@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.mainactivity
+package kg.o.internlabs.omarket.presentation.activities.mainactivity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
