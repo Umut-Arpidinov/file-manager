@@ -1,15 +1,16 @@
 package kg.o.internlabs.omarket.presentation.activities
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.view.LayoutInflater
+import kg.o.internlabs.core.BaseActivity
+import kg.o.internlabs.core.BaseViewModel
 import kg.o.internlabs.omarket.databinding.ActivitySplashScreenBinding
-import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 
-class SplashScreen : AppCompatActivity() {
-    private lateinit var binding: ActivitySplashScreenBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySplashScreenBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+class SplashScreen : BaseActivity<BaseViewModel, ActivitySplashScreenBinding>() {
+
+    override val viewModel: BaseViewModel
+        get() = TODO("Not yet implemented")
+
+    override fun inflateViewBinding(inflater: LayoutInflater): ActivitySplashScreenBinding {
+        return ActivitySplashScreenBinding.inflate(inflater)
     }
 }
