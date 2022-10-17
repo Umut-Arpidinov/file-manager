@@ -9,8 +9,8 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
 
-    private lateinit var binding: VB
-    protected lateinit var viewModel: VM
+    protected lateinit var binding: VB
+    protected abstract val viewModel: VM
 
     protected abstract fun inflateViewBinding(inflater: LayoutInflater): VB
 
@@ -32,7 +32,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
         initListener()
     }
 
-    open fun checkInternet() {}
+    open fun checkInternet() {} // проверка интернета
     open fun initViewModel() {}// Обрабатываем все обзерверы
     open fun initView() {} // Инициализации вьюшек
     open fun initListener() {} // Прописываем все логику кликов

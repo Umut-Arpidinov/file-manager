@@ -1,9 +1,10 @@
-package kg.o.internlabs.omarket.presentation.activities.mainactivity
+package kg.o.internlabs.omarket.presentation.ui.activities.activities
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import kg.o.internlabs.core.BaseActivity
 import kg.o.internlabs.omarket.databinding.ActivityMainBinding
+import kg.o.internlabs.omarket.presentation.viewmodels.activitiesviewmodels.MainViewModel
 
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
@@ -14,5 +15,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityMainBinding {
         return ActivityMainBinding.inflate(inflater)
+    }
+
+    override fun initView() {
+        super.initView()
+        //binding.navHost
     }
 }
