@@ -37,18 +37,18 @@
     <color name="yellow_1">#FFCC00</color>
     <color name="yellow_2">#FFE600</color>
     <!--    Grays               -->
-    <color name="light_gray_bg">#EFEFF4</color>
-    <color name="light_gray">#F7F7F7</color>
-    <color name="icon_gray_bg">#ECECEC</color>
-    <color name="mid_gray">#E0E0E5</color>
-    <color name="title_gray">#C8C8C8</color>
-    <color name="secondary_gray">#8A8A8E</color>
+    <color name="gray_1">#8A8A8E</color>
+    <color name="gray_2">#C8C8C8</color>
+    <color name="gray_3">#ECECEC</color>
+    <color name="gray_4">#EFEFF4</color>
+    <color name="gray_5">#F7F7F7</color>
+    <color name="gray_6">#E0E0E5</color>
     <!--    Black               -->
     <color name="black_1">#010101</color>
-    <color name="black_icons_bg">#111112</color>
-    <color name="black_elements">#1C1C1E</color>
-    <color name="black_separator">#28282A</color>
-    <color name="black_asphalt">#4A4A4A</color>
+    <color name="black_2">#111112</color>
+    <color name="black_3">#1C1C1E</color>
+    <color name="black_4">#28282A</color>
+    <color name="black_5">#4A4A4A</color>
     <!--    Blue                -->
     <color name="blue_1">#007AFF</color>
     <color name="blue_2">#026DB5</color>
