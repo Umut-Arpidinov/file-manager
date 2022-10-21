@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.custom_view
+package kg.o.internlabs.core.custom_view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kg.o.internlabs.omarket.R
+import kg.o.internlabs.core.R
+import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding
+import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding.inflate
 
-class CustomView : ConstraintLayout {
+
+class OtpInputCustomView : ConstraintLayout {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -23,18 +26,16 @@ class CustomView : ConstraintLayout {
         defStyleAttr
     )
 
-    private var rvOTP: RecyclerView? = null
+    private val binding: OtpInputCustomViewBinding = inflate(LayoutInflater.from(context), this, true)
 
     private val adapter by lazy { RVAdapter() }
 
 
     init {
-        val view = View.inflate(context, R.layout.custom_view, this)
-        rvOTP = view.findViewById(R.id.rvOTP)
 
         val manager = GridLayoutManager(context, 6)
-        rvOTP?.layoutManager = manager
-        rvOTP?.adapter = adapter
+        binding.rvOTP.layoutManager = manager
+        binding.rvOTP.adapter = adapter
         val list = arrayListOf<OptEntity>()
         for (i in 0..5){
             list.add(OptEntity("", false))
