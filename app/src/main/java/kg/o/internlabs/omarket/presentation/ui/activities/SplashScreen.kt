@@ -6,8 +6,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
-import kg.o.internlabs.core.BaseActivity
-import kg.o.internlabs.core.BaseViewModel
+import kg.o.internlabs.core.base.BaseActivity
+import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.omarket.databinding.ActivitySplashScreenBinding
 import kg.o.internlabs.omarket.presentation.ui.activities.activities.MainActivity
 
