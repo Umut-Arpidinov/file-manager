@@ -4,5 +4,9 @@
         <attr name="cancelImageVisibility" format="boolean"/>
         <attr name="helperTextState" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="OtpInputCustomView">
+        <attr name="otp_custom_view" format="integer"/>
+    </declare-styleable>
     
 </resources>

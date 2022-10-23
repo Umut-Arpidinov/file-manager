@@ -23,8 +23,15 @@ class OtpInputCustomView : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
-        defStyleAttr
-    )
+        defStyleAttr){
+        context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView).run {
+            getText(R.styleable.OtpInputCustomView_otp_custom_view)?.let {
+               otp(it.toString().toInt())
+            }
+            recycle()
+    }
+
+    }
 
     private val binding: OtpInputCustomViewBinding =
         inflate(LayoutInflater.from(context), this, true)
@@ -34,17 +41,6 @@ class OtpInputCustomView : ConstraintLayout {
 
     init {
 
-        val manager = GridLayoutManager(context, 6)
-        binding.rvOTP.layoutManager = manager
-        binding.rvOTP.adapter = adapter
-        val list = arrayListOf<OptEntity>()
-        for (i in 0..5) {
-            list.add(OptEntity("", false))
-        }
-
-//        list.map { it.error = true }
-
-        adapter.submitList(list)
     }
 
     fun updateTv(text: String) {
@@ -52,6 +48,20 @@ class OtpInputCustomView : ConstraintLayout {
         if (text.length == 6) {
 
         }
+    }
+
+    fun otp(int: Int) {
+        val manager = GridLayoutManager(context, 6)
+        binding.rvOTP.layoutManager = manager
+        binding.rvOTP.adapter = adapter
+        val list = arrayListOf<OptEntity>()
+        for (i in 0..int) {
+            list.add(OptEntity("", false))
+        }
+
+//        list.map { it.error = true }
+
+        adapter.submitList(list)
     }
 
 
