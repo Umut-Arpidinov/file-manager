@@ -26,7 +26,8 @@ class OtpInputCustomView : ConstraintLayout {
         defStyleAttr
     )
 
-    private val binding: OtpInputCustomViewBinding = inflate(LayoutInflater.from(context), this, true)
+    private val binding: OtpInputCustomViewBinding =
+        inflate(LayoutInflater.from(context), this, true)
 
     private val adapter by lazy { RVAdapter() }
 
@@ -37,7 +38,7 @@ class OtpInputCustomView : ConstraintLayout {
         binding.rvOTP.layoutManager = manager
         binding.rvOTP.adapter = adapter
         val list = arrayListOf<OptEntity>()
-        for (i in 0..5){
+        for (i in 0..5) {
             list.add(OptEntity("", false))
         }
 
@@ -46,9 +47,9 @@ class OtpInputCustomView : ConstraintLayout {
         adapter.submitList(list)
     }
 
-    fun updateTv(text: String){
+    fun updateTv(text: String) {
         text.split("")
-        if (text.length == 6){
+        if (text.length == 6) {
 
         }
     }
@@ -74,6 +75,7 @@ class RVAdapter : ListAdapter<OptEntity, RVViewHolder>(otpDiff) {
 class RVViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     private var tvTitle: TextView? = null
+
     init {
         tvTitle = view.findViewById(R.id.one)
     }
@@ -82,9 +84,10 @@ class RVViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         tvTitle?.text = item?.text
     }
 
-    companion object{
+    companion object {
         fun create(parent: ViewGroup): RVViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_custom, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_recycler_custom, parent, false)
             return RVViewHolder(view)
         }
     }
@@ -93,11 +96,11 @@ class RVViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
 val otpDiff = object : DiffUtil.ItemCallback<OptEntity>() {
     override fun areItemsTheSame(oldItem: OptEntity, newItem: OptEntity): Boolean {
-       return  oldItem == newItem
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: OptEntity, newItem: OptEntity): Boolean {
-        return  oldItem.error == newItem.error &&  oldItem.text == newItem.text
+        return oldItem.error == newItem.error && oldItem.text == newItem.text
     }
 
 }
