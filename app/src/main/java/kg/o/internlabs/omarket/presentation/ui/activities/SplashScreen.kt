@@ -27,18 +27,18 @@ class SplashScreen : BaseActivity<BaseViewModel, ActivitySplashScreenBinding>() 
 
     override fun initView() {
         super.initView()
-//        Handler(Looper.getMainLooper()).postDelayed({
-//
-//            // Start activity
-//            startActivity(Intent(this, MainActivity::class.java))
-//
-//            // Animate the loading of new activity
-//            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-//
-//            // Close this activity
-//            finish()
-//
-//        }, 40000)
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            // Start activity
+            startActivity(Intent(this, MainActivity::class.java))
+
+            // Animate the loading of new activity
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
+            // Close this activity
+            finish()
+
+        }, 4000)
     }
 
     private fun makeFullScreen() {

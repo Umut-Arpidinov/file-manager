@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginHorizontal="@dimen/margin_24dp"
-        tools:itemCount="6"
+        tools:itemCount="4"
         tools:listitem="@layout/item_recycler_custom"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintStart_toStartOf="parent"

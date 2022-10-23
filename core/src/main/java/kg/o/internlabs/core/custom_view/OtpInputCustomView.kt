@@ -18,45 +18,38 @@ import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding.inflate
 
 class OtpInputCustomView : ConstraintLayout {
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr){
-        context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView).run {
-            getText(R.styleable.OtpInputCustomView_otp_custom_view)?.let {
-               otp(it.toString().toInt())
-            }
-            recycle()
-    }
-
-    }
-
     private val binding: OtpInputCustomViewBinding =
         inflate(LayoutInflater.from(context), this, true)
 
     private val adapter by lazy { RVAdapter() }
 
-
-    init {
-
-    }
-
-    fun updateTv(text: String) {
-        text.split("")
-        if (text.length == 6) {
-
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView).run {
+            getText(R.styleable.OtpInputCustomView_otp_custom_view)?.let {
+                otpAttrs(it.toString().toInt())
+            }
+            recycle()
         }
     }
 
-    fun otp(int: Int) {
-        val manager = GridLayoutManager(context, 6)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+
+//    fun updateTv(text: String) {
+//        text.split("")
+//        if (text.length == 6) {
+//
+//        }
+//    }
+
+    private fun otpAttrs(input: Int) {
+        val manager = GridLayoutManager(context, input)
         binding.rvOTP.layoutManager = manager
         binding.rvOTP.adapter = adapter
         val list = arrayListOf<OptEntity>()
-        for (i in 0..int) {
-            list.add(OptEntity("", false))
+        for (i in 0 until input) {
+            list.add(OptEntity())
         }
 
 //        list.map { it.error = true }
@@ -68,8 +61,8 @@ class OtpInputCustomView : ConstraintLayout {
 }
 
 data class OptEntity(
-    val text: String,
-    var error: Boolean
+    val text: String = "",
+    var error: Boolean = false
 )
 
 class RVAdapter : ListAdapter<OptEntity, RVViewHolder>(otpDiff) {
