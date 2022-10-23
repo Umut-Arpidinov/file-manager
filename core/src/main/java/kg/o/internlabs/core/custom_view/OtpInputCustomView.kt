@@ -18,38 +18,32 @@ import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding.inflate
 
 class OtpInputCustomView : ConstraintLayout {
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr)
-//    {
-//        context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView)?.run {
-//            getText(R.styleable.OtpInputCustomView_android_text).let {
-//                set(it.toString())
-//            }
-//            recycle()
-//        }
-//    }
-
-
     private val binding: OtpInputCustomViewBinding = inflate(LayoutInflater.from(context), this, true)
 
     private val adapter by lazy { RVAdapter() }
 
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)    {
+            context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView)?.run {
+            getText(R.styleable.OtpInputCustomView_otp_custom_view).let {
+                set(it.toString().toInt())
+            }
+            recycle()
+        }
+    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr)
 
-    init {
 
-        val manager = GridLayoutManager(context, 6)
+
+    fun set(input: Int){
+        val manager = GridLayoutManager(context, input)
         binding.rvOTP.layoutManager = manager
         binding.rvOTP.adapter = adapter
-
-    }
-
-    fun set(text: String){
         val list = arrayListOf<OptEntity>()
-        for (i in 0..5){
+        for (i in 0 until input){
             list.add(OptEntity("", false))
         }
         //        list.map { it.error = true }
