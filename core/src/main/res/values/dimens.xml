@@ -8,6 +8,9 @@
     <dimen name="view_width_311dp">311dp</dimen>
     <dimen name="view_width_343dp">343dp</dimen>
 
+    <dimen name="radius_view_12dp">12dp</dimen>
+
+
 
     <dimen name="margin_2dp">2dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
