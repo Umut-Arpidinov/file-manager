@@ -18,7 +18,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun initView() {
-        super.initView()
-        //binding.navHost
+
     }
 }
