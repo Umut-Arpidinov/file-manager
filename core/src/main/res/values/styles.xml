@@ -1,17 +1,17 @@
 <resources>
 
     <style name="appBar" >
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">@dimen/text_15sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
         <item name="android:textColor">@color/black_4</item>
     </style>
     <style name="hint" >
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">@dimen/text_13sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:textColor">@color/black_4</item>
     </style>
     <style name="numberInput">
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">@dimen/text_17sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
         <item name="android:textColor">@color/black_1</item>
 
