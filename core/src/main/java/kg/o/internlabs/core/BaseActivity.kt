@@ -18,10 +18,9 @@ abstract class BaseActivity<VM: ViewModel, VB: ViewBinding> : AppCompatActivity(
         operationBeforeSetContent()
         setContentView(binding.root)
 
-        checkInternet()
-        initViewModel()
-        initView()
-        initListener()
+
+
+
     }
 
     open fun operationBeforeSetContent() {}  // Этот метод выпонится до задание setContentView
