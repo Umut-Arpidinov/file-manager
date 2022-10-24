@@ -12,21 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/number_input_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <kg.o.internlabs.core.NumberInputView
-        app:helperTextState="@string/Ввод"
-        android:id="@+id/number_input_field"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <kg.o.internlabs.core.custom_view.OtpInputCustomView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        app:layout_constraintTop_toBottomOf="@id/number_input_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

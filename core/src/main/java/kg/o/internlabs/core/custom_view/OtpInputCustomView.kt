@@ -3,15 +3,14 @@ package kg.o.internlabs.core.custom_view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.core.R
+import kg.o.internlabs.core.databinding.ItemRecyclerCustomBinding
 import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding
 import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding.inflate
 
@@ -32,9 +31,12 @@ class OtpInputCustomView : ConstraintLayout {
             recycle()
         }
     }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs,  defStyleAttr)
 
-
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
 
     private fun setNumber(number: Int) {
@@ -52,7 +54,7 @@ class OtpInputCustomView : ConstraintLayout {
 
 //    fun updateTv(text: String){
 //        text.split("")
-//        if (text.length == 6){
+//        if (text.length == 4){
 //
 //        }
 //    }
@@ -65,7 +67,12 @@ data class OptEntity(
 
 class RVAdapter : ListAdapter<OptEntity, RVViewHolder>(otpDiff) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {
-        return RVViewHolder.create(parent)
+        val binding = ItemRecyclerCustomBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return RVViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RVViewHolder, position: Int) {
@@ -73,26 +80,26 @@ class RVAdapter : ListAdapter<OptEntity, RVViewHolder>(otpDiff) {
     }
 }
 
-class RVViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
-    private var tvTitle: TextView? = null
-
-    init {
-        tvTitle = view.findViewById(R.id.one)
-    }
+class RVViewHolder(private val binding: ItemRecyclerCustomBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: OptEntity?) {
-        tvTitle?.text = item?.text
+        binding.one.text = item?.text
     }
 
     companion object {
         fun create(parent: ViewGroup): RVViewHolder {
-            val view = LayoutInflater.from(parent.context)
+            val binding = ItemRecyclerCustomBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_recycler_custom, parent, false)
-            return RVViewHolder(view)
+            return RVViewHolder(binding)
         }
-    }
 
+    }
 }
 
 val otpDiff = object : DiffUtil.ItemCallback<OptEntity>() {
