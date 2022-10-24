@@ -86,20 +86,6 @@ class RVViewHolder(private val binding: ItemRecyclerCustomBinding) :
     fun bind(item: OptEntity?) {
         binding.one.text = item?.text
     }
-
-    companion object {
-        fun create(parent: ViewGroup): RVViewHolder {
-            val binding = ItemRecyclerCustomBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_recycler_custom, parent, false)
-            return RVViewHolder(binding)
-        }
-
-    }
 }
 
 val otpDiff = object : DiffUtil.ItemCallback<OptEntity>() {
