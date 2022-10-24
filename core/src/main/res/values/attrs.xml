@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomInputField">
+    <declare-styleable name="NumberInputView">
         <attr name="android:text"/>
         <attr name="cancelImageVisibility" format="boolean"/>
     </declare-styleable>

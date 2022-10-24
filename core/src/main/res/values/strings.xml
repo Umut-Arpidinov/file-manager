@@ -2,4 +2,6 @@
 <resources>
     <string name="Войти">Войти</string>
     <string name="Ввод">Введите номер телефона</string>
+    <string name="imageDesc">cancel icon</string>
+
 </resources>
