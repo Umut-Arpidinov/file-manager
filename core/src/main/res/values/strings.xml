@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Войти">Войти</string>
-    <string name="Ввод">Введите номер телефона</string>
-    <string name="imageDesc">cancel icon</string>
+    <string name="Войти" translatable="false">Войти</string>
+    <string name="Ввод" translatable="false">Введите номер телефона</string>
+    <string name="Ошибка_номера">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
+    <string name="imageDesc" translatable="false">cancel icon</string>
 
 </resources>

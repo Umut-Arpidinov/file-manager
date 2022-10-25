@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <kg.o.internlabs.core.NumberInputView
-        android:text="@string/Ввод"
+        app:helperTextState="@string/Ввод"
         android:id="@+id/number_input_field"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

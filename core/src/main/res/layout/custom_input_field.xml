@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="@id/number_input_frame"
@@ -31,7 +31,7 @@
                 android:layout_height="@dimen/view_height_48dp"
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:layout_marginEnd="@dimen/margin_16dp"
-                android:background="@drawable/shape"
+                android:background="@drawable/number_ok_style"
                 app:layout_constraintBottom_toTopOf="@id/number_input_helper_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,10 +44,10 @@
                     android:layout_height="@dimen/view_height_32dp"
                     android:textAppearance="@style/numberInput"
                     android:layout_gravity="center"
-                    android:background="@drawable/shape"
-                    android:inputType="phone"
+                    android:background="@drawable/number_ok_style"
+                    android:inputType="number"
                     android:minLines="1"
-                    android:maxLength="40"
+                    android:maxLength="13"
                     android:textCursorDrawable="@drawable/o_custom_coursor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
