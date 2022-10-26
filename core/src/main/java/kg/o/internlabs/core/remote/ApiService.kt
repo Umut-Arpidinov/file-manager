@@ -14,11 +14,11 @@ interface ApiService {
         @Header("API_KEY") apiKey: String,
         @Body reg: Register?
     ):
-            Call<Otp>
+            Call<RegResponse>
 
     @POST("api/market-auth/check-otp/")
     fun checkOtp(
-        @Header("API_KEY") msisdn: String,
+        @Header("API_KEY") apiKey: String,
         @Body otp: Otp?
     ):
             Call<Token>
@@ -26,7 +26,7 @@ interface ApiService {
     @POST("api/market-auth/refresh-token/")
     fun refreshToken(
         @Header("API_KEY") apiKey: String,
-        @Body reg: Token?
+        @Body reg: RefreshToken?
     ):
             Call<Token>
 
