@@ -1,5 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
@@ -11,7 +12,8 @@ import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.omarket.databinding.ActivitySplashScreenBinding
 import kg.o.internlabs.omarket.presentation.ui.activities.activities.MainActivity
 
-class SplashScreen : BaseActivity<BaseViewModel, ActivitySplashScreenBinding>() {
+@SuppressLint("CustomSplashScreen")
+class SplashScreenActivity : BaseActivity<BaseViewModel, ActivitySplashScreenBinding>() {
 
     override val viewModel: BaseViewModel
         get() = TODO("Not yet implemented")

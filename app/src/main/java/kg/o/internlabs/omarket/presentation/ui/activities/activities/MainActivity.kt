@@ -9,6 +9,11 @@ import com.google.gson.reflect.TypeToken
 import kg.o.internlabs.core.base.BaseActivity
 import kg.o.internlabs.core.model.*
 import kg.o.internlabs.core.network.RetrofitClient
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import kg.o.internlabs.core.BaseActivity
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.ActivityMainBinding
 import kg.o.internlabs.omarket.presentation.viewmodels.activitiesviewmodels.MainViewModel
 import retrofit2.Call
