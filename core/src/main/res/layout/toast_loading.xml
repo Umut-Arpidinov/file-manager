@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/loading_wrapper"
-    android:layout_width="328dp"
-    android:layout_height="52dp"
+    android:layout_width="@dimen/view_328dp"
+    android:layout_height="@dimen/view_52dp"
     android:background="@drawable/background_toast_loading"
-    android:elevation="1dp"
+    android:elevation="@dimen/card_elevation_1dp"
     android:gravity="center"
     android:orientation="horizontal">
 
     <ProgressBar
         style="?android:attr/progressBarStyle"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="12dp"
+        android:layout_width="@dimen/view_28dp"
+        android:layout_height="@dimen/view_28dp"
+        android:layout_marginStart="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/margin_12dp"
+        android:layout_marginEnd="@dimen/margin_10dp"
+        android:layout_marginBottom="@dimen/margin_12dp"
 
         android:indeterminateDrawable="@drawable/theme_progress_bar_for_toast_loading" />
 
     <TextView
         android:id="@+id/toastLoadingMessage"
-        android:layout_width="265dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="19dp"
-        android:text="Message"
+        android:layout_width="@dimen/view_265dp"
+        android:layout_height="@dimen/view_15dp"
+        android:layout_marginTop="@dimen/margin_19dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_19dp"
+        android:text="@string/message"
         android:textColor="@color/black_1"
         android:textFontWeight="400"
-        android:textSize="12sp" />
+        android:textSize="@dimen/text_12sp" />
 
 </LinearLayout>

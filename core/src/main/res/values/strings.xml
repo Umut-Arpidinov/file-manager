@@ -4,5 +4,8 @@
     <string name="Ввод" translatable="false">Введите номер телефона</string>
     <string name="Ошибка_номера">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
     <string name="imageDesc" translatable="false">cancel icon</string>
+    <string name="message">Message</string>
+    <string name="button">Button</string>
+    <string name="_5">5</string>
 
 </resources>

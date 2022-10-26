@@ -1,85 +1,100 @@
 package kg.o.internlabs.core
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.CountDownTimer
-import android.view.Gravity
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 
 //Activity -> MainActivity
 
 class CustomToasts(private val mainActivity: Activity) : Activity() {
-    fun toastLoading(text: String) {
-        val inflater = mainActivity.layoutInflater
-        val layout: View =
-            inflater.inflate(R.layout.toast_loading, mainActivity.findViewById(R.id.loading_wrapper))
 
-        Toast(mainActivity).apply {
-            val textMessage: TextView = layout.findViewById(R.id.toastLoadingMessage)
+    fun snackButtonLoading(text: String, layout: View) {
+        val snackBar = Snackbar.make(layout, "", Snackbar.LENGTH_LONG)
+        snackBar.view.setBackgroundColor(Color.TRANSPARENT)
+        val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
-            textMessage.text = text
-            duration = Toast.LENGTH_SHORT
-            setGravity(Gravity.CENTER, 0, 0)
-            view = layout
-        }.show()
+        val customView = mainActivity.layoutInflater.inflate(
+            R.layout.toast_loading, mainActivity.findViewById(R.id.loading_wrapper)
+        )
+
+        val textMessage: TextView = customView.findViewById(R.id.toastLoadingMessage)
+        textMessage.text = text
+
+        snackBarLayout.addView(customView, 0)
+        snackBar.show()
     }
 
-    fun toastSuccess(text: String) {
-        val inflater = mainActivity.layoutInflater
-        val layout: View =
-            inflater.inflate(R.layout.toast_success, mainActivity.findViewById(R.id.success_wrapper))
+    fun snackButtonSuccess(text: String, layout: View) {
+        val snackBar = Snackbar.make(layout, "", Snackbar.LENGTH_LONG)
+        snackBar.view.setBackgroundColor(Color.TRANSPARENT)
+        val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
-        Toast(mainActivity).apply {
-            val textMessage: TextView = layout.findViewById(R.id.toastSuccessMessage)
+        val customView = mainActivity.layoutInflater.inflate(
+            R.layout.toast_success, mainActivity.findViewById(R.id.success_wrapper)
+        )
 
-            textMessage.text = text
-            duration = Toast.LENGTH_SHORT
-            setGravity(Gravity.BOTTOM, 0, 0)
-            view = layout
-        }.show()
+        val textMessage: TextView = customView.findViewById(R.id.toastSuccessMessage)
+        textMessage.text = text
+
+        snackBarLayout.addView(customView, 0)
+        snackBar.show()
     }
 
-    fun toastError(text: String) {
-        val inflater = mainActivity.layoutInflater
-        val layout: View =
-            inflater.inflate(R.layout.toast_error, mainActivity.findViewById(R.id.error_wrapper))
+    fun snackButtonError(text: String, layout: View) {
+        val snackBar = Snackbar.make(layout, "", Snackbar.LENGTH_LONG)
+        snackBar.view.setBackgroundColor(Color.TRANSPARENT)
+        val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
-        Toast(mainActivity).apply {
-            val textMessage: TextView = layout.findViewById(R.id.toastErrorMessage)
+        val customView = mainActivity.layoutInflater.inflate(
+            R.layout.toast_error, mainActivity.findViewById(R.id.error_wrapper)
+        )
 
-            textMessage.text = text
-            duration = Toast.LENGTH_SHORT
-            setGravity(Gravity.TOP, 0, 0)
-            view = layout
-        }.show()
+        val textMessage: TextView = customView.findViewById(R.id.toastErrorMessage)
+        textMessage.text = text
+
+        snackBarLayout.addView(customView, 0)
+        snackBar.show()
     }
 
-    fun toastTimer(text: String, btnText: String) {
-        val inflater = mainActivity.layoutInflater
-        val layout: View =
-            inflater.inflate(R.layout.toast_timer, mainActivity.findViewById(R.id.timer_wrapper))
+    fun snackButtonTimer(text: String, btnText: String, layout: View, timerStart: Long, timerEnd: Long) {
+        val snackBar = Snackbar.make(layout, "", Snackbar.LENGTH_INDEFINITE)
+        snackBar.view.setBackgroundColor(Color.TRANSPARENT)
+        val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
-        Toast(mainActivity).apply {
-            val textMessage: TextView = layout.findViewById(R.id.toastTimerMessage)
-            val textBtn: TextView = layout.findViewById(R.id.toastTimerButton)
-            val timerText: TextView = layout.findViewById(R.id.toastTimer)
+        val customView = mainActivity.layoutInflater.inflate(
+            R.layout.toast_timer, mainActivity.findViewById(R.id.timer_wrapper)
+        )
 
-            object : CountDownTimer(5000, 1000) {
-                override fun onTick(p0: Long) {
-                    timerText.text = "$p0"
-                }
+        val textMessage: TextView = customView.findViewById(R.id.toastTimerMessage)
+        val timerText: TextView = customView.findViewById(R.id.toastTimer)
+        val button: Button = customView.findViewById(R.id.toastTimerButton)
 
-                override fun onFinish() {
-                    timerText.text = "0"
-                }
-            }.start()
+        object : CountDownTimer(timerStart, timerEnd) {
+            override fun onTick(p0: Long) {
+                timerText.text = "$p0"
+            }
 
-            textMessage.text = text
-            textBtn.text = btnText
-            duration = Toast.LENGTH_LONG
-            setGravity(Gravity.TOP, 0, 0)
-            view = layout
-        }.show()
+            override fun onFinish() {
+                timerText.text = "0"
+                snackBarLayout.removeAllViews()
+            }
+        }.start()
+
+        button.setOnClickListener {
+            Toast.makeText(mainActivity, "Logic to be done.", Toast.LENGTH_SHORT).show()
+            snackBar.dismiss()
+            snackBarLayout.removeAllViews()
+        }
+
+        textMessage.text = text
+        button.text = btnText
+
+        snackBarLayout.addView(customView, 0)
+        snackBar.show()
     }
 }
