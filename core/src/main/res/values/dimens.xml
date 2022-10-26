@@ -12,8 +12,8 @@
     <dimen name="margin_16dp">16dp</dimen>
     <dimen name="margin_96dp">96dp</dimen>
 
-    <dimen name="coursore_width_1dp">1dp</dimen>
-    <dimen name="coursore_width_2dp">2dp</dimen>
+    <dimen name="cursor_width_1dp">1dp</dimen>
+    <dimen name="cursor_width_2dp">2dp</dimen>
 
     <dimen name="card_elevation_0dp">0dp</dimen>
     <dimen name="card_elevation_1dp">1dp</dimen>

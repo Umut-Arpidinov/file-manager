@@ -48,7 +48,7 @@
                     android:inputType="number"
                     android:minLines="1"
                     android:maxLength="13"
-                    android:textCursorDrawable="@drawable/o_custom_coursor"
+                    android:textCursorDrawable="@drawable/o_custom_cursor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
