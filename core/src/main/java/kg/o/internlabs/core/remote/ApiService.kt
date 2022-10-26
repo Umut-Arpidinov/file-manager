@@ -1,9 +1,6 @@
 package kg.o.internlabs.core.remote
 
-import kg.o.internlabs.core.model.Login
-import kg.o.internlabs.core.model.Otp
-import kg.o.internlabs.core.model.RefreshToken
-import kg.o.internlabs.core.model.Register
+import kg.o.internlabs.core.model.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -17,21 +14,21 @@ interface ApiService {
         @Header("API_KEY") apiKey: String,
         @Body reg: Register?
     ):
-            Call<Register>
+            Call<Otp>
 
     @POST("api/market-auth/check-otp/")
     fun checkOtp(
-        @Header("API_KEY") apiKey: String,
-        @Body reg: Otp?
+        @Header("API_KEY") msisdn: String,
+        @Body otp: Otp?
     ):
-            Call<Otp>
+            Call<Token>
 
     @POST("api/market-auth/refresh-token/")
     fun refreshToken(
         @Header("API_KEY") apiKey: String,
-        @Body reg: RefreshToken?
+        @Body reg: Token?
     ):
-            Call<RefreshToken>
+            Call<Token>
 
     @POST("api/market-auth/auth/msisdn-password/")
     fun loginUser(
