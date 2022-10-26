@@ -7,6 +7,8 @@
     <dimen name="view_width_41dp">41dp</dimen>
     <dimen name="view_width_311dp">311dp</dimen>
     <dimen name="view_width_343dp">343dp</dimen>
+    <dimen name="view_height_50dp">50dp</dimen>
+    <dimen name="view_width_30dp">30dp</dimen>
 
     <dimen name="radius_view_12dp">12dp</dimen>
 
@@ -15,6 +17,7 @@
     <dimen name="margin_24dp">24dp</dimen>
     <dimen name="margin_16dp">16dp</dimen>
     <dimen name="margin_18dp">18dp</dimen>
+    <dimen name="margin_50dp">50dp</dimen>
     <dimen name="margin_96dp">96dp</dimen>
 
     <dimen name="coursore_width_1dp">1dp</dimen>
@@ -30,7 +33,4 @@
     <dimen name="text_15sp">15sp</dimen>
     <dimen name="text_17sp">17sp</dimen>
     <dimen name="text_32sp">32sp</dimen>
-
-
-
 </resources>
