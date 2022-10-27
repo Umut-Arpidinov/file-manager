@@ -31,6 +31,8 @@ data class RegResponse(
 data class RefreshToken(
     @SerializedName("refresh_token")
     val refreshToken: String? = null,
+    val message: String? = null
+
 )
 
 
