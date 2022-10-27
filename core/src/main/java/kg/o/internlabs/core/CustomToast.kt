@@ -102,6 +102,8 @@ class CustomToasts(private val mainActivity: Activity) : Activity() {
 
         snackBarLayout.addView(customView, 0)
         snackBar.show()
+
+        TODO("Не используемый snackBar в приложении, но нужно пофиксить детали позже")
     }
 
     fun snackButtonSystem(text: String, layout: View) {

@@ -28,7 +28,7 @@
         android:layout_marginEnd="@dimen/margin_16dp"
         android:layout_marginBottom="@dimen/margin_19dp"
         android:text="@string/message"
-        android:textColor="@color/black_1"
+        android:textColor="@color/black_5"
         android:textFontWeight="400"
         tools:targetApi="p"
         android:textSize="@dimen/text_12sp" />
