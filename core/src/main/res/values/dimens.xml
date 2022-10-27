@@ -10,7 +10,10 @@
     <dimen name="view_168dp">168dp</dimen>
     <dimen name="view_14dp">14dp</dimen>
     <dimen name="view_100dp">100dp</dimen>
+    <dimen name="view_102dp">102dp</dimen>
+    <dimen name="view_118dp">118dp</dimen>
     <dimen name="view_30dp">30dp</dimen>
+    <dimen name="view_35dp">35dp</dimen>
     <dimen name="view_160dp">160dp</dimen>
     <dimen name="view_height_32dp">32dp</dimen>
     <dimen name="view_height_48dp">48dp</dimen>
@@ -33,6 +36,7 @@
     <dimen name="radius_view_4dp">4dp</dimen>
 
     <dimen name="margin_2dp">2dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="margin_11dp">11dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
@@ -52,6 +56,7 @@
 
     <dimen name="corner_radius_8dp">8dp</dimen>
     <dimen name="corner_radius_12dp">12dp</dimen>
+    <dimen name="corner_radius_32dp">32dp</dimen>
 
     <dimen name="text_12sp">12sp</dimen>
     <dimen name="text_13sp">13sp</dimen>

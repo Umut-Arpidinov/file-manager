@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/success_wrapper"
     android:layout_width="@dimen/view_328dp"
     android:layout_height="@dimen/view_52dp"
@@ -15,7 +16,8 @@
         android:layout_marginTop="@dimen/margin_12dp"
         android:layout_marginEnd="@dimen/margin_10dp"
         android:layout_marginBottom="@dimen/margin_12dp"
-        android:src="@drawable/background_toast_success_image_group" />
+        android:src="@drawable/background_toast_success_image_group"
+        android:contentDescription="@string/description"/>
 
     <TextView
         android:id="@+id/toastSuccessMessage"
@@ -27,6 +29,7 @@
         android:text="@string/message"
         android:textColor="@color/black_1"
         android:textFontWeight="400"
+        tools:targetApi="p"
         android:textSize="@dimen/text_12sp" />
 
 </LinearLayout>

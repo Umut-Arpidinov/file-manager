@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loading_wrapper"
     android:layout_width="@dimen/view_328dp"
     android:layout_height="@dimen/view_52dp"
@@ -29,6 +30,7 @@
         android:text="@string/message"
         android:textColor="@color/black_1"
         android:textFontWeight="400"
+        tools:targetApi="p"
         android:textSize="@dimen/text_12sp" />
 
 </LinearLayout>

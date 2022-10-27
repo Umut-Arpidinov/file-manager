@@ -7,5 +7,7 @@
     <string name="message">Message</string>
     <string name="button">Button</string>
     <string name="_5">5</string>
+    <string name="description">description</string>
+    <string name="toast_system_text">Системный</string>
 
 </resources>
