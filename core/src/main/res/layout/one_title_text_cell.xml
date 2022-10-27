@@ -64,9 +64,10 @@
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:id="@+id/view"
         style="@style/Divider.Horizontal"
+        app:layout_constraintStart_toStartOf="@id/cl_top"
         app:layout_constraintTop_toBottomOf="@id/cl_top"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

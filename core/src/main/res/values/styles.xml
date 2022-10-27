@@ -49,7 +49,7 @@
 
     <style name="Divider.Horizontal" parent="Divider">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">2dp</item> // You can change thickness here.
+        <item name="android:layout_height">0.5dp</item> // You can change thickness here.
         <item name="android:background">@color/black_1</item>
     </style>
 
