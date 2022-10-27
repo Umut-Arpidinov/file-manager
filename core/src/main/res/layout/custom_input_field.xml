@@ -35,6 +35,8 @@
                 app:layout_constraintTop_toTopOf="parent">
                 <kg.o.internlabs.core.custom_number_input_view.custom_masked_edit_text.MaskedEditText
                     android:autofillHints="phone"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginEnd="@dimen/margin_16dp"
                     android:maxLines="1"
                     android:inputType="number"
                     android:id="@+id/enter_number_edit_text"
@@ -42,7 +44,7 @@
                     android:gravity="left|center"
                     android:hint="@string/hint_for_number"
                     app:keep_hint="true"
-                    android:layout_width="@dimen/view_width_311dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/view_height_32dp"
                     android:textAppearance="@style/numberInput"
                     android:layout_gravity="center"
@@ -66,12 +68,14 @@
             </FrameLayout>
             <TextView
                 android:id="@+id/number_input_helper_text"
-                android:layout_width="@dimen/view_width_343dp"
+                android:layout_width="match_parent"
+                android:text="@string/enter_number"
                 android:layout_height="@dimen/view_height_32dp"
                 android:textAppearance="@style/hint"
                 app:layout_constraintBottom_toBottomOf="@id/number_input_frame"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="@dimen/margin_28dp"
+                android:layout_marginEnd="@dimen/margin_28dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/number_input_frame" />
         </androidx.constraintlayout.widget.ConstraintLayout>

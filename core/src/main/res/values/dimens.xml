@@ -29,6 +29,7 @@
     <dimen name="view_width_41dp">41dp</dimen>
     <dimen name="margin_18dp">18dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
+    <dimen name="margin_28dp">28dp</dimen>
 
 
 </resources>
