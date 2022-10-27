@@ -1,8 +1,8 @@
-package kg.o.internlabs.core.network
+package kg.o.internlabs.core.data.remote.network
 
 import androidx.viewbinding.BuildConfig
 import kg.o.internlabs.core.BuildConfig.API_URL
-import kg.o.internlabs.core.remote.ApiService
+import kg.o.internlabs.core.data.remote.ApiService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

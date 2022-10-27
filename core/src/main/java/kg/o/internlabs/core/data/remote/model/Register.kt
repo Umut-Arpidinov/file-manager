@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.model
+package kg.o.internlabs.core.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

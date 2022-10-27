@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.model
+package kg.o.internlabs.core.data.remote.model
 
 data class Login(
     val msisdn: String,
