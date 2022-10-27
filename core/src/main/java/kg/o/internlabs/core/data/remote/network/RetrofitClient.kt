@@ -1,8 +1,7 @@
 package kg.o.internlabs.core.data.remote.network
 
-import androidx.viewbinding.BuildConfig
 import kg.o.internlabs.core.BuildConfig.API_URL
-import kg.o.internlabs.core.data.remote.ApiService
+import kg.o.internlabs.omarket.data.remote.ApiService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,7 +20,7 @@ object RetrofitClient {
     private fun authInterceptor(): Interceptor {
         val authInterceptor = Interceptor { chain ->
             val request = chain.request().newBuilder().apply {
-                addHeader("Content-type", "application/json")
+                addHeader("Content-type", "application/json").addHeader("API_KEY", "ypsGjpmpDR9GndA9YvzBHpIqXsFStfyq")
             }.build()
             chain.proceed(request)
         }
@@ -36,7 +35,7 @@ object RetrofitClient {
         .build()
 
 
-    val instance: ApiService by lazy {
+    val instance: kg.o.internlabs.omarket.data.remote.ApiService by lazy {
 
         val retrofit = Retrofit.Builder()
             .baseUrl(API_URL)
@@ -44,7 +43,7 @@ object RetrofitClient {
             .client(okHttpClient)
             .build()
 
-        retrofit.create(ApiService::class.java)
+        retrofit.create(kg.o.internlabs.omarket.data.remote.ApiService::class.java)
     }
 
 }

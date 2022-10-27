@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.data.remote
+package kg.o.internlabs.omarket.data.remote
 
 import kg.o.internlabs.core.data.remote.model.*
 import retrofit2.Call
@@ -29,5 +29,5 @@ interface ApiService {
     fun loginUser(
         @Header("API_KEY") apiKey: String,
         @Body reg: Login?
-    ): Call<Login>
+    ): Call<Token>
 }

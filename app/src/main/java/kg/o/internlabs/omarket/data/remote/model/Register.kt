@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.data.remote.model
+package kg.o.internlabs.omarket.data.remote
 
 import com.google.gson.annotations.SerializedName
 
@@ -34,5 +34,4 @@ data class RefreshToken(
     val message: String? = null
 
 )
-
 
