@@ -1,6 +1,61 @@
 <resources>
+    <style name="Theme.OMarket" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black_1</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black_1</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
 
-    <style name="Widget.Theme.OMarket.MyView" parent="">
-        <item name="android:background">@color/gray_600</item>
+    <style name="Theme.OMarket.Core.Cells">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="TextView">
+        <item name="android:textColor">@color/black_1</item>
+    </style>
+
+    <style name="TextView.Cells.Title" parent="TextView">
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
+    <style name="TextView.Cells.SubTitle" parent="TextView">
+        <item name="android:textColor">@color/gray_1</item>
+    </style>
+
+    <style name="Container">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Container.Main">
+        <item name="android:background">@color/black_2</item>
+    </style>
+
+    <style name="Container.Cells">
+        <item name="android:background">@color/black_1</item>
+    </style>
+
+
+    <style name="appBar" >
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:textColor">@color/black_4</item>
+    </style>
+    <style name="hint" >
+        <item name="android:textSize">@dimen/text_13sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textColor">@color/black_4</item>
+    </style>
+    <style name="numberInput">
+        <item name="android:textSize">@dimen/text_17sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:textColor">@color/black_1</item>
+
     </style>
 </resources>

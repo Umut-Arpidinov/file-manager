@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    style="@style/Container.Cells"
-    android:layout_height="@dimen/view_height_48dp">
+    android:layout_height="@dimen/view_height_48dp"
+    style="?">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/margin_16dp"
         android:background="@drawable/cell_around_corners">
+
         <ImageView
             android:id="@+id/iv_cells_icon"
             android:layout_width="31.23dp"
@@ -24,42 +25,46 @@
 
         <TextView
             android:id="@+id/tv_cell_title"
-            style="@style/TextView.Cells.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:lineHeight="18.75dp"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/roboto"
-            android:lineHeight="18.75dp"
             android:text="@string/title_in_cells"
+            android:textColor="@color/black_5"
             android:textFontWeight="400"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_cells_icon"
             app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="p" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_cells_icon" />
 
-        <TextView
-            android:id="@+id/tv_cell_detail"
-            style="@style/TextView.Cells.SubTitle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/margin_12dp"
-            android:fontFamily="@font/roboto"
-            android:gravity="center_vertical"
-            android:lineHeight="18.75dp"
-            android:text="@string/cells_info"
-            android:textFontWeight="400"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@id/iv_shevron"
-            tools:targetApi="p" />
-
-        <ImageView
-            android:id="@+id/iv_shevron"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="end"
             android:layout_marginEnd="@dimen/margin_18dp"
-            android:src="@drawable/arrow_shevron"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_cell_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:fontFamily="@font/roboto"
+                android:lineHeight="18.75dp"
+                android:text="@string/cells_info"
+                android:textAlignment="viewEnd"
+                android:layout_marginEnd="@dimen/margin_12dp"
+                android:textColor="@color/gray_1"
+                android:textFontWeight="400"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_shevron"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:src="@drawable/arrow_shevron" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
