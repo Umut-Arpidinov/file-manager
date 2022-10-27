@@ -43,6 +43,21 @@
         <item name="android:background">@color/gray_4</item>
     </style>
 
+    <style name="Divider">
+        <item name="android:background">?android:attr/listDivider</item> //you can give your color here. that will change all divider color in your app.
+    </style>
+
+    <style name="Divider.Horizontal" parent="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item> // You can change thickness here.
+        <item name="android:background">@color/black_1</item>
+    </style>
+
+    <style name="Divider.Vertical" parent="Divider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
 
     <style name="appBar" >
         <item name="android:textSize">@dimen/text_15sp</item>
