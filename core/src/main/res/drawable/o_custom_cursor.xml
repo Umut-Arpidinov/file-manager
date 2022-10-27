@@ -3,5 +3,4 @@
     <size android:width="@dimen/cursor_width_2dp"/>
     <size android:height="@dimen/view_height_32dp"/>
     <solid android:color="@color/magenta_1"/>
-
 </shape>

@@ -2,8 +2,6 @@ package kg.o.internlabs.core.custom_number_input_view.custom_masked_edit_text
 
 class RawText {
     var text = ""
-
-
     /**
      * text = 012345678, range = 123 =&gt; text = 0456789
      * @param range given range
@@ -11,8 +9,8 @@ class RawText {
     fun subtractFromString(range: Range) {
         var firstPart = ""
         var lastPart = ""
-        if (range.start  > 0 && range.start  <= text.length) {
-            firstPart = text.substring(0, range.start )
+        if (range.start > 0 && range.start <= text.length) {
+            firstPart = text.substring(0, range.start)
         }
         if (range.end >= 0 && range.end < text.length) {
             lastPart = text.substring(range.end, text.length)

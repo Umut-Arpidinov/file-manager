@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="NumberInputView">
         <attr name="cancelImageVisibility" format="boolean"/>
+        <attr name="cancelImageWithText" format="string"/>
         <attr name="helperTextState" format="string"/>
     </declare-styleable>
 
