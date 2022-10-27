@@ -24,11 +24,6 @@ class NumberInputView : ConstraintLayout {
             getText(R.styleable.NumberInputView_helperTextState)?.let {
                 setHintText(it.toString())
             }
-            setCancelImageVisibility(
-                getBoolean(
-                    R.styleable.NumberInputView_cancelImageVisibility, true
-                )
-            )
             recycle()
         }
 
@@ -56,17 +51,11 @@ class NumberInputView : ConstraintLayout {
 
             }
             enterNumber -> {
+                println("Enter number happened ")
                 numberInputHelperText.text = enterNumber
-                numberInputCancelImage.visibility = View.GONE
+                numberInputCancelImage.visibility = View.INVISIBLE
             }
 
-        }
-    }
-
-    private fun setCancelImageVisibility(isVisible: Boolean) = with(binding) {
-        when (isVisible) {
-            true -> numberInputCancelImage.visibility = View.VISIBLE
-            else -> numberInputCancelImage.visibility = View.GONE
         }
     }
 
@@ -81,12 +70,9 @@ class NumberInputView : ConstraintLayout {
             enterNumberEditText.background = ResourcesCompat.getDrawable(
                 resources, R.drawable.number_ok_style, null)
             numberInputHelperText.setTextColor(ContextCompat.getColor(context, R.color.black_1))
-
-
+            enterNumberEditText.text = null
 
         }
-
-
     }
 
 
