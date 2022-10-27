@@ -39,8 +39,10 @@ class NumberInputView : ConstraintLayout{
         val enterNumber = context.getString(R.string.enter_number)
         when(state){
             numberNotFound -> {
-                numberInputHelperText.text = numberNotFound
-                numberInputHelperText.setTextColor(ContextCompat.getColor(context, R.color.red_1))
+                with(numberInputHelperText){
+                    text = numberNotFound
+                    setTextColor(ContextCompat.getColor(context, R.color.red_1))
+                }
                 numberInputFrame.background = ResourcesCompat.getDrawable(resources,
                     R.drawable.number_not_ok_style,null)
                 enterNumberEditText.background = ResourcesCompat.getDrawable(resources,
@@ -48,9 +50,6 @@ class NumberInputView : ConstraintLayout{
 
             }
             enterNumber -> numberInputHelperText.text = enterNumber
-
-
-
         }
     }
 

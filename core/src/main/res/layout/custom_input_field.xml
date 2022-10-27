@@ -39,9 +39,10 @@
 
                 <kg.o.internlabs.core.custom_number_input_view.custom_masked_edit_text.MaskedEditText
                     android:autofillHints="phone"
+                    android:maxLines="1"
+                    android:inputType="number"
                     android:id="@+id/enter_number_edit_text"
                     app:mask="+996 ### ### ###"
-                    app:allowed_chars="0123456789"
                     android:gravity="left|center"
                     android:hint="@string/hint_for_number"
                     app:keep_hint="true"
@@ -50,14 +51,13 @@
                     android:textAppearance="@style/numberInput"
                     android:layout_gravity="center"
                     android:background="@drawable/number_ok_style"
-                    android:textCursorDrawable="@drawable/o_custom_cursor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="LabelFor" >
-
                 </kg.o.internlabs.core.custom_number_input_view.custom_masked_edit_text.MaskedEditText>
+
 
 
                 <ImageView
