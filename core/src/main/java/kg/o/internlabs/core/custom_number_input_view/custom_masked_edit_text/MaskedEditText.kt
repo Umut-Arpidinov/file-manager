@@ -34,13 +34,10 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     private var place: Int = 0
     private var isKeepingText = false
 
-
     constructor(context: Context?) : super(context!!) {
         init()
     }
-
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-
         init()
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.MaskedEditText)
         mask = attributes.getString(R.styleable.MaskedEditText_mask)
@@ -48,19 +45,14 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
             attributes.getBoolean(R.styleable.MaskedEditText_enable_ime_action, false)
         val representation = attributes.getString(R.styleable.MaskedEditText_char_representation)
         charRepresentation = if (representation == null) '#' else representation[0]
-
         keepHint = attributes.getBoolean(R.styleable.MaskedEditText_keep_hint, false)
         cleanUp()
-
         // Ignoring enter key presses if needed
         if (!enableImeAction) setOnEditorActionListener(onEditorActionListener) else setOnEditorActionListener(
             null
         )
-
         attributes.recycle()
     }
-
-
     override fun setOnFocusChangeListener(listener: OnFocusChangeListener) {
         focusChangeListener = listener
     }
@@ -89,8 +81,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         initialized = true
         super.setOnFocusChangeListener { v, hasFocus ->
             if (focusChangeListener != null) focusChangeListener!!.onFocusChange(v, hasFocus)
-
-
             if (hasFocus()) {
                 selectionChanged = false
                 this@MaskedEditText.setSelection(lastValidPosition())
@@ -106,15 +96,11 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     }
 
     private fun hasHint() = hint != null
-
-
     constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(
         context!!, attrs, defStyle
     ) {
         init()
     }
-
-
     private fun getRawText(): String {
         return rawText.text
     }
@@ -151,19 +137,11 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         if (!editingBefore) {
             editingBefore = true
             if (start > lastValidMaskPosition) ignore = true
-
-
             var rangeStart = start
             if (after == 0) rangeStart = erasingStart(start)
-
-
             val range = calculateRange(rangeStart, start + count)
             if (range.start != -1) rawText.subtractFromString(range)
-
-
             if (count > 0) place = previousValidPosition(start)
-
-
         }
     }
 
@@ -180,8 +158,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         if (!editingOnChanged && editingBefore) {
             editingOnChanged = true
             if (ignore) return
-
-
             if (quantity > 0) {
                 val startingPosition = maskToRaw[nextValidPosition(start)]
                 val addedString = s.subSequence(start, start + quantity).toString()
@@ -230,8 +206,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
                     val start = fixSelection(begin)
                     val end = fixSelection(ends)
                     if (start >= 0 && end < text!!.length) setSelection(start, end)
-
-
                 }
             }
         }
@@ -240,8 +214,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
 
     private fun fixSelection(selection: Int): Int {
         return if (selection > lastValidPosition()) lastValidPosition() else nextValidPosition(place)
-
-
     }
 
     private fun nextValidPosition(currentPlace: Int): Int {
@@ -267,8 +239,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         return if (rawText.length() == maxRawLength) rawToMask[rawText.length() - 1] + 1 else nextValidPosition(
             rawToMask[rawText.length()]
         )
-
-
     }
 
     private fun makeMaskedText(): String {
@@ -279,8 +249,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
             val rawIndex = maskToRaw[i]
             if (rawIndex == -1) maskedText[i] = mask!![i] else maskedText[i] =
                 rawText.charAt(rawIndex)
-
-
         }
         return String(maskedText)
     }
@@ -322,6 +290,4 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         }
         return range
     }
-
-
 }

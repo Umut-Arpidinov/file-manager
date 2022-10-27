@@ -2,6 +2,7 @@ package kg.o.internlabs.core.custom_number_input_view.custom_masked_edit_text
 
 class RawText {
     var text = ""
+
     /**
      * text = 012345678, range = 123 =&gt; text = 0456789
      * @param range given range

@@ -26,14 +26,11 @@ class NumberInputView : ConstraintLayout {
             }
             recycle()
         }
-
     }
-
 
     private fun setHintText(state: String) = with(binding) {
         val numberNotFound = context.getString(R.string.number_mistake)
         val enterNumber = context.getString(R.string.enter_number)
-
         when (state) {
             numberNotFound -> {
                 cancelImageLogic()
@@ -48,18 +45,16 @@ class NumberInputView : ConstraintLayout {
                 enterNumberEditText.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.number_not_ok_style, null
                 )
-
             }
             enterNumber -> {
                 println("Enter number happened ")
                 numberInputHelperText.text = enterNumber
                 numberInputCancelImage.visibility = View.INVISIBLE
             }
-
         }
     }
 
-    private fun cancelImageLogic() = with(binding){
+    private fun cancelImageLogic() = with(binding) {
         val enterNumber = context.getString(R.string.enter_number)
         numberInputCancelImage.setOnClickListener {
             numberInputHelperText.text = enterNumber
@@ -68,12 +63,10 @@ class NumberInputView : ConstraintLayout {
                 resources, R.drawable.number_ok_style, null
             )
             enterNumberEditText.background = ResourcesCompat.getDrawable(
-                resources, R.drawable.number_ok_style, null)
+                resources, R.drawable.number_ok_style, null
+            )
             numberInputHelperText.setTextColor(ContextCompat.getColor(context, R.color.black_1))
             enterNumberEditText.text = null
-
         }
     }
-
-
 }
