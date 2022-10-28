@@ -30,6 +30,7 @@
     <dimen name="margin_18dp">18dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
     <dimen name="margin_28dp">28dp</dimen>
+    <dimen name="view_80dp">80dp</dimen>
 
 
 </resources>
