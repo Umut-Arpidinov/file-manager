@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/mainFragment">
 
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragmentInitialState"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFragmentInitialState"
+        android:label="fragment_login_final_state"
+        tools:layout="@layout/fragment_login_final_state" >
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragmentProgressState"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFragmentProgressState"
+        android:label="LoginFragmentProgressState" >
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragmentFinalState"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFragmentFinalState"
+        android:label="LoginFragmentFinalState" >
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragmentFilledFields"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentFilledFields"
+        android:label="RegistrationFragmentFilledFields" />
+    <fragment
+        android:id="@+id/registrationFragmentOtp"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentOtp"
+        android:label="RegistrationFragmentOtp" />
+    <fragment
+        android:id="@+id/registrationFragmentEmptyFields"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentEmptyFields"
+        android:label="fragment_registration_otp"
+        tools:layout="@layout/fragment_registration_otp" />
 </navigation>
