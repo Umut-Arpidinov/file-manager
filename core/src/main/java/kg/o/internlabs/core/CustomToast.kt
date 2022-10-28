@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 
 //Activity -> MainActivity
 
-class CustomToasts(private val mainActivity: Activity) : Activity() {
+class CustomToasts(private val mainActivity: Activity) {
 
     fun snackButtonLoading(text: String, layout: View) {
         val snackBar = Snackbar.make(layout, "", Snackbar.LENGTH_INDEFINITE)
