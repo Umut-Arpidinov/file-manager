@@ -42,4 +42,22 @@ class ProgressButtonView : ConstraintLayout {
         attrs,
         defStyleAttr
     )
+
+    //button is touched
+    fun buttonActivated(){
+        binding.customTxt.visibility = GONE
+        binding.progressBar.visibility = VISIBLE
+    }
+
+    //when process is finished
+    fun buttonFinished(){
+        binding.progressBar.visibility = GONE
+        binding.customTxt.visibility = VISIBLE
+    }
+
+    //button clickable or not
+    fun buttonAvailability(state: Boolean) {
+        if (state) binding.cardViewBtn.setBackgroundResource(R.color.green_1)
+        else binding.cardViewBtn.setBackgroundResource(R.color.green_3)
+    }
 }
