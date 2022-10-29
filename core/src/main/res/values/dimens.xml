@@ -38,4 +38,8 @@
     <dimen name="text_16sp">16sp</dimen>
     <dimen name="text_17sp">17sp</dimen>
     <dimen name="text_32sp">32sp</dimen>
+
+    <dimen name="line_16px">16dp</dimen>
+
+
 </resources>
