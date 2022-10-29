@@ -15,10 +15,10 @@
     <dimen name="margin_end_16dp">16dp</dimen>
     <dimen name="cells_title_text_size_16sp">16sp</dimen>
     <dimen name="cells_title_text_size_14sp">14sp</dimen>
-    <dimen name="cells_title_line_height_18.17dp">18.17</dimen>
-    <dimen name="cells_title_line_height_16.41dp">16.41</dimen>
-    <dimen name="icon_height_31.23dp">31.23</dimen>
-    <dimen name="icon_width_31.23dp">31.23</dimen>
+    <dimen name="cells_title_line_height_18.17dp">18.17dp</dimen>
+    <dimen name="cells_title_line_height_16.41dp">16.41dp</dimen>
+    <dimen name="icon_height_31.23dp">31.23dp</dimen>
+    <dimen name="icon_width_31.23dp">31.23dp</dimen>
 
     <dimen name="margin_2dp">2dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>

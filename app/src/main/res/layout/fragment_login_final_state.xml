@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/red"
     tools:context=".presentation.ui.fragments.login.LoginFragmentInitialState">
 
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.2" />
 
-   <!-- <kg.o.internlabs.core.cells.CustomSmallSubtitleTextCellsView
+    <kg.o.internlabs.core.cells.CustomSmallSubtitleTextCellsView
         android:id="@+id/cottcv_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,8 +69,9 @@
         app:setDetails="Sample"
         app:setShevron="@drawable/arrow_shevron"
         app:setSubtitle="Subtitle"
-        app:setTitle="Title" />-->
-    <!-- <kg.o.internlabs.core.cells.CustomOneTitleTextCellsView
+        app:setTitle="Title" />
+
+     <kg.o.internlabs.core.cells.CustomOneTitleTextCellsView
          android:id="@+id/cottcv_2"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
@@ -83,7 +84,15 @@
          android:layout_marginHorizontal="@dimen/margin_16dp"
          app:setShevron="@drawable/arrow_shevron"
          app:layout_constraintTop_toBottomOf="@id/cottcv_1"/>
- -->
+
+   <!-- <include android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/one_title_text_cell"/>-->
+
+    <!--<kg.o.internlabs.core.custom_view.OtpInputCustomView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/login"/>-->
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="wrap_content"

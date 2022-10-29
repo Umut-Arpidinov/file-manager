@@ -10,8 +10,10 @@ import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.OneTitleTextCellBinding
 
 class CustomOneTitleTextCellsView : ConstraintLayout {
-    private val binding = OneTitleTextCellBinding.inflate(LayoutInflater.from(context),
-        this, true)
+    private val binding: OneTitleTextCellBinding = OneTitleTextCellBinding.inflate(
+        LayoutInflater.from(context),
+        this, true
+    )
 
     constructor(context: Context) : super(context)
 
@@ -22,35 +24,30 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
                 setBackground(it)
             }
 
-            getBoolean(R.styleable.CustomOneTitleTextCellsView_hasIcon, false).let {
-                hasIcon(it)
-                if (it){
-                    setIcon(getResourceId(R.styleable.CustomOneTitleTextCellsView_setIcon,
-                       R.drawable.bg_cells_image))
-                }
+            getResourceId(R.styleable.CustomOneTitleTextCellsView_setIcon, 0).let {
+                setIcon(it)
             }
 
             getString(R.styleable.CustomOneTitleTextCellsView_setTitle)?.let {
                 setTitle(it)
             }
 
-            getBoolean(R.styleable.CustomOneTitleTextCellsView_hasDetails, false).let {
-                hasDetails(it)
-                if (it){
-                    getString(R.styleable.CustomOneTitleTextCellsView_setDetails)?.let { details ->
-                        setDetails(details)
-                    }
-                }
+            getString(R.styleable.CustomOneTitleTextCellsView_setDetails)?.let { details ->
+                setDetails(details)
             }
+
 
             getBoolean(R.styleable.CustomOneTitleTextCellsView_hasShevron, false).let {
                 hasShevron(it)
                 if (it) {
-                    setShevron(getResourceId(R.styleable.CustomOneTitleTextCellsView_setShevron,
-                        R.drawable.arrow_shevron))
+                    setShevron(
+                        getResourceId(
+                            R.styleable.CustomOneTitleTextCellsView_setShevron,
+                            R.drawable.arrow_shevron
+                        )
+                    )
                 }
             }
-
             recycle()
         }
     }
@@ -60,7 +57,7 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
     }
 
     fun hasDetails(it: Boolean) {
-        binding.tvCellDetails?.isVisible= it
+        binding.tvCellDetails.isVisible = it
     }
 
     fun hasIcon(visibility: Boolean) {
@@ -72,7 +69,7 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
     }
 
     fun setDetails(details: String) {
-        binding.tvCellDetails?.text = details
+        binding.tvCellDetails.text = details
 
     }
 
@@ -80,29 +77,37 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
         binding.tvCellTitle.text = title
     }
 
-    fun setIcon(res: Int) {
-        binding.ivCellsIcon.setImageResource(res)
+    fun setIcon(res: Int) = with(binding) {
+        if (res == 0) {
+            ivCellsIcon.isVisible = false
+        }
+        ivCellsIcon.isVisible = true
+        ivCellsIcon.setImageResource(res)
     }
 
-    fun setBackground(pos: String) = with(binding){
-        when(pos) {
+    fun setBackground(pos: String) = with(binding) {
+        when (pos) {
             "Single" -> {
                 root.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.cell_around_corners, null)
+                    resources, R.drawable.cell_around_corners, null
+                )
             }
             "Top" -> {
                 root.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.cell_top_corners, null)
-                vDivider?.isVisible = true
+                    resources, R.drawable.cell_top_corners, null
+                )
+                vDivider.isVisible = true
             }
             "Bottom" -> {
                 root.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.cell_bottom_corners, null)
+                    resources, R.drawable.cell_bottom_corners, null
+                )
             }
             "Middle" -> {
                 root.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.cell_middle_bacground, null)
-                vDivider?.isVisible = true
+                    resources, R.drawable.cell_middle_bacground, null
+                )
+                vDivider.isVisible = true
             }
         }
     }

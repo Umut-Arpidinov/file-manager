@@ -9,20 +9,14 @@ import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.SubtitleTextCellBinding
 
-class CustomSmallSubtitleTextCellsView : ConstraintLayout {
+class CustomBigSubtitleTextCellsView : ConstraintLayout {
     private val binding = SubtitleTextCellBinding.inflate(LayoutInflater.from(context),
         this, true)
 
     constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
-
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         context.obtainStyledAttributes(attrs,
-            R.styleable.CustomSmallSubtitleTextCellsView).run {
+            R.styleable.CustomBigSubtitleTextCellsView).run {
                 getString(R.styleable.CustomSmallSubtitleTextCellsView_position)?.let {
                     setBackground(it)
                 }
@@ -75,7 +69,6 @@ class CustomSmallSubtitleTextCellsView : ConstraintLayout {
                         )
                     }
                 }
-
             recycle()
         }
     }

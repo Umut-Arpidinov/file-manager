@@ -18,11 +18,5 @@ class LoginFragmentFinalState : BaseFragment<FragmentLoginFinalStateBinding, Log
          return FragmentLoginFinalStateBinding.inflate(inflater)
     }
 
-    override fun initListener() {
-        super.initListener()
-//        val navHostFragment = requireActivity().supportFragmentManager
-//            .findFragmentById(R.id.nav_host) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        navController.navigate(R.id.mainFragment)
-    }
+
 }
