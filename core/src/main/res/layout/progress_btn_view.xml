@@ -4,38 +4,26 @@
     android:id="@+id/card_view_btn"
     android:layout_width="match_parent"
     android:layout_height="@dimen/view_height_50dp"
-    app:cardBackgroundColor="@color/green_1"
     app:cardCornerRadius="@dimen/margin_12dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/custom_txt"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/green_1"
+        android:gravity="center"
+        android:text="@string/empty_text"
+        android:textColor="@color/white_1"
+        android:textSize="@dimen/text_15sp" />
 
-        <TextView
-            android:id="@+id/custom_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_text"
-            android:textColor="@color/white_1"
-            android:textSize="@dimen/text_15sp"
-            android:fontFamily="@font/roboto"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="@dimen/view_width_30dp"
-            android:layout_height="@dimen/view_width_30dp"
-            android:layout_marginEnd="@dimen/margin_16dp"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/magenta_1"
-            android:indeterminateTintMode="src_atop"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/view_width_30dp"
+        android:layout_height="@dimen/view_width_30dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/magenta_1"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone" />
 </androidx.cardview.widget.CardView>
