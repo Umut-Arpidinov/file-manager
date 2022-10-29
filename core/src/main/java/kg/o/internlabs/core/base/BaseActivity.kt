@@ -1,30 +1,22 @@
-package kg.o.internlabs.core
+package kg.o.internlabs.core.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
-
+abstract class BaseActivity<VM: ViewModel, VB: ViewBinding> : AppCompatActivity() {
     protected lateinit var binding: VB
     protected abstract val viewModel: VM
 
     protected abstract fun inflateViewBinding(inflater: LayoutInflater): VB
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = inflateViewBinding(layoutInflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        operationBeforeSetContent()
+        setContentView(binding.root)
 
         checkInternet()
         initViewModel()
@@ -32,7 +24,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
         initListener()
     }
 
-    open fun checkInternet() {} // проверка интернета
+    open fun operationBeforeSetContent() {}  // Этот метод выпонится до задание setContentView
+    open fun checkInternet() {} // Провека интернета
     open fun initViewModel() {}// Обрабатываем все обзерверы
     open fun initView() {} // Инициализации вьюшек
     open fun initListener() {} // Прописываем все логику кликов
