@@ -8,7 +8,6 @@ import kg.o.internlabs.omarket.presentation.viewmodels.fragmentsviewmodels.MainV
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
-
     override val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
@@ -16,6 +15,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentMainBinding {
         return FragmentMainBinding.inflate(inflater)
     }
+
+
 
 
 }
