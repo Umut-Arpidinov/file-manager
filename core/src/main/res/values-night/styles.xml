@@ -22,11 +22,22 @@
     </style>
 
     <style name="TextView.Cells.Title" parent="TextView">
+        <item name="android:visibility">gone</item>
         <item name="android:textColor">@color/gray_3</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:layout_marginStart">@dimen/margin_start_8dp</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_16sp</item>
     </style>
 
-    <style name="TextView.Cells.SubTitle" parent="TextView">
+    <style name="TextView.Cells.SubTitle" parent="TextView.Cells.Title">
         <item name="android:textColor">@color/gray_1</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_16sp</item>
+    </style>
+
+    <style name="TextView.Cells.Details" parent="TextView.Cells.Title">
+        <item name="android:textColor">@color/gray_1</item>
+        <item name="android:layout_marginStart">@dimen/margin_start_0dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_end_16dp</item>
     </style>
 
     <style name="Container">
@@ -42,12 +53,13 @@
     </style>
 
     <style name="Divider">
-        <item name="android:background">?android:attr/listDivider</item> //you can give your color here. that will change all divider color in your app.
+        <item name="android:background">?android:attr/listDivider</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="Divider.Horizontal" parent="Divider">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item> // You can change thickness here.
+        <item name="android:layout_height">0.5dp</item>
         <item name="android:background">@color/black_4</item>
     </style>
 
@@ -73,4 +85,5 @@
         <item name="android:textColor">@color/black_1</item>
 
     </style>
+
 </resources>

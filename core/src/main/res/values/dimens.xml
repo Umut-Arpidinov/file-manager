@@ -10,6 +10,15 @@
 
     <dimen name="radius_view_12dp">12dp</dimen>
     <dimen name="cells_corner_radius_4dp">4dp</dimen>
+    <dimen name="margin_start_8dp">8dp</dimen>
+    <dimen name="margin_start_0dp">0dp</dimen>
+    <dimen name="margin_end_16dp">16dp</dimen>
+    <dimen name="cells_title_text_size_16sp">16sp</dimen>
+    <dimen name="cells_title_text_size_14sp">14sp</dimen>
+    <dimen name="cells_title_line_height_18.17dp">18.17</dimen>
+    <dimen name="cells_title_line_height_16.41dp">16.41</dimen>
+    <dimen name="icon_height_31.23dp">31.23</dimen>
+    <dimen name="icon_width_31.23dp">31.23</dimen>
 
     <dimen name="margin_2dp">2dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
@@ -17,6 +26,7 @@
     <dimen name="margin_16dp">16dp</dimen>
     <dimen name="margin_18dp">18dp</dimen>
     <dimen name="margin_96dp">96dp</dimen>
+    <dimen name="margin_horizontal_8dp">8dp</dimen>
 
     <dimen name="coursore_width_1dp">1dp</dimen>
     <dimen name="coursore_width_2dp">2dp</dimen>
@@ -31,7 +41,10 @@
     <dimen name="text_15sp">15sp</dimen>
     <dimen name="text_17sp">17sp</dimen>
     <dimen name="text_32sp">32sp</dimen>
-
+    <dimen name="icon_height_46dp">46dp</dimen>
+    <dimen name="icon_width_46dp">46dp</dimen>
+    <dimen name="margin_start_10dp">10dp</dimen>
+    <dimen name="margin_end_4dp">4dp</dimen>
 
 
 </resources>

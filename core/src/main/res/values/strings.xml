@@ -6,5 +6,10 @@
     <string name="imageDesc" translatable="false">cancel icon</string>
     <string name="title_in_cells">Заголовок</string>
     <string name="cells_info">Информация</string>
+    <string name="cells_subtitle">Подзаголовок</string>
+    <string name="svevron" translatable="false">svevron</string>
+    <string name="icon">icon</string>
+    <string name="edit_del_icon">edit/del icon</string>
+    <string name="icon_edit">edit icon</string>
 
 </resources>
