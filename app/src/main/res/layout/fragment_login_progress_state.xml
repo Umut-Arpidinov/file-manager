@@ -8,6 +8,8 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.login.LoginFragmentInitialState">
 
+
+
     <EditText
         android:id="@+id/username"
         android:layout_width="0dp"

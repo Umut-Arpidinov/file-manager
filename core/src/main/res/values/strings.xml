@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Войти" translatable="false">Войти</string>
-    <string name="Ввод" translatable="false">Введите номер телефона</string>
-    <string name="Ошибка_номера">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
-    <string name="imageDesc" translatable="false">cancel icon</string>
+    <string name="Enter">Войти</string>
+    <string name="enter_number">Введите номер телефона</string>
+    <string name="number_mistake">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
+    <string name="image_description">cancel icon</string>
+    <string name="hint_for_number" translatable="false"> XXXXXXXXXXXX</string>
 
 </resources>

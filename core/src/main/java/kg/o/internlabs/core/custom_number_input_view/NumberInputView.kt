@@ -1,17 +1,17 @@
-package kg.o.internlabs.core
+package kg.o.internlabs.core.custom_number_input_view
 
 import android.content.Context
-
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding.inflate
 
-class NumberInputView : ConstraintLayout {
+class NumberInputView : ConstraintLayout{
     private val binding: CustomInputFieldBinding = inflate(LayoutInflater.from(context),
         this, true)
 
@@ -35,19 +35,21 @@ class NumberInputView : ConstraintLayout {
 
 
     private fun setHintText(state: String) = with(binding) {
-        val numberNotFound = context.getString(R.string.Ошибка_номера)
-        val enterNumber = context.getString(R.string.Ввод)
+        val numberNotFound = context.getString(R.string.number_mistake)
+        val enterNumber = context.getString(R.string.enter_number)
         when(state){
             numberNotFound -> {
                 numberInputHelperText.text = numberNotFound
-                numberInputHelperText.setTextColor(ContextCompat.getColor(context,R.color.red_1))
-                numberInputFrame.background = ResourcesCompat.getDrawable(resources,R.drawable.number_not_ok_style,null)
-                enterNumberEditText.background = ResourcesCompat.getDrawable(resources,R.drawable.number_not_ok_style,null)
+                numberInputHelperText.setTextColor(ContextCompat.getColor(context, R.color.red_1))
+                numberInputFrame.background = ResourcesCompat.getDrawable(resources,
+                    R.drawable.number_not_ok_style,null)
+                enterNumberEditText.background = ResourcesCompat.getDrawable(resources,
+                    R.drawable.number_not_ok_style,null)
 
             }
-            enterNumber ->{
-                numberInputHelperText.text = enterNumber
-            }
+            enterNumber -> numberInputHelperText.text = enterNumber
+
+
 
         }
     }
@@ -57,6 +59,8 @@ class NumberInputView : ConstraintLayout {
             true -> numberInputCancelImage.visibility = View.VISIBLE
             else -> numberInputCancelImage.visibility = View.GONE
         }
+
     }
+
 
 }
