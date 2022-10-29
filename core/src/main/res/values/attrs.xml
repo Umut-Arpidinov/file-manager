@@ -9,4 +9,7 @@
         <attr name="otp_custom_view" format="integer"/>
     </declare-styleable>
 
+    <declare-styleable name="ProgressButtonView">
+        <attr name="text" format="string" />
+    </declare-styleable>
 </resources>
