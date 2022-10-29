@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="position" format="string"/>
-    <attr name="setRootBackground" format="integer"/>
-    <attr name="hasIcon" format="boolean"/>
-    <attr name="setIcon" format="reference"/>
-    <attr name="setTitle" format="string"/>
-    <attr name="hasDetails" format="boolean"/>
-    <attr name="setDetails" format="string"/>
-    <attr name="hasShevron" format="boolean"/>
-    <attr name="setShevron" format="reference"/>
-
-
     <declare-styleable name="NumberInputView">
         <attr name="cancelImageVisibility" format="boolean"/>
         <attr name="helperTextState" format="string"/>
@@ -21,35 +10,27 @@
     </declare-styleable>
 
     <declare-styleable name="CustomOneTitleTextCellsView">
-        <attr name="position"/>
-        <attr name="setRootBackground"/>
-
-        <attr name="hasIcon"/>
-        <attr name="setIcon"/>
-
-        <attr name="setTitle"/>
-        <attr name="hasDetails"/>
-        <attr name="setDetails"/>
-
-        <attr name="hasShevron"/>
-        <attr name="setShevron"/>
+        <attr name="position" format="string"/>
+        <attr name="setRootBackground" format="integer"/>
+        <attr name="hasIcon" format="boolean"/>
+        <attr name="setIcon" format="reference"/>
+        <attr name="setTitle" format="string"/>
+        <attr name="hasDetails" format="boolean"/>
+        <attr name="setDetails" format="string"/>
+        <attr name="hasShevron" format="boolean"/>
+        <attr name="setShevron" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="CustomSmallSubtitleTextCellsView" parent="CustomOneTitleTextCellsView">
         <attr name="hasSubtitle" format="boolean"/>
         <attr name="setSubtitle" format="string"/>
-
         <attr name="position"/>
         <attr name="setRootBackground"/>
-
         <attr name="hasIcon"/>
         <attr name="setIcon"/>
-
         <attr name="setTitle"/>
-
         <attr name="hasDetails"/>
         <attr name="setDetails"/>
-
         <attr name="hasShevron"/>
         <attr name="setShevron"/>
     </declare-styleable>

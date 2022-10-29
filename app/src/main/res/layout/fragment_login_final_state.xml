@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.2" />
 
-    <kg.o.internlabs.core.cells.CustomSmallSubtitleTextCellsView
+   <!-- <kg.o.internlabs.core.cells.CustomSmallSubtitleTextCellsView
         android:id="@+id/cottcv_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,8 +70,8 @@
         app:setTitle="Title"
         app:setShevron="@drawable/arrow_shevron"
         android:layout_marginHorizontal="@dimen/margin_16dp"
-        app:layout_constraintTop_toBottomOf="@id/login"/>
-    <kg.o.internlabs.core.cells.CustomOneTitleTextCellsView
+        app:layout_constraintTop_toBottomOf="@id/login"/>-->
+   <!-- <kg.o.internlabs.core.cells.CustomOneTitleTextCellsView
         android:id="@+id/cottcv_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
         android:layout_marginHorizontal="@dimen/margin_16dp"
         app:setShevron="@drawable/arrow_shevron"
         app:layout_constraintTop_toBottomOf="@id/cottcv_1"/>
-
+-->
     <ProgressBar
         android:id="@+id/loading"
         android:visibility="gone"
