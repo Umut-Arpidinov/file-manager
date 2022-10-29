@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.viewmodels.fragmentsviewmodels
+package kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads
 
 import kg.o.internlabs.core.base.BaseViewModel
 

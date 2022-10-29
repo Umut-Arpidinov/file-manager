@@ -2,11 +2,8 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import kg.o.internlabs.core.base.BaseFragment
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationEmptyFieldsBinding
-import kg.o.internlabs.omarket.presentation.viewmodels.fragmentsviewmodels.RegistrationViewModel
 
 class RegistrationFragmentEmptyFields : BaseFragment<FragmentRegistrationEmptyFieldsBinding,
         RegistrationViewModel>() {

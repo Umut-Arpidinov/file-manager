@@ -1,10 +1,9 @@
-package kg.o.internlabs.omarket.presentation.ui.activities.activities
+package kg.o.internlabs.omarket.presentation.ui.activities.activities.main_activity
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import kg.o.internlabs.core.base.BaseActivity
 import kg.o.internlabs.omarket.databinding.ActivityMainBinding
-import kg.o.internlabs.omarket.presentation.viewmodels.activitiesviewmodels.MainViewModel
 
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {

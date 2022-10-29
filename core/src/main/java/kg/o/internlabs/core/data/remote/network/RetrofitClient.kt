@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 
 object RetrofitClient {
-    const val API_KEY = "ypsGjpmpDR9GndA9YvzBHpIqXsFStfyq"
+    private const val API_KEY = "ypsGjpmpDR9GndA9YvzBHpIqXsFStfyq"
 
 
     private fun interceptor(): Interceptor {

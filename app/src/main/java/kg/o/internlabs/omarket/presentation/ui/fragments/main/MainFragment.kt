@@ -1,10 +1,11 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments
+package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import kg.o.internlabs.core.base.BaseFragment
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
-import kg.o.internlabs.omarket.presentation.viewmodels.fragmentsviewmodels.MainViewModel
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
@@ -16,7 +17,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         return FragmentMainBinding.inflate(inflater)
     }
 
-
-
-
+    override fun initView() {
+        super.initView()
+        findNavController().navigate(R.id.loginFragmentFinalState)
+    }
 }

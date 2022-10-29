@@ -1,10 +1,9 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments
+package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
-import kg.o.internlabs.omarket.presentation.viewmodels.fragmentsviewmodels.ProfileViewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
     override val viewModel: ProfileViewModel by lazy {

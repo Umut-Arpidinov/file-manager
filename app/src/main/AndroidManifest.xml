@@ -27,7 +27,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".presentation.ui.activities.activities.MainActivity"
+            android:name=".presentation.ui.activities.activities.main_activity.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
