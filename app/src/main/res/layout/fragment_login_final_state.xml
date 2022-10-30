@@ -5,8 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red"
-    tools:context=".presentation.ui.fragments.login.LoginFragmentInitialState">
+    tools:context=".presentation.ui.fragments.login.LoginInitialStateFragment">
 
     <kg.o.internlabs.core.custom_view.cells.CustomSmallSubtitleTextCellsView
         android:id="@+id/csstcv_1"

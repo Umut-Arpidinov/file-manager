@@ -1,4 +1,4 @@
-package kg.o.internlabs.core
+package kg.o.internlabs.core.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
