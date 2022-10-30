@@ -11,5 +11,7 @@
     <string name="icon">icon</string>
     <string name="edit_del_icon">edit/del icon</string>
     <string name="icon_edit">edit icon</string>
+    <string name="_12_2022">12 декабря 2022</string>
+    <string name="comments">Поле ввода комментарий</string>
 
 </resources>

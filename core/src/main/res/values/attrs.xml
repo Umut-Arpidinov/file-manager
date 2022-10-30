@@ -29,6 +29,7 @@
     </declare-styleable>
 
     <declare-styleable name="CustomBigSubtitleTextCellsView" parent="CustomSmallSubtitleTextCellsView">
+        <attr name="isEditable" format="boolean"/>
         <attr name="setSubtitle"/>
         <attr name="position" />
         <attr name="setRootBackground" />
@@ -36,6 +37,12 @@
         <attr name="setTitle" />
         <attr name="setDetails" />
         <attr name="setShevron" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomCompositeCellView" parent = "CustomSmallSubtitleTextCellsView">
+        <attr name="setIcon"/>
+        <attr name="setDetails"/>
+        <attr name="setDate" format="string"/>
     </declare-styleable>
 
 </resources>

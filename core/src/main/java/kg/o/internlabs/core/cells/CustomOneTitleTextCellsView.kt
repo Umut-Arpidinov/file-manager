@@ -24,9 +24,7 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
                 setBackground(it)
             }
 
-            getResourceId(R.styleable.CustomOneTitleTextCellsView_setIcon, 0).let {
-                setIcon(it)
-            }
+            setIcon(getResourceId(R.styleable.CustomOneTitleTextCellsView_setIcon, 0))
 
             getString(R.styleable.CustomOneTitleTextCellsView_setTitle)?.let {
                 setTitle(it)
@@ -36,53 +34,45 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
                 setDetails(details)
             }
 
-
-            getBoolean(R.styleable.CustomOneTitleTextCellsView_hasShevron, false).let {
-                hasShevron(it)
-                if (it) {
-                    setShevron(
-                        getResourceId(
-                            R.styleable.CustomOneTitleTextCellsView_setShevron,
-                            R.drawable.arrow_shevron
-                        )
-                    )
-                }
+            getResourceId(
+                R.styleable.CustomOneTitleTextCellsView_setShevron,
+                0
+            ).let {
+                setShevron(it)
             }
             recycle()
         }
     }
 
-    fun hasShevron(it: Boolean) {
-        binding.ivShevron.isVisible = it
+    fun setShevron(resourceId: Int) = with(binding.ivShevron) {
+        if (resourceId == 0) {
+            isVisible = false
+            return
+        }
+        isVisible = true
+        setImageResource(resourceId)
     }
 
-    fun hasDetails(it: Boolean) {
-        binding.tvCellDetails.isVisible = it
-    }
-
-    fun hasIcon(visibility: Boolean) {
-        binding.ivCellsIcon.isVisible = visibility
-    }
-
-    fun setShevron(resourceId: Int) {
-        binding.ivShevron.setImageResource(resourceId)
-    }
-
-    fun setDetails(details: String) {
-        binding.tvCellDetails.text = details
-
+    fun setDetails(details: String) = with(binding.tvCellDetails) {
+        if (details.isEmpty()) {
+            isVisible = false
+            return
+        }
+        isVisible = true
+        text = details
     }
 
     fun setTitle(title: String) {
         binding.tvCellTitle.text = title
     }
 
-    fun setIcon(res: Int) = with(binding) {
+    fun setIcon(res: Int) = with(binding.ivCellsIcon) {
         if (res == 0) {
-            ivCellsIcon.isVisible = false
+            isVisible = false
+            return
         }
-        ivCellsIcon.isVisible = true
-        ivCellsIcon.setImageResource(res)
+        isVisible = true
+        setImageResource(res)
     }
 
     fun setBackground(pos: String) = with(binding) {

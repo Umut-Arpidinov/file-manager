@@ -41,6 +41,10 @@
         <item name="android:layout_marginStart">@dimen/margin_start_0dp</item>
         <item name="android:layout_marginEnd">@dimen/margin_end_16dp</item>
     </style>
+    
+    <style name="TextView.Divider.Cells.Title" parent="TextView.Cells.Title">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
 
     <style name="Container">
         <item name="android:background">@color/white</item>

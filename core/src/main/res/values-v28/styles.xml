@@ -23,6 +23,12 @@
         <item name="android:layout_marginEnd">@dimen/margin_end_16dp</item>
     </style>
 
+    <style name="TextView.Divider.Cells.Title" parent="TextView.Cells.Title">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:lineHeight">@dimen/cells_title_line_height_19dp</item>
+    </style>
+
     <style name="Divider">
         <item name="android:background">?android:attr/listDivider</item>
         <item name="android:visibility">gone</item>

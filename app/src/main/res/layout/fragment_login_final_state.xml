@@ -60,10 +60,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
-        app:hasDetails="true"
-        app:hasIcon="true"
-        app:hasShevron="true"
-        app:hasSubtitle="true"
         app:layout_constraintTop_toBottomOf="@id/login"
         app:position="Top"
         app:setDetails="Sample"
@@ -76,18 +72,16 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          app:position="Bottom"
-         app:hasShevron="true"
-         app:hasIcon="true"
-         app:hasDetails="true"
          app:setDetails="Sample"
          app:setTitle="Title"
          android:layout_marginHorizontal="@dimen/margin_16dp"
          app:setShevron="@drawable/arrow_shevron"
          app:layout_constraintTop_toBottomOf="@id/cottcv_1"/>
 
-   <!-- <include android:layout_width="match_parent"
+    <include android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/one_title_text_cell"/>-->
+        app:layout_constraintBottom_toTopOf="@id/cottcv_1"
+        layout="@layout/composite_cell"/>
 
     <!--<kg.o.internlabs.core.custom_view.OtpInputCustomView
         android:layout_width="wrap_content"

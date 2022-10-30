@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Container.Cells"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/cells_corner_radius_5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cell_middle_bacground"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_cells_icon"
+                android:layout_width="@dimen/icon_width_31.23dp"
+                android:layout_height="@dimen/icon_height_31.23dp"
+                android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
+                android:layout_marginVertical="@dimen/margin_vertical_8.38dp"
+                android:contentDescription="@string/icon"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bg_cells_image" />
+
+            <TextView
+                android:id="@+id/tv_cell_date"
+                style="@style/TextView.Cells.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_12_2022"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_cells_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_cell_details"
+                style="@style/TextView.Cells.Details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cells_info"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/v_divider"
+            style="@style/Divider.Horizontal"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/et_comment"
+            style="@style/TextView.Cells.SubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/margin_vertical_8dp"
+            android:background="@android:color/white"
+            android:gravity="bottom"
+            android:hint="@string/comments"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLength="130"
+            android:visibility="visible" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

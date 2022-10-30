@@ -27,6 +27,7 @@
     <dimen name="margin_18dp">18dp</dimen>
     <dimen name="margin_96dp">96dp</dimen>
     <dimen name="margin_horizontal_8dp">8dp</dimen>
+    <dimen name="margin_vertical_8.38dp">8.38dp</dimen>
 
     <dimen name="coursore_width_1dp">1dp</dimen>
     <dimen name="coursore_width_2dp">2dp</dimen>
@@ -45,6 +46,10 @@
     <dimen name="icon_width_46dp">46dp</dimen>
     <dimen name="margin_start_10dp">10dp</dimen>
     <dimen name="margin_end_4dp">4dp</dimen>
+    <dimen name="cells_corner_radius_5dp">5dp</dimen>
+    <dimen name="margin_vertical_8dp">8dp</dimen>
+    <dimen name="margin_horizontal_20dp">20dp</dimen>
+    <dimen name="divider_cell_52dp">52dp</dimen>
 
 
 </resources>

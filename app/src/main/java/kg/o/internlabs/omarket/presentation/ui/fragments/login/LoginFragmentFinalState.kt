@@ -18,5 +18,10 @@ class LoginFragmentFinalState : BaseFragment<FragmentLoginFinalStateBinding, Log
          return FragmentLoginFinalStateBinding.inflate(inflater)
     }
 
+    override fun initView() {
+        super.initView()
+        val a = "1234567890 Поле ввода комментария вмещает в себя такое же количество символов, сколько поле поле ввода комментария - 130 символов"
+        println("----------- "+a.length)
+    }
 
 }
