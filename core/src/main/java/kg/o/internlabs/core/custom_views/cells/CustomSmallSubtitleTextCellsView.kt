@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.custom_view.cells
+package kg.o.internlabs.core.custom_views.cells
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,47 +7,49 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
-import kg.o.internlabs.core.databinding.BigSubtitleTextCellBinding
+import kg.o.internlabs.core.databinding.SubtitleTextCellBinding
 
-class CustomBigSubtitleTextCellsView : ConstraintLayout {
-    private val binding = BigSubtitleTextCellBinding.inflate(
+class CustomSmallSubtitleTextCellsView : ConstraintLayout {
+    private val binding = SubtitleTextCellBinding.inflate(
         LayoutInflater.from(context),
         this, true
     )
 
     constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
+
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        context.obtainStyledAttributes(attrs, R.styleable.CustomBigSubtitleTextCellsView).run {
-
-            editOrDelete(getBoolean(R.styleable.CustomBigSubtitleTextCellsView_isEditable, false))
-
-            getString(R.styleable.CustomBigSubtitleTextCellsView_position)?.let {
+        context.obtainStyledAttributes(
+            attrs,
+            R.styleable.CustomSmallSubtitleTextCellsView
+        ).run {
+            getString(R.styleable.CustomSmallSubtitleTextCellsView_position)?.let {
                 setBackground(it)
             }
-            setIcon(getResourceId(R.styleable.CustomBigSubtitleTextCellsView_setIcon, 0))
 
-            getString(R.styleable.CustomBigSubtitleTextCellsView_setTitle)?.let {
+            setIcon(getResourceId(R.styleable.CustomSmallSubtitleTextCellsView_setIcon, 0))
+
+
+            getString(R.styleable.CustomSmallSubtitleTextCellsView_setTitle)?.let {
                 setTitle(it)
             }
 
-            getString(R.styleable.CustomBigSubtitleTextCellsView_setSubtitle)?.let {
+            getString(R.styleable.CustomSmallSubtitleTextCellsView_setSubtitle)?.let {
                 setSubtitle(it)
             }
 
-            getString(R.styleable.CustomBigSubtitleTextCellsView_setDetails)?.let {
+            getString(R.styleable.CustomSmallSubtitleTextCellsView_setDetails)?.let {
                 setDetails(it)
             }
 
-            setShevron(getResourceId(R.styleable.CustomBigSubtitleTextCellsView_setShevron, 0))
+            setShevron(getResourceId(R.styleable.CustomSmallSubtitleTextCellsView_setShevron, 0))
 
             recycle()
         }
-    }
-
-    fun editOrDelete(it: Boolean) = with(binding){
-        if (it) return
-        ivCellsEditIcon.isVisible = false
-        ivEditDel.isVisible = false
     }
 
     fun setSubtitle(subtitle: String) = with(binding.tvCellSubtitle) {
@@ -55,6 +57,7 @@ class CustomBigSubtitleTextCellsView : ConstraintLayout {
             isVisible = false
             return
         }
+        println(subtitle)
         isVisible = true
         text = subtitle
     }

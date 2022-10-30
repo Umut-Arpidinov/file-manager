@@ -12,7 +12,7 @@
         android:text="splash"
         android:textSize="@dimen/text_32sp" />
 
-    <kg.o.internlabs.core.custom_view.OtpInputCustomView
+    <kg.o.internlabs.core.custom_views.OtpInputCustomView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

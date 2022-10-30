@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.login.LoginInitialStateFragment">
 
-    <kg.o.internlabs.core.custom_view.cells.CustomSmallSubtitleTextCellsView
+    <kg.o.internlabs.core.custom_views.cells.CustomSmallSubtitleTextCellsView
         android:id="@+id/csstcv_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:setSubtitle="@string/cells_subtitle"
         app:setTitle="@string/title_in_cells" />
 
-    <kg.o.internlabs.core.custom_view.cells.CustomOneTitleTextCellsView
+    <kg.o.internlabs.core.custom_views.cells.CustomOneTitleTextCellsView
         android:id="@+id/cottcv_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:setShevron="@drawable/arrow_shevron"
         app:setTitle="@string/title_in_cells" />
 
-    <kg.o.internlabs.core.custom_view.cells.CustomBigSubtitleTextCellsView
+    <kg.o.internlabs.core.custom_views.cells.CustomBigSubtitleTextCellsView
         android:id="@+id/cbstcv_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:setSubtitle="@string/cells_subtitle"
         app:setTitle="@string/title_in_cells" />
 
-    <kg.o.internlabs.core.custom_view.cells.CustomCompositeCellView
+    <kg.o.internlabs.core.custom_views.cells.CustomCompositeCellView
         android:id="@+id/cccv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         app:setDetails="@string/cells_info"
         app:setIcon="@drawable/bg_cells_image" />
 
-    <kg.o.internlabs.core.custom_view.cells.CustomDividerCellView
+    <kg.o.internlabs.core.custom_views.cells.CustomDividerCellView
         android:id="@+id/cdcv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:setButton="@string/all"
         app:setTitle="@string/title_in_cells" />
 
-    <kg.o.internlabs.core.custom_view.cells.CustomFAQCellView
+    <kg.o.internlabs.core.custom_views.cells.CustomFAQCellView
         android:id="@+id/cfaqcv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

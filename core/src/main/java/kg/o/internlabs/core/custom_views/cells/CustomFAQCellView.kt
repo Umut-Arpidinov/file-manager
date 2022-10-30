@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.custom_view.cells
+package kg.o.internlabs.core.custom_views.cells
 
 import android.content.Context
 import android.util.AttributeSet
