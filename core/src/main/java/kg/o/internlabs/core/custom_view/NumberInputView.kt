@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.custom_number_input_view
+package kg.o.internlabs.core.custom_view
 
 import android.content.Context
 import android.util.AttributeSet
