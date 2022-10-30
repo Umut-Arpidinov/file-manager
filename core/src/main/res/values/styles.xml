@@ -24,7 +24,6 @@
     </style>
 
     <style name="TextView.Cells.Title" parent="TextView">
-        <item name="android:visibility">gone</item>
         <item name="android:textColor">@color/black_5</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:layout_marginStart">@dimen/margin_start_8dp</item>
@@ -41,10 +40,17 @@
         <item name="android:layout_marginStart">@dimen/margin_start_0dp</item>
         <item name="android:layout_marginEnd">@dimen/margin_end_16dp</item>
     </style>
-    
+
     <style name="TextView.Divider.Cells.Title" parent="TextView.Cells.Title">
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
+
+    <style name="TextView.Divider.Cells.Button" parent="TextView.Cells.Title">
+        <item name="android:textColor">@color/blue_1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
 
     <style name="Container">
         <item name="android:background">@color/white</item>
@@ -75,16 +81,18 @@
     </style>
 
 
-    <style name="appBar" >
+    <style name="appBar">
         <item name="android:textSize">@dimen/text_15sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
         <item name="android:textColor">@color/black_4</item>
     </style>
-    <style name="hint" >
+
+    <style name="hint">
         <item name="android:textSize">@dimen/text_13sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:textColor">@color/black_4</item>
     </style>
+
     <style name="numberInput">
         <item name="android:textSize">@dimen/text_17sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>

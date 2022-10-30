@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Container.Cells"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -9,7 +10,6 @@
         android:id="@+id/cl_top"
         android:layout_width="match_parent"
         android:layout_height="76dp"
-        android:visibility="gone"
         android:background="@drawable/cell_around_corners"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -17,86 +17,82 @@
             android:id="@+id/iv_edit_del"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
             android:layout_marginStart="@dimen/margin_start_10dp"
             android:layout_marginEnd="@dimen/margin_end_4dp"
+            android:contentDescription="@string/edit_del_icon"
             android:src="@drawable/ic_edit_del"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/edit_del_icon" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_cells_icon"
             android:layout_width="@dimen/icon_width_46dp"
             android:layout_height="@dimen/icon_height_46dp"
-            android:visibility="visible"
             android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/bg_cells_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_edit_del"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/bg_cells_image"
-            android:contentDescription="@string/icon" />
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/iv_cells_edit_icon"
             android:layout_width="@dimen/icon_width_46dp"
             android:layout_height="@dimen/icon_height_46dp"
-            android:visibility="visible"
-            android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
+            android:contentDescription="@string/icon_edit"
+            android:scaleType="center"
+            android:src="@drawable/ic_edit"
+            android:alpha="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/iv_cells_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/bg_cells_image"
-            android:contentDescription="@string/icon_edit" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_cell_title"
             style="@style/TextView.Cells.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_in_cells"
             app:layout_constraintBottom_toTopOf="@id/tv_cell_subtitle"
             app:layout_constraintStart_toEndOf="@id/iv_cells_icon"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/title_in_cells" />
 
         <TextView
             android:id="@+id/tv_cell_subtitle"
             style="@style/TextView.Cells.SubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cells_subtitle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_cells_icon"
-            app:layout_constraintTop_toBottomOf="@id/tv_cell_title"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_cell_title"
+            tools:text="@string/cells_subtitle" />
 
         <TextView
             android:id="@+id/tv_cell_details"
             style="@style/TextView.Cells.Details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cells_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_shevron"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/cells_info" />
 
         <ImageView
             android:id="@+id/iv_shevron"
-            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_18dp"
+            android:contentDescription="@string/svevron"
             android:src="@drawable/arrow_shevron"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/svevron" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/v_divider"
             style="@style/Divider.Horizontal"
-            android:layout_width="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_cell_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

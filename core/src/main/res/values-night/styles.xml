@@ -22,7 +22,6 @@
     </style>
 
     <style name="TextView.Cells.Title" parent="TextView">
-        <item name="android:visibility">gone</item>
         <item name="android:textColor">@color/gray_3</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:layout_marginStart">@dimen/margin_start_8dp</item>
@@ -42,6 +41,12 @@
 
     <style name="TextView.Divider.Cells.Title" parent="TextView.Cells.Title">
         <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="TextView.Divider.Cells.Button" parent="TextView.Cells.Title">
+        <item name="android:textColor">@color/blue_1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
     <style name="Container">

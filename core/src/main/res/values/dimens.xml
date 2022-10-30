@@ -50,6 +50,8 @@
     <dimen name="margin_vertical_8dp">8dp</dimen>
     <dimen name="margin_horizontal_20dp">20dp</dimen>
     <dimen name="divider_cell_52dp">52dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_end_21dp">21dp</dimen>
 
 
 </resources>

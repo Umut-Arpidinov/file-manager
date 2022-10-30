@@ -18,39 +18,32 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/iv_cells_icon"
-                android:layout_width="@dimen/icon_width_31.23dp"
-                android:layout_height="@dimen/icon_height_31.23dp"
-                android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
-                android:layout_marginVertical="@dimen/margin_vertical_8.38dp"
-                android:contentDescription="@string/icon"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_cells_image" />
-
             <TextView
-                android:id="@+id/tv_cell_date"
+                android:id="@+id/tv_cell_questions"
                 style="@style/TextView.Cells.Title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/_12_2022"
+                android:layout_margin="@dimen/margin_8dp"
+                android:text="@string/questions"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_cells_icon"
+                app:layout_constraintEnd_toStartOf="@id/iv_shevron"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_cell_details"
-                style="@style/TextView.Cells.Details"
+            <ImageView
+                android:id="@+id/iv_shevron"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cells_info"
+                android:layout_marginVertical="@dimen/margin_vertical_8.38dp"
+                android:layout_marginStart="@dimen/margin_end_16dp"
+                android:layout_marginEnd="@dimen/margin_end_21dp"
+                android:contentDescription="@string/spinner"
+                android:src="@drawable/ic_arrow_down"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_cell_questions"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -59,18 +52,20 @@
             style="@style/Divider.Horizontal"
             android:visibility="visible" />
 
-        <EditText
-            android:id="@+id/et_comment"
-            style="@style/TextView.Cells.SubTitle"
+        <LinearLayout
+            android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/margin_vertical_8dp"
-            android:background="@android:color/white"
-            android:gravity="bottom"
-            android:hint="@string/comments"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            android:maxLength="130"
-            android:visibility="visible" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_cell_answer"
+                style="@style/TextView.Cells.SubTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:text="@string/answer"
+                android:visibility="visible" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

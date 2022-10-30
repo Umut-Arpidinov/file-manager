@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.cells
+package kg.o.internlabs.core.custom_view.cells
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,44 +7,62 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
-import kg.o.internlabs.core.databinding.OneTitleTextCellBinding
+import kg.o.internlabs.core.databinding.SubtitleTextCellBinding
 
-class CustomOneTitleTextCellsView : ConstraintLayout {
-    private val binding: OneTitleTextCellBinding = OneTitleTextCellBinding.inflate(
+class CustomSmallSubtitleTextCellsView : ConstraintLayout {
+    private val binding = SubtitleTextCellBinding.inflate(
         LayoutInflater.from(context),
         this, true
     )
 
     constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        context.obtainStyledAttributes(attrs, R.styleable.CustomOneTitleTextCellsView).run {
-
-            getString(R.styleable.CustomOneTitleTextCellsView_position)?.let {
+        context.obtainStyledAttributes(
+            attrs,
+            R.styleable.CustomSmallSubtitleTextCellsView
+        ).run {
+            getString(R.styleable.CustomSmallSubtitleTextCellsView_position)?.let {
                 setBackground(it)
             }
 
-            setIcon(getResourceId(R.styleable.CustomOneTitleTextCellsView_setIcon, 0))
+            setIcon(getResourceId(R.styleable.CustomSmallSubtitleTextCellsView_setIcon, 0))
 
-            getString(R.styleable.CustomOneTitleTextCellsView_setTitle)?.let {
+
+            getString(R.styleable.CustomSmallSubtitleTextCellsView_setTitle)?.let {
                 setTitle(it)
             }
 
-            getString(R.styleable.CustomOneTitleTextCellsView_setDetails)?.let { details ->
-                setDetails(details)
+            getString(R.styleable.CustomSmallSubtitleTextCellsView_setSubtitle)?.let {
+                setSubtitle(it)
             }
 
-            getResourceId(
-                R.styleable.CustomOneTitleTextCellsView_setShevron,
-                0
-            ).let {
-                setShevron(it)
+            getString(R.styleable.CustomSmallSubtitleTextCellsView_setDetails)?.let {
+                setDetails(it)
             }
+
+            setShevron(getResourceId(R.styleable.CustomSmallSubtitleTextCellsView_setShevron, 0))
+
             recycle()
         }
     }
 
-    fun setShevron(resourceId: Int) = with(binding.ivShevron) {
+    fun setSubtitle(subtitle: String) = with(binding.tvCellSubtitle) {
+        if (subtitle.isEmpty()) {
+            isVisible = false
+            return
+        }
+        println(subtitle)
+        isVisible = true
+        text = subtitle
+    }
+
+    fun setShevron(resourceId: Int) = with(binding.ivShevron){
         if (resourceId == 0) {
             isVisible = false
             return
@@ -53,20 +71,21 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
         setImageResource(resourceId)
     }
 
-    fun setDetails(details: String) = with(binding.tvCellDetails) {
+    fun setDetails(details: String) = with(binding.tvCellDetails){
         if (details.isEmpty()) {
             isVisible = false
             return
         }
         isVisible = true
         text = details
+
     }
 
     fun setTitle(title: String) {
         binding.tvCellTitle.text = title
     }
 
-    fun setIcon(res: Int) = with(binding.ivCellsIcon) {
+    fun setIcon(res: Int) = with(binding.ivCellsIcon){
         if (res == 0) {
             isVisible = false
             return
@@ -81,6 +100,7 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_around_corners, null
                 )
+                vDivider.isVisible = false
             }
             "Top" -> {
                 root.background = ResourcesCompat.getDrawable(
@@ -92,10 +112,11 @@ class CustomOneTitleTextCellsView : ConstraintLayout {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_bottom_corners, null
                 )
+                vDivider.isVisible = false
             }
             "Middle" -> {
                 root.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.cell_middle_bacground, null
+                    resources, R.drawable.cell_middle_background, null
                 )
                 vDivider.isVisible = true
             }

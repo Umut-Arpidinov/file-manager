@@ -13,5 +13,9 @@
     <string name="icon_edit">edit icon</string>
     <string name="_12_2022">12 декабря 2022</string>
     <string name="comments">Поле ввода комментарий</string>
+    <string name="all">Все</string>
+    <string name="spinner">spinner</string>
+    <string name="questions">Могу ли я оплатить товар через О!Деньги</string>
+    <string name="answer">В данный момент оплата через O!Деньги находится в стадии разработки и будет доступна в ближайших обновлениях приложения.</string>
 
 </resources>

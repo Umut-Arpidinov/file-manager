@@ -29,8 +29,8 @@
     </declare-styleable>
 
     <declare-styleable name="CustomBigSubtitleTextCellsView" parent="CustomSmallSubtitleTextCellsView">
-        <attr name="isEditable" format="boolean"/>
-        <attr name="setSubtitle"/>
+        <attr name="isEditable" format="boolean" />
+        <attr name="setSubtitle" />
         <attr name="position" />
         <attr name="setRootBackground" />
         <attr name="setIcon" />
@@ -39,10 +39,20 @@
         <attr name="setShevron" />
     </declare-styleable>
 
-    <declare-styleable name="CustomCompositeCellView" parent = "CustomSmallSubtitleTextCellsView">
-        <attr name="setIcon"/>
-        <attr name="setDetails"/>
-        <attr name="setDate" format="string"/>
+    <declare-styleable name="CustomCompositeCellView">
+        <attr name="setIcon" />
+        <attr name="setDetails" />
+        <attr name="setDate" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomDividerCellView">
+        <attr name="setTitle" />
+        <attr name="setButton" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomFAQCellView">
+        <attr name="setQuestions" format="string" />
+        <attr name="setAnswers" format="string"/>
     </declare-styleable>
 
 </resources>
