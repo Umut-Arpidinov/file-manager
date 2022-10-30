@@ -10,7 +10,12 @@ import kg.o.internlabs.core.databinding.CompositeCellBinding
 
 class CustomCompositeCellView : ConstraintLayout {
     private val binding = CompositeCellBinding.inflate(
-        LayoutInflater.from(context), this, true)
+        LayoutInflater.from(context), this, true
+    )
+
+    private var imageResources = 0
+    private var date = ""
+    private var details = ""
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -30,26 +35,36 @@ class CustomCompositeCellView : ConstraintLayout {
         }
     }
 
-    fun setDetails(details: String) = with(binding.tvCellDetails){
-        if (details.isNotEmpty()) {
+    fun getIcon() = imageResources
+
+    fun getDate() = date
+
+    fun getDetails() = details
+
+    fun getComments() = binding.etComment.text.toString()
+
+    fun setDetails(details: String) = with(binding.tvCellDetails) {
+        if (details.isEmpty()) {
             isVisible = false
             return
         }
         isVisible = true
         text = details
-
+        this@CustomCompositeCellView.details = details
     }
 
-    fun setDate(title: String) {
-        binding.tvCellDate.text = title
+    fun setDate(date: String) {
+        binding.tvCellDate.text = date
+        this.date = date
     }
 
-    fun setIcon(res: Int) = with(binding.ivCellsIcon){
+    fun setIcon(res: Int) = with(binding.ivCellsIcon) {
         if (res == 0) {
             isVisible = false
             return
         }
         isVisible = true
         setImageResource(res)
+        imageResources = res
     }
 }

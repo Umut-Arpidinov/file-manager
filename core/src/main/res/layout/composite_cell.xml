@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Container.Cells"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -25,19 +26,17 @@
                 android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
                 android:layout_marginVertical="@dimen/margin_vertical_8.38dp"
                 android:contentDescription="@string/icon"
-                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_cells_image" />
+                android:src="@drawable/bg_cells_image" />
 
             <TextView
                 android:id="@+id/tv_cell_date"
                 style="@style/TextView.Cells.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_12_2022"
-                android:visibility="visible"
+                tools:text="@string/_12_2022"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_cells_icon"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,8 +46,7 @@
                 style="@style/TextView.Cells.Details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cells_info"
-                android:visibility="visible"
+                tools:text="@string/cells_info"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,8 +54,8 @@
 
         <View
             android:id="@+id/v_divider"
-            style="@style/Divider.Horizontal"
-            android:visibility="visible" />
+            android:visibility="visible"
+            style="@style/Divider.Horizontal"/>
 
         <EditText
             android:id="@+id/et_comment"
@@ -65,12 +63,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margin_vertical_8dp"
-            android:background="@android:color/white"
+            android:background="@drawable/cell_middle_background"
             android:gravity="bottom"
             android:hint="@string/comments"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
-            android:maxLength="130"
-            android:visibility="visible" />
+            android:maxLength="130"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

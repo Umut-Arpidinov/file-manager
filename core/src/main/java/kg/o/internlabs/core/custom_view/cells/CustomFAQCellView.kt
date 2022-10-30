@@ -31,6 +31,7 @@ class CustomFAQCellView : ConstraintLayout {
     private fun initClick() = with(binding){
         ivShevron.setOnClickListener {
             llBottom.isVisible = !llBottom.isVisible
+            vDivider.isVisible = llBottom.isVisible
             if (llBottom.isVisible){
                 ivShevron.setImageResource(R.drawable.ic_arrow_up)
             } else {
@@ -44,6 +45,6 @@ class CustomFAQCellView : ConstraintLayout {
     }
 
     fun setAnswers(title: String) {
-        binding.tvCellQuestions.text = title
+        binding.tvCellAnswer.text = title
     }
 }

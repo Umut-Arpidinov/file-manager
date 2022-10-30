@@ -25,10 +25,17 @@ class CustomDividerCellView : ConstraintLayout {
             }
             recycle()
         }
+        initClick()
     }
 
-    fun setButtonText(textInButton: String) = with(binding.tvCellDetails){
-        if (textInButton.isNotEmpty()) {
+    private fun initClick() = with(binding){
+        btnDetails.setOnClickListener {
+           println("click click")
+        }
+    }
+
+    fun setButtonText(textInButton: String) = with(binding.btnDetails){
+        if (textInButton.isEmpty()) {
             isVisible = false
             return
         }

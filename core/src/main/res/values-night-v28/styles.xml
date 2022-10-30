@@ -49,6 +49,4 @@
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">match_parent</item>
     </style>
-
-    <dimen name="cells_title_line_height_19dp">19dp</dimen>
 </resources>
