@@ -41,6 +41,7 @@
                     android:id="@+id/enter_number_edit_text"
                     app:mask="+996 ### ### ###"
                     android:gravity="left|center"
+                    android:textCursorDrawable="@color/magenta_1"
                     android:hint="@string/hint_for_number"
                     app:keep_hint="true"
                     android:layout_width="match_parent"
