@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.MainFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
     </fragment>
     <fragment
         android:id="@+id/loginFragmentInitialState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFragmentInitialState"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginInitialStateFragment"
         android:label="fragment_login_final_state"
         tools:layout="@layout/fragment_login_final_state" >
     </fragment>
     <fragment
         android:id="@+id/loginFragmentProgressState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFragmentProgressState"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginProgressStateFragment"
         android:label="LoginFragmentProgressState" >
     </fragment>
     <fragment
         android:id="@+id/loginFragmentFinalState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFragmentFinalState"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFinalStateFragment"
         android:label="LoginFragmentFinalState" >
     </fragment>
     <fragment
