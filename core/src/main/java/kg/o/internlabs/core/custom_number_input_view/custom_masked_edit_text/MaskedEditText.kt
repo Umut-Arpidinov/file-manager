@@ -1,24 +1,16 @@
 package kg.o.internlabs.core.custom_number_input_view.custom_masked_edit_text
 
 import kg.o.internlabs.core.R
-
-
 import android.content.Context
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
-import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.widget.AppCompatEditText
 
 class MaskedEditText : AppCompatEditText, TextWatcher {
-    private val onEditorActionListener = OnEditorActionListener { _, _, _ ->
-        true
-    }
     private var mask: String? = null
-    private var charRepresentation = 0.toChar()
-    private var keepHint = false
     private lateinit var rawToMask: IntArray
     private var rawText: RawText = RawText()
     private var editingBefore = false
@@ -30,31 +22,18 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     private var maxRawLength = 0
     private var lastValidMaskPosition = 0
     private var selectionChanged = false
-    private var focusChangeListener: OnFocusChangeListener? = null
     private var place: Int = 0
     private var isKeepingText = false
-
     constructor(context: Context?) : super(context!!) {
         init()
     }
+
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init()
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.MaskedEditText)
         mask = attributes.getString(R.styleable.MaskedEditText_mask)
-        val enableImeAction =
-            attributes.getBoolean(R.styleable.MaskedEditText_enable_ime_action, false)
-        val representation = attributes.getString(R.styleable.MaskedEditText_char_representation)
-        charRepresentation = if (representation == null) '#' else representation[0]
-        keepHint = attributes.getBoolean(R.styleable.MaskedEditText_keep_hint, false)
         cleanUp()
-        // Ignoring enter key presses if needed
-        if (!enableImeAction) setOnEditorActionListener(onEditorActionListener) else setOnEditorActionListener(
-            null
-        )
         attributes.recycle()
-    }
-    override fun setOnFocusChangeListener(listener: OnFocusChangeListener) {
-        focusChangeListener = listener
     }
 
     private fun cleanUp() {
@@ -70,22 +49,14 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         editingBefore = true
         editingOnChanged = true
         editingAfter = true
-        if (hasHint() && rawText.length() == 0) this.setText(makeMaskedTextWithHint()) else this.setText(
-            makeMaskedText()
-        )
+        if (hasHint() && rawText.length() == 0) this.setText(makeMaskedTextWithHint())
         editingBefore = false
         editingOnChanged = false
         editingAfter = false
         maxRawLength = maskToRaw[previousValidPosition(mask!!.length - 1)] + 1
         lastValidMaskPosition = findLastValidMaskPosition()
         initialized = true
-        super.setOnFocusChangeListener { v, hasFocus ->
-            if (focusChangeListener != null) focusChangeListener!!.onFocusChange(v, hasFocus)
-            if (hasFocus()) {
-                selectionChanged = false
-                this@MaskedEditText.setSelection(lastValidPosition())
-            }
-        }
+
     }
 
     private fun findLastValidMaskPosition(): Int {
@@ -96,13 +67,11 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     }
 
     private fun hasHint() = hint != null
+
     constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(
         context!!, attrs, defStyle
     ) {
         init()
-    }
-    private fun getRawText(): String {
-        return rawText.text
     }
 
     private fun generatePositionArrays() {
@@ -112,7 +81,7 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         var charIndex = 0
         for (i in 0 until mask!!.length) {
             val currentChar = mask!![i]
-            if (currentChar == charRepresentation) {
+            if (currentChar == '#') {
                 aux[charIndex] = i
                 maskToRaw[i] = charIndex++
             } else {
@@ -174,9 +143,7 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     override fun afterTextChanged(s: Editable) {
         if (!editingAfter && editingBefore && editingOnChanged) {
             editingAfter = true
-            if (hasHint() && (keepHint || rawText.length() == 0)) setText(makeMaskedTextWithHint()) else setText(
-                makeMaskedText()
-            )
+            if (hasHint() || ( rawText.length() == 0)) setText(makeMaskedTextWithHint())
             selectionChanged = false
             setSelection(place)
             editingBefore = false
@@ -241,18 +208,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         )
     }
 
-    private fun makeMaskedText(): String {
-        val maskedTextLength: Int =
-            if (rawText.length() < rawToMask.size) rawToMask[rawText.length()] else mask!!.length
-        val maskedText = CharArray(maskedTextLength)
-        for (i in maskedText.indices) {
-            val rawIndex = maskToRaw[i]
-            if (rawIndex == -1) maskedText[i] = mask!![i] else maskedText[i] =
-                rawText.charAt(rawIndex)
-        }
-        return String(maskedText)
-    }
-
     private fun makeMaskedTextWithHint(): CharSequence {
         val ssb = SpannableStringBuilder()
         var mtrv: Int
@@ -261,12 +216,8 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
             mtrv = maskToRaw[i]
             if (mtrv != -1) {
                 if (mtrv < rawText.length()) ssb.append(rawText.charAt(mtrv)) else ssb.append(hint[maskToRaw[i]])
-
-
             } else ssb.append(mask!![i])
-
-
-            if (keepHint && rawText.length() < rawToMask.size && i >= rawToMask[rawText.length()] || !keepHint && i >= maskFirstChunkEnd) {
+            if (rawText.length() < rawToMask.size && i >= rawToMask[rawText.length()] && i >= maskFirstChunkEnd) {
                 ssb.setSpan(ForegroundColorSpan(currentHintTextColor), i, i + 1, 0)
             }
         }

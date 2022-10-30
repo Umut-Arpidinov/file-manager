@@ -19,7 +19,6 @@ class RawText {
         text = firstPart + lastPart
     }
 
-
     fun addToString(newText: String?, start: Int, maxLength: Int): Int {
         var newString = newText
         var firstPart = ""

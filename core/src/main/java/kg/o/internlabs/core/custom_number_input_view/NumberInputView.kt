@@ -9,9 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding
-import kg.o.internlabs.core.databinding.CustomInputFieldBinding.bind
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding.inflate
-
 class NumberInputView : ConstraintLayout {
     private val binding: CustomInputFieldBinding = inflate(
         LayoutInflater.from(context), this, true
@@ -47,7 +45,6 @@ class NumberInputView : ConstraintLayout {
                 )
             }
             enterNumber -> {
-                println("Enter number happened ")
                 numberInputHelperText.text = enterNumber
                 numberInputCancelImage.visibility = View.INVISIBLE
             }
