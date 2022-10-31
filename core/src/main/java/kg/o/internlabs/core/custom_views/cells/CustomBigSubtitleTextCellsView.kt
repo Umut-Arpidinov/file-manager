@@ -3,6 +3,7 @@ package kg.o.internlabs.core.custom_views.cells
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -51,29 +52,17 @@ class CustomBigSubtitleTextCellsView : ConstraintLayout {
     }
 
     fun setSubtitle(subtitle: String) = with(binding.tvCellSubtitle) {
-        if (subtitle.isEmpty()) {
-            isVisible = false
-            return
-        }
-        isVisible = true
+        isVisible = subtitle.isNotEmpty()
         text = subtitle
     }
 
-    fun setShevron(resourceId: Int) = with(binding.ivShevron){
-        if (resourceId == 0) {
-            isVisible = false
-            return
-        }
-        isVisible = true
+    fun setShevron(@DrawableRes resourceId: Int) = with(binding.ivShevron){
+        isVisible = resourceId != 0
         setImageResource(resourceId)
     }
 
     fun setDetails(details: String) = with(binding.tvCellDetails){
-        if (details.isEmpty()) {
-            isVisible = false
-            return
-        }
-        isVisible = true
+        isVisible = details.isNotEmpty()
         text = details
 
     }
@@ -82,12 +71,8 @@ class CustomBigSubtitleTextCellsView : ConstraintLayout {
         binding.tvCellTitle.text = title
     }
 
-    fun setIcon(res: Int) = with(binding.ivCellsIcon){
-        if (res == 0) {
-            isVisible = false
-            return
-        }
-        isVisible = true
+    fun setIcon(@DrawableRes res: Int) = with(binding.ivCellsIcon){
+        isVisible = res != 0
         setImageResource(res)
     }
 
@@ -97,7 +82,6 @@ class CustomBigSubtitleTextCellsView : ConstraintLayout {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_around_corners, null
                 )
-                vDivider.isVisible = false
             }
             "Top" -> {
                 root.background = ResourcesCompat.getDrawable(
@@ -109,7 +93,6 @@ class CustomBigSubtitleTextCellsView : ConstraintLayout {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_bottom_corners, null
                 )
-                vDivider.isVisible = false
             }
             "Middle" -> {
                 root.background = ResourcesCompat.getDrawable(

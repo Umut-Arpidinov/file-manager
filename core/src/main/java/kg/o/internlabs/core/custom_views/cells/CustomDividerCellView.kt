@@ -30,7 +30,7 @@ class CustomDividerCellView : ConstraintLayout {
 
     private fun initClick() = with(binding){
         btnDetails.setOnClickListener {
-           println("click click")
+           // TODO click
         }
     }
 

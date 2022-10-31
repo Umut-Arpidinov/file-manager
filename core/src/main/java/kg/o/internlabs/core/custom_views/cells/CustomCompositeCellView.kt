@@ -3,6 +3,7 @@ package kg.o.internlabs.core.custom_views.cells
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
@@ -44,11 +45,9 @@ class CustomCompositeCellView : ConstraintLayout {
     fun getComments() = binding.etComment.text.toString()
 
     fun setDetails(details: String) = with(binding.tvCellDetails) {
-        if (details.isEmpty()) {
-            isVisible = false
-            return
-        }
-        isVisible = true
+        isVisible = details.isNotEmpty()
+        if (!isVisible) return
+
         text = details
         this@CustomCompositeCellView.details = details
     }
@@ -58,12 +57,10 @@ class CustomCompositeCellView : ConstraintLayout {
         this.date = date
     }
 
-    fun setIcon(res: Int) = with(binding.ivCellsIcon) {
-        if (res == 0) {
-            isVisible = false
-            return
-        }
-        isVisible = true
+    fun setIcon(@DrawableRes res: Int) = with(binding.ivCellsIcon) {
+        isVisible = res != 0
+        if (!isVisible) return
+
         setImageResource(res)
         imageResources = res
     }

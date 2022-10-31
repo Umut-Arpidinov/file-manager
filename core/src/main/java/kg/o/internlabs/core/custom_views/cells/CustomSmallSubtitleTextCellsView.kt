@@ -100,7 +100,6 @@ class CustomSmallSubtitleTextCellsView : ConstraintLayout {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_around_corners, null
                 )
-                vDivider.isVisible = false
             }
             "Top" -> {
                 root.background = ResourcesCompat.getDrawable(
@@ -112,7 +111,6 @@ class CustomSmallSubtitleTextCellsView : ConstraintLayout {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_bottom_corners, null
                 )
-                vDivider.isVisible = false
             }
             "Middle" -> {
                 root.background = ResourcesCompat.getDrawable(
