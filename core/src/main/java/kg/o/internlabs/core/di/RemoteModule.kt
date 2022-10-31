@@ -39,7 +39,6 @@ object RemoteModule {
     }
 
     @Provides
-    @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .writeTimeout(20, TimeUnit.SECONDS)
