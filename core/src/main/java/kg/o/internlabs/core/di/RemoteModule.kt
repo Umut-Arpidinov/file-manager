@@ -40,7 +40,7 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient() : OkHttpClient{
+    fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
@@ -49,4 +49,5 @@ object RemoteModule {
             .addInterceptor(authInterceptor())
             .build()
     }
+
 }

@@ -18,21 +18,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient?): Retrofit? {
-        return client?.let {
-          Retrofit.Builder()
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit? {
+        return Retrofit.Builder()
               .baseUrl(API_URL)
               .addConverterFactory(GsonConverterFactory.create())
-              .client(it)
+              .client(okHttpClient)
               .build()
-        }
+
     }
 
     @Provides
     fun providePostApi(retrofit: Retrofit): ApiService? {
         return retrofit.create(ApiService::class.java)
     }
-
-
 
 }
