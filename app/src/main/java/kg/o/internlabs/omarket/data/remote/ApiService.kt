@@ -1,7 +1,8 @@
 package kg.o.internlabs.omarket.data.remote
 
 
-import kg.o.internlabs.core.data.remote.network.model.Register
+
+import kg.o.internlabs.omarket.data.remote.model.Register
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST

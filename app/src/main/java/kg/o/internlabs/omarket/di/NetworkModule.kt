@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kg.o.internlabs.core.BuildConfig.API_URL
+import kg.o.internlabs.omarket.data.remote.ApiService
 import okhttp3.OkHttpClient
 
 import retrofit2.Retrofit
