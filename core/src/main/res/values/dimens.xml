@@ -2,7 +2,6 @@
 <resources>
     <dimen name="view_width_0dp">0dp</dimen>
     <dimen name="view_24dp">24dp</dimen>
-    <dimen name="view_28dp">28dp</dimen>
     <dimen name="view_328dp">328dp</dimen>
     <dimen name="view_52dp">52dp</dimen>
     <dimen name="view_265dp">265dp</dimen>
