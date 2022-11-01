@@ -3,10 +3,12 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.login
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginProgressStateBinding
 
+@AndroidEntryPoint
 class LoginProgressStateFragment : BaseFragment<FragmentLoginProgressStateBinding, LoginViewModel>() {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
