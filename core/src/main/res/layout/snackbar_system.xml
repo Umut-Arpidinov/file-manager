@@ -4,7 +4,7 @@
     android:id="@+id/system_wrapper"
     android:layout_width="@dimen/view_118dp"
     android:layout_height="@dimen/view_35dp"
-    android:background="@drawable/background_toast_system"
+    android:background="@drawable/background_snackbar_system"
     android:gravity="center"
     android:orientation="horizontal">
 

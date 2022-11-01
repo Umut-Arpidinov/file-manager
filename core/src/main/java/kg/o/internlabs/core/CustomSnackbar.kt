@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
-class CustomToasts(private val activity: Activity) {
+class CustomSnackbar(private val activity: Activity) {
 
     fun snackButtonLoading(text: String, layout: View) {
         val snackBar = Snackbar.make(layout, "", Snackbar.LENGTH_INDEFINITE)
@@ -15,7 +15,7 @@ class CustomToasts(private val activity: Activity) {
         val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
         val customView = activity.layoutInflater.inflate(
-            R.layout.toast_loading, activity.findViewById(R.id.loading_wrapper)
+            R.layout.snackbar_loading, activity.findViewById(R.id.loading_wrapper)
         )
 
         val textMessage: TextView = customView.findViewById(R.id.toastLoadingMessage)
@@ -36,14 +36,14 @@ class CustomToasts(private val activity: Activity) {
         val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
         val customView = activity.layoutInflater.inflate(
-            R.layout.toast_for_error_and_success, activity.findViewById(R.id.error_and_success_wrapper)
+            R.layout.snackbar_for_error_and_success, activity.findViewById(R.id.error_and_success_wrapper)
         )
 
         val textMessage: TextView = customView.findViewById(R.id.snackMessage)
         textMessage.text = text
 
         val image: ImageView = customView.findViewById(R.id.snackImage)
-        image.setImageResource(R.drawable.background_toast_success_image_group)
+        image.setImageResource(R.drawable.background_snackbar_success_image_group)
 
         snackBarLayout.addView(customView, 0)
         snackBar.show()
@@ -55,7 +55,7 @@ class CustomToasts(private val activity: Activity) {
         val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
         val customView = activity.layoutInflater.inflate(
-            R.layout.toast_for_error_and_success, activity.findViewById(R.id.error_and_success_wrapper)
+            R.layout.snackbar_for_error_and_success, activity.findViewById(R.id.error_and_success_wrapper)
         )
 
         val textMessage: TextView = customView.findViewById(R.id.snackMessage)
@@ -71,7 +71,7 @@ class CustomToasts(private val activity: Activity) {
         val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
         val customView = activity.layoutInflater.inflate(
-            R.layout.toast_system, activity.findViewById(R.id.system_wrapper)
+            R.layout.snackbar_system, activity.findViewById(R.id.system_wrapper)
         )
 
         val textMessage: TextView = customView.findViewById(R.id.textSystem)

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/loading_wrapper"
+    android:id="@+id/error_and_success_wrapper"
     android:layout_width="@dimen/view_328dp"
     android:layout_height="@dimen/view_52dp"
-    android:background="@drawable/background_toast_loading"
-    android:elevation="@dimen/card_elevation_1dp"
+    android:background="@drawable/background_snackbar_loading"
+    android:elevation="@dimen/elevation_1dp"
     android:gravity="center"
     android:orientation="horizontal">
 
-    <ProgressBar
-        style="?android:attr/progressBarStyle"
+    <ImageView
+        android:id="@+id/snackImage"
         android:layout_width="@dimen/view_28dp"
         android:layout_height="@dimen/view_28dp"
         android:layout_marginStart="@dimen/margin_10dp"
         android:layout_marginTop="@dimen/margin_12dp"
         android:layout_marginEnd="@dimen/margin_10dp"
         android:layout_marginBottom="@dimen/margin_12dp"
-
-        android:indeterminateDrawable="@drawable/theme_progress_bar_for_toast_loading" />
+        android:src="@drawable/background_snackbar_error_image_group"
+        android:contentDescription="@string/description"/>
 
     <TextView
-        android:id="@+id/toastLoadingMessage"
+        android:id="@+id/snackMessage"
         android:layout_width="@dimen/view_265dp"
         android:layout_height="@dimen/view_15dp"
         android:layout_marginTop="@dimen/margin_19dp"
