@@ -3,6 +3,7 @@ package kg.o.internlabs.core
 import android.app.Activity
 import android.graphics.Color
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
@@ -35,11 +36,14 @@ class CustomToasts(private val activity: Activity) {
         val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
         val customView = activity.layoutInflater.inflate(
-            R.layout.toast_success, activity.findViewById(R.id.success_wrapper)
+            R.layout.toast_for_error_and_success, activity.findViewById(R.id.error_and_success_wrapper)
         )
 
-        val textMessage: TextView = customView.findViewById(R.id.toastSuccessMessage)
+        val textMessage: TextView = customView.findViewById(R.id.snackMessage)
         textMessage.text = text
+
+        val image: ImageView = customView.findViewById(R.id.snackImage)
+        image.setImageResource(R.drawable.background_toast_success_image_group)
 
         snackBarLayout.addView(customView, 0)
         snackBar.show()
@@ -51,10 +55,10 @@ class CustomToasts(private val activity: Activity) {
         val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
         val customView = activity.layoutInflater.inflate(
-            R.layout.toast_error, activity.findViewById(R.id.error_wrapper)
+            R.layout.toast_for_error_and_success, activity.findViewById(R.id.error_and_success_wrapper)
         )
 
-        val textMessage: TextView = customView.findViewById(R.id.toastErrorMessage)
+        val textMessage: TextView = customView.findViewById(R.id.snackMessage)
         textMessage.text = text
 
         snackBarLayout.addView(customView, 0)
