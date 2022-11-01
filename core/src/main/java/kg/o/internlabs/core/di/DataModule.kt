@@ -18,6 +18,4 @@ object DataModule {
     @Provides
     fun provideSharedPrefs(@ApplicationContext context: Context) : SharedPreferences
     = PreferenceManager.getDefaultSharedPreferences(context)
-
-
 }
