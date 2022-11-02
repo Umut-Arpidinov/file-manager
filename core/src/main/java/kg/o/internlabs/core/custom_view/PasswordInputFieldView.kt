@@ -1,6 +1,8 @@
 package kg.o.internlabs.core.custom_view
 
 import android.content.Context
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,6 @@ import androidx.core.content.res.ResourcesCompat
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.PasswordInputViewBinding
 import kg.o.internlabs.core.databinding.PasswordInputViewBinding.inflate
-
 
 class PasswordInputFieldView : ConstraintLayout {
     private val binding: PasswordInputViewBinding =
@@ -32,17 +33,18 @@ class PasswordInputFieldView : ConstraintLayout {
 
     fun setHelperText(state: String) = with(binding) {
         passwordHelper.text = state
-        if(state == context.getString(R.string.incorrect_password)|| state == context.getString(R.string.password_not_match)){
+        if (state == context.getString(R.string.incorrect_password)) {
+            setFrameErrorColor()
+            setTextErrorColor()
+        }
+        if (state == context.getString(R.string.password_not_match)) {
             passwordToggle.visibility = View.VISIBLE
             setFrameErrorColor()
             setTextErrorColor()
-            passwordToggle.setOnClickListener{
-
+            passwordToggle.setOnClickListener {
+                setToggleState()
             }
         }
-
-
-
     }
 
     fun setPasswordHint(text: String) = with(binding) {
@@ -57,5 +59,18 @@ class PasswordInputFieldView : ConstraintLayout {
 
     private fun setTextErrorColor() = with(binding) {
         passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.red_1))
+    }
+
+    private fun setToggleState() = with(binding) {
+
+        if (passwordInputField.transformationMethod.equals(PasswordTransformationMethod.getInstance())) {
+            passwordInputField.transformationMethod =
+                HideReturnsTransformationMethod.getInstance()
+            passwordToggle.setImageResource(R.drawable.ic_baseline_visibility_off_24)
+        } else {
+            passwordInputField.transformationMethod =
+                PasswordTransformationMethod.getInstance()
+            passwordToggle.setImageResource(R.drawable.ic_baseline_visibility_24)
+        }
     }
 }
