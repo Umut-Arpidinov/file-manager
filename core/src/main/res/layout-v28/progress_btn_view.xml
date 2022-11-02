@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_btn"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/view_44dp"
-    app:cardCornerRadius="@dimen/view_4dp">
+    android:layout_height="@dimen/view_height_50dp"
+    app:cardCornerRadius="@dimen/margin_12dp">
 
     <TextView
         android:id="@+id/custom_txt"
@@ -19,8 +18,9 @@
         android:foreground="@drawable/progress_btn_effect"
         android:gravity="center"
         android:text="@string/empty_text"
-        android:lineSpacingExtra="@dimen/extra_spacing_2dp"
+        android:textFontWeight="500"
         android:textColor="@color/white_1"
+        android:lineSpacingExtra="@dimen/extra_spacing_2dp"
         android:textSize="@dimen/text_14sp" />
 
     <ProgressBar
