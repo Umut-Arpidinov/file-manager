@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Войти" translatable="false">Войти</string>
-    <string name="Ввод" translatable="false">Введите номер телефона</string>
+    <string name="sign_in">Войти</string>
+    <string name="type_phone_number" translatable="false">Введите номер телефона</string>
     <string name="number_mistake">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
     <string name="imageDesc" translatable="false">cancel icon</string>
     <string name="empty_text">Empty text</string>
     <string name="hint_for_number">XXXXXXXXXXXX</string>
-    <string name="image_description">cancel</string>
+    <string name="image_description">Cancel</string>
     <string name="enter_number">Введите номер телефона</string>
     <string name="underline_licence"><u>условия пользовательского соглашения</u></string>
 </resources>
