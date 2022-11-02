@@ -32,7 +32,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-                <kg.o.internlabs.core.custom_view.custom_masked_edit_text.MaskedEditText
+                <kg.o.internlabs.core.custom_views.number_input_view.custom_masked_edit_text.MaskedEditText
                     android:autofillHints="phone"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginEnd="@dimen/margin_16dp"
@@ -54,7 +54,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="LabelFor" >
-                </kg.o.internlabs.core.custom_view.custom_masked_edit_text.MaskedEditText>
+                </kg.o.internlabs.core.custom_views.number_input_view.custom_masked_edit_text.MaskedEditText>
                 <ImageView
                     android:contentDescription="@string/image_description"
                     android:id="@+id/number_input_cancel_image"

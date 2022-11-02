@@ -1,4 +1,4 @@
-package kg.o.internlabs.core.custom_view
+package kg.o.internlabs.core.custom_views
 
 import android.content.Context
 import android.text.method.HideReturnsTransformationMethod

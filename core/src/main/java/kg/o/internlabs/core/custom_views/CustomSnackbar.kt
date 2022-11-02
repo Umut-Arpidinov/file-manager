@@ -1,4 +1,4 @@
-package kg.o.internlabs.core
+package kg.o.internlabs.core.custom_views
 
 import android.app.Activity
 import android.graphics.Color
@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
+import kg.o.internlabs.core.R
 
 class CustomSnackbar(private val activity: Activity) {
 
