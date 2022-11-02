@@ -8,4 +8,5 @@
     <string name="hint_for_number">XXXXXXXXXXXX</string>
     <string name="image_description">cancel</string>
     <string name="enter_number">Введите номер телефона</string>
+    <string name="underline_licence"><u>условия пользовательского соглашения</u></string>
 </resources>

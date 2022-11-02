@@ -43,5 +43,7 @@
     <dimen name="view_80dp">80dp</dimen>
     <dimen name="margin_28dp">28dp</dimen>
 
-
+    <dimen name="extra_spacing_6dp">6dp</dimen>
+    <dimen name="extra_spacing_3dp">3dp</dimen>
+    <dimen name="extra_spacing_2dp">2dp</dimen>
 </resources>
