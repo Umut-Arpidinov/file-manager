@@ -4,6 +4,12 @@
     <string name="Ввод" translatable="false">Введите номер телефона</string>
     <string name="number_mistake">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
     <string name="imageDesc" translatable="false">cancel icon</string>
+    <string name="message">Message</string>
+    <string name="button">Button</string>
+    <string name="_5">5</string>
+    <string name="description">description</string>
+    <string name="toast_system_text">Системный</string>
+
     <string name="empty_text">Empty text</string>
     <string name="hint_for_number">XXXXXXXXXXXX</string>
     <string name="image_description">cancel</string>

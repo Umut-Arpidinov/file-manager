@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loading_wrapper"
+    android:layout_width="@dimen/view_328dp"
+    android:layout_height="@dimen/view_52dp"
+    android:background="@drawable/background_snackbar_loading"
+    android:elevation="@dimen/card_elevation_1dp"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:layout_width="@dimen/view_28dp"
+        android:layout_height="@dimen/view_28dp"
+        android:layout_marginStart="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/margin_12dp"
+        android:layout_marginEnd="@dimen/margin_10dp"
+        android:layout_marginBottom="@dimen/margin_12dp"
+
+        android:indeterminateDrawable="@drawable/theme_progress_bar_for_snackbar_loading" />
+
+    <TextView
+        android:id="@+id/toastLoadingMessage"
+        android:layout_width="@dimen/view_265dp"
+        android:layout_height="@dimen/view_15dp"
+        android:layout_marginTop="@dimen/margin_19dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_19dp"
+        android:text="@string/message"
+        android:textColor="@color/black_5"
+        android:textFontWeight="400"
+        tools:targetApi="p"
+        android:textSize="@dimen/text_12sp" />
+
+</LinearLayout>
