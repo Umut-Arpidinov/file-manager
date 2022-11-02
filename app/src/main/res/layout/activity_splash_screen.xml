@@ -7,16 +7,15 @@
     tools:context=".presentation.ui.activities.SplashScreenActivity">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="splash"
-        android:textSize="@dimen/text_32sp" />
-
-    <kg.o.internlabs.core.custom_view.OtpInputCustomView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="Ошибка"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:otp_custom_view="4" />
+        style="@style/error_500_title_txt" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

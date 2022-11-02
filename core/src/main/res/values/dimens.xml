@@ -41,5 +41,7 @@
 
     <dimen name="line_16px">16dp</dimen>
 
-
+    <dimen name="extra_spacing_6dp">6dp</dimen>
+    <dimen name="extra_spacing_3dp">3dp</dimen>
+    <dimen name="extra_spacing_2dp">2dp</dimen>
 </resources>
