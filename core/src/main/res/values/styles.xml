@@ -1,10 +1,5 @@
 <resources>
 
-    <style name="appBar" >
-        <item name="android:textSize">@dimen/text_15sp</item>
-        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
-        <item name="android:textColor">@color/black_4</item>
-    </style>
     <style name="hint" >
         <item name="android:textSize">@dimen/text_13sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
