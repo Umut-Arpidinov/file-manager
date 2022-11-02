@@ -8,6 +8,12 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.login.LoginInitialStateFragment">
 
+    <kg.o.internlabs.core.custom_view.PasswordInputFieldView
+        app:helperTextSate="@string/incorrect_password"
+        app:passwordHint="@string/enter_password_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <EditText
         android:id="@+id/username"
         android:layout_width="0dp"

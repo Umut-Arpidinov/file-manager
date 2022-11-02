@@ -15,5 +15,9 @@
     <string name="image_description">cancel</string>
     <string name="enter_number">Введите номер телефона</string>
     <string name="visibility_image">toggle eye</string>
-    <string name="create_password_helper">Create password</string>
+
+    <string name="enter_password_hint">Введите пароль</string>
+    <string name="incorrect_password">Неверный пароль</string>
+    <string name="password_not_match">Пароли не совпадают</string>
+    <string name="helper_text_create_password">Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы</string>
 </resources>
