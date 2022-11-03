@@ -17,49 +17,39 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     private val binding: PasswordInputViewBinding =
         inflate(LayoutInflater.from(context), this, true)
 
+
+     init {
+         binding.passwordToggle.setOnClickListener{
+             setToggleState()
+         }
+     }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         context.obtainStyledAttributes(attrs, R.styleable.CustomPasswordInputFieldView).run {
-            getText(R.styleable.CustomPasswordInputFieldView_helperTextSate)?.let {
-                setHelperText(it.toString())
+            getText(R.styleable.CustomPasswordInputFieldView_setMessage)?.let {
+                setMessage(it.toString(),false)
             }
-            getText(R.styleable.CustomPasswordInputFieldView_passwordHint)?.let {
+            getText(R.styleable.CustomPasswordInputFieldView_setPasswordHint)?.let {
                 setPasswordHint(it.toString())
             }
             recycle()
-
         }
     }
 
-    fun setHelperText(state: String) = with(binding) {
-        passwordHelper.text = state
-        passwordToggle.visibility = View.GONE
-        if (state == context.getString(R.string.incorrect_password)) {
-            passwordHelper.text = state
-            setFrameErrorColor()
-            setTextErrorColor()
-        }
-        if (state == context.getString(R.string.password_not_match)) {
-            passwordHelper.text = state
-            passwordToggle.visibility = View.VISIBLE
-            setFrameErrorColor()
-            setTextErrorColor()
-            passwordToggle.setOnClickListener {
-                setToggleState()
-            }
-        }
-        if (state == context.getString(R.string.frame_error)) {
-            passwordHelper.text = null
-            passwordToggle.visibility = View.VISIBLE
-            setFrameErrorColor()
-            passwordToggle.setOnClickListener {
-                setToggleState()
-            }
-        }
+    fun setMessage(message: String, isError: Boolean) = with(binding){
+        if(isError) setErrorMessage(message)
+        else passwordHelper.text  = message
     }
+
+    fun setErrorMessage(message: String) = with(binding){
+        passwordHelper.text = message
+        setFrameErrorColor()
+        setTextErrorColor()
+    }
+
 
     fun setPasswordHint(text: String) = with(binding) {
-        passwordToggle.visibility = View.GONE
         passwordInputField.hint = text
     }
 
@@ -74,7 +64,6 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     }
 
     private fun setToggleState() = with(binding) {
-
         if (passwordInputField.transformationMethod.equals(PasswordTransformationMethod.getInstance())) {
             passwordInputField.transformationMethod =
                 HideReturnsTransformationMethod.getInstance()

@@ -18,7 +18,7 @@
         <attr name="text" format="string" />
     </declare-styleable>
     <declare-styleable name="CustomPasswordInputFieldView">
-        <attr name ="helperTextSate" format="string"/>
-        <attr name ="passwordHint" format="string"/>
+        <attr name ="setMessage" format="string"/>
+        <attr name ="setPasswordHint" format="string"/>
     </declare-styleable>
 </resources>
