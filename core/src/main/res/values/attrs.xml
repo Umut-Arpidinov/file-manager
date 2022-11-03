@@ -5,16 +5,13 @@
     </declare-styleable>
 
     <declare-styleable name="OtpInputCustomView">
-        <attr name="otp_custom_view" format="integer"/>
+        <attr name="setValues" format="integer"/>
     </declare-styleable>
+
     <declare-styleable name="MaskedEditText">
         <attr name="mask" format="string" />
         <attr name="keep_hint" format="boolean" />
     </declare-styleable>
-
-
-
-
     <declare-styleable name="ProgressButtonView">
         <attr name="text" format="string" />
     </declare-styleable>

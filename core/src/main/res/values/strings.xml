@@ -9,4 +9,6 @@
     <string name="hint_for_number">XXXXXXXXXXXX</string>
     <string name="image_description">Cancel</string>
     <string name="enter_number">Введите номер телефона</string>
+    <string name="error_otp">Неверный код</string>
+    <string name="resent">Отправить повторно</string>
 </resources>
