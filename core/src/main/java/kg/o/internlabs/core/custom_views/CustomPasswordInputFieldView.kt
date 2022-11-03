@@ -5,7 +5,6 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -21,7 +20,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         context.obtainStyledAttributes(attrs, R.styleable.CustomPasswordInputFieldView).run {
             getText(R.styleable.CustomPasswordInputFieldView_setMessage)?.let {
-                setMessage(it.toString(),false)
+                setMessage(it.toString())
             }
             getText(R.styleable.CustomPasswordInputFieldView_setPasswordHint)?.let {
                 setPasswordHint(it.toString())
@@ -31,13 +30,12 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         }
     }
 
-    fun setMessage(message: String, isError: Boolean) = with(binding){
-        if(isError) setErrorMessage(message)
-        else passwordHelper.text  = message
+    fun setMessage(message: String) = with(binding){
+        passwordHelper.text  = message
     }
 
     fun setErrorMessage(message: String) = with(binding){
-        passwordHelper.text = message
+        setMessage(message)
         setFrameErrorColor()
         setTextErrorColor()
     }
