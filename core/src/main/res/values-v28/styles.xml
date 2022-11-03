@@ -1,99 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="title_first_page_txt">
-        <item name="android:textSize">@dimen/text_32sp</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_6dp</item>
+    <style name="AppTitleStyle">
         <item name="android:textColor">@color/black_5</item>
+        <item name="android:textSize">@dimen/text_32sp</item>
         <item name="android:textFontWeight">600</item>
-        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_6dp</item>
     </style>
 
-    <style name="primary_first_page_txt">
+    <style name="AppPrimaryStyle">
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:textFontWeight">400</item>
         <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
+    </style>
+
+    <style name="AppRegStyle">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
+    </style>
+
+    <style name="AppTopScreenStyle">
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
+        <item name="android:textColor">@color/black_4</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textSize">@dimen/text_15sp</item>
+    </style>
+
+    <style name="AppDefaultBlueText">
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
+        <item name="android:textColor">@color/blue_1</item>
+    </style>
+
+    <style name="FirstPageTitle" parent="AppTitleStyle">
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+    </style>
+
+    <style name="Error500Title" parent="AppTitleStyle">
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
+    </style>
+
+    <style name="FirstPagePrimaryText" parent="AppPrimaryStyle">
         <item name="android:textSize">@dimen/text_17sp</item>
         <item name="android:textColor">@color/gray_1</item>
     </style>
 
-    <style name="sign_in_top_txt">
-        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
-        <item name="android:textColor">@color/black_4</item>
-        <item name="android:textFontWeight">500</item>
-        <item name="android:textSize">@dimen/text_15sp</item>
-    </style>
-
-    <style name="under_inp_field_txt">
-        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
-        <item name="android:textColor">@color/black_4</item>
-        <item name="android:textFontWeight">400</item>
+    <style name="PrimaryUnderFieldText" parent="AppPrimaryStyle">
         <item name="android:textSize">@dimen/text_13sp</item>
+        <item name="android:textColor">@color/black_4</item>
     </style>
 
-    <style name="license_regular_txt">
-        <item name="android:fontFamily">@font/roboto</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
-        <item name="android:textColor">@color/black_5</item>
-        <item name="android:textFontWeight">400</item>
-        <item name="android:textSize">@dimen/text_14sp</item>
-    </style>
-
-    <style name="license_touchable_txt">
-        <item name="android:fontFamily">@font/roboto</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
-        <item name="android:textColor">@color/magenta_1</item>
-        <item name="android:textFontWeight">400</item>
-        <item name="android:textSize">@dimen/text_14sp</item>
-    </style>
-
-    <style name="sms_sent_style_txt">
-        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
+    <style name="SentSMSText" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_15sp</item>
         <item name="android:textColor">@color/black_1</item>
-        <item name="android:textFontWeight">400</item>
-        <item name="android:textSize">@dimen/text_15sp</item>
     </style>
 
-    <style name="timer_style_txt">
-        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
+    <style name="TimerText" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_15sp</item>
         <item name="android:textColor">@color/gray_1</item>
-        <item name="android:textFontWeight">400</item>
-        <item name="android:textSize">@dimen/text_15sp</item>
     </style>
 
-    <style name="error_under_inp_txt">
-        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
-        <item name="android:textColor">@color/red_1</item>
-        <item name="android:textFontWeight">400</item>
-        <item name="android:textSize">@dimen/text_14sp</item>
-    </style>
-
-    <style name="blue_under_inp_txt">
-        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
-        <item name="android:textColor">@color/blue_1</item>
-        <item name="android:textFontWeight">400</item>
-        <item name="android:textSize">@dimen/text_15sp</item>
-    </style>
-
-    <style name="forget_pass_style_txt">
-        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
-        <item name="android:textColor">@color/blue_1</item>
+    <style name="ForgetPasswordBlueText" parent="AppDefaultBlueText">
         <item name="android:textFontWeight">500</item>
-        <item name="android:textSize">@dimen/text_15sp</item>
     </style>
 
-    <style name="error_500_title_txt">
-        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
-        <item name="android:lineSpacingExtra">@dimen/extra_spacing_6dp</item>
-        <item name="android:textColor">@color/black_5</item>
-        <item name="android:textFontWeight">600</item>
-        <item name="android:textSize">@dimen/text_32sp</item>
+    <style name="ErrorUnderInpText" parent="AppPrimaryStyle">
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:textColor">@color/red_1</item>
     </style>
+
+    <style name="LicenseRegularText" parent="AppRegStyle">
+        <item name="android:textColor">@color/black_5</item>
+    </style>
+
+    <style name="licenseTouchableText" parent="AppRegStyle">
+        <item name="android:textColor">@color/magenta_1</item>
+    </style>
+
 </resources>
