@@ -20,6 +20,7 @@
     </style>
     <style name="CardView.OTP" parent="CardView.Light">
         <item name="android:background">@color/gray_5</item>
+        <item name="elevation">@dimen/card_elevation_0dp</item>
     </style>
     <style name="OTPErrorMessage">
         <item name="android:letterSpacing">0.0</item>

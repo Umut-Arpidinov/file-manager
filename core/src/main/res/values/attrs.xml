@@ -5,7 +5,10 @@
     </declare-styleable>
 
     <declare-styleable name="OtpInputCustomView">
-        <attr name="setValues" format="integer"/>
+        <attr name="set_first_value" format="string"/>
+        <attr name="set_second_value" format="string"/>
+        <attr name="set_third_value" format="string"/>
+        <attr name="set_fourth_value" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="MaskedEditText">

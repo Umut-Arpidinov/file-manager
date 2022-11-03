@@ -12,11 +12,6 @@
         android:text="splash"
         android:textSize="@dimen/text_32sp" />
 
-    <kg.o.internlabs.core.custom_views.OtpInputCustomView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:otp_custom_view="4" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
