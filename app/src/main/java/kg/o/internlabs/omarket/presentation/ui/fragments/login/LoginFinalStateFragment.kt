@@ -18,6 +18,12 @@ class LoginFinalStateFragment : BaseFragment<FragmentLoginFinalStateBinding, Log
 
     override fun initListener() {
         super.initListener()
+
+        binding.button.setOnClickListener {
+            val text = binding.line1.getPasswordField()
+
+            println(text)
+        }
 //        val navHostFragment = requireActivity().supportFragmentManager
 //            .findFragmentById(R.id.nav_host) as NavHostFragment
 //        val navController = navHostFragment.navController
