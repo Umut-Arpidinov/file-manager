@@ -9,8 +9,16 @@
     tools:context=".presentation.ui.fragments.login.LoginInitialStateFragment">
 
     <kg.o.internlabs.core.custom_views.OtpInputCustomView
+        android:id="@+id/otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:set_otp="0"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_get"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,19 @@
 package kg.o.internlabs.core.custom_views
 
+import android.content.ContentValues
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -22,22 +30,72 @@ class OtpInputCustomView : ConstraintLayout {
         inflate(LayoutInflater.from(context), this, true)
 
     constructor(context: Context) : super(context)
+    //constructor(context: Context, otpResend: OtpResend) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView).run {
-            getText(R.styleable.OtpInputCustomView_set_first_value)?.let {
-                setFirstValue(it.toString())
-            }
-            getText(R.styleable.OtpInputCustomView_set_second_value)?.let {
-                setSecondValue(it.toString())
-            }
-            getText(R.styleable.OtpInputCustomView_set_third_value)?.let {
-                setThirdValue(it.toString())
-            }
-            getText(R.styleable.OtpInputCustomView_set_fourth_value)?.let {
-                setFourthValue(it.toString())
+            getText(R.styleable.OtpInputCustomView_set_otp)?.let {
+                setOtp(it.toString())
             }
             recycle()
+            initWatcher()
+            initClickers()
         }
+    }
+
+    private fun initClickers() = with(binding) {
+        etOtp1.setOnClickListener {
+            with(etOtp1) {
+                isFocusable = true
+                isFocusableInTouchMode = true
+                requestFocus()
+            }
+        }
+        etOtp2.setOnClickListener {
+            with(etOtp2) {
+                isFocusable = true
+                isFocusableInTouchMode = true
+                requestFocus()
+            }
+        }
+        etOtp3.setOnClickListener {
+            with(etOtp3) {
+                isFocusable = true
+                isFocusableInTouchMode = true
+                requestFocus()
+            }
+        }
+        etOtp4.setOnClickListener {
+            with(etOtp4) {
+                isFocusable = true
+                isFocusableInTouchMode = true
+                requestFocus()
+            }
+        }
+
+        //binding.tvResentButton.setOnClickListener()
+    }
+
+
+
+    private fun initWatcher() = with(binding) {
+        etOtp1.addTextChangedListener {
+            etOtp1.isFocusable = it.toString().isEmpty()
+            etOtp2.isFocusable = !etOtp1.isFocusable
+
+        }
+        etOtp2.addTextChangedListener {
+            etOtp2.isFocusable = it.toString().isEmpty()
+            etOtp3.isFocusable = !etOtp2.isFocusable
+        }
+        etOtp3.addTextChangedListener {
+            etOtp3.isFocusable = it.toString().isEmpty()
+            etOtp4.isFocusable = !etOtp3.isFocusable
+        }
+        etOtp4.addTextChangedListener {
+            etOtp4.isFocusable = it.toString().isEmpty()
+        }
+
+
     }
 
     private fun setFirstValue(value: String) = with(binding) {
@@ -63,5 +121,30 @@ class OtpInputCustomView : ConstraintLayout {
         etOtp4.isFocusable = value.isEmpty()
     }
 
+    fun setOtp(values: String) {
+        if (values.length > 4 || values.length < 4) return
+        setFirstValue(values[0].toString())
+        setSecondValue(values[1].toString())
+        setThirdValue(values[2].toString())
+        setFourthValue(values[3].toString())
+    }
 
+    fun setError(error: String) = with(binding){
+        with(tvResponseMessage){
+            text = error
+            isVisible = true
+        }
+
+        tvResentButton.isVisible = true
+        setErrorBackground()
+    }
+
+    private fun setErrorBackground() = with(binding){
+        fl1.background = ResourcesCompat.getDrawable(resources,
+            R.drawable.bg_custom_view_error_sms, null)
+    }
+
+    fun getValues() = "${binding.etOtp1.text.toString()}${binding.etOtp2.text.toString()}" +
+            "${binding.etOtp3.text.toString()}${binding.etOtp4.text.toString()}"
 }
+

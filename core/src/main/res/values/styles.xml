@@ -14,13 +14,8 @@
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>
         <item name="android:textSize">@dimen/text_17sp</item>
-        <item name="android:focusable">false</item>
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
-    </style>
-    <style name="CardView.OTP" parent="CardView.Light">
-        <item name="android:background">@color/gray_5</item>
-        <item name="elevation">@dimen/card_elevation_0dp</item>
     </style>
     <style name="OTPErrorMessage">
         <item name="android:letterSpacing">0.0</item>
