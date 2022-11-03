@@ -17,13 +17,6 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     private val binding: PasswordInputViewBinding =
         inflate(LayoutInflater.from(context), this, true)
 
-
-     init {
-         binding.passwordToggle.setOnClickListener{
-             setToggleState()
-         }
-     }
-
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         context.obtainStyledAttributes(attrs, R.styleable.CustomPasswordInputFieldView).run {
@@ -34,6 +27,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
                 setPasswordHint(it.toString())
             }
             recycle()
+            initClick()
         }
     }
 
@@ -63,19 +57,19 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.red_1))
     }
 
-    private fun setToggleState() = with(binding) {
-        if (passwordInputField.transformationMethod.equals(PasswordTransformationMethod.getInstance())) {
-            passwordInputField.transformationMethod =
-                HideReturnsTransformationMethod.getInstance()
-            passwordToggle.setImageResource(R.drawable.ic_outline_visibility_off_24)
-        } else {
-            passwordInputField.transformationMethod =
-                PasswordTransformationMethod.getInstance()
-            passwordToggle.setImageResource(R.drawable.ic_outline_visibility_24)
+    private fun initClick() = with(binding) {
+        passwordToggle.setOnClickListener {
+            if (passwordInputField.transformationMethod.equals(PasswordTransformationMethod.getInstance())) {
+                passwordInputField.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
+                passwordToggle.setImageResource(R.drawable.ic_outline_visibility_off_24)
+            } else {
+                passwordInputField.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
+                passwordToggle.setImageResource(R.drawable.ic_outline_visibility_24)
+            }
         }
     }
-
     fun getPasswordField(): String = binding.passwordInputField.text.toString()
-
 
 }
