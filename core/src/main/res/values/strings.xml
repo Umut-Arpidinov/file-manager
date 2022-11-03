@@ -16,6 +16,7 @@
     <string name="password_not_match">Пароли не совпадают</string>
     <string name="create_new_password">Придумайте пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
+    <string name="frame_error">Frame Error</string>
     <string name="helper_text_create_password">Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы</string>
-    <string name="toggle">image</string>
+    <string name="toggle">Union vector</string>
 </resources>

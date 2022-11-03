@@ -33,11 +33,14 @@ class PasswordInputFieldView : ConstraintLayout {
 
     fun setHelperText(state: String) = with(binding) {
         passwordHelper.text = state
+        passwordToggle.visibility = View.GONE
         if (state == context.getString(R.string.incorrect_password)) {
+            passwordHelper.text = state
             setFrameErrorColor()
             setTextErrorColor()
         }
         if (state == context.getString(R.string.password_not_match)) {
+            passwordHelper.text = state
             passwordToggle.visibility = View.VISIBLE
             setFrameErrorColor()
             setTextErrorColor()
@@ -45,9 +48,18 @@ class PasswordInputFieldView : ConstraintLayout {
                 setToggleState()
             }
         }
+        if(state == context.getString(R.string.frame_error)){
+            passwordHelper.text = null
+            passwordToggle.visibility = View.VISIBLE
+            setFrameErrorColor()
+            passwordToggle.setOnClickListener {
+                setToggleState()
+            }
+        }
     }
 
     fun setPasswordHint(text: String) = with(binding) {
+        passwordToggle.visibility = View.GONE
         passwordInputField.hint = text
     }
 
@@ -66,11 +78,11 @@ class PasswordInputFieldView : ConstraintLayout {
         if (passwordInputField.transformationMethod.equals(PasswordTransformationMethod.getInstance())) {
             passwordInputField.transformationMethod =
                 HideReturnsTransformationMethod.getInstance()
-            passwordToggle.setImageResource(R.drawable.ic_baseline_visibility_off_24)
+            passwordToggle.setImageResource(R.drawable.ic_outline_visibility_off_24)
         } else {
             passwordInputField.transformationMethod =
                 PasswordTransformationMethod.getInstance()
-            passwordToggle.setImageResource(R.drawable.ic_baseline_visibility_24)
+            passwordToggle.setImageResource(R.drawable.ic_outline_visibility_24)
         }
     }
 }
