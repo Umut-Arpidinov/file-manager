@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.login.LoginInitialStateFragment">
     <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
-        app:helperTextSate="@string/frame_error"
+        app:helperTextSate="@string/helper_text_create_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
