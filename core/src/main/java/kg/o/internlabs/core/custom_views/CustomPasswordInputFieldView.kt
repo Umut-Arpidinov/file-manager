@@ -13,7 +13,7 @@ import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.PasswordInputViewBinding
 import kg.o.internlabs.core.databinding.PasswordInputViewBinding.inflate
 
-class PasswordInputFieldView : ConstraintLayout {
+class CustomPasswordInputFieldView : ConstraintLayout {
     private val binding: PasswordInputViewBinding =
         inflate(LayoutInflater.from(context), this, true)
 
@@ -48,7 +48,7 @@ class PasswordInputFieldView : ConstraintLayout {
                 setToggleState()
             }
         }
-        if(state == context.getString(R.string.frame_error)){
+        if (state == context.getString(R.string.frame_error)) {
             passwordHelper.text = null
             passwordToggle.visibility = View.VISIBLE
             setFrameErrorColor()
@@ -84,5 +84,9 @@ class PasswordInputFieldView : ConstraintLayout {
                 PasswordTransformationMethod.getInstance()
             passwordToggle.setImageResource(R.drawable.ic_outline_visibility_24)
         }
+    }
+
+    fun getPasswordField(): String = with(binding) {
+        return passwordInputField.text.toString()
     }
 }
