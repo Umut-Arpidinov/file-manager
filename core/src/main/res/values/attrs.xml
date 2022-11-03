@@ -17,7 +17,7 @@
     <declare-styleable name="ProgressButtonView">
         <attr name="text" format="string" />
     </declare-styleable>
-    <declare-styleable name="PasswordInputFieldView">
+    <declare-styleable name="CustomPasswordInputFieldView">
         <attr name ="helperTextSate" format="string"/>
         <attr name ="passwordHint" format="string"/>
     </declare-styleable>

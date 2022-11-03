@@ -19,11 +19,11 @@ class CustomPasswordInputFieldView : ConstraintLayout {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        context.obtainStyledAttributes(attrs, R.styleable.PasswordInputFieldView).run {
-            getText(R.styleable.PasswordInputFieldView_helperTextSate)?.let {
+        context.obtainStyledAttributes(attrs, R.styleable.CustomPasswordInputFieldView).run {
+            getText(R.styleable.CustomPasswordInputFieldView_helperTextSate)?.let {
                 setHelperText(it.toString())
             }
-            getText(R.styleable.PasswordInputFieldView_passwordHint)?.let {
+            getText(R.styleable.CustomPasswordInputFieldView_passwordHint)?.let {
                 setPasswordHint(it.toString())
             }
             recycle()
@@ -86,7 +86,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         }
     }
 
-    fun getPasswordField(): String = with(binding) {
-        return passwordInputField.text.toString()
-    }
+    fun getPasswordField(): String = binding.passwordInputField.text.toString()
+
+
 }
