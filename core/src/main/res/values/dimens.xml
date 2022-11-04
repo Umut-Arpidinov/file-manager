@@ -81,6 +81,11 @@
     <dimen name="margin_horizontal_8dp">8dp</dimen>
     <dimen name="margin_horizontal_12dp">12dp</dimen>
     <dimen name="margin_vertical_16dp">16dp</dimen>
+    <dimen name="view_width_32dp">32dp</dimen>
+    <dimen name="padding_4dp">4dp</dimen>
+    <dimen name="view_88dp">88dp</dimen>
+    <dimen name="margin_40dp">40dp</dimen>
+    <dimen name="line_height29dp">20.29dp</dimen>
 
 
 </resources>
