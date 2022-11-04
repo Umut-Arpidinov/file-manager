@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="NumberInputView">
         <attr name="helperTextState" format="string"/>
+
     </declare-styleable>
 
     <declare-styleable name="OtpInputCustomView">
@@ -15,5 +16,9 @@
 
     <declare-styleable name="ProgressButtonView">
         <attr name="text" format="string" />
+    </declare-styleable>
+    <declare-styleable name="CustomPasswordInputFieldView">
+        <attr name ="setMessage" format="string"/>
+        <attr name ="setPasswordHint" format="string"/>
     </declare-styleable>
 </resources>
