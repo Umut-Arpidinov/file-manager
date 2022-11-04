@@ -1,6 +1,7 @@
 package kg.o.internlabs.core.custom_views
 
 import android.content.Context
+import android.os.CountDownTimer
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.EditText
@@ -25,6 +26,7 @@ class OtpInputCustomView : ConstraintLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, otpResend: OtpResend) : super(context) {
         OtpInputCustomView.otpResend = otpResend
+        setTimer(0)
     }
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView).run {
@@ -35,6 +37,21 @@ class OtpInputCustomView : ConstraintLayout {
             initClickers()
             recycle()
         }
+    }
+
+    fun setTimer(time: Long) {
+        object : CountDownTimer(30000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000)
+                println("seconds remaining: " + millisUntilFinished / 1000)
+            }
+
+            override fun onFinish() {
+                println("done")
+                //mTextField.setText("done!")
+            }
+        }.start()
     }
 
     private fun initClickers() = with(binding) {
@@ -79,7 +96,6 @@ class OtpInputCustomView : ConstraintLayout {
                 isFocusable = !etOtp2.isFocusable
                 requestFocus()
             }
-            //etOtp3.isFocusable = !etOtp2.isFocusable
         }
         etOtp3.addTextChangedListener {
             etOtp3.isFocusable = it.toString().isEmpty()
@@ -87,7 +103,6 @@ class OtpInputCustomView : ConstraintLayout {
                 isFocusable = !etOtp2.isFocusable
                 requestFocus()
             }
-            //etOtp4.isFocusable = !etOtp3.isFocusable
         }
         etOtp4.addTextChangedListener {
             etOtp4.isFocusable = it.toString().isEmpty()
