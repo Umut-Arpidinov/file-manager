@@ -68,15 +68,26 @@ class OtpInputCustomView : ConstraintLayout {
     private fun initWatcher() = with(binding) {
         etOtp1.addTextChangedListener {
             etOtp1.isFocusable = it.toString().isEmpty()
-            etOtp2.isFocusable = !etOtp1.isFocusable
+            with(etOtp2) {
+                isFocusable = !etOtp1.isFocusable
+                requestFocus()
+            }
         }
         etOtp2.addTextChangedListener {
             etOtp2.isFocusable = it.toString().isEmpty()
-            etOtp3.isFocusable = !etOtp2.isFocusable
+            with(etOtp3) {
+                isFocusable = !etOtp2.isFocusable
+                requestFocus()
+            }
+            //etOtp3.isFocusable = !etOtp2.isFocusable
         }
         etOtp3.addTextChangedListener {
             etOtp3.isFocusable = it.toString().isEmpty()
-            etOtp4.isFocusable = !etOtp3.isFocusable
+            with(etOtp4) {
+                isFocusable = !etOtp2.isFocusable
+                requestFocus()
+            }
+            //etOtp4.isFocusable = !etOtp3.isFocusable
         }
         etOtp4.addTextChangedListener {
             etOtp4.isFocusable = it.toString().isEmpty()

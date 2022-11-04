@@ -1,8 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
-import android.content.ClipData.Item
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
