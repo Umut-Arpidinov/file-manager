@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -13,7 +15,7 @@ import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding
 import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding.inflate
 
 
-class OtpInputCustomView : ConstraintLayout {
+class OtpInputCustomView : ConstraintLayout, View.OnClickListener {
     private var otpResend: OtpResend? = null
 
     private val binding: OtpInputCustomViewBinding =
@@ -215,5 +217,9 @@ class OtpInputCustomView : ConstraintLayout {
 
     fun getValues() = "${binding.etOtp1.text}${binding.etOtp2.text}" +
             "${binding.etOtp3.text}${binding.etOtp4.text}"
+
+    override fun onClick(v: View?) {
+        TODO("Not yet implemented")
+    }
 }
 
