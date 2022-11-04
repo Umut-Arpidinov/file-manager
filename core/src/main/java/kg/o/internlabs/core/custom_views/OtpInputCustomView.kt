@@ -1,37 +1,34 @@
 package kg.o.internlabs.core.custom_views
 
-import android.content.ContentValues
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import androidx.annotation.RequiresApi
+import android.view.MotionEvent
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.core.R
-import kg.o.internlabs.core.databinding.ItemRecyclerCustomBinding
 import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding
 import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding.inflate
 
 
 class OtpInputCustomView : ConstraintLayout {
+    private var otpResend: OtpResend? = null
 
     private val binding: OtpInputCustomViewBinding =
         inflate(LayoutInflater.from(context), this, true)
 
-    constructor(context: Context) : super(context)
-    //constructor(context: Context, otpResend: OtpResend) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context) : super(context ){
+        println("-------------111 $otpResend")
+    }
+   /* constructor(context: Context, otpResend: OtpResend) : super(context){
+        println("-------------------hhohohoh   ${this.otpResend}")
+        this.otpResend = otpResend
+        println("----------oooo---------hhohohoh   ${this.otpResend}")
+    }*/
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        println("----------------222  $otpResend")
         context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView).run {
             getText(R.styleable.OtpInputCustomView_set_otp)?.let {
                 setOtp(it.toString())
@@ -41,6 +38,69 @@ class OtpInputCustomView : ConstraintLayout {
             initClickers()
         }
     }
+
+    var touchType = -1 // No user touch yet.
+
+    var onClickListener: () -> Unit = {
+       println("on click not yet implemented")
+        binding.tvResentButton.setOnClickListener {
+            println("toched")
+            otpResend?.sendOtpAgain()
+        }
+    }
+
+
+
+    override fun onTouchEvent(e: MotionEvent?): Boolean {
+        println(".................")
+        val value = super.onTouchEvent(e)
+
+        when(e?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                println("toooooch")
+                /* Determine where the user has touched on the screen. */
+                touchType = 1 // for eg.
+                return true
+            }
+            MotionEvent.ACTION_UP -> {
+                println("toooooch")
+
+                /* Now that user has lifted his finger. . . */
+                when (touchType) {
+                    1 -> {
+                        println("toch type")
+                        onClickListener()
+                    }
+                }
+            }
+            MotionEvent.ACTION_BUTTON_PRESS -> {
+
+            }
+        }
+        return value
+    }
+
+    /*private var listener: OnClickListener? = null
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_UP) {
+            if (listener != null) listener!!.onClick(this)
+        }
+        return super.dispatchTouchEvent(event)
+    }
+
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.getAction() === KeyEvent.ACTION_UP && (event.getKeyCode() === KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() === KeyEvent.KEYCODE_ENTER)) {
+            if (listener != null) listener!!.onClick(this)
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
+    override fun setOnClickListener(listener: OnClickListener?) {
+        this.listener = listener
+    }
+*/
 
     private fun initClickers() = with(binding) {
         etOtp1.setOnClickListener {
@@ -72,7 +132,10 @@ class OtpInputCustomView : ConstraintLayout {
             }
         }
 
-        //binding.tvResentButton.setOnClickListener()
+      /*  binding.tvResentButton.setOnClickListener {
+            println(otpResend)
+            otpResend?.sendOtpAgain()
+        }*/
     }
 
 
@@ -142,9 +205,15 @@ class OtpInputCustomView : ConstraintLayout {
     private fun setErrorBackground() = with(binding){
         fl1.background = ResourcesCompat.getDrawable(resources,
             R.drawable.bg_custom_view_error_sms, null)
+        fl2.background = ResourcesCompat.getDrawable(resources,
+            R.drawable.bg_custom_view_error_sms, null)
+        fl3.background = ResourcesCompat.getDrawable(resources,
+            R.drawable.bg_custom_view_error_sms, null)
+        fl4.background = ResourcesCompat.getDrawable(resources,
+            R.drawable.bg_custom_view_error_sms, null)
     }
 
-    fun getValues() = "${binding.etOtp1.text.toString()}${binding.etOtp2.text.toString()}" +
-            "${binding.etOtp3.text.toString()}${binding.etOtp4.text.toString()}"
+    fun getValues() = "${binding.etOtp1.text}${binding.etOtp2.text}" +
+            "${binding.etOtp3.text}${binding.etOtp4.text}"
 }
 
