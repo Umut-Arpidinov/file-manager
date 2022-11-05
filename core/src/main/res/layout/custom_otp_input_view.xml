@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_marginVertical="@dimen/margin_vertical_16dp"
-            android:text="@string/error_otp"
+            tools:text="@string/error_otp"
             android:textAppearance="@style/OTPErrorMessage" />
 
         <TextView
@@ -117,7 +117,7 @@
             android:visibility="gone"
             android:layout_gravity="end"
             android:layout_marginVertical="@dimen/margin_vertical_16dp"
-            android:text="@string/_02_00"
+            tools:text="@string/_02_00"
             android:textAppearance="@style/OtpTimer" />
 
         <TextView
