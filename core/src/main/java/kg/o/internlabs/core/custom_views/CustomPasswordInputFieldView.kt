@@ -9,12 +9,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import kg.o.internlabs.core.R
-import kg.o.internlabs.core.databinding.PasswordInputViewBinding
-import kg.o.internlabs.core.databinding.PasswordInputViewBinding.inflate
+import kg.o.internlabs.core.databinding.CustomPasswordInputViewBinding
 
 class CustomPasswordInputFieldView : ConstraintLayout {
-    private val binding: PasswordInputViewBinding =
-        inflate(LayoutInflater.from(context), this, true)
+    private val binding = CustomPasswordInputViewBinding.inflate(LayoutInflater.from(context),
+        this, true)
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {

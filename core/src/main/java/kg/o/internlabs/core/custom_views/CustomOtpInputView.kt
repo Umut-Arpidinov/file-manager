@@ -10,22 +10,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.core.R
+import kg.o.internlabs.core.databinding.CustomOtpInputViewBinding
 import kg.o.internlabs.core.databinding.ItemRecyclerCustomBinding
-import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding
-import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding.inflate
 
 
-class OtpInputCustomView : ConstraintLayout {
+class CustomOtpInputView : ConstraintLayout {
 
-    private val binding: OtpInputCustomViewBinding =
-        inflate(LayoutInflater.from(context), this, true)
+    private val binding = CustomOtpInputViewBinding.inflate(LayoutInflater.from(context),
+        this, true)
 
     private val adapter by lazy { RVAdapter() }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView).run {
-            getText(R.styleable.OtpInputCustomView_otp_custom_view)?.let {
+        context.obtainStyledAttributes(attrs, R.styleable.CustomOtpInputView).run {
+            getText(R.styleable.CustomOtpInputView_otp_custom_view)?.let {
                 setNumber(it.toString().toInt())
             }
             recycle()

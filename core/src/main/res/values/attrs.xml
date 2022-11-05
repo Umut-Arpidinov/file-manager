@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="NumberInputView">
+    <declare-styleable name="CustomNumberInputView">
         <attr name="helperTextState" format="string"/>
 
     </declare-styleable>
 
-    <declare-styleable name="OtpInputCustomView">
+    <declare-styleable name="CustomOtpInputView">
         <attr name="otp_custom_view" format="integer"/>
     </declare-styleable>
 
@@ -14,7 +14,7 @@
         <attr name="keep_hint" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="ProgressButtonView">
+    <declare-styleable name="CustomButtonView">
         <attr name="text" format="string" />
     </declare-styleable>
     <declare-styleable name="CustomPasswordInputFieldView">

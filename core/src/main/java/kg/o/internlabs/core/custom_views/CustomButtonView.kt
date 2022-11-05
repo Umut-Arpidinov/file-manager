@@ -5,30 +5,30 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import kg.o.internlabs.core.R
-import kg.o.internlabs.core.databinding.ProgressBtnViewBinding
+import kg.o.internlabs.core.databinding.CustomBtnViewBinding
 
-class ProgressButtonView : ConstraintLayout {
+class CustomButtonView : ConstraintLayout {
     var textOfView: String = ""
         set(value) {
             field = value
             binding.customTxt.text = value
         }
 
-    private val binding: ProgressBtnViewBinding = ProgressBtnViewBinding.inflate(
+    private val binding: CustomBtnViewBinding = CustomBtnViewBinding.inflate(
         LayoutInflater.from(context), this, true
     )
 
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        context.obtainStyledAttributes(attrs, R.styleable.ProgressButtonView).run {
-            val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProgressButtonView)
+        context.obtainStyledAttributes(attrs, R.styleable.CustomButtonView).run {
+            val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomButtonView)
             val indexes = typedArray.indexCount
 
-            getText(R.styleable.ProgressButtonView_text)?.let {
+            getText(R.styleable.CustomButtonView_text)?.let {
                 for (i in 0..indexes) {
                     val attr = typedArray.getIndex(0)
-                    if (attr == R.styleable.ProgressButtonView_text) {
+                    if (attr == R.styleable.CustomButtonView_text) {
                         textOfView = typedArray.getString(attr).toString()
                     }
                 }

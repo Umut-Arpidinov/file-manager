@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
-import kg.o.internlabs.omarket.databinding.FragmentLoginFinalStateBinding
+import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
 
 @AndroidEntryPoint
-class LoginFinalStateFragment : BaseFragment<FragmentLoginFinalStateBinding, LoginViewModel>() {
+class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>() {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginFinalStateBinding {
-         return FragmentLoginFinalStateBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginEndBinding {
+         return FragmentLoginEndBinding.inflate(inflater)
     }
 
     override fun initListener() {
