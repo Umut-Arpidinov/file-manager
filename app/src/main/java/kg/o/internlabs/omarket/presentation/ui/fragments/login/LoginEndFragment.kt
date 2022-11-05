@@ -5,19 +5,19 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
+import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
 import kg.o.internlabs.core.custom_views.OtpInputCustomView
 import kg.o.internlabs.core.custom_views.OtpResend
 import kg.o.internlabs.omarket.databinding.FragmentLoginFinalStateBinding
 
-
 @AndroidEntryPoint
-class LoginFinalStateFragment : BaseFragment<FragmentLoginFinalStateBinding, LoginViewModel>(), OtpResend{
+class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>() {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginFinalStateBinding {
-         return FragmentLoginFinalStateBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginEndBinding {
+         return FragmentLoginEndBinding.inflate(inflater)
     }
 
     override fun initListener() {
