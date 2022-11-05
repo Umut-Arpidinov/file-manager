@@ -22,16 +22,13 @@ class CustomOtpInputView : ConstraintLayout {
         var otpResend: OtpResend? = null
     }
 
-    private val binding: OtpInputCustomViewBinding =
-        inflate(LayoutInflater.from(context), this, true)
-
     constructor(context: Context) : super(context)
     constructor(context: Context, otpResend: OtpResend) : super(context) {
-        OtpInputCustomView.otpResend = otpResend
+        CustomOtpInputView.otpResend = otpResend
     }
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        context.obtainStyledAttributes(attrs, R.styleable.OtpInputCustomView).run {
-            getText(R.styleable.OtpInputCustomView_set_otp)?.let {
+        context.obtainStyledAttributes(attrs, R.styleable.CustomOtpInputView).run {
+            getText(R.styleable.CustomOtpInputView_otp_custom_view)?.let {
                 setOtp(it.toString())
             }
             initWatcher()
