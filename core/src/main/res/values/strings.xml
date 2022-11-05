@@ -4,7 +4,7 @@
     <string name="message">Message</string>
     <string name="description">description</string>
     <string name="toast_system_text">Системный</string>
-
+    <string name="log_in">Войти</string>
     <string name="empty_text">Empty text</string>
     <string name="hint_for_number">XXXXXXXXXXXX</string>
     <string name="image_description">Cancel</string>
