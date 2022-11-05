@@ -10,11 +10,14 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import kg.o.internlabs.core.R
-import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding
-import kg.o.internlabs.core.databinding.OtpInputCustomViewBinding.inflate
+import kg.o.internlabs.core.databinding.CustomOtpInputViewBinding
+import kg.o.internlabs.core.databinding.ItemRecyclerCustomBinding
 
-class OtpInputCustomView : ConstraintLayout {
 
+class CustomOtpInputView : ConstraintLayout {
+
+    private val binding = CustomOtpInputViewBinding.inflate(LayoutInflater.from(context),
+        this, true)
     companion object {
         var otpResend: OtpResend? = null
     }
@@ -150,4 +153,3 @@ class OtpInputCustomView : ConstraintLayout {
     fun getValues() = "${binding.etOtp1.text}${binding.etOtp2.text}" +
             "${binding.etOtp3.text}${binding.etOtp4.text}"
 }
-

@@ -12,32 +12,22 @@
         tools:layout="@layout/fragment_main" >
     </fragment>
     <fragment
-        android:id="@+id/loginFragmentInitialState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginInitialStateFragment"
-        android:label="fragment_login_final_state"
-        tools:layout="@layout/fragment_login_final_state" >
-    </fragment>
+        android:id="@+id/loginEndFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginEndFragment"
+        android:label="fragment_login_start"
+        tools:layout="@layout/fragment_login_start" />
     <fragment
-        android:id="@+id/loginFragmentProgressState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginProgressStateFragment"
-        android:label="LoginFragmentProgressState" >
-    </fragment>
+        android:id="@+id/loginStartFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginStartFragment"
+        android:label="fragment_login_end"
+        tools:layout="@layout/fragment_login_end" />
     <fragment
-        android:id="@+id/loginFragmentFinalState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFinalStateFragment"
-        android:label="LoginFragmentFinalState" >
-    </fragment>
+        android:id="@+id/registrationOtpFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationOtpFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" />
     <fragment
-        android:id="@+id/registrationFragmentFilledFields"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentFilledFields"
-        android:label="RegistrationFragmentFilledFields" />
-    <fragment
-        android:id="@+id/registrationFragmentOtp"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentOtp"
-        android:label="RegistrationFragmentOtp" />
-    <fragment
-        android:id="@+id/registrationFragmentEmptyFields"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentEmptyFields"
-        android:label="fragment_registration_otp"
-        tools:layout="@layout/fragment_registration_otp" />
+        android:id="@+id/registrationFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragment"
+        android:label="RegistrationFragment" />
 </navigation>

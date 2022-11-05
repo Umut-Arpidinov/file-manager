@@ -7,7 +7,7 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 
 @AndroidEntryPoint
-class RegistrationFragmentOtp :
+class RegistrationOtpFragment :
     BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>() {
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]

@@ -10,7 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding.inflate
-class NumberInputView : ConstraintLayout {
+class CustomNumberInputView : ConstraintLayout {
     private val binding: CustomInputFieldBinding = inflate(
         LayoutInflater.from(context), this, true
     )
@@ -18,8 +18,8 @@ class NumberInputView : ConstraintLayout {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
-        context.obtainStyledAttributes(attributeSet, R.styleable.NumberInputView).run {
-            getText(R.styleable.NumberInputView_helperTextState)?.let {
+        context.obtainStyledAttributes(attributeSet, R.styleable.CustomNumberInputView).run {
+            getText(R.styleable.CustomNumberInputView_helperTextState)?.let {
                 setHintText(it.toString())
             }
             recycle()

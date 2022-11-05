@@ -6,20 +6,20 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.R
-import kg.o.internlabs.omarket.databinding.FragmentLoginInitialStateBinding
+import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
 
 @AndroidEntryPoint
-class LoginInitialStateFragment : BaseFragment<FragmentLoginInitialStateBinding, LoginViewModel>() {
+class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>() {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginInitialStateBinding {
-         return FragmentLoginInitialStateBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginStartBinding {
+         return FragmentLoginStartBinding.inflate(inflater)
     }
 
     override fun initListener() {
         super.initListener()
-        findNavController().navigate(R.id.loginFragmentProgressState)
+        findNavController().navigate(R.id.loginEndFragment)
     }
 }
