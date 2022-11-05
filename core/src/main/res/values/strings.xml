@@ -21,4 +21,5 @@
     <string name="frame_error">Frame Error</string>
     <string name="helper_text_create_password">Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы</string>
     <string name="toggle">Union vector</string>
+    <string name="_02_00">02:00</string>
 </resources>
