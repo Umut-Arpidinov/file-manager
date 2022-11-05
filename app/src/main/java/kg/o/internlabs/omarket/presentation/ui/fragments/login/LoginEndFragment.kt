@@ -6,12 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
-import kg.o.internlabs.core.custom_views.OtpInputCustomView
 import kg.o.internlabs.core.custom_views.OtpResend
-import kg.o.internlabs.omarket.databinding.FragmentLoginFinalStateBinding
 
 @AndroidEntryPoint
-class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>() {
+class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(), OtpResend {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
@@ -23,8 +21,9 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     override fun initListener() {
         super.initListener()
 
-        OtpInputCustomView(requireContext(), this)
-        binding.btnGet.setOnClickListener {
+        binding.otp.setInterface(this)
+
+        binding.btnOtp.setOnClickListener {
             println( binding.otp.getValues())
             binding.otp.setError("Niene")
         }
@@ -39,6 +38,10 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         println("Would you not mind to send me, the otp one more time?")
         Toast.makeText(requireContext(), "Would you not mind to send me, the otp one more time?",
         Toast.LENGTH_LONG).show()
+    }
+
+    override fun watcher(empty: Boolean) {
+        println("--jj------$empty")
     }
 
 }
