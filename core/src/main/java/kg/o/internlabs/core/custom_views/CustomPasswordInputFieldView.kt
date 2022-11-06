@@ -42,7 +42,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         }
     }
 
-    fun setInterface(textWatcher: PasswordInputHelper, fieldNumber: Int) {
+    fun setInterface(textWatcher: PasswordInputHelper, fieldNumber: Int = 0) {
         this.textWatcher = textWatcher
         this.fieldNumber = fieldNumber
     }
