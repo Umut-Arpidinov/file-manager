@@ -1,24 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginHorizontal="@dimen/margin_horizontal_24dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvOTP"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_48dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/fl_1"
+            android:layout_width="@dimen/view_width_41dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_custom_view_sms"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/et_otp1"
+                style="@style/OTPInputText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/transparent"
+                android:focusableInTouchMode="true"
+                android:importantForAutofill="no"
+                tools:ignore="LabelFor"
+                tools:targetApi="P"
+                tools:text="3" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_2"
+            android:layout_width="@dimen/view_width_41dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_custom_view_sms"
+            app:layout_constraintEnd_toStartOf="@id/fl_3"
+            app:layout_constraintStart_toEndOf="@id/fl_1">
+
+            <EditText
+                android:id="@+id/et_otp2"
+                style="@style/OTPInputText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/transparent"
+                android:focusableInTouchMode="true"
+                android:importantForAutofill="no"
+                tools:ignore="LabelFor"
+                tools:targetApi="P"
+                tools:text="3" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_3"
+            android:layout_width="@dimen/view_width_41dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_custom_view_sms"
+            app:layout_constraintEnd_toStartOf="@id/fl_4"
+            app:layout_constraintStart_toEndOf="@id/fl_2">
+
+            <EditText
+                android:id="@+id/et_otp3"
+                style="@style/OTPInputText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/transparent"
+                android:focusableInTouchMode="true"
+                android:importantForAutofill="no"
+                tools:ignore="LabelFor"
+                tools:targetApi="P"
+                tools:text="3" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_4"
+            android:layout_width="@dimen/view_width_41dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_custom_view_sms"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <EditText
+                android:id="@+id/et_otp4"
+                style="@style/OTPInputText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/transparent"
+                android:focusableInTouchMode="true"
+                android:importantForAutofill="no"
+                tools:ignore="LabelFor"
+                tools:targetApi="P"
+                tools:text="3" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:itemCount="4"
-        tools:listitem="@layout/item_recycler_custom"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:layout_marginStart="@dimen/margin_24dp"
-        android:layout_marginEnd="@dimen/margin_24dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="@dimen/margin_start_4dp"
+        app:layout_constraintTop_toBottomOf="@id/ll1">
 
+        <TextView
+            android:id="@+id/tv_response_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginVertical="@dimen/margin_vertical_16dp"
+            tools:text="@string/error_otp"
+            android:textAppearance="@style/OTPErrorMessage" />
 
+        <TextView
+            android:id="@+id/tv_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="end"
+            android:layout_marginVertical="@dimen/margin_vertical_16dp"
+            tools:text="@string/_02_00"
+            android:textAppearance="@style/OtpTimer" />
 
-
-
+        <TextView
+            android:id="@+id/tv_resent_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:visibility="gone"
+            android:layout_marginVertical="@dimen/margin_vertical_16dp"
+            android:text="@string/resent"
+            android:textAppearance="@style/OTPResentButton" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
