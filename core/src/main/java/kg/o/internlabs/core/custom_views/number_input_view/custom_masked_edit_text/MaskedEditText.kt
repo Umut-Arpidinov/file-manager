@@ -8,8 +8,12 @@ import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import kg.o.internlabs.core.custom_views.CustomTextWatcher
 
 class MaskedEditText : AppCompatEditText, TextWatcher {
+    private var textWatcher: CustomTextWatcher? = null
+    private var fieldsNumber = 0
+
     private var mask: String? = null
     private lateinit var rawToMask: IntArray
     private var rawText: RawText = RawText()
@@ -122,7 +126,13 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         return start
     }
 
+    fun setInterface(textWatcher: CustomTextWatcher, fieldsNumber: Int) {
+        this.textWatcher = textWatcher
+        this.fieldsNumber = fieldsNumber
+    }
+
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        textWatcher?.numberWatcher(s[s.length-1] != 'X', fieldsNumber)
         var quantity = count
         if (!editingOnChanged && editingBefore) {
             editingOnChanged = true
@@ -143,7 +153,9 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     override fun afterTextChanged(s: Editable) {
         if (!editingAfter && editingBefore && editingOnChanged) {
             editingAfter = true
-            if (hasHint() || ( rawText.length() == 0)) setText(makeMaskedTextWithHint())
+            if (hasHint() || ( rawText.length() == 0)){
+                setText(makeMaskedTextWithHint())
+            }
             selectionChanged = false
             setSelection(place)
             editingBefore = false

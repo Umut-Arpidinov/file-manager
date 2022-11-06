@@ -30,4 +30,9 @@
         android:id="@+id/registrationFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragment"
         android:label="RegistrationFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

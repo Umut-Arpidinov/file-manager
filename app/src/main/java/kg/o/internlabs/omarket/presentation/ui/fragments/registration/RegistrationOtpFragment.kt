@@ -3,14 +3,23 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
+import kg.o.internlabs.core.custom_views.CustomTextWatcher
 import kg.o.internlabs.core.custom_views.OtpResend
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 
 @AndroidEntryPoint
 class RegistrationOtpFragment :
     BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>(), OtpResend {
+
+    private var isOtpNotEmpty = false
+    private var isNumberNotEmpty = false
+    private var isPasswordNotEmpty = false
+
+
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
@@ -19,33 +28,36 @@ class RegistrationOtpFragment :
         return FragmentRegistrationOtpBinding.inflate(inflater)
     }
 
-    override fun initView() {
+    override fun initView() = with(binding){
         super.initView()
 
-        binding.cusOtp.setInterface(this)
-        binding.btnSendOtp.buttonAvailability(false)
-        //binding.cusOtp.setError("Niene")
-
-        /* binding.otp.setInterface(this)
-
-      binding.btnOtp.setOnClickListener {
-          println( binding.otp.getValues())
-          binding.otp.setError()
-      }*/
-//        val navHostFragment = requireActivity().supportFragmentManager
-//            .findFragmentById(R.id.nav_host) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        navController.navigate(R.id.mainFragment)
+        //cusOtp.setInterface(this@RegistrationOtpFragment)
+        btnSendOtp.buttonAvailability(true)
+        btnSendOtp1.buttonAvailability(false)
+        btnSendOtp2.buttonActivated()
     }
 
     override fun initListener() {
         super.initListener()
-        binding.cusOtp.setOnClickListener {
+        binding.btnSendOtp.setOnClickListener {
+            Toast.makeText(
+                requireContext(), "clicked",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        binding.btnSendOtp1.setOnClickListener {
+            Toast.makeText(
+                requireContext(), "clicked",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        binding.btnSendOtp2.setOnClickListener {
+            Toast.makeText(
+                requireContext(), "clicked",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
-        binding.btnSendOtp.setOnClickListener {
-            binding.cusOtp.setError("Niene")
-        }
     }
 
     override fun sendOtpAgain() {
@@ -58,9 +70,13 @@ class RegistrationOtpFragment :
         ).show()
     }
 
+    private fun complexWatcher() {
+        binding.btnSendOtp.buttonAvailability(isOtpNotEmpty && isNumberNotEmpty && isPasswordNotEmpty)
+    }
+
     override fun watcher(empty: Boolean) {
-        println("--jj------$empty")
-        binding.btnSendOtp.buttonAvailability(empty)
+        println("--otp_watcher------$empty")
+        complexWatcher()
     }
 
 }

@@ -6,28 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.registration.RegistrationOtpFragment">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/tv_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_40dp"
+        android:text="SMS c кодом отправлено на номер \n +996 700 123 321"
         android:textAlignment="center"
         android:textAppearance="@style/OTPInputText"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="SMS c кодом отправлено на номер \n +996 700 123 321" />
-
+        app:layout_constraintBottom_toTopOf="@id/cus_otp"
+        app:layout_constraintTop_toTopOf="parent" />-->
+<!--
     <kg.o.internlabs.core.custom_views.CustomOtpInputView
         android:id="@+id/cus_otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_16dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_info" />
+        app:layout_constraintTop_toBottomOf="@id/tv_info" />-->
 
     <kg.o.internlabs.core.custom_views.CustomButtonView
         android:id="@+id/btn_send_otp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="148dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:text="@string/log_in" />
+
+    <kg.o.internlabs.core.custom_views.CustomButtonView
+        android:id="@+id/btn_send_otp1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_16dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_send_otp"
+        app:text="@string/log_in" />
+
+    <kg.o.internlabs.core.custom_views.CustomButtonView
+        android:id="@+id/btn_send_otp2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:text="@string/log_in" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

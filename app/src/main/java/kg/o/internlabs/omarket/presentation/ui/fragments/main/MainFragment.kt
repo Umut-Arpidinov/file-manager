@@ -21,6 +21,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     override fun initView() {
         super.initView()
-        findNavController().navigate(R.id.loginStartFragment)
+        findNavController().navigate(R.id.profileFragment)
     }
 }
