@@ -14,6 +14,7 @@
     <string name="visibility_image">toggle eye</string>
 
     <string name="enter_password_hint">Введите пароль</string>
+    <string name="forgot_password">забыли пароль ?</string>
     <string name="incorrect_password">Неверный пароль</string>
     <string name="password_not_match">Пароли не совпадают</string>
     <string name="create_new_password">Придумайте пароль</string>
@@ -22,4 +23,7 @@
     <string name="helper_text_create_password">Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы</string>
     <string name="toggle">Union vector</string>
     <string name="_02_00">02:00</string>
+
+    <string name="accept">нажимая \"Войти\" вы принимаете</string>
+    <string name="terms_agreement"><u>условия пользовательского соглашения</u><a h="https://www.youtube.com/"/></string>
 </resources>
