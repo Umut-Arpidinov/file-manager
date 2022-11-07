@@ -1,30 +1,37 @@
 package kg.o.internlabs.omarket.data.remote
 
 
-
+import androidx.lifecycle.LiveData
 import kg.o.internlabs.omarket.data.remote.model.Register
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
     @POST("api/market-auth/register/")
-    fun registerUser(
+    suspend fun registerUser(
         @Body reg: Register?
-    ): Call<Register>
+    ): Response<Register>
 
     @POST("api/market-auth/check-otp/")
-    fun checkOtp(
+    suspend fun checkOtp(
         @Body otp: Register?
-    ): Call<Register>
+    ): Response<Register>
+
+    @POST("api/market-auth/check-otp/")
+    suspend fun checkOtpLiveData(
+        @Body otp: Register?
+    ): LiveData<Register>
+
 
     @POST("api/market-auth/refresh-token/")
-    fun refreshToken(
+    suspend fun refreshToken(
         @Body reg: Register?
-    ): Call<Register>
+    ): Response<Register>
 
     @POST("api/market-auth/auth/msisdn-password/")
-    fun loginUser(
+    suspend fun loginUser(
         @Body reg: Register?
-    ): Call<Register>
+    ): Response<Register>
 }
