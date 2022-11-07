@@ -6,7 +6,8 @@
     </declare-styleable>
 
     <declare-styleable name="CustomOtpInputView">
-        <attr name="otp_custom_view" format="integer"/>
+        <attr name="set_otp" format="integer" />
+        <attr name="set_timer" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="MaskedEditText">

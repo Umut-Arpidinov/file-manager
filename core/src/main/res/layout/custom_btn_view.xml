@@ -26,6 +26,9 @@
         android:textSize="@dimen/text_14sp"
         tools:targetApi="28"
         android:focusable="true" />
+        android:lineHeight="@dimen/line_16dp"
+        android:textColor="@color/white_1"
+        android:textSize="@dimen/text_14sp" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
