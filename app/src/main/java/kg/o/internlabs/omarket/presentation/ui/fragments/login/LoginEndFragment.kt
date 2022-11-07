@@ -11,7 +11,6 @@ import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
 @AndroidEntryPoint
 class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(),
     NumberInputHelper, PasswordInputHelper {
-
     private var isNumberNotEmpty = false
     private var isPasswordNotEmpty = false
 
@@ -20,21 +19,20 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginEndBinding {
-         return FragmentLoginEndBinding.inflate(inflater)
+        return FragmentLoginEndBinding.inflate(inflater)
     }
 
     override fun initView() {
         super.initView()
-
     }
 
-    override fun initListener() = with(binding){
+    override fun initListener() = with(binding) {
         super.initListener()
         // setting watchers
         cusNum.setInterface(this@LoginEndFragment)
         cusPass.setInterface(this@LoginEndFragment)
-    }
 
+    }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty
@@ -47,9 +45,9 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     }
 
     // следить за двумя полями одновременно
-    private fun complexWatcher() = with(binding){
-        println("num ------"+isNumberNotEmpty)
-        println("pass ------"+isPasswordNotEmpty)
+    private fun complexWatcher() = with(binding) {
+        println("num ------" + isNumberNotEmpty)
+        println("pass ------" + isPasswordNotEmpty)
         println("--------------------------")
         // TODO Здесь можно управлять кнопкой если isNumberNotEmpty && isPasswordNotEmpty true то...
         // TODO так можно переключать кнопку

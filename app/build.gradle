@@ -77,6 +77,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
 
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
     /*
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2'

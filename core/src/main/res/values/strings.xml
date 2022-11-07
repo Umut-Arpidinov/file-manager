@@ -25,5 +25,5 @@
     <string name="_02_00">02:00</string>
 
     <string name="accept">нажимая \"Войти\" вы принимаете</string>
-    <string name="terms_agreement"><u>условия пользовательского соглашения</u><a h="https://www.youtube.com/"/></string>
+    <string name="terms_agreement"><u>условия пользовательского соглашения</u></string>
 </resources>
