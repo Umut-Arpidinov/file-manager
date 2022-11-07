@@ -18,6 +18,12 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginStartBinding {
          return FragmentLoginStartBinding.inflate(inflater)
     }
+    override fun initView() = with(binding) {
+        super.initView()
+        cusBtn1.buttonAvailability(false)
+        cusBtn2.buttonAvailability(0)
+
+    }
 
     override fun initListener() = with(binding) {
         super.initListener()
@@ -27,15 +33,13 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         findNavController().navigate(R.id.loginEndFragment)
     }
 
-    override fun initView() {
-        super.initView()
-
-    }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         // TODO Здесь можно управлять кнопкой если button.clickable = notEmpty
         // TODO если поле номера введен не полностью notEmpty = false
     }
+
+
 
     // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
 }
