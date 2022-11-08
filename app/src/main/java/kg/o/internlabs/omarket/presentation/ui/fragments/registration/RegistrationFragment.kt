@@ -55,7 +55,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
     // следить за тремья полями одновременно
     private fun complexWatcher() = with(binding) {
         if(isNumberNotEmpty && isFirstPasswordNotEmpty && isSecondPasswordNotEmpty) {
-            if(cusPass.getPasswordField().equals(cusPass1.getPasswordField())){
+            if(cusPass.getPasswordField() == cusPass1.getPasswordField()){
                 btnSendOtp.buttonAvailability(true)
                 textButton.visibility = View.VISIBLE
                 textButton.movementMethod = LinkMovementMethod.getInstance()
