@@ -63,7 +63,7 @@ class CustomButtonView : ConstraintLayout {
     //button clickable or not
     fun buttonAvailability(state: Boolean) = with(binding){
         if (state) {
-            cardViewBtn.isClickable = true
+            cardViewBtn.isClickable = false
             with(customTxt) {
                 isEnabled = true
                 setBackgroundResource(R.color.green_1)
@@ -71,7 +71,7 @@ class CustomButtonView : ConstraintLayout {
             }
         }
         else {
-            cardViewBtn.isClickable = false
+            cardViewBtn.isClickable = true
             with(customTxt) {
                 isEnabled = false
                 setBackgroundResource(R.color.green_3)

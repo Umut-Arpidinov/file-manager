@@ -6,39 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.registration.RegistrationFragment">
 
-    <kg.o.internlabs.core.custom_views.CustomNumberInputView
-        android:id="@+id/cus_num"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginBottom="@dimen/margin_16dp"
-        app:layout_constraintBottom_toTopOf="@+id/cus_pass"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/textButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
-        android:id="@+id/cus_pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginBottom="@dimen/margin_16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cus_num"
-        app:setPasswordHint="@string/create_new_password" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
-        android:id="@+id/cus_pass1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginBottom="@dimen/margin_16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cus_pass"
-        app:setPasswordHint="@string/confirm_password" />
+            <kg.o.internlabs.core.custom_views.CustomNumberInputView
+                android:id="@+id/cus_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_16dp"
+                app:layout_constraintBottom_toTopOf="@+id/cus_pass" />
+
+            <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
+                android:id="@+id/cus_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_40dp"
+                app:setPasswordHint="@string/create_new_password" />
+
+            <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
+                android:id="@+id/cus_pass1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_16dp"
+                app:setPasswordHint="@string/confirm_password" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textButton"
@@ -65,6 +70,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:text="@string/sign_in" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

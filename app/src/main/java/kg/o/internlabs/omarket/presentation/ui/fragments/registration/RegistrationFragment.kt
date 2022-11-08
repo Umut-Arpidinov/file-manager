@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
+import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 
@@ -67,10 +68,15 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                 cusPass1.setErrorMessage("Пароли не совпадают")
                 cusPass.setErrorMessage("")
             }
+        } else {
+            btnSendOtp.buttonAvailability(false)
         }
+
+
 
         btnSendOtp.setOnClickListener{
             findNavController().navigate(R.id.registrationOtpFragment)
+
         }
     }
 }
