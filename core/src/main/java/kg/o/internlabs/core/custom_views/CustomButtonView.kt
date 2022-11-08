@@ -65,14 +65,17 @@ class CustomButtonView : ConstraintLayout {
         if (state) {
             cardViewBtn.isClickable = false
             with(customTxt) {
+                isEnabled = true
                 setBackgroundResource(R.color.green_1)
                 isClickable = false
             }
         }
         else {
+            cardViewBtn.isClickable = true
             with(customTxt) {
                 isEnabled = false
                 setBackgroundResource(R.color.green_3)
+                isClickable = false
             }
         }
 
