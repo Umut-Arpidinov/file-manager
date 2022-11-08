@@ -1,6 +1,8 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,12 +29,14 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         return FragmentRegistrationBinding.inflate(inflater)
     }
 
-    override fun initListener() = with(binding){
+    override fun initListener() = with(binding) {
         super.initListener()
         // setting watchers
         cusNum.setInterface(this@RegistrationFragment)
-        cusPass1.setInterface(this@RegistrationFragment)
+        cusPass.setInterface(this@RegistrationFragment)
         cusPass1.setInterface(this@RegistrationFragment, 1)
+        cusPass.setMessage("Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы")
+        btnSendOtp.buttonAvailability(false)
     }
 
 
@@ -42,26 +46,31 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
     }
 
     override fun passwordWatcher(notEmpty: Boolean, fieldsNumber: Int) {
-        when(fieldsNumber) {
+        when (fieldsNumber) {
             0 -> isFirstPasswordNotEmpty = notEmpty
             1 -> isSecondPasswordNotEmpty = notEmpty
         }
         complexWatcher()
     }
-
     // следить за тремья полями одновременно
-    private fun complexWatcher() = with(binding){
-        println("num ------"+isNumberNotEmpty)
-        println("pass1 ------"+isFirstPasswordNotEmpty)
-        println("pass2 ------"+isSecondPasswordNotEmpty)
-        println("--------------------------")
-        // TODO Здесь можно управлять кнопкой если isNumberNotEmpty &&
-    //TODO   isFirstPasswordNotEmpty && isSecondPasswordNotEmpty true то...
-        // TODO так можно переключать кнопку
-        //btnSendOtp.buttonAvailability(isNumberNotEmpty && isFirstPasswordNotEmpty && isSecondPasswordNotEmpty)
-    }
+    private fun complexWatcher() = with(binding) {
+        if(isNumberNotEmpty && isFirstPasswordNotEmpty && isSecondPasswordNotEmpty) {
+            if(cusPass.getPasswordField().equals(cusPass1.getPasswordField())){
+                btnSendOtp.buttonAvailability(true)
+                textButton.visibility = View.VISIBLE
+                textButton.movementMethod = LinkMovementMethod.getInstance()
+                cusPass.setMessage("Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы")
+                cusPass1.setMessage("")
+            } else {
+                btnSendOtp.buttonAvailability(false)
+                textButton.visibility = View.GONE
+                cusPass1.setErrorMessage("Пароли не совпадают")
+                cusPass.setErrorMessage("")
+            }
+        }
 
-    // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
-    // TODO значение 1 поле пороля  вызыаем геттер так binding.cusPass1.getPasswordField()
-    // TODO значение 2 поле пороля  вызыаем геттер так binding.cusPass2.getPasswordField()
+        btnSendOtp.setOnClickListener{
+            findNavController().navigate(R.id.registrationOtpFragment)
+        }
+    }
 }

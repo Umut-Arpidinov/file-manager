@@ -6,37 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.registration.RegistrationFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="RegistrationFragment \n Экран Атабека"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <kg.o.internlabs.core.custom_views.CustomNumberInputView
         android:id="@+id/cus_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/cus_pass1">
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        app:layout_constraintBottom_toTopOf="@+id/cus_pass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </kg.o.internlabs.core.custom_views.CustomNumberInputView>
+    <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
+        android:id="@+id/cus_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cus_num"
+        app:setPasswordHint="@string/create_new_password" />
 
     <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
         android:id="@+id/cus_pass1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/cus_pass2" />
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cus_pass"
+        app:setPasswordHint="@string/confirm_password" />
 
-    <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
-        android:id="@+id/cus_pass2"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_32dp"
+        android:layout_marginStart="@dimen/margin_28dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_28dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:text="@string/terms_and_conditions"
+        android:textAppearance="@style/hint"
+        android:textColorLink="@color/magenta_1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_send_otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <kg.o.internlabs.core.custom_views.CustomButtonView
+        android:id="@+id/btn_send_otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_margin="@dimen/margin_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:text="@string/sign_in" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
