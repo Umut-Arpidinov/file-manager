@@ -29,7 +29,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginEndBinding {
-         return FragmentLoginEndBinding.inflate(inflater)
+        return FragmentLoginEndBinding.inflate(inflater)
     }
 
     override fun initView() {
@@ -37,52 +37,54 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     }
 
-    override fun initListener() = with(binding){
     override fun initViewModel() {
+        super.initViewModel()
         initObserver()
     }
 
+
     private fun initObserver() {
-        safeFlowGather {
-          viewModel.movieState.collectLatest {
-              when (it) {
-                  is ApiState.Success -> {
-                      Log.d("Ray", it.data.toString())
-                  }
-                  is ApiState.Failure -> {
-                      Log.d("Ray", it.msg.toString())
+            safeFlowGather {
+                viewModel.movieState.collectLatest {
+                    when (it) {
+                        is ApiState.Success -> {
+                            Log.d("Ray", it.data.toString())
+                        }
+                        is ApiState.Failure -> {
+                            Log.d("Ray", it.msg.toString())
 
-                  }
-                  ApiState.Loading -> {
-                      Log.d("Ray", "Loading ")
-                  }
-              }
-          }
-        }
-    }
-
-    fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
+                        }
+                        ApiState.Loading -> {
+                            Log.d("Ray", "Loading ")
+                        }
+                    }
+                }
             }
         }
-    }
 
-    override fun initListener() {
-        super.initListener()
-        // setting watchers
-        cusNum.setInterface(this@LoginEndFragment)
-        cusPass.setInterface(this@LoginEndFragment)
-    }
+        fun safeFlowGather(action: suspend () -> Unit) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    action()
+                }
+            }
+        }
 
+        override fun initListener() = with(binding) {
+            super.initListener()
+            // setting watchers
+
+            cusNum.setInterface(this@LoginEndFragment)
+            cusPass.setInterface(this@LoginEndFragment)
+
+            val reg = RegisterEntity(msisdn = "996702270242", password = "1234567890")
+            viewModel.loginUser(reg)
+        }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty
         complexWatcher()
 
-        val reg= RegisterEntity(msisdn = "996702270242", password = "1234567890")
-        viewModel.loginUser(reg)
 
 //        val navHostFragment = requireActivity().supportFragmentManager
 //            .findFragmentById(R.id.nav_host) as NavHostFragment
@@ -96,9 +98,11 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     }
 
     // следить за двумя полями одновременно
-    private fun complexWatcher() = with(binding){
-        println("num ------"+isNumberNotEmpty)
-        println("pass ------"+isPasswordNotEmpty)
+
+
+    fun complexWatcher() = with(binding) {
+        println("num ------" + isNumberNotEmpty)
+        println("pass ------" + isPasswordNotEmpty)
         println("--------------------------")
         // TODO Здесь можно управлять кнопкой если isNumberNotEmpty && isPasswordNotEmpty true то...
         // TODO так можно переключать кнопку
@@ -108,3 +112,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
     // TODO чтобы получить значение пороля вызыаем геттер так binding.cusPass.getPasswordField()
 }
+
+
+
+

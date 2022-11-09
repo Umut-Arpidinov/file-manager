@@ -8,10 +8,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
-import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.core.custom_views.OtpHelper
+import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
@@ -19,25 +18,16 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegistrationOtpFragment :
-    BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>() {
+    BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>(), OtpHelper {
     private val prefs: StoragePreferences by lazy {
         StoragePreferences(requireContext())
     }
-
-    BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>(), OtpHelper {
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentRegistrationOtpBinding {
         return FragmentRegistrationOtpBinding.inflate(inflater)
-    }
-
-    override fun initListener() {
-        super.initListener()
-        //подключаем листенер
-        //cusOtp.setInterface(this@RegistrationOtpFragment)
-
     }
 
     override fun initViewModel() {
@@ -49,13 +39,13 @@ class RegistrationOtpFragment :
         viewModel.checkOtp(reg)
     }
 
-        fun safeFlowGather(action: suspend () -> Unit) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    action()
-                }
+    fun safeFlowGather(action: suspend () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                action()
             }
         }
+    }
 
     fun initObserver() {
         safeFlowGather {
@@ -77,6 +67,8 @@ class RegistrationOtpFragment :
                 }
             }
         }
+    }
+
     override fun sendOtpAgain() {
         //TODO если смс не пришла то можно обратно отсяда запросить код заново
     }
@@ -85,3 +77,5 @@ class RegistrationOtpFragment :
         //TODO смотрить за полями для ввода отп кода
     }
 }
+
+

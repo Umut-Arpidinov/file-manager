@@ -36,10 +36,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         return FragmentRegistrationBinding.inflate(inflater)
     }
 
-    override fun initListener() = with(binding){
-    override fun initView() {
-        super.initView()
-    }
+
 
     override fun initViewModel() {
         initObserver()
@@ -72,9 +69,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         }
     }
 
-    override fun initListener() {
+    override fun initListener() = with(binding) {
         super.initListener()
-
         val reg = RegisterEntity(msisdn = "996500997007", password = "1234", password2 = "1234")
         viewModel.registerUser(reg)
 
