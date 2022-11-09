@@ -1,7 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.view.LayoutInflater
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +31,12 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         cusPass.setInterface(this@LoginEndFragment)
         btn.buttonAvailability(false)
 
+        btn.setOnClickListener {
+            findNavController().navigate(R.id.mainFragment)
+        }
+        btnPdf.setOnClickListener {
+            findNavController().navigate(R.id.pdfFragment)
+        }
     }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
@@ -46,16 +51,13 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     // следить за двумя полями одновременно
     private fun complexWatcher() = with(binding) {
-
         if (isNumberNotEmpty&&isPasswordNotEmpty){
             btn.buttonAvailability(true)
         } else {
             btn.buttonAvailability(false)
-            cusPass.setErrorMessage(getString(kg.o.internlabs.core.R.string.incorrect_password))
-            forgotPassword.visibility = View.VISIBLE
+                // cusPass.setErrorMessage(getString(kg.o.internlabs.core.R.string.incorrect_password))
         }
-        println(cusNum.getVales() + " number")
-        println(cusPass.getPasswordField() + " password")
+
 
         println("num ------" + isNumberNotEmpty)
         println("pass ------" + isPasswordNotEmpty)
@@ -63,9 +65,6 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         // TODO Здесь можно управлять кнопкой если isNumberNotEmpty && isPasswordNotEmpty true то...
         // TODO так можно переключать кнопку
         //btnSendOtp.buttonAvailability(isNumberNotEmpty && isPasswordNotEmpty)
-        btnPdf.setOnClickListener {
-            findNavController().navigate(R.id.pdfFragment)
-        }
     }
     // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
     // TODO чтобы получить значение пороля вызыаем геттер так binding.cusPass.getPasswordField()

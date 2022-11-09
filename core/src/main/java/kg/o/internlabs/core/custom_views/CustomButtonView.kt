@@ -75,7 +75,7 @@ class CustomButtonView : ConstraintLayout {
             with(customTxt) {
                 isEnabled = false
                 setBackgroundResource(R.color.green_3)
-                isClickable = false
+                isClickable = true
             }
         }
 

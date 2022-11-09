@@ -12,16 +12,17 @@
         tools:layout="@layout/fragment_main" >
     </fragment>
     <fragment
-        android:id="@+id/loginEndFragment"
+        android:id="@+id/loginStartFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginEndFragment"
         android:label="fragment_login_start"
         tools:layout="@layout/fragment_login_start" >
     </fragment>
     <fragment
-        android:id="@+id/loginStartFragment"
+        android:id="@+id/loginEndFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginStartFragment"
         android:label="fragment_login_end"
         tools:layout="@layout/fragment_login_end" >
+
     </fragment>
     <fragment
         android:id="@+id/registrationOtpFragment"
