@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
+import kg.o.internlabs.core.custom_views.OtpHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
-import kg.o.internlabs.core.custom_views.OtpResend
+import kg.o.internlabs.omarket.R
 
 @AndroidEntryPoint
-class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(), OtpResend {
 class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(),
-    NumberInputHelper, PasswordInputHelper {
+    NumberInputHelper, PasswordInputHelper, OtpHelper  {
 
     private var isNumberNotEmpty = false
     private var isPasswordNotEmpty = false
@@ -43,19 +44,13 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     override fun initListener() = with(binding){
         super.initListener()
 
-        binding.otp.setInterface(this)
+        binding.otp.setInterface(this@LoginEndFragment)
 
         binding.btnOtp.setOnClickListener {
             println( binding.otp.getValues())
             binding.otp.setError("Niene")
         }
-//        val navHostFragment = requireActivity().supportFragmentManager
-//            .findFragmentById(R.id.nav_host) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        navController.navigate(R.id.mainFragment)
-        // setting watchers
-        cusNum.setInterface(this@LoginEndFragment)
-        cusPass.setInterface(this@LoginEndFragment)
+
     }
 
 
@@ -87,10 +82,11 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         println("Would you not mind to send me, the otp one more time?")
         Toast.makeText(requireContext(), "Would you not mind to send me, the otp one more time?",
         Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.mainFragment)
     }
 
-    override fun watcher(empty: Boolean) {
-        println("--jj------$empty")
+    override fun watcher(notEmpty: Boolean) {
+        println("--jj------$notEmpty")
     }
 
 }
