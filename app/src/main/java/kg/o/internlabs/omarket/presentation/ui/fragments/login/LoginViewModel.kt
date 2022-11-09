@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
+import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.usecases.LoginUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +21,7 @@ class LoginViewModel @Inject constructor(
     private val _movieState = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
     val movieState = _movieState.asStateFlow()
 
-    fun loginUser(reg: RegisterDto){
+    fun loginUser(reg: RegisterEntity){
             viewModelScope.launch {
                 useCase(reg).collectLatest {
                     when(it){

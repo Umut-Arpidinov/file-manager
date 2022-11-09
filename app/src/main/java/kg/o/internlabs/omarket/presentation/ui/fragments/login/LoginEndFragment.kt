@@ -11,6 +11,7 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
+import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -58,7 +59,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     override fun initListener() {
         super.initListener()
 
-        val reg= RegisterDto(msisdn = "996702270242", password = "1234567890")
+        val reg= RegisterEntity(msisdn = "996702270242", password = "1234567890")
         viewModel.loginUser(reg)
 
 //        val navHostFragment = requireActivity().supportFragmentManager

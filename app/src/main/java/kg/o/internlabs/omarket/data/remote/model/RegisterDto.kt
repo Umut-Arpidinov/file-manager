@@ -1,6 +1,7 @@
 package kg.o.internlabs.omarket.data.remote.model
 
 import com.google.gson.annotations.SerializedName
+import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 
 data class RegisterDto(
     @SerializedName("access_token")

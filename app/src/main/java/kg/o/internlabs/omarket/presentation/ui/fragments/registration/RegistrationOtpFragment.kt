@@ -12,18 +12,19 @@ import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
+import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegistrationOtpFragment :
-    BaseFragment<FragmentRegistrationOtpBinding, RegistrationOtpViewModel>() {
+    BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>() {
     private val prefs: StoragePreferences by lazy {
         StoragePreferences(requireContext())
     }
 
-    override val viewModel: RegistrationOtpViewModel by lazy {
-        ViewModelProvider(this)[RegistrationOtpViewModel::class.java]
+    override val viewModel: RegistrationViewModel by lazy {
+        ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentRegistrationOtpBinding {
@@ -39,25 +40,25 @@ class RegistrationOtpFragment :
     }
 
     override fun initListener() {
-        val reg = RegisterDto(msisdn = "996500997007", otp = "7197")
+        val reg = RegisterEntity(msisdn = "996500997007", otp = "7197")
         viewModel.checkOtp(reg)
     }
 
-    fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
+        fun safeFlowGather(action: suspend () -> Unit) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    action()
+                }
             }
         }
-    }
 
     fun initObserver() {
         safeFlowGather {
-            viewModel.movieState.collectLatest {
+            viewModel.checkOtp.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        prefs.otp = it.data.accessToken
-                        Log.d("Ray", prefs.otp.toString())
+                        prefs.refreshToken = it.data.refreshToken
+                        Log.d("Ray", prefs.refreshToken.toString())
 
                         Log.d("Ray", it.data.toString())
                     }

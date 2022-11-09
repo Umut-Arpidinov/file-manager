@@ -1,7 +1,6 @@
 package kg.o.internlabs.omarket.data.remote
 
 
-import androidx.lifecycle.LiveData
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -17,12 +16,6 @@ interface ApiService {
     suspend fun checkOtp(
         @Body otp: RegisterDto?
     ): Response<RegisterDto>
-
-    @POST("api/market-auth/check-otp/")
-    suspend fun checkOtpLiveData(
-        @Body otp: RegisterDto?
-    ): LiveData<RegisterDto>
-
 
     @POST("api/market-auth/refresh-token/")
     suspend fun refreshToken(
