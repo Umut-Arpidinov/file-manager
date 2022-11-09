@@ -67,7 +67,6 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
             findNavController().navigate(R.id.pdfFragment)
         }
     }
-
     // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
     // TODO чтобы получить значение пороля вызыаем геттер так binding.cusPass.getPasswordField()
 }
