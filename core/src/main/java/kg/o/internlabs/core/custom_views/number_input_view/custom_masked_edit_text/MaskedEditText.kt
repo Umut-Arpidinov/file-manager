@@ -8,8 +8,13 @@ import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import kg.o.internlabs.core.custom_views.NumberInputHelper
 
 class MaskedEditText : AppCompatEditText, TextWatcher {
+    private var textWatcher: NumberInputHelper? = null
+    private var fieldsNumber = 0
+    private var fieldValues = ""
+
     private var mask: String? = null
     private lateinit var rawToMask: IntArray
     private var rawText: RawText = RawText()
@@ -35,6 +40,13 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         cleanUp()
         attributes.recycle()
     }
+
+    fun setInterface(textWatcher: NumberInputHelper, fieldsNumber: Int) {
+        this.textWatcher = textWatcher
+        this.fieldsNumber = fieldsNumber
+    }
+
+    fun getValues() = fieldValues
 
     private fun cleanUp() {
         initialized = false
@@ -123,6 +135,8 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        textWatcher?.numberWatcher(s[s.length-1] != 'X', fieldsNumber)
+        fieldValues = s.toString()
         var quantity = count
         if (!editingOnChanged && editingBefore) {
             editingOnChanged = true

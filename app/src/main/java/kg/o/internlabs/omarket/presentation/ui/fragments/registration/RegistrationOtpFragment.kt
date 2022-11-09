@@ -11,6 +11,7 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
+import kg.o.internlabs.core.custom_views.OtpHelper
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
@@ -23,6 +24,7 @@ class RegistrationOtpFragment :
         StoragePreferences(requireContext())
     }
 
+    BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>(), OtpHelper {
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
@@ -31,8 +33,11 @@ class RegistrationOtpFragment :
         return FragmentRegistrationOtpBinding.inflate(inflater)
     }
 
-    override fun initView() {
-        super.initView()
+    override fun initListener() {
+        super.initListener()
+        //подключаем листенер
+        //cusOtp.setInterface(this@RegistrationOtpFragment)
+
     }
 
     override fun initViewModel() {
@@ -72,5 +77,11 @@ class RegistrationOtpFragment :
                 }
             }
         }
+    override fun sendOtpAgain() {
+        //TODO если смс не пришла то можно обратно отсяда запросить код заново
+    }
+
+    override fun watcher(notEmpty: Boolean) {
+        //TODO смотрить за полями для ввода отп кода
     }
 }

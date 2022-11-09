@@ -26,6 +26,10 @@ class CustomNumberInputView : ConstraintLayout {
         }
     }
 
+    fun setInterface(textWatcher: NumberInputHelper, fieldsNumber: Int = 0) {
+        binding.enterNumberEditText.setInterface(textWatcher, fieldsNumber)
+    }
+
     private fun setHintText(state: String) = with(binding) {
         val numberNotFound = context.getString(R.string.number_mistake)
         val enterNumber = context.getString(R.string.enter_number)
@@ -50,6 +54,8 @@ class CustomNumberInputView : ConstraintLayout {
             }
         }
     }
+
+    fun getVales() = binding.enterNumberEditText.getValues()
 
     private fun cancelImageLogic() = with(binding) {
         val enterNumber = context.getString(R.string.enter_number)

@@ -8,6 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
+import kg.o.internlabs.core.custom_views.NumberInputHelper
+import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
@@ -16,7 +18,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>() {
+class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(),
+    NumberInputHelper, PasswordInputHelper {
+
+    private var isNumberNotEmpty = false
+    private var isPasswordNotEmpty = false
+
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
@@ -25,6 +32,12 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
          return FragmentLoginEndBinding.inflate(inflater)
     }
 
+    override fun initView() {
+        super.initView()
+
+    }
+
+    override fun initListener() = with(binding){
     override fun initViewModel() {
         initObserver()
     }
@@ -58,6 +71,15 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     override fun initListener() {
         super.initListener()
+        // setting watchers
+        cusNum.setInterface(this@LoginEndFragment)
+        cusPass.setInterface(this@LoginEndFragment)
+    }
+
+
+    override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
+        isNumberNotEmpty = notEmpty
+        complexWatcher()
 
         val reg= RegisterEntity(msisdn = "996702270242", password = "1234567890")
         viewModel.loginUser(reg)
@@ -67,4 +89,22 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 //        val navController = navHostFragment.navController
 //        navController.navigate(R.id.mainFragment)
     }
+
+    override fun passwordWatcher(notEmpty: Boolean, fieldsNumber: Int) {
+        isPasswordNotEmpty = notEmpty
+        complexWatcher()
+    }
+
+    // следить за двумя полями одновременно
+    private fun complexWatcher() = with(binding){
+        println("num ------"+isNumberNotEmpty)
+        println("pass ------"+isPasswordNotEmpty)
+        println("--------------------------")
+        // TODO Здесь можно управлять кнопкой если isNumberNotEmpty && isPasswordNotEmpty true то...
+        // TODO так можно переключать кнопку
+        //btnSendOtp.buttonAvailability(isNumberNotEmpty && isPasswordNotEmpty)
+    }
+
+    // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
+    // TODO чтобы получить значение пороля вызыаем геттер так binding.cusPass.getPasswordField()
 }

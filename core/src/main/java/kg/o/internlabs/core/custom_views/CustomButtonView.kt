@@ -51,14 +51,30 @@ class CustomButtonView : ConstraintLayout {
     }
 
     //when process is finished
-    fun buttonFinished() {
-        binding.progressBar.visibility = GONE
-        binding.customTxt.visibility = VISIBLE
+    fun buttonFinished() = with(binding){
+        progressBar.visibility = GONE
+        cardViewBtn.isClickable = false
+        with(customTxt) {
+            visibility = VISIBLE
+            isClickable = false
+        }
     }
 
     //button clickable or not
-    fun buttonAvailability(state: Boolean) {
-        if (state) binding.customTxt.setBackgroundResource(R.color.green_1)
-        else binding.customTxt.setBackgroundResource(R.color.green_3)
+    fun buttonAvailability(state: Boolean) = with(binding){
+        if (state) {
+            cardViewBtn.isClickable = false
+            with(customTxt) {
+                setBackgroundResource(R.color.green_1)
+                isClickable = false
+            }
+        }
+        else {
+            with(customTxt) {
+                isEnabled = false
+                setBackgroundResource(R.color.green_3)
+            }
+        }
+
     }
 }
