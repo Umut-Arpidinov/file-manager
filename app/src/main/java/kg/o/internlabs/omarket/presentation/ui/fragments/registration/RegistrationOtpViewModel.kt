@@ -3,7 +3,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
-import kg.o.internlabs.omarket.common.ApiState
+import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.Register
 import kg.o.internlabs.omarket.domain.usecases.CheckOtpUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,10 +33,3 @@ class RegistrationOtpViewModel @Inject constructor(
         }
     }
 }
-
-
-data class CheckOtpState(
-    val data: Register = Register(),
-    val error: String = "",
-    val isLoading: Boolean = false
-)

@@ -1,6 +1,6 @@
-package kg.o.internlabs.omarket.base
+package kg.o.internlabs.core.base
 
-import kg.o.internlabs.omarket.common.ApiState
+import kg.o.internlabs.core.common.ApiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import retrofit2.Response

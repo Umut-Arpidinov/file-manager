@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.common
+package kg.o.internlabs.core.common
 
 sealed class ApiState<out T> {
 
@@ -17,11 +17,11 @@ sealed class ApiState<out T> {
         }
     }
 
-    fun<T,R> ApiState<T>.map(transform:(T)->R):ApiState<R>{
+    fun<T,R> ApiState<T>.map(transform:(T)->R): ApiState<R> {
         return when(this){
-            is ApiState.Success -> ApiState.Success(transform(data))
-            is ApiState.Failure -> ApiState.Failure(msg)
-            ApiState.Loading -> ApiState.Loading
+            is Success -> Success(transform(data))
+            is Failure -> Failure(msg)
+            Loading -> Loading
         }
     }
 

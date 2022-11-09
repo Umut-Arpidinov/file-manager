@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kg.o.internlabs.omarket.domain.repository.CheckOtpRepository
-import kg.o.internlabs.omarket.domain.repository.CheckOtpRepositoryImpl
+import kg.o.internlabs.omarket.data.repository.CheckOtpRepositoryImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)

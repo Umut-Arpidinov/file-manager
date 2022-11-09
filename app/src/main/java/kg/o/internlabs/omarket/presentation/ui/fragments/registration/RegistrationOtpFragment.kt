@@ -9,7 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.data.local.prefs.StoragePreferences
-import kg.o.internlabs.omarket.common.ApiState
+import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.Register
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kotlinx.coroutines.flow.collectLatest
