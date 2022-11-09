@@ -1,5 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -13,8 +14,10 @@ import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
 @AndroidEntryPoint
 class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(),
     NumberInputHelper, PasswordInputHelper {
+
     private var isNumberNotEmpty = false
     private var isPasswordNotEmpty = false
+    private var args: LoginEndFragmentArgs? = null
 
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
@@ -24,6 +27,19 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         return FragmentLoginEndBinding.inflate(inflater)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        args = LoginEndFragmentArgs.fromBundle(requireArguments())
+    }
+
+    override fun initView() {
+        super.initView()
+
+        println(args?.number)
+
+    }
+
+    override fun initListener() = with(binding){
     override fun initListener() = with(binding) {
         super.initListener()
         // setting watchers
@@ -66,6 +82,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         // TODO так можно переключать кнопку
         //btnSendOtp.buttonAvailability(isNumberNotEmpty && isPasswordNotEmpty)
     }
+
     // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
     // TODO чтобы получить значение пороля вызыаем геттер так binding.cusPass.getPasswordField()
 }
