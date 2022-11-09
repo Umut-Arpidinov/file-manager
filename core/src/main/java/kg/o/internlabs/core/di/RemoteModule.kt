@@ -1,9 +1,12 @@
 package kg.o.internlabs.core.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -48,5 +51,9 @@ object RemoteModule {
             .addInterceptor(authInterceptor())
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun providesStoragePreferences(@ApplicationContext context: Context) = StoragePreferences(context)
 
 }

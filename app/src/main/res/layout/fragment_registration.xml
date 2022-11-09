@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.registration.RegistrationFragment">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="RegistrationFragment \n Экран Атабека"
         android:textAlignment="center"
-        android:textSize="30sp"/>
-</FrameLayout>
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <kg.o.internlabs.core.custom_views.CustomNumberInputView
+        android:id="@+id/cus_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/cus_pass1">
+
+    </kg.o.internlabs.core.custom_views.CustomNumberInputView>
+
+    <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
+        android:id="@+id/cus_pass1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/cus_pass2" />
+
+    <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
+        android:id="@+id/cus_pass2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

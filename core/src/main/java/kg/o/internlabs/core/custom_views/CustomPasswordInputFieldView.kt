@@ -8,10 +8,15 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.addTextChangedListener
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomPasswordInputViewBinding
 
 class CustomPasswordInputFieldView : ConstraintLayout {
+
+    private var textWatcher: PasswordInputHelper? = null
+    private var fieldNumber = 0
+
     private val binding = CustomPasswordInputViewBinding.inflate(LayoutInflater.from(context),
         this, true)
 
@@ -26,7 +31,20 @@ class CustomPasswordInputFieldView : ConstraintLayout {
             }
             recycle()
             initClick()
+            initWatcher()
         }
+    }
+
+
+    private fun initWatcher() {
+        binding.passwordInputField.addTextChangedListener {
+            textWatcher?.passwordWatcher(it.toString().length > 8, fieldNumber)
+        }
+    }
+
+    fun setInterface(textWatcher: PasswordInputHelper, fieldNumber: Int = 0) {
+        this.textWatcher = textWatcher
+        this.fieldNumber = fieldNumber
     }
 
     fun setMessage(message: String) = with(binding){
@@ -68,5 +86,4 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         }
     }
     fun getPasswordField(): String = binding.passwordInputField.text.toString()
-
 }
