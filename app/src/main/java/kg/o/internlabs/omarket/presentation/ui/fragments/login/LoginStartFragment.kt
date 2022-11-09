@@ -2,8 +2,6 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavAction
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
@@ -31,31 +29,20 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
     override fun initListener() = with(binding) {
         super.initListener()
 
-        // setting watcher
         cusNum.setInterface(this@LoginStartFragment)
-        //findNavController().navigate(R.id.loginEndFragment)
+
         cusBtnReg.setOnClickListener {
-            println("clicked reg")
             findNavController().navigate(R.id.registrationFragment)
         }
         cusBtnEnter.setOnClickListener {
-            println("clicked enter")
-
-                // val act = NavAction(R.id.loginEndFragment)
-            //val directions = act.navOptions
-            /*val amount = //amountTv.text.toString().toInt()
-
-            val action = SpecifyAmountFragmentDirections.confirmationAction(amount)*/
-            findNavController().navigate(R.id.loginEndFragment)
+            findNavController().navigate(
+                LoginStartFragmentDirections
+                    .goLoginEnd(binding.cusNum.getVales())
+            )
         }
-
     }
-
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         binding.cusBtnEnter.buttonAvailability(notEmpty)
     }
-
-
-    // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
 }

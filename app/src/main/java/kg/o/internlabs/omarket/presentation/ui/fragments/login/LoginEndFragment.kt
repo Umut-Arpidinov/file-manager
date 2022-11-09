@@ -1,5 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,6 +15,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     private var isNumberNotEmpty = false
     private var isPasswordNotEmpty = false
+    private var args: LoginEndFragmentArgs? = null
 
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
@@ -23,8 +25,15 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
          return FragmentLoginEndBinding.inflate(inflater)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        args = LoginEndFragmentArgs.fromBundle(requireArguments())
+    }
+
     override fun initView() {
         super.initView()
+
+        println(args?.number)
 
     }
 
