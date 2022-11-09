@@ -15,7 +15,7 @@
     </style>
 
     <style name="SplashScreenTheme" parent="Theme.OMarket">
-        <item name="android:windowBackground">@drawable/bg_theme_splash</item>
+<!--        <item name="android:windowBackground">@drawable/bg_theme_splash</item>-->
     </style>
 
 </resources>
