@@ -15,17 +15,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <kg.o.internlabs.core.custom_views.CustomButtonView
-        android:id="@+id/cus_btn1"
+        android:id="@+id/cus_btn_reg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:text="@string/log_in"
         android:layout_margin="@dimen/margin_16dp"
-        app:layout_constraintBottom_toTopOf="@id/cus_btn2"/>
+        app:layout_constraintBottom_toTopOf="@id/cus_btn_enter"/>
 
     <kg.o.internlabs.core.custom_views.CustomButtonView
-        android:id="@+id/cus_btn2"
+        android:id="@+id/cus_btn_enter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:text="@string/enter"
         android:layout_margin="@dimen/margin_16dp"
-        app:layout_constraintTop_toBottomOf="@id/cus_btn1"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

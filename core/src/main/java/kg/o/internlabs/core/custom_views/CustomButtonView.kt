@@ -82,6 +82,7 @@ class CustomButtonView : ConstraintLayout {
                 cardViewBtn.isClickable = false
                 with(customTxt) {
                     setBackgroundResource(R.color.gray_5)
+                    setTextColor(resources.getColor(R.color.black_1, null))
                     isClickable = false
                 }
             }

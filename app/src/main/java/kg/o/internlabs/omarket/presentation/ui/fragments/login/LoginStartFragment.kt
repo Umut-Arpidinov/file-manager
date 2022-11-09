@@ -2,6 +2,8 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavAction
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
@@ -10,19 +12,20 @@ import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
 
 @AndroidEntryPoint
-class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>(), NumberInputHelper {
+class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>(),
+    NumberInputHelper {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginStartBinding {
-         return FragmentLoginStartBinding.inflate(inflater)
+        return FragmentLoginStartBinding.inflate(inflater)
     }
+
     override fun initView() = with(binding) {
         super.initView()
-        cusBtn1.buttonAvailability(false)
-        cusBtn2.buttonAvailability(0)
-
+        cusBtnEnter.buttonAvailability(false)
+        cusBtnReg.buttonAvailability(0)
     }
 
     override fun initListener() = with(binding) {
@@ -30,15 +33,28 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
 
         // setting watcher
         cusNum.setInterface(this@LoginStartFragment)
-        findNavController().navigate(R.id.loginEndFragment)
+        //findNavController().navigate(R.id.loginEndFragment)
+        cusBtnReg.setOnClickListener {
+            println("clicked reg")
+            findNavController().navigate(R.id.registrationFragment)
+        }
+        cusBtnEnter.setOnClickListener {
+            println("clicked enter")
+
+                // val act = NavAction(R.id.loginEndFragment)
+            //val directions = act.navOptions
+            /*val amount = //amountTv.text.toString().toInt()
+
+            val action = SpecifyAmountFragmentDirections.confirmationAction(amount)*/
+            findNavController().navigate(R.id.loginEndFragment)
+        }
+
     }
 
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
-        // TODO Здесь можно управлять кнопкой если button.clickable = notEmpty
-        // TODO если поле номера введен не полностью notEmpty = false
+        binding.cusBtnEnter.buttonAvailability(notEmpty)
     }
-
 
 
     // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
