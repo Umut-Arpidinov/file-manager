@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.Register
+import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -39,7 +39,7 @@ class RegistrationOtpFragment :
     }
 
     override fun initListener() {
-        val reg = Register(msisdn = "996500997007", otp = "7197")
+        val reg = RegisterDto(msisdn = "996500997007", otp = "7197")
         viewModel.checkOtp(reg)
     }
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.Register
+import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.usecases.CheckOtpUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,10 +17,10 @@ import javax.inject.Inject
 class RegistrationOtpViewModel @Inject constructor(
     private val useCase: CheckOtpUseCase
 ) : BaseViewModel() {
-    private val _movieState = MutableStateFlow<ApiState<Register>>(ApiState.Loading)
+    private val _movieState = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
     val movieState = _movieState.asStateFlow()
 
-    fun checkOtp(reg: Register) {
+    fun checkOtp(reg: RegisterDto) {
         viewModelScope.launch {
             useCase(reg).collectLatest {
                 when (it) {

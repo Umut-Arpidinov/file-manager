@@ -1,10 +1,37 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
+import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.data.remote.model.RegisterDto
+import kg.o.internlabs.omarket.domain.usecases.LoginUserUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(): BaseViewModel() {
-    // TODO: Implement the ViewModel
+class LoginViewModel @Inject constructor(
+   private val useCase: LoginUserUseCase
+): BaseViewModel() {
+    private val _movieState = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
+    val movieState = _movieState.asStateFlow()
+
+    fun loginUser(reg: RegisterDto){
+            viewModelScope.launch {
+                useCase(reg).collectLatest {
+                    when(it){
+                        is ApiState.Success -> _movieState.value = it
+                        is ApiState.Failure -> _movieState.value = it
+                        ApiState.Loading -> {
+
+                        }
+                    }
+                }
+            }
+    }
+
 }

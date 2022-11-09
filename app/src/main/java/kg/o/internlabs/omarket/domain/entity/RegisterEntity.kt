@@ -1,11 +1,7 @@
-package kg.o.internlabs.omarket.data.remote.model
+package kg.o.internlabs.omarket.domain.entity
 
-import com.google.gson.annotations.SerializedName
-
-data class Register(
-    @SerializedName("access_token")
+data class RegisterEntity(
     val accessToken: String? = null,
-    @SerializedName("refresh_token")
     val refreshToken: String? = null,
     val message: String? = null,
     val msisdn: String? = null,
@@ -14,5 +10,3 @@ data class Register(
     val password: String? = null,
     val password2: String? = null,
 )
-
-
