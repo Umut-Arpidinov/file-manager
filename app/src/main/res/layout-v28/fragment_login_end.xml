@@ -77,7 +77,7 @@
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="@string/log_in"
+        app:text="@string/enter"
         android:layout_marginHorizontal="@dimen/margin_16dp"
         android:layout_marginBottom="@dimen/margin_16dp"
         app:layout_constraintBottom_toBottomOf="parent"

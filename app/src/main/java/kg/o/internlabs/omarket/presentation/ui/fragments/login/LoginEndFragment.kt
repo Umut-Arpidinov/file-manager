@@ -34,12 +34,10 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     override fun initView() {
         super.initView()
-
         println(args?.number)
 
     }
 
-    override fun initListener() = with(binding){
     override fun initListener() = with(binding) {
         super.initListener()
         // setting watchers
@@ -67,11 +65,12 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     // следить за двумя полями одновременно
     private fun complexWatcher() = with(binding) {
-        if (isNumberNotEmpty&&isPasswordNotEmpty){
+
+        if (isNumberNotEmpty && isPasswordNotEmpty) {
             btn.buttonAvailability(true)
         } else {
             btn.buttonAvailability(false)
-                // cusPass.setErrorMessage(getString(kg.o.internlabs.core.R.string.incorrect_password))
+            // cusPass.setErrorMessage(getString(kg.o.internlabs.core.R.string.incorrect_password))
         }
 
 
