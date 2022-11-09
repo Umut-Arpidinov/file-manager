@@ -37,5 +37,6 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         // TODO если поле номера введен не полностью notEmpty = false
     }
 
+
     // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
 }
