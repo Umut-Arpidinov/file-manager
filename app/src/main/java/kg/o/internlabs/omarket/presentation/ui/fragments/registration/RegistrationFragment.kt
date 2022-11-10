@@ -19,7 +19,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
     private var isFirstPasswordNotEmpty = false
     private var isSecondPasswordNotEmpty = false
 
-
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
@@ -38,10 +37,10 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         btnSendOtp.buttonAvailability(false)
 
         btnSendOtp.setOnClickListener {
-            findNavController().navigate(RegistrationFragmentDirections.goToOtp(cusNum.getVales()))
+            findNavController().navigate(RegistrationFragmentDirections
+                .goToOtp(cusNum.getVales(), cusPass1.getPasswordField()))
         }
     }
-
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty
