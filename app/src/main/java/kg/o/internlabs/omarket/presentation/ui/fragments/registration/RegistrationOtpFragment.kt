@@ -9,10 +9,12 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.CustomTextWatcher
 import kg.o.internlabs.core.custom_views.OtpResend
 import kg.o.internlabs.omarket.R
+import kg.o.internlabs.core.custom_views.OtpHelper
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 
 @AndroidEntryPoint
 class RegistrationOtpFragment :
+    BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>(), OtpHelper {
     BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>(), OtpResend {
 
     private var isOtpNotEmpty = false
