@@ -23,3 +23,13 @@ fun StoragePreferences.getStringFlow(key: String, defValue: String?) =
 
 fun StoragePreferences.getStringSetFlow(key: String, defValue: Set<String>?) =
     getFlow(key) { sharedPreference.getStringSet(key, defValue) }
+
+fun SharedPreferences.put(key: String, value: Any?) {
+    edit().apply {
+        when (value) {
+            is String -> putString(key, value.toString())
+            is Int -> putInt(key, value)
+            is Boolean -> putBoolean(key, value)
+        }
+    }.apply()
+}

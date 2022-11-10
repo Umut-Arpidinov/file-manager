@@ -20,15 +20,15 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-              .baseUrl(API_URL)
-              .addConverterFactory(GsonConverterFactory.create())
-              .client(okHttpClient)
-              .build()
+            .baseUrl("https://staging-api-market.o.kg/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
     }
 
     @Provides
     @Singleton
-    fun providePostApi(retrofit: Retrofit): ApiService? {
+    fun providePostApi(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 
