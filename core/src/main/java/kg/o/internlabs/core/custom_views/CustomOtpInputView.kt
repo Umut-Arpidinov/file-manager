@@ -10,7 +10,6 @@ import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomOtpInputViewBinding
 
@@ -40,25 +39,25 @@ class CustomOtpInputView : ConstraintLayout {
     }
 
     private fun initClickers() = with(binding) {
-        clicked(etOtp1)
-        clicked(etOtp2)
-        clicked(etOtp3)
-        clicked(etOtp4)
+        clicked(etOtp1, 1)
+        clicked(etOtp2, 2)
+        clicked(etOtp3, 3)
+        clicked(etOtp4, 4)
 
         tvResentButton.setOnClickListener {
             otpHelper?.sendOtpAgain()
         }
     }
 
-    private fun clicked(et: EditText) {
+    private fun clicked(et: EditText, i: Int) {
         et.setOnClickListener {
             with(it) {
-                isFocusable = true
+                //isFocusable = true
                 isFocusableInTouchMode = true
                 requestFocus()
             }
         }
-        initWatcher()
+        //initWatcher()
     }
 
     fun setInterface(otpHelper: OtpHelper) {
@@ -66,98 +65,88 @@ class CustomOtpInputView : ConstraintLayout {
     }
 
     private fun initWatcher() = with(binding) {
-        watch(etOtp1, etOtp2, etOtp1, 1)
-        watch(etOtp2, etOtp3, etOtp1, 2)
-        watch(etOtp3, etOtp4, etOtp2, 3)
-        watch(etOtp4, etOtp3, etOtp3, 4)
+        watch(etOtp1, 1)
+        watch(etOtp2, 2)
+        watch(etOtp3, 3)
+        watch(etOtp4, 4)
+
     }
 
-    private fun watch(et1: EditText, et2: EditText, et: EditText, cellsPosition: Int) {
-        var before = false
-        var after: Boolean
+    private fun watch(et1: EditText, cellsPosition: Int) {
         et1.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                before = s.isNullOrEmpty()
-                println(".start.... $start")
-                println(".count.... $count")
-                println("..after... $after")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+                if (before > count) {
+                    deleting(cellsPosition)
+                } else {
+                    adding(cellsPosition)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
-                after = s.isNullOrEmpty()
-                println("***** $after   *** $before")
-                if (before) {
-                    if (cellsPosition != 4) {
-                        normalFocus(et1, et2, cellsPosition)
-                    }
-                } else {
-                    abnormalFocus(et1, et2, et, cellsPosition)
-                }
-                //watcher()
+                watcher()
             }
         })
     }
 
-    private fun watch(et: EditText) {
-        et.addTextChangedListener {
-            et.isFocusable = it.toString().isEmpty()
-            hasFourthValue = !et.isFocusable
-        }
-        //watcher()
+    private fun adding(cellsPosition: Int) = with(binding){
+        println("adding  $cellsPosition")
+        when(cellsPosition) {
+            1 -> {
+                etOtp1.isFocusable = false
+                etOtp2.isFocusable = true
+                etOtp2.requestFocus()
+            }
+            2 -> {
+                etOtp2.isFocusable = false
+                etOtp3.isFocusable = true
+                etOtp3.requestFocus()
+            }
+            3 -> {
+                etOtp3.isFocusable = false
+                etOtp4.isFocusable = true
+                etOtp4.requestFocus()
+            }
 
-    }
-
-    private fun normalFocus(et1: EditText, et2: EditText, cellsPosition: Int) {
-        println("normal")
-        et1.isFocusable = false
-        with(et2) {
-            isFocusable = !et1.isFocusable
-            requestFocus()
-            when (cellsPosition) {
-                1 -> hasFirstValue = isFocusable
-                2 -> hasSecondValue = isFocusable
-                3 -> hasThirdValue = isFocusable
+            else -> {
+                etOtp1.isFocusable = true
             }
         }
-        //watcher()
     }
 
-    private fun abnormalFocus(et1: EditText, et2: EditText, et: EditText, cellsPosition: Int) {
-        println("abnormal  $cellsPosition  $et1    $et2")
-        if (cellsPosition != 1) {
-            if (cellsPosition == 4) {
-                et1.isFocusable = false
-                with(et2) {
-                    isFocusable = !et1.isFocusable
-                    requestFocus()
-                    hasThirdValue = isFocusable
-                }
-            } else {
-                et1.isFocusable = false
-                with(et) {
-                    isFocusable = !et1.isFocusable
-                    requestFocus()
-                    when (cellsPosition) {
-                        2 -> hasFirstValue = isFocusable
-                        3 -> hasSecondValue = isFocusable
-                    }
-                }
+    private fun deleting(cellsPosition: Int) = with(binding){
+        println("deleting   $cellsPosition")
+        when(cellsPosition) {
+            2 -> {
+               etOtp2.isFocusable = false
+                etOtp1.isFocusable = true
+                etOtp1.requestFocus()
             }
-        } else {
-            watch(et1)
+            3 -> {
+               etOtp3.isFocusable = false
+                etOtp2.isFocusable = true
+                etOtp2.requestFocus()
+            }
+            4 -> {
+               etOtp4.isFocusable = false
+                etOtp3.isFocusable = true
+                etOtp3.requestFocus()
+            }
+
+            else -> {
+                etOtp1.isFocusable = true
+            }
         }
-        //watcher()
     }
 
     private fun watcher() {
         println("length     ${getValues().length}")
         if (getValues().length != 4) {
             setError()
+            otpHelper?.watcher(false)
             return
         }
         println("length2     ${getValues().length}")
