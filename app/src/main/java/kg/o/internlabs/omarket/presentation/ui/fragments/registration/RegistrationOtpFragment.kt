@@ -6,15 +6,26 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.OtpHelper
 import kg.o.internlabs.core.data.local.prefs.StoragePreferences
+import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import retrofit2.Response
+
+private fun <T> getError(response: Response<T>): String {
+    val gson = Gson()
+    val type = object : TypeToken<RegisterDto>() {}.type
+    val errorResponse: RegisterDto? = gson.fromJson(response.errorBody()?.charStream(), type)
+    return errorResponse?.message.toString()
+}
 
 @AndroidEntryPoint
 class RegistrationOtpFragment :
@@ -22,6 +33,7 @@ class RegistrationOtpFragment :
     private val prefs: StoragePreferences by lazy {
         StoragePreferences(requireContext())
     }
+
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
@@ -35,11 +47,11 @@ class RegistrationOtpFragment :
     }
 
     override fun initListener() {
-        val reg = RegisterEntity(msisdn = "996500997007", otp = "7197")
+        val reg = RegisterEntity(msisdn = "996500997007", otp = "02305")
         viewModel.checkOtp(reg)
     }
 
-    fun safeFlowGather(action: suspend () -> Unit) {
+  private fun safeFlowGather(action: suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 action()
@@ -52,25 +64,23 @@ class RegistrationOtpFragment :
             viewModel.checkOtp.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        prefs.refreshToken = it.data.refreshToken
-                        Log.d("Ray", prefs.refreshToken.toString())
-
-                        Log.d("Ray", it.data.toString())
+                        Log.d("Ray", "success 400")
                     }
                     is ApiState.Failure -> {
-                        Log.d("Ray", it.msg.toString())
 
+                        Log.d("Ray", it.msg.toString())
                     }
                     ApiState.Loading -> {
-                        Log.d("Ray", "Loading epta")
+                        //TODO показать прогресс бар
                     }
                 }
             }
         }
     }
 
+
     override fun sendOtpAgain() {
-        //TODO если смс не пришла то можно обратно отсяда запросить код заново
+        //TODO если смс не пришла то можно обратно отсюда запросить код заново
     }
 
     override fun watcher(notEmpty: Boolean) {

@@ -1,5 +1,8 @@
 package kg.o.internlabs.core.base
 
+import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kg.o.internlabs.core.common.ApiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -8,7 +11,7 @@ import java.io.IOException
 
 abstract class BaseRepository {
 
-     fun <T> safeApiCall(
+    fun <T> safeApiCall(
         apiCall: suspend () -> Response<T>
     ): Flow<ApiState<T>> = flow {
         emit(ApiState.Loading)

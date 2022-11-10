@@ -12,7 +12,7 @@ interface ApiService {
         @Body reg: RegisterDto?
     ): Response<RegisterDto>
 
-    @POST("api/market-auth/check-otp/")
+    @POST("/api/market-auth/check-otp/")
     suspend fun checkOtp(
         @Body otp: RegisterDto?
     ): Response<RegisterDto>
