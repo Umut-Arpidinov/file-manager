@@ -32,7 +32,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         cusNum.setInterface(this@LoginStartFragment)
 
         cusBtnReg.setOnClickListener {
-            findNavController().navigate(R.id.mainFragment)
+            findNavController().navigate(R.id.registrationFragment)
         }
         cusBtnEnter.setOnClickListener {
             findNavController().navigate(
