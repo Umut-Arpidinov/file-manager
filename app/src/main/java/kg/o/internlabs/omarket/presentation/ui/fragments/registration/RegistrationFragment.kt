@@ -9,7 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
-import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 
@@ -70,7 +69,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
             } else {
                 btnSendOtp.buttonAvailability(false)
                 textButton.visibility = View.GONE
-                cusPass1.setErrorMessage("Пароли не совпадают")
+                cusPass1.setErrorMessage(getString(kg.o.internlabs.core.R.string.password_not_match))
                 cusPass.setErrorMessage("")
             }
         } else {
