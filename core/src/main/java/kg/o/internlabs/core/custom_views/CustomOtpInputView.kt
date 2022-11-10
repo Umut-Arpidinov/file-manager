@@ -10,12 +10,10 @@ import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomOtpInputViewBinding
 
 class CustomOtpInputView : ConstraintLayout {
-    private var errorMessage = ""
     private var otpHelper: OtpHelper? = null
     private var hasFirstValue = false
     private var hasSecondValue = false
@@ -89,6 +87,7 @@ class CustomOtpInputView : ConstraintLayout {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
+                watch()
                 after = s.isNullOrEmpty()
                 println("***** $after   *** $before")
                 if (before) {
@@ -104,12 +103,15 @@ class CustomOtpInputView : ConstraintLayout {
         })
     }
 
+    private fun watch() {
+        otpHelper?.watcher(getValues().length == 4)
+    }
+
     private fun watch(et: EditText) {
-        et.addTextChangedListener {
-            et.isFocusable = it.toString().isEmpty()
-            hasFourthValue = !et.isFocusable
-            watcher()
-        }
+        println("4   watch")
+        et.isFocusable = false
+        hasFourthValue = !et.isFocusable
+        watcher()
     }
 
     private fun normalFocus(et1: EditText, et2: EditText, cellsPosition: Int) {
@@ -135,7 +137,7 @@ class CustomOtpInputView : ConstraintLayout {
                 with(et2) {
                     isFocusable = !et1.isFocusable
                     requestFocus()
-                    hasThirdValue = isFocusable
+                    hasThirdValue = !isFocusable
                 }
             } else {
                 et1.isFocusable = false
@@ -155,15 +157,15 @@ class CustomOtpInputView : ConstraintLayout {
     }
 
     private fun watcher() {
-        otpHelper?.watcher(hasFirstValue && hasSecondValue && hasThirdValue && hasFourthValue)
-        errorWatcher()
-    }
-
- private fun errorWatcher() {
-        if(!hasFirstValue || !hasSecondValue || !hasThirdValue || !hasFourthValue){
-            setError(errorMessage)
+        println("1   $hasFirstValue")
+        println("2   $hasSecondValue")
+        println("3   $hasThirdValue")
+        println("4   $hasFourthValue")
+        if (getValues().length != 4) {
+            setError("")
         }
     }
+
     fun setOtp(values: String) = with(binding) {
         if (values.length > 4 || values.length < 4) return
         etOtp1.setText(values[0].toString())
@@ -173,7 +175,6 @@ class CustomOtpInputView : ConstraintLayout {
     }
 
     fun setError(error: String = "") = with(binding) {
-        errorMessage = error
         with(tvResponseMessage) {
             text = error
             isVisible = error.isNotEmpty()

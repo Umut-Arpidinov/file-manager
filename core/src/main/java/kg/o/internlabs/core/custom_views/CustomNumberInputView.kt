@@ -57,10 +57,6 @@ class CustomNumberInputView : ConstraintLayout {
 
     fun getVales() = binding.enterNumberEditText.getValues()
 
-    fun setInterface(textWatcher: CustomTextWatcher, fieldsNumber: Int) {
-        binding.enterNumberEditText.setInterface(textWatcher, fieldsNumber)
-    }
-
     private fun cancelImageLogic() = with(binding) {
         val enterNumber = context.getString(R.string.enter_number)
         numberInputCancelImage.setOnClickListener {
