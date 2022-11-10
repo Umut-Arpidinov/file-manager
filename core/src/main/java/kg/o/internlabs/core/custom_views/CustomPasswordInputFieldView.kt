@@ -38,7 +38,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
 
     private fun initWatcher() {
         binding.passwordInputField.addTextChangedListener {
-            textWatcher?.passwordWatcher(it.toString().length > 8, fieldNumber)
+            textWatcher?.passwordWatcher(it.toString().length >= 8, fieldNumber)
         }
     }
 

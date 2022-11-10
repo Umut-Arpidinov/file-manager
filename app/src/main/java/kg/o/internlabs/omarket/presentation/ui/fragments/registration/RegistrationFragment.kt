@@ -36,8 +36,12 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         cusNum.setInterface(this@RegistrationFragment)
         cusPass.setInterface(this@RegistrationFragment)
         cusPass1.setInterface(this@RegistrationFragment, 1)
-        cusPass.setMessage("Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы")
+        cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
         btnSendOtp.buttonAvailability(false)
+
+        btnSendOtp.setOnClickListener {
+            findNavController().navigate(R.id.registrationOtpFragment)
+        }
     }
 
 
@@ -53,14 +57,15 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         }
         complexWatcher()
     }
+
     // следить за тремья полями одновременно
     private fun complexWatcher() = with(binding) {
-        if(isNumberNotEmpty && isFirstPasswordNotEmpty && isSecondPasswordNotEmpty) {
-            if(cusPass.getPasswordField() == cusPass1.getPasswordField()){
+        if (isNumberNotEmpty && isFirstPasswordNotEmpty && isSecondPasswordNotEmpty) {
+            if (cusPass.getPasswordField() == cusPass1.getPasswordField()) {
                 btnSendOtp.buttonAvailability(true)
                 textButton.visibility = View.VISIBLE
                 textButton.movementMethod = LinkMovementMethod.getInstance()
-                cusPass.setMessage("Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы")
+                cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
                 cusPass1.setMessage("")
             } else {
                 btnSendOtp.buttonAvailability(false)
@@ -70,13 +75,9 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
             }
         } else {
             btnSendOtp.buttonAvailability(false)
-        }
-
-
-
-        btnSendOtp.setOnClickListener{
-            findNavController().navigate(R.id.registrationOtpFragment)
-
+            textButton.visibility = View.GONE
+            cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
+            cusPass1.setMessage("")
         }
     }
 }

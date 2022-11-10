@@ -51,7 +51,7 @@ class CustomButtonView : ConstraintLayout {
     }
 
     //when process is finished
-    fun buttonFinished() = with(binding){
+    fun buttonFinished() = with(binding) {
         progressBar.visibility = GONE
         cardViewBtn.isClickable = false
         with(customTxt) {
@@ -60,24 +60,19 @@ class CustomButtonView : ConstraintLayout {
         }
     }
 
-    //button clickable or not
-    fun buttonAvailability(state: Boolean) = with(binding){
+    fun buttonAvailability(state: Boolean) = with(binding) {
         if (state) {
             cardViewBtn.isClickable = false
             with(customTxt) {
-                isEnabled = true
                 setBackgroundResource(R.color.green_1)
                 isClickable = false
             }
-        }
-        else {
-            cardViewBtn.isClickable = true
+        } else {
             with(customTxt) {
                 isEnabled = false
                 setBackgroundResource(R.color.green_3)
-                isClickable = false
+                isClickable = true
             }
         }
-
     }
 }

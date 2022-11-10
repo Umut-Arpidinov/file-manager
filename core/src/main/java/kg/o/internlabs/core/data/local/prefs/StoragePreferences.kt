@@ -12,6 +12,7 @@ class StoragePreferences(context: Context) : BasePrefs(context) {
     var isTokenExpired: Boolean? by PrefDelegate(sharedPreference, Keys.IS_TOKEN_EXPIRED, false)
     var isLoggedIn: Boolean? by PrefDelegate(sharedPreference, Keys.LOGIN_STATUS, false)
     var theme: Boolean by PrefDelegate(sharedPreference, Keys.THEME, false)
+    var msisdn: String? by PrefDelegate(sharedPreference, Keys.MSISDN, "")
 
 
     object Keys {
@@ -20,5 +21,6 @@ class StoragePreferences(context: Context) : BasePrefs(context) {
         const val ACCESS_TOKEN = "ACCESS_TOKEN"
         const val REFRESH_TOKEN = "REFRESH_TOKEN"
         const val IS_TOKEN_EXPIRED = "IS_TOKEN_EXPIRED"
+        const val MSISDN = "MSISDN"
     }
 }
