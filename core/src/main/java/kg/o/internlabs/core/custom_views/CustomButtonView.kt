@@ -60,6 +60,7 @@ class CustomButtonView : ConstraintLayout {
         }
     }
 
+    //button clickable or not
     fun buttonAvailability(state: Boolean) = with(binding) {
         if (state) {
             cardViewBtn.isClickable = false

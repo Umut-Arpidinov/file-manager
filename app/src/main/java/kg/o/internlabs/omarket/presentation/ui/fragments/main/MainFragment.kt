@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
-import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 
@@ -22,6 +21,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     override fun initView() {
         super.initView()
-        findNavController().navigate(R.id.registrationFragment)
+        //findNavController().navigate(R.id.loginStartFragment)
     }
 }

@@ -2,7 +2,6 @@
 <resources>
     <declare-styleable name="CustomNumberInputView">
         <attr name="helperTextState" format="string"/>
-
     </declare-styleable>
 
     <declare-styleable name="CustomOtpInputView">
