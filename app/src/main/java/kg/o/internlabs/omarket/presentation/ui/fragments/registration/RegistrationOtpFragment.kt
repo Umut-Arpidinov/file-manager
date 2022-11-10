@@ -2,9 +2,11 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.OtpHelper
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 
 @AndroidEntryPoint
@@ -20,6 +22,14 @@ class RegistrationOtpFragment :
 
     override fun initListener() {
         super.initListener()
+        binding.cusOtp.setInterface(this)
+        binding.cucBtn.buttonAvailability(false)
+
+
+        binding.cucBtn.setOnClickListener {
+            binding.cusOtp.setError("Er")
+        }
+
         //подключаем листенер
         //cusOtp.setInterface(this@RegistrationOtpFragment)
 
@@ -27,9 +37,11 @@ class RegistrationOtpFragment :
 
     override fun sendOtpAgain() {
         //TODO если смс не пришла то можно обратно отсяда запросить код заново
+        findNavController().navigate(R.id.mainFragment)
     }
 
     override fun watcher(notEmpty: Boolean) {
-        //TODO смотрить за полями для ввода отп кода
+        println("-----$notEmpty")
+        binding.cucBtn.buttonAvailability(notEmpty)
     }
 }

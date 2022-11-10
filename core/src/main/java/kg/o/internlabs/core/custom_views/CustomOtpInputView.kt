@@ -39,12 +39,6 @@ class CustomOtpInputView : ConstraintLayout {
         }
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
-
     private fun initClickers() = with(binding) {
         clicked(etOtp1)
         clicked(etOtp2)
@@ -64,6 +58,7 @@ class CustomOtpInputView : ConstraintLayout {
                 requestFocus()
             }
         }
+        initWatcher()
     }
 
     fun setInterface(otpHelper: OtpHelper) {
@@ -84,22 +79,26 @@ class CustomOtpInputView : ConstraintLayout {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 before = s.isNullOrEmpty()
+                println(".start.... $start")
+                println(".count.... $count")
+                println("..after... $after")
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
 
             override fun afterTextChanged(s: Editable?) {
                 after = s.isNullOrEmpty()
                 println("***** $after   *** $before")
                 if (before) {
-                    if (cellsPosition == 4) {
-                        watch(et1)
-                    } else {
+                    if (cellsPosition != 4) {
                         normalFocus(et1, et2, cellsPosition)
                     }
                 } else {
                     abnormalFocus(et1, et2, et, cellsPosition)
                 }
+                //watcher()
             }
         })
     }
@@ -108,8 +107,9 @@ class CustomOtpInputView : ConstraintLayout {
         et.addTextChangedListener {
             et.isFocusable = it.toString().isEmpty()
             hasFourthValue = !et.isFocusable
-            watcher()
         }
+        //watcher()
+
     }
 
     private fun normalFocus(et1: EditText, et2: EditText, cellsPosition: Int) {
@@ -123,8 +123,8 @@ class CustomOtpInputView : ConstraintLayout {
                 2 -> hasSecondValue = isFocusable
                 3 -> hasThirdValue = isFocusable
             }
-            watcher()
         }
+        //watcher()
     }
 
     private fun abnormalFocus(et1: EditText, et2: EditText, et: EditText, cellsPosition: Int) {
@@ -148,22 +148,23 @@ class CustomOtpInputView : ConstraintLayout {
                     }
                 }
             }
-            watcher()
         } else {
             watch(et1)
         }
+        //watcher()
     }
 
     private fun watcher() {
-        otpHelper?.watcher(hasFirstValue && hasSecondValue && hasThirdValue && hasFourthValue)
-        errorWatcher()
+        println("length     ${getValues().length}")
+        if (getValues().length != 4) {
+            setError()
+            return
+        }
+        println("length2     ${getValues().length}")
+
+        otpHelper?.watcher(true)
     }
 
- private fun errorWatcher() {
-        if(!hasFirstValue || !hasSecondValue || !hasThirdValue || !hasFourthValue){
-            setError(errorMessage)
-        }
-    }
     fun setOtp(values: String) = with(binding) {
         if (values.length > 4 || values.length < 4) return
         etOtp1.setText(values[0].toString())
@@ -173,7 +174,6 @@ class CustomOtpInputView : ConstraintLayout {
     }
 
     fun setError(error: String = "") = with(binding) {
-        errorMessage = error
         with(tvResponseMessage) {
             text = error
             isVisible = error.isNotEmpty()

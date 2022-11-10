@@ -28,6 +28,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
 
     override fun initListener() = with(binding) {
         super.initListener()
+        findNavController().navigate(R.id.registrationOtpFragment)
 
         cusNum.setInterface(this@LoginStartFragment)
 

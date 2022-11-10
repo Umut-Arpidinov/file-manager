@@ -5,10 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.registration.RegistrationOtpFragment">
 
-    <TextView
+
+    <kg.o.internlabs.core.custom_views.CustomOtpInputView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="RegistrationOtpFragment \n Экран Медера"
-        android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:id="@+id/cus_otp"
+        android:layout_marginTop="@dimen/margin_40dp"
+        android:layout_height="wrap_content" />
+
+    <kg.o.internlabs.core.custom_views.CustomButtonView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cuc_btn"
+        android:layout_gravity="bottom"/>
+
+
 </FrameLayout>
