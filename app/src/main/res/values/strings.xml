@@ -8,4 +8,6 @@
     <string name="hello">hi Hello</string>
     <string name="log_in">Зарегестрироваться</string>
     <string name="enter">Войти</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

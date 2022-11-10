@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CustomNumberInputView">
-        <attr name="helperTextState" format="string" />
+        <attr name="helperTextState" format="string"/>
     </declare-styleable>
     <declare-styleable name="CustomOtpInputView">
         <attr name="set_otp" format="integer" />
