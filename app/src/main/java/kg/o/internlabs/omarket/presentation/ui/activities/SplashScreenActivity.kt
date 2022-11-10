@@ -2,16 +2,13 @@ package kg.o.internlabs.omarket.presentation.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
-import android.view.WindowInsets
-import android.view.WindowManager
+import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseActivity
 import kg.o.internlabs.core.base.BaseViewModel
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.ActivitySplashScreenBinding
 import kg.o.internlabs.omarket.presentation.ui.activities.activities.main_activity.MainActivity
 
@@ -41,8 +38,6 @@ class SplashScreenActivity : BaseActivity<BaseViewModel, ActivitySplashScreenBin
     }
 
     private fun makeFullScreen() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 }
