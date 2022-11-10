@@ -9,7 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 
 @AndroidEntryPoint
@@ -39,7 +38,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         btnSendOtp.buttonAvailability(false)
 
         btnSendOtp.setOnClickListener {
-            findNavController().navigate(R.id.registrationOtpFragment)
+            findNavController().navigate(RegistrationFragmentDirections.goToOtp(cusNum.getVales()))
         }
     }
 
