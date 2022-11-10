@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomBtnViewBinding
 
@@ -81,11 +82,9 @@ class CustomButtonView : ConstraintLayout {
         when (state) {
             0 -> {
                 cardViewBtn.isClickable = false
-                with(customTxt) {
-                    setBackgroundResource(R.color.gray_5)
-                    setTextColor(resources.getColor(R.color.black_1, null))
-                    isClickable = false
-                }
+                customTxt.isVisible = false
+                customTxtGray.isVisible = true
+                customTxtGray.isClickable = false
             }
             else -> {
                 with(customTxt) {

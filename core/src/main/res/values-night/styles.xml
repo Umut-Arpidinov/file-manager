@@ -20,4 +20,10 @@
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:textColor">@color/blue_1</item>
     </style>
+
+
+    <style name="ButtonGray" >
+        <item name="android:background">@color/black_3</item>
+        <item name="android:textColor">@color/white_1</item>
+    </style>
 </resources>
