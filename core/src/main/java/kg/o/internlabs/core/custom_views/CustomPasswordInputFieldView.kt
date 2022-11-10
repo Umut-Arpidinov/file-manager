@@ -50,7 +50,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     fun setMessage(message: String) = with(binding){
         passwordHelper.text  = message
         setFrameDefaultColor()
-        setTextDefaultColor()
+
     }
 
     fun setErrorMessage(message: String) = with(binding){
@@ -78,10 +78,6 @@ class CustomPasswordInputFieldView : ConstraintLayout {
 
     private fun setTextErrorColor() = with(binding) {
         passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.red_1))
-    }
-
-    private fun setTextDefaultColor() = with(binding) {
-        passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.black_4))
     }
 
     private fun initClick() = with(binding) {

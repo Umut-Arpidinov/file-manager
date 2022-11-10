@@ -5,20 +5,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomOtpInputViewBinding
 
+
 class CustomOtpInputView : ConstraintLayout {
     private var otpHelper: OtpHelper? = null
-    private var hasFirstValue = false
-    private var hasSecondValue = false
-    private var hasThirdValue = false
-    private var hasFourthValue = false
 
     private val binding = CustomOtpInputViewBinding.inflate(
         LayoutInflater.from(context),
@@ -37,31 +36,27 @@ class CustomOtpInputView : ConstraintLayout {
         }
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
-
     private fun initClickers() = with(binding) {
-        clicked(etOtp1)
-        clicked(etOtp2)
-        clicked(etOtp3)
-        clicked(etOtp4)
+        clicked(etOtp1, 1)
+        clicked(etOtp2, 2)
+        clicked(etOtp3, 3)
+        clicked(etOtp4, 4)
 
         tvResentButton.setOnClickListener {
             otpHelper?.sendOtpAgain()
         }
     }
 
-    private fun clicked(et: EditText) {
+    private fun clicked(et: EditText, i: Int) {
         et.setOnClickListener {
+            println("---==------==----")
             with(it) {
                 isFocusable = true
                 isFocusableInTouchMode = true
                 requestFocus()
             }
         }
+        //initWatcher()
     }
 
     fun setInterface(otpHelper: OtpHelper) {
@@ -69,101 +64,102 @@ class CustomOtpInputView : ConstraintLayout {
     }
 
     private fun initWatcher() = with(binding) {
-        watch(etOtp1, etOtp2, etOtp1, 1)
-        watch(etOtp2, etOtp3, etOtp1, 2)
-        watch(etOtp3, etOtp4, etOtp2, 3)
-        watch(etOtp4, etOtp3, etOtp3, 4)
+        watch(etOtp1, 1)
+        watch(etOtp2, 2)
+        watch(etOtp3, 3)
+        watch(etOtp4, 4)
+
     }
 
-    private fun watch(et1: EditText, et2: EditText, et: EditText, cellsPosition: Int) {
-        var before = false
-        var after: Boolean
+    private fun watch(et1: EditText, cellsPosition: Int) {
         et1.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                before = s.isNullOrEmpty()
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (before > count) {
+                    deleting(cellsPosition)
+                } else {
+                    adding(cellsPosition)
+                }
+            }
 
             override fun afterTextChanged(s: Editable?) {
-                watch()
-                after = s.isNullOrEmpty()
-                println("***** $after   *** $before")
-                if (before) {
-                    if (cellsPosition == 4) {
-                        watch(et1)
-                    } else {
-                        normalFocus(et1, et2, cellsPosition)
-                    }
-                } else {
-                    abnormalFocus(et1, et2, et, cellsPosition)
-                }
+                watcher()
             }
         })
     }
 
-    private fun watch() {
-        otpHelper?.watcher(getValues().length == 4)
-    }
-
-    private fun watch(et: EditText) {
-        println("4   watch")
-        et.isFocusable = false
-        hasFourthValue = !et.isFocusable
-        watcher()
-    }
-
-    private fun normalFocus(et1: EditText, et2: EditText, cellsPosition: Int) {
-        println("normal")
-        et1.isFocusable = false
-        with(et2) {
-            isFocusable = !et1.isFocusable
-            requestFocus()
-            when (cellsPosition) {
-                1 -> hasFirstValue = isFocusable
-                2 -> hasSecondValue = isFocusable
-                3 -> hasThirdValue = isFocusable
+    private fun adding(cellsPosition: Int) = with(binding){
+        println("adding  $cellsPosition")
+        when(cellsPosition) {
+            1 -> {
+                etOtp1.isFocusable = false
+                etOtp2.isFocusable = true
+                etOtp2.requestFocus()
             }
-            watcher()
+            2 -> {
+                etOtp2.isFocusable = false
+                etOtp3.isFocusable = true
+                etOtp3.requestFocus()
+            }
+            3 -> {
+                etOtp3.isFocusable = false
+                etOtp4.isFocusable = true
+                etOtp4.requestFocus()
+            }
+
+            else -> {
+                etOtp1.isFocusable = true
+            }
         }
     }
 
-    private fun abnormalFocus(et1: EditText, et2: EditText, et: EditText, cellsPosition: Int) {
-        println("abnormal  $cellsPosition  $et1    $et2")
-        if (cellsPosition != 1) {
-            if (cellsPosition == 4) {
-                et1.isFocusable = false
-                with(et2) {
-                    isFocusable = !et1.isFocusable
-                    requestFocus()
-                    hasThirdValue = !isFocusable
-                }
-            } else {
-                et1.isFocusable = false
-                with(et) {
-                    isFocusable = !et1.isFocusable
-                    requestFocus()
-                    when (cellsPosition) {
-                        2 -> hasFirstValue = isFocusable
-                        3 -> hasSecondValue = isFocusable
-                    }
-                }
+    private fun deleting(cellsPosition: Int) = with(binding){
+        println("deleting   $cellsPosition")
+        when(cellsPosition) {
+            2 -> {
+               etOtp2.isFocusable = false
+                etOtp2.clearFocus()
+                etOtp1.isFocusable = true
+                etOtp1.requestFocus()
+                val imm: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm?.showSoftInput(etOtp1, InputMethodManager.SHOW_IMPLICIT)
             }
-            watcher()
-        } else {
-            watch(et1)
+            3 -> {
+               etOtp3.isFocusable = false
+                etOtp3.clearFocus()
+                etOtp2.isFocusable = true
+                etOtp2.requestFocus()
+                val imm: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm?.showSoftInput(etOtp2, InputMethodManager.SHOW_IMPLICIT)
+            }
+            4 -> {
+               etOtp4.isFocusable = false
+                etOtp4.clearFocus()
+                etOtp3.isFocusable = true
+                etOtp3.requestFocus()
+                val imm: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm?.showSoftInput(etOtp3, InputMethodManager.SHOW_IMPLICIT)
+            }
+
+            else -> {
+                etOtp1.isFocusable = true
+            }
         }
     }
 
     private fun watcher() {
-        println("1   $hasFirstValue")
-        println("2   $hasSecondValue")
-        println("3   $hasThirdValue")
-        println("4   $hasFourthValue")
+        println("length     ${getValues().length}")
         if (getValues().length != 4) {
-            setError("")
+            setError()
+            otpHelper?.watcher(false)
+            return
         }
+        println("length2     ${getValues().length}")
+
+        otpHelper?.watcher(true)
     }
 
     fun setOtp(values: String) = with(binding) {

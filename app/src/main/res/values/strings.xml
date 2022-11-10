@@ -6,6 +6,7 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="hello">hi Hello</string>
+    <string name="splash_screen">splash_screen</string>
     <string name="log_in">Зарегистрироваться</string>
     <string name="enter">Войти</string>
     <!-- TODO: Remove or change this placeholder text -->
