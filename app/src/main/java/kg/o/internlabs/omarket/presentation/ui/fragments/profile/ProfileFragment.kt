@@ -8,6 +8,7 @@ import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
+
     override val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(this)[ProfileViewModel::class.java]
     }
@@ -15,6 +16,4 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentProfileBinding {
         return FragmentProfileBinding.inflate(inflater)
     }
-
-
 }

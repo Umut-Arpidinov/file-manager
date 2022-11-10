@@ -1,7 +1,8 @@
 package kg.o.internlabs.core.custom_views
 
 import android.content.Context
-import android.os.CountDownTimer
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.EditText
@@ -9,13 +10,11 @@ import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomOtpInputViewBinding
 
 class CustomOtpInputView : ConstraintLayout {
     private var otpHelper: OtpHelper? = null
-    private var timer = 0L
     private var hasFirstValue = false
     private var hasSecondValue = false
     private var hasThirdValue = false
@@ -32,48 +31,17 @@ class CustomOtpInputView : ConstraintLayout {
             getText(R.styleable.CustomOtpInputView_set_otp)?.let {
                 setOtp(it.toString())
             }
-            getInteger(R.styleable.CustomOtpInputView_set_timer, 10_000).run {
-                timer = this.toLong()
-                startTimer()
-            }
             initWatcher()
             initClickers()
             recycle()
         }
     }
 
-    fun setTimer(value: Long) {
-        timer = value
-        startTimer()
-    }
-
-    private fun startTimer() = with(binding) {
-        tvResentButton.isVisible = false
-        tvTimer.isVisible = true
-        object : CountDownTimer(timer, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val totalTimer = millisUntilFinished / 1000
-                val hours: Int = (totalTimer / 3_600).toInt()
-                val time: String = if (hours > 0) {
-                    String.format(
-                        "%02d:%02d:%02d", hours,
-                        ((totalTimer % 3_600) / 60).toInt(), (totalTimer % 60).toInt()
-                    )
-                } else {
-                    String.format(
-                        "%02d:%02d", ((totalTimer % 3_600) / 60).toInt(),
-                        (totalTimer % 60).toInt()
-                    )
-                }
-                tvTimer.text = time
-            }
-
-            override fun onFinish() {
-                tvTimer.isVisible = false
-                tvResentButton.isVisible = true
-            }
-        }.start()
-    }!!
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     private fun initClickers() = with(binding) {
         clicked(etOtp1)
@@ -83,7 +51,6 @@ class CustomOtpInputView : ConstraintLayout {
 
         tvResentButton.setOnClickListener {
             otpHelper?.sendOtpAgain()
-            startTimer()
         }
     }
 
@@ -102,38 +69,101 @@ class CustomOtpInputView : ConstraintLayout {
     }
 
     private fun initWatcher() = with(binding) {
-        watch(etOtp1, etOtp2, 1)
-        watch(etOtp2, etOtp3, 2)
-        watch(etOtp3, etOtp4, 3)
-        watch(etOtp4)
+        watch(etOtp1, etOtp2, etOtp1, 1)
+        watch(etOtp2, etOtp3, etOtp1, 2)
+        watch(etOtp3, etOtp4, etOtp2, 3)
+        watch(etOtp4, etOtp3, etOtp3, 4)
     }
 
-    private fun watch(et1: EditText, et2: EditText, cellsPosition: Int) {
-        et1.addTextChangedListener {
-            et1.isFocusable = it.toString().isEmpty()
-            with(et2) {
-                isFocusable = !et1.isFocusable
-                requestFocus()
-                when (cellsPosition) {
-                    1 -> hasFirstValue = isFocusable
-                    2 -> hasSecondValue = isFocusable
-                    3 -> hasThirdValue = isFocusable
-                }
-                watcher()
+    private fun watch(et1: EditText, et2: EditText, et: EditText, cellsPosition: Int) {
+        var before = false
+        var after: Boolean
+        et1.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                before = s.isNullOrEmpty()
             }
-        }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                watch()
+                after = s.isNullOrEmpty()
+                println("***** $after   *** $before")
+                if (before) {
+                    if (cellsPosition == 4) {
+                        watch(et1)
+                    } else {
+                        normalFocus(et1, et2, cellsPosition)
+                    }
+                } else {
+                    abnormalFocus(et1, et2, et, cellsPosition)
+                }
+            }
+        })
+    }
+
+    private fun watch() {
+        otpHelper?.watcher(getValues().length == 4)
     }
 
     private fun watch(et: EditText) {
-        et.addTextChangedListener {
-            et.isFocusable = it.toString().isEmpty()
-            hasFourthValue = !et.isFocusable
+        println("4   watch")
+        et.isFocusable = false
+        hasFourthValue = !et.isFocusable
+        watcher()
+    }
+
+    private fun normalFocus(et1: EditText, et2: EditText, cellsPosition: Int) {
+        println("normal")
+        et1.isFocusable = false
+        with(et2) {
+            isFocusable = !et1.isFocusable
+            requestFocus()
+            when (cellsPosition) {
+                1 -> hasFirstValue = isFocusable
+                2 -> hasSecondValue = isFocusable
+                3 -> hasThirdValue = isFocusable
+            }
             watcher()
         }
     }
 
+    private fun abnormalFocus(et1: EditText, et2: EditText, et: EditText, cellsPosition: Int) {
+        println("abnormal  $cellsPosition  $et1    $et2")
+        if (cellsPosition != 1) {
+            if (cellsPosition == 4) {
+                et1.isFocusable = false
+                with(et2) {
+                    isFocusable = !et1.isFocusable
+                    requestFocus()
+                    hasThirdValue = !isFocusable
+                }
+            } else {
+                et1.isFocusable = false
+                with(et) {
+                    isFocusable = !et1.isFocusable
+                    requestFocus()
+                    when (cellsPosition) {
+                        2 -> hasFirstValue = isFocusable
+                        3 -> hasSecondValue = isFocusable
+                    }
+                }
+            }
+            watcher()
+        } else {
+            watch(et1)
+        }
+    }
+
     private fun watcher() {
-        otpHelper?.watcher(hasFirstValue && hasSecondValue && hasThirdValue && hasFourthValue)
+        println("1   $hasFirstValue")
+        println("2   $hasSecondValue")
+        println("3   $hasThirdValue")
+        println("4   $hasFourthValue")
+        if (getValues().length != 4) {
+            setError("")
+        }
     }
 
     fun setOtp(values: String) = with(binding) {
@@ -144,25 +174,33 @@ class CustomOtpInputView : ConstraintLayout {
         etOtp4.setText(values[3].toString())
     }
 
-    fun setError(error: String) = with(binding) {
+    fun setError(error: String = "") = with(binding) {
         with(tvResponseMessage) {
             text = error
-            isVisible = true
+            isVisible = error.isNotEmpty()
         }
-        setErrorBackground()
+        tvResentButton.isVisible = tvResponseMessage.isVisible
+        setErrorBackground(error.isNotEmpty())
     }
 
-    private fun setErrorBackground() = with(binding) {
-        changeBackgroundColor(fl1)
-        changeBackgroundColor(fl2)
-        changeBackgroundColor(fl3)
-        changeBackgroundColor(fl4)
+    private fun setErrorBackground(notEmpty: Boolean) = with(binding) {
+        changeBackgroundColor(fl1, notEmpty)
+        changeBackgroundColor(fl2, notEmpty)
+        changeBackgroundColor(fl3, notEmpty)
+        changeBackgroundColor(fl4, notEmpty)
     }
 
-    private fun changeBackgroundColor(fl: FrameLayout) {
+    private fun changeBackgroundColor(fl: FrameLayout, notEmpty: Boolean) {
+        if (notEmpty) {
+            fl.background = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.bg_custom_view_error_sms, null
+            )
+            return
+        }
         fl.background = ResourcesCompat.getDrawable(
             resources,
-            R.drawable.bg_custom_view_error_sms, null
+            R.drawable.bg_custom_view_sms, null
         )
     }
 

@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="400"
+            android:lineHeight="@dimen/line_16.41dp"
             android:fontFamily="@font/roboto"
             android:text="@string/accept"
             android:textColor="@color/black_5"
@@ -30,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="400"
+            android:lineHeight="@dimen/line_16.41dp"
             android:autoLink="all"
             android:fontFamily="@font/roboto"
             android:text="@string/terms_agreement"
@@ -41,6 +43,7 @@
         android:id="@+id/cus_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_top_40dp"
         app:helperTextState="@string/enter_number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,8 +54,24 @@
         android:id="@+id/cus_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
         app:layout_constraintTop_toBottomOf="@+id/cus_num"
         app:setPasswordHint="@string/enter_password_hint"/>
+
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_password"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_40dp"
+        android:gravity="center"
+        android:textSize="@dimen/text_15sp"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textColor="@color/blue_1"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/cus_pass"/>
 
     <kg.o.internlabs.core.custom_views.CustomButtonView
         android:id="@+id/btn"
@@ -63,6 +82,6 @@
         android:layout_marginBottom="@dimen/margin_16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

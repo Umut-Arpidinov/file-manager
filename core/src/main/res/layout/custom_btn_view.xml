@@ -5,9 +5,8 @@
     android:id="@+id/card_view_btn"
     android:layout_width="match_parent"
     android:layout_height="@dimen/view_height_48dp"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardCornerRadius="@dimen/view_4dp">
+    app:cardCornerRadius="@dimen/corner_radius_12dp">
+
 
     <TextView
         android:id="@+id/custom_txt"
