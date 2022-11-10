@@ -73,10 +73,6 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
             // cusPass.setErrorMessage(getString(kg.o.internlabs.core.R.string.incorrect_password))
         }
 
-
-        println("num ------" + isNumberNotEmpty)
-        println("pass ------" + isPasswordNotEmpty)
-        println("--------------------------")
         // TODO Здесь можно управлять кнопкой если isNumberNotEmpty && isPasswordNotEmpty true то...
         // TODO так можно переключать кнопку
         //btnSendOtp.buttonAvailability(isNumberNotEmpty && isPasswordNotEmpty)
