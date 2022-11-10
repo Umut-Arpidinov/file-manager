@@ -76,4 +76,23 @@ class CustomButtonView : ConstraintLayout {
             }
         }
     }
+
+    fun buttonAvailability(state: Int = 0) = with(binding) {
+        when (state) {
+            0 -> {
+                cardViewBtn.isClickable = false
+                with(customTxt) {
+                    setBackgroundResource(R.color.gray_5)
+                    setTextColor(resources.getColor(R.color.black_1, null))
+                    isClickable = false
+                }
+            }
+            else -> {
+                with(customTxt) {
+                    isEnabled = false
+                    setBackgroundResource(R.color.green_3)
+                }
+            }
+        }
+    }
 }
