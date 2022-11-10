@@ -11,6 +11,7 @@ import android.view.WindowManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseActivity
 import kg.o.internlabs.core.base.BaseViewModel
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.ActivitySplashScreenBinding
 import kg.o.internlabs.omarket.presentation.ui.activities.activities.main_activity.MainActivity
 
@@ -39,15 +40,9 @@ class SplashScreenActivity : BaseActivity<BaseViewModel, ActivitySplashScreenBin
         }, 4000)
     }
 
-    @Suppress("DEPRECATION")
     private fun makeFullScreen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
         }
     }
 }
