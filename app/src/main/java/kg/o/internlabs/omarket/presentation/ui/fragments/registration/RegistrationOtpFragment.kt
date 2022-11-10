@@ -1,6 +1,8 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,6 +14,9 @@ import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 @AndroidEntryPoint
 class RegistrationOtpFragment :
     BaseFragment<FragmentRegistrationOtpBinding, RegistrationViewModel>(), OtpHelper {
+
+    private var args: RegistrationOtpFragmentArgs? = null
+
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
@@ -20,28 +25,35 @@ class RegistrationOtpFragment :
         return FragmentRegistrationOtpBinding.inflate(inflater)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        args = RegistrationOtpFragmentArgs.fromBundle(requireArguments())
+    }
+
+    override fun initView() = with(binding) {
+        super.initView()
+
+        tvInfo.text = requireActivity().getString(R.string.info, args?.number)
+        cusOtp.setInterface(this@RegistrationOtpFragment)
+        btnSendOtp.buttonAvailability(false)
+    }
+
     override fun initListener() {
         super.initListener()
-        binding.cusOtp.setInterface(this)
-        binding.cucBtn.buttonAvailability(false)
-
-
-        binding.cucBtn.setOnClickListener {
-            binding.cusOtp.setError("Er")
+        binding.btnSendOtp.setOnClickListener {
+            findNavController().navigate(R.id.loginStartFragment)
         }
-
-        //подключаем листенер
-        //cusOtp.setInterface(this@RegistrationOtpFragment)
 
     }
 
     override fun sendOtpAgain() {
-        //TODO если смс не пришла то можно обратно отсяда запросить код заново
-        findNavController().navigate(R.id.mainFragment)
+        Toast.makeText(
+            requireContext(), "Would you not mind to send me, the otp one more time?",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun watcher(notEmpty: Boolean) {
-        println("-----$notEmpty")
-        binding.cucBtn.buttonAvailability(notEmpty)
+        binding.btnSendOtp.buttonAvailability(notEmpty)
     }
 }
