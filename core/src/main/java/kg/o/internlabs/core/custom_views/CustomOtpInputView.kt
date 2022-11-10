@@ -53,8 +53,6 @@ class CustomOtpInputView : ConstraintLayout {
         et.setOnClickListener {
             with(it) {
                 //isFocusable = true
-                isFocusableInTouchMode = true
-                requestFocus()
             }
         }
         //initWatcher()
