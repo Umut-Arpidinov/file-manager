@@ -5,21 +5,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomOtpInputViewBinding
 
+
 class CustomOtpInputView : ConstraintLayout {
-    private var errorMessage = ""
     private var otpHelper: OtpHelper? = null
-    private var hasFirstValue = false
-    private var hasSecondValue = false
-    private var hasThirdValue = false
-    private var hasFourthValue = false
 
     private val binding = CustomOtpInputViewBinding.inflate(
         LayoutInflater.from(context),
@@ -51,8 +49,11 @@ class CustomOtpInputView : ConstraintLayout {
 
     private fun clicked(et: EditText, i: Int) {
         et.setOnClickListener {
+            println("---==------==----")
             with(it) {
-                //isFocusable = true
+                isFocusable = true
+                isFocusableInTouchMode = true
+                requestFocus()
             }
         }
         //initWatcher()
@@ -120,18 +121,27 @@ class CustomOtpInputView : ConstraintLayout {
         when(cellsPosition) {
             2 -> {
                etOtp2.isFocusable = false
+                etOtp2.clearFocus()
                 etOtp1.isFocusable = true
                 etOtp1.requestFocus()
+                val imm: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm?.showSoftInput(etOtp1, InputMethodManager.SHOW_IMPLICIT)
             }
             3 -> {
                etOtp3.isFocusable = false
+                etOtp3.clearFocus()
                 etOtp2.isFocusable = true
                 etOtp2.requestFocus()
+                val imm: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm?.showSoftInput(etOtp2, InputMethodManager.SHOW_IMPLICIT)
             }
             4 -> {
                etOtp4.isFocusable = false
+                etOtp4.clearFocus()
                 etOtp3.isFocusable = true
                 etOtp3.requestFocus()
+                val imm: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm?.showSoftInput(etOtp3, InputMethodManager.SHOW_IMPLICIT)
             }
 
             else -> {
