@@ -18,6 +18,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:statusBarColor">@color/black_1</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="background">@color/black_1</item>
     </style>
 
 </resources>
