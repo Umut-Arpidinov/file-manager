@@ -58,7 +58,7 @@
         android:text="@string/terms_and_conditions"
         android:textAppearance="@style/hint"
         android:textColorLink="@color/magenta_1"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/btn_send_otp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

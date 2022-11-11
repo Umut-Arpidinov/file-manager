@@ -55,6 +55,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty
+        
         complexWatcher()
     }
 
