@@ -36,4 +36,9 @@
     <style name="OtpTimer" parent="OTPResentButton">
         <item name="android:textColor">@color/gray_1</item>
     </style>
+
+    <style name="ButtonGray" >
+        <item name="android:background">@color/gray_5</item>
+        <item name="android:textColor">@color/black_1</item>
+    </style>
 </resources>

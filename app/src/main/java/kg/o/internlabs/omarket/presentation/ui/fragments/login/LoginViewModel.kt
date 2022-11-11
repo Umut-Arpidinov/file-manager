@@ -12,12 +12,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kg.o.internlabs.omarket.data.local.prefs.PrefsRepositoryImpl
+import kg.o.internlabs.omarket.domain.usecases.CheckNumberPrefs
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-   private val useCase: LoginUserUseCase
+   private val useCase: LoginUserUseCase,
+   private val repository: PrefsRepositoryImpl
 ): BaseViewModel() {
+    private val checkNumberPrefs = CheckNumberPrefs(repository)
     private val _movieState = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
     val movieState = _movieState.asStateFlow()
 

@@ -12,6 +12,7 @@ import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
@@ -23,6 +24,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     private var isNumberNotEmpty = false
     private var isPasswordNotEmpty = false
+    private var args: LoginEndFragmentArgs? = null
 
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
@@ -32,8 +34,14 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         return FragmentLoginEndBinding.inflate(inflater)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        args = LoginEndFragmentArgs.fromBundle(requireArguments())
+    }
+
     override fun initView() {
         super.initView()
+        println(args?.number)
 
     }
 
@@ -76,20 +84,27 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
             cusNum.setInterface(this@LoginEndFragment)
             cusPass.setInterface(this@LoginEndFragment)
+    override fun initListener() = with(binding) {
+        super.initListener()
+        // setting watchers
+        cusNum.setInterface(this@LoginEndFragment)
+        cusPass.setInterface(this@LoginEndFragment)
+        btn.buttonAvailability(false)
 
             val reg = RegisterEntity(msisdn = "996702270242", password = "1234567890")
             viewModel.loginUser(reg)
         }
+        btn.setOnClickListener {
+            findNavController().navigate(R.id.mainFragment)
+        }
+        btnPdf.setOnClickListener {
+            findNavController().navigate(R.id.pdfFragment)
+        }
+    }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty
         complexWatcher()
-
-
-//        val navHostFragment = requireActivity().supportFragmentManager
-//            .findFragmentById(R.id.nav_host) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        navController.navigate(R.id.mainFragment)
     }
 
     override fun passwordWatcher(notEmpty: Boolean, fieldsNumber: Int) {
@@ -104,6 +119,15 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         println("num ------" + isNumberNotEmpty)
         println("pass ------" + isPasswordNotEmpty)
         println("--------------------------")
+    private fun complexWatcher() = with(binding) {
+
+        if (isNumberNotEmpty && isPasswordNotEmpty) {
+            btn.buttonAvailability(true)
+        } else {
+            btn.buttonAvailability(false)
+            // cusPass.setErrorMessage(getString(kg.o.internlabs.core.R.string.incorrect_password))
+        }
+
         // TODO Здесь можно управлять кнопкой если isNumberNotEmpty && isPasswordNotEmpty true то...
         // TODO так можно переключать кнопку
         //btnSendOtp.buttonAvailability(isNumberNotEmpty && isPasswordNotEmpty)
@@ -112,7 +136,3 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
     // TODO чтобы получить значение пороля вызыаем геттер так binding.cusPass.getPasswordField()
 }
-
-
-
-

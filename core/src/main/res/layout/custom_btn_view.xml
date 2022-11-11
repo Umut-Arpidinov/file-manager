@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_btn"
     android:layout_width="match_parent"
+    app:cardElevation="@dimen/card_elevation_0dp"
     android:layout_height="@dimen/view_height_48dp"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardCornerRadius="@dimen/view_4dp">
+    app:cardCornerRadius="@dimen/corner_radius_12dp">
+
 
     <TextView
         android:id="@+id/custom_txt"
@@ -26,6 +26,24 @@
         android:lineHeight="@dimen/line_16dp"
         android:textColor="@color/white_1"
         android:textSize="@dimen/text_14sp" />
+
+    <TextView
+        android:id="@+id/custom_txt_gray"
+        style="@style/ButtonGray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/roboto"
+        android:textSize="@dimen/text_14sp"
+        android:lineHeight="@dimen/line_16dp"
+        android:textFontWeight="500"
+        android:visibility="gone"
+        android:foreground="@drawable/progress_btn_effect"
+        android:gravity="center"
+        android:text="@string/log_in"
+        tools:targetApi="28" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

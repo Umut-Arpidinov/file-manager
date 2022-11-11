@@ -38,7 +38,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
 
     private fun initWatcher() {
         binding.passwordInputField.addTextChangedListener {
-            textWatcher?.passwordWatcher(it.toString().length > 8, fieldNumber)
+            textWatcher?.passwordWatcher(it.toString().length >= 8, fieldNumber)
         }
     }
 
@@ -49,6 +49,8 @@ class CustomPasswordInputFieldView : ConstraintLayout {
 
     fun setMessage(message: String) = with(binding){
         passwordHelper.text  = message
+        setFrameDefaultColor()
+
     }
 
     fun setErrorMessage(message: String) = with(binding){
@@ -65,6 +67,12 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     private fun setFrameErrorColor() = with(binding) {
         frame.background = ResourcesCompat.getDrawable(
             resources, R.drawable.number_not_ok_style, null
+        )
+    }
+
+    private fun setFrameDefaultColor() = with(binding) {
+        frame.background = ResourcesCompat.getDrawable(
+            resources, R.drawable.number_ok_style, null
         )
     }
 

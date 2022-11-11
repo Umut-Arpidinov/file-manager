@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomBtnViewBinding
 
@@ -51,7 +52,7 @@ class CustomButtonView : ConstraintLayout {
     }
 
     //when process is finished
-    fun buttonFinished() = with(binding){
+    fun buttonFinished() = with(binding) {
         progressBar.visibility = GONE
         cardViewBtn.isClickable = false
         with(customTxt) {
@@ -61,20 +62,36 @@ class CustomButtonView : ConstraintLayout {
     }
 
     //button clickable or not
-    fun buttonAvailability(state: Boolean) = with(binding){
+    fun buttonAvailability(state: Boolean) = with(binding) {
         if (state) {
             cardViewBtn.isClickable = false
             with(customTxt) {
                 setBackgroundResource(R.color.green_1)
                 isClickable = false
             }
-        }
-        else {
+        } else {
             with(customTxt) {
                 isEnabled = false
                 setBackgroundResource(R.color.green_3)
+                isClickable = true
             }
         }
+    }
 
+    fun buttonAvailability(state: Int = 0) = with(binding) {
+        when (state) {
+            0 -> {
+                cardViewBtn.isClickable = false
+                customTxt.isVisible = false
+                customTxtGray.isVisible = true
+                customTxtGray.isClickable = false
+            }
+            else -> {
+                with(customTxt) {
+                    isEnabled = false
+                    setBackgroundResource(R.color.green_3)
+                }
+            }
+        }
     }
 }
