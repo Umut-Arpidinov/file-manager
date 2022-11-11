@@ -69,13 +69,13 @@ class RegistrationOtpFragment :
     override fun initListener() {
         val reg = RegisterEntity(msisdn = "996500997007", otp = "02305")
         viewModel.checkOtp(reg)
-    }
         super.initListener()
         binding.btnSendOtp.setOnClickListener {
             findNavController().navigate(R.id.loginStartFragment)
         }
+    }
 
-  private fun safeFlowGather(action: suspend () -> Unit) {
+    private fun safeFlowGather(action: suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 action()
@@ -115,5 +115,7 @@ class RegistrationOtpFragment :
         binding.btnSendOtp.buttonAvailability(notEmpty)
     }
 }
+
+
 
 

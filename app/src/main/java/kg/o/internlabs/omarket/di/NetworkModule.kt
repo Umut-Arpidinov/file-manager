@@ -8,6 +8,7 @@ import kg.o.internlabs.core.BuildConfig.API_URL
 import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.data.local.prefs.PrefsRepositoryImpl
 import kg.o.internlabs.omarket.data.remote.ApiService
+import kg.o.internlabs.omarket.domain.repository.PrefsRepository
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,12 +32,4 @@ object NetworkModule {
     fun providePostApi(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
-
-    @Provides
-    @Singleton
-    fun providePrefsRepository(context: StoragePreferences) = PrefsRepositoryImpl(context)
-
-  /*  @Provides
-    fun providesAuthRepository(storagePreferences: StoragePreferences, apiAuth: ApiAuth) =
-        AuthRepository(storagePreferences, apiAuth)*/
 }

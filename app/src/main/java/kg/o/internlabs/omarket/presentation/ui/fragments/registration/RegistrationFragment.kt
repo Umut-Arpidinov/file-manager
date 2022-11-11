@@ -37,9 +37,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         return FragmentRegistrationBinding.inflate(inflater)
     }
 
-    override fun initListener() = with(binding) {
-
-
     override fun initViewModel() {
         initObserver()
     }
@@ -76,12 +73,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         val reg = RegisterEntity(msisdn = "996500997007", password = "1234", password2 = "1234")
         viewModel.registerUser(reg)
 
-        /*findNavController().navigate(R.id.registrationOtpFragment)*/
-       /* val navHostFragment = requireActivity().supportFragmentManager
-            .findFragmentById(R.id.nav_host) as NavHostFragment
-        val navController = navHostFragment.navController
-        //navController.navigate(R.id.)*/
-        // setting watchers
         cusNum.setInterface(this@RegistrationFragment)
         cusPass.setInterface(this@RegistrationFragment)
         cusPass1.setInterface(this@RegistrationFragment, 1)
@@ -93,7 +84,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                 .goToOtp(cusNum.getVales(), cusPass1.getPasswordField()))
         }
     }
-
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty

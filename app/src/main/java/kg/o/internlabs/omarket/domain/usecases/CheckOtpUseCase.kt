@@ -9,5 +9,5 @@ import javax.inject.Inject
 class CheckOtpUseCase @Inject constructor(
     private val repo: RegisterRepository
 ) {
-     operator fun invoke(reg: RegisterEntity) = repo.checkOtp(reg)
+    operator fun invoke(reg: RegisterEntity) = repo.checkOtp(reg)
 }

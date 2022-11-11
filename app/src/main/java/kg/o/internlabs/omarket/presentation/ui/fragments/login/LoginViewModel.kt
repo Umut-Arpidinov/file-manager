@@ -6,22 +6,31 @@ import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.domain.usecases.CheckNumberPrefs
 import kg.o.internlabs.omarket.domain.usecases.LoginUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kg.o.internlabs.omarket.data.local.prefs.PrefsRepositoryImpl
-import kg.o.internlabs.omarket.domain.usecases.CheckNumberPrefs
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-   private val useCase: LoginUserUseCase
+   private val useCase: LoginUserUseCase, private val checkNumberPrefs: CheckNumberPrefs
 ): BaseViewModel() {
     private val _movieState = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
+    private val _ate = MutableStateFlow<Boolean>(false)
+    val ate = _ate.asStateFlow()
     val movieState = _movieState.asStateFlow()
+
+
+    fun checkNumber(number: String) {
+        viewModelScope.launch {
+            checkNumberPrefs(number).collectLatest {
+                _ate.value = it
+            }
+        }
+    }
 
     fun loginUser(reg: RegisterEntity){
             viewModelScope.launch {
@@ -36,11 +45,13 @@ class LoginViewModel @Inject constructor(
                 }
             }
     }
+}
 
+/*
 class LoginViewModel @Inject constructor(
     private val repository: PrefsRepositoryImpl
 ) : BaseViewModel() {
 
     private val checkNumberPrefs = CheckNumberPrefs(repository)
 
-}
+}*/

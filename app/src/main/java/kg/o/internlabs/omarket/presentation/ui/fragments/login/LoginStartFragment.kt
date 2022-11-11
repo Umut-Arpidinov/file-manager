@@ -1,13 +1,18 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.view.LayoutInflater
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>(),
@@ -26,6 +31,34 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         cusBtnReg.buttonAvailability(0)
     }
 
+    override fun initViewModel() {
+        super.initViewModel()
+        observe()
+    }
+
+    private fun observe() {
+        safeFlowGather {
+            viewModel.ate.collectLatest {
+                if (it) {
+                    findNavController().navigate(
+                        LoginStartFragmentDirections
+                            .goLoginEnd(binding.cusNum.getVales())
+                    )
+                } else {
+                    println("no00000000000000000000")
+                }
+            }
+        }
+    }
+
+    private fun safeFlowGather(action: suspend () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                action()
+            }
+        }
+    }
+
     override fun initListener() = with(binding) {
         super.initListener()
         cusNum.setInterface(this@LoginStartFragment)
@@ -33,10 +66,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
             findNavController().navigate(R.id.registrationFragment)
         }
         cusBtnEnter.setOnClickListener {
-            findNavController().navigate(
-                LoginStartFragmentDirections
-                    .goLoginEnd(binding.cusNum.getVales())
-            )
+            viewModel.checkNumber(cusNum.getVales())
         }
     }
 

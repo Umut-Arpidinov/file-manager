@@ -50,9 +50,13 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     override fun initListener() = with(binding) {
         super.initListener()
         // setting watchers
+        val reg = RegisterEntity(msisdn = "996702270242", password = "1234567890")
+        viewModel.loginUser(reg)
         cusNum.setInterface(this@LoginEndFragment)
         cusPass.setInterface(this@LoginEndFragment)
         btn.buttonAvailability(false)
+    }
+
     override fun initViewModel() {
         super.initViewModel()
         initObserver()
@@ -60,59 +64,36 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
 
     private fun initObserver() {
-            safeFlowGather {
-                viewModel.movieState.collectLatest {
-                    when (it) {
-                        is ApiState.Success -> {
-                            Log.d("Ray", it.data.toString())
-                        }
-                        is ApiState.Failure -> {
-                            Log.d("Ray", it.msg.toString())
+        safeFlowGather {
+            viewModel.movieState.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        Log.d("Ray", it.data.toString())
+                    }
+                    is ApiState.Failure -> {
+                        Log.d("Ray", it.msg.toString())
 
-                        }
-                        ApiState.Loading -> {
-                            Log.d("Ray", "Loading ")
-                        }
+                    }
+                    ApiState.Loading -> {
+                        Log.d("Ray", "Loading ")
                     }
                 }
             }
         }
+    }
 
-        fun safeFlowGather(action: suspend () -> Unit) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    action()
-                }
+    fun safeFlowGather(action: suspend () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                action()
             }
         }
-
-        override fun initListener() = with(binding) {
-            super.initListener()
-            // setting watchers
-
-            cusNum.setInterface(this@LoginEndFragment)
-            cusPass.setInterface(this@LoginEndFragment)
-
-        btn.setOnClickListener {
-            findNavController().navigate(R.id.mainFragment)
-        }
-        btnPdf.setOnClickListener {
-            findNavController().navigate(R.id.pdfFragment)
-        }
     }
-            val reg = RegisterEntity(msisdn = "996702270242", password = "1234567890")
-            viewModel.loginUser(reg)
-        }
+
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty
         complexWatcher()
-
-
-//        val navHostFragment = requireActivity().supportFragmentManager
-//            .findFragmentById(R.id.nav_host) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        navController.navigate(R.id.mainFragment)
     }
 
     override fun passwordWatcher(notEmpty: Boolean, fieldsNumber: Int) {
@@ -120,13 +101,6 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         complexWatcher()
     }
 
-    // следить за двумя полями одновременно
-
-
-    fun complexWatcher() = with(binding) {
-        println("num ------" + isNumberNotEmpty)
-        println("pass ------" + isPasswordNotEmpty)
-        println("--------------------------")
     private fun complexWatcher() = with(binding) {
 
         if (isNumberNotEmpty && isPasswordNotEmpty) {

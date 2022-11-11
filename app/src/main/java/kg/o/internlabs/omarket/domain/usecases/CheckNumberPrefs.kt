@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class CheckNumberPrefs @Inject constructor(private val prefsRepository: PrefsRepository) {
 
-    fun checkPhoneNumberFromPrefs(number: String)  = prefsRepository.checkPhoneNumberFromPrefs(number)
+    operator fun invoke(number: String)  = prefsRepository.checkPhoneNumberFromPrefs(number)
 
 }
