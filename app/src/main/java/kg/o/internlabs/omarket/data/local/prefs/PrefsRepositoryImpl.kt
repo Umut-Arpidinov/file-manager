@@ -13,6 +13,7 @@ class PrefsRepositoryImpl @Inject constructor(private val context: StoragePrefer
         if (phoneNumber == number){
             return context.getBooleanFlow(StoragePreferences.Keys.USER_PHONE_NUMBER, false)
         }
+        context.emergency = false
         return context.getBooleanFlow(StoragePreferences.Keys.EMERGENCY, false)
     }
 
