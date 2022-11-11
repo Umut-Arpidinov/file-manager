@@ -7,6 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.login.LoginEndFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_login_end"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/back_black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            style="@style/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <kg.o.internlabs.core.custom_views.CustomNumberInputView
+        android:id="@+id/cus_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top_40dp"
+        app:helperTextState="@string/enter_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tb_login_end" />
+
+    <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
+        android:id="@+id/cus_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/cus_num"
+        app:setPasswordHint="@string/enter_password_hint"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,23 +70,6 @@
             android:textColor="@color/magenta_1"
             android:textSize="@dimen/text_14sp" />
     </LinearLayout>
-
-    <kg.o.internlabs.core.custom_views.CustomNumberInputView
-        android:id="@+id/cus_num"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top_40dp"
-        app:helperTextState="@string/enter_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
-        android:id="@+id/cus_pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cus_num"
-        app:setPasswordHint="@string/enter_password_hint"/>
 
     <kg.o.internlabs.core.custom_views.CustomButtonView
         android:id="@+id/btn"

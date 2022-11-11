@@ -44,6 +44,8 @@ class RegistrationOtpFragment :
             findNavController().navigate(R.id.loginStartFragment)
         }
 
+        binding.tbRegistrationOtp.setNavigationOnClickListener { findNavController().navigateUp() }
+
     }
 
     override fun sendOtpAgain() {

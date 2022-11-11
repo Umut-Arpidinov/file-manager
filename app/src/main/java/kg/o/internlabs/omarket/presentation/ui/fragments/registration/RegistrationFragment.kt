@@ -33,12 +33,16 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         cusNum.setInterface(this@RegistrationFragment)
         cusPass.setInterface(this@RegistrationFragment)
         cusPass1.setInterface(this@RegistrationFragment, 1)
+
+        tbRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
         cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
         btnSendOtp.buttonAvailability(false)
 
         btnSendOtp.setOnClickListener {
-            findNavController().navigate(RegistrationFragmentDirections
-                .goToOtp(cusNum.getVales(), cusPass1.getPasswordField()))
+            findNavController().navigate(
+                RegistrationFragmentDirections
+                    .goToOtp(cusNum.getVales(), cusPass1.getPasswordField())
+            )
         }
     }
 

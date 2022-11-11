@@ -12,6 +12,13 @@
         <item name="android:textColor">@color/black_1</item>
     </style>
 
+    <style name="toolbarTitle">
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:textColor">@color/black_1</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
     <style name="OTPInputText">
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>

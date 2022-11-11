@@ -9,6 +9,7 @@
     <string name="splash_screen">splash_screen</string>
     <string name="log_in">Зарегистрироваться</string>
     <string name="enter">Войти</string>
+    <string name="registration">Регистрация</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="info">SMS c кодом отправлено на номер \n %1$s</string>

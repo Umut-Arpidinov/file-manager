@@ -51,6 +51,8 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         btnPdf.setOnClickListener {
             findNavController().navigate(R.id.pdfFragment)
         }
+
+        tbLoginEnd.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
