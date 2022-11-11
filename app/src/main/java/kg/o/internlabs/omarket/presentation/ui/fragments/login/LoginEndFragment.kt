@@ -48,7 +48,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     override fun initView() {
         super.initView()
-        println()
+        binding.cusNum.setText(args?.number.toString())
     }
 
     private fun initObserver(number: String, password: String) {
