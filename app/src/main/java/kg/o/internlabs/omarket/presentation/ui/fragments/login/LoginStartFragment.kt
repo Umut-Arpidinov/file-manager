@@ -1,19 +1,26 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
+import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
+import kg.o.internlabs.omarket.utils.createCurrentNumber
 
 @AndroidEntryPoint
 class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>(),
     NumberInputHelper {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
+    }
+
+    private val prefs: StoragePreferences by lazy {
+        StoragePreferences(requireContext())
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginStartBinding {
@@ -33,10 +40,15 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
             findNavController().navigate(R.id.registrationFragment)
         }
         cusBtnEnter.setOnClickListener {
-            findNavController().navigate(
-                LoginStartFragmentDirections
-                    .goLoginEnd(binding.cusNum.getVales())
-            )
+            val currentNumber = binding.cusNum.getVales().createCurrentNumber(cusNum.getVales())
+            if (currentNumber == prefs.userPhoneNumber) {
+                findNavController().navigate(
+                    LoginStartFragmentDirections
+                        .goLoginEnd(binding.cusNum.getVales())
+                )
+            } else {
+                Toast.makeText(requireContext(), "Неверный номер телефона!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

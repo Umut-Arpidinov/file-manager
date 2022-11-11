@@ -8,7 +8,6 @@ import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.usecases.CheckOtpUseCase
 import kg.o.internlabs.omarket.domain.usecases.RegisterUserUseCase
-import kg.o.internlabs.omarket.toDomain
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest

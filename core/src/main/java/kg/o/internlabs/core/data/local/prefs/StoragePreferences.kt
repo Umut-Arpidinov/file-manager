@@ -8,7 +8,7 @@ class StoragePreferences(context: Context) : BasePrefs(context) {
         get() = "kg.o.internlabs.core.data.local.prefs"
 
     var token: String? by PrefDelegate(sharedPreference, Keys.ACCESS_TOKEN, "")
-    var userPhoneNumber: String? by PrefDelegate(sharedPreference, Keys.USER_PHONE_NUMBER, "")
+    var userPhoneNumber: String? by PrefDelegate(sharedPreference, Keys.USER_PHONE_NUMBER, "996702270242")
     var refreshToken: String? by PrefDelegate(sharedPreference, Keys.REFRESH_TOKEN, "")
     var isTokenExpired: Boolean? by PrefDelegate(sharedPreference, Keys.IS_TOKEN_EXPIRED, false)
     var isLoggedIn: Boolean? by PrefDelegate(sharedPreference, Keys.LOGIN_STATUS, false)

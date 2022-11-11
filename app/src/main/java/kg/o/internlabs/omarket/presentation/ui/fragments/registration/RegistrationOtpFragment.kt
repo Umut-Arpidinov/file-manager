@@ -1,28 +1,19 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
-import android.util.Log
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.lifecycle.Lifecycle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.OtpHelper
 import kg.o.internlabs.core.data.local.prefs.StoragePreferences
-import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import retrofit2.Response
 
 @AndroidEntryPoint
 class RegistrationOtpFragment :
@@ -42,9 +33,6 @@ class RegistrationOtpFragment :
         return FragmentRegistrationOtpBinding.inflate(inflater)
     }
 
-    override fun initViewModel() {
-        initObserver()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,34 +50,28 @@ class RegistrationOtpFragment :
     override fun initListener() {
         super.initListener()
         binding.btnSendOtp.setOnClickListener {
-            findNavController().navigate(R.id.loginStartFragment)
+            initObserver()
         }
+    }
 
-        val reg = RegisterEntity(msisdn = "996500997007", otp = "02305")
+
+    private fun initObserver() {
+        val reg = RegisterEntity(msisdn = args?.number, otp = binding.cusOtp.getValues())
         viewModel.checkOtp(reg)
-
-    }
-    private fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
-            }
-        }
-    }
-
-    fun initObserver() {
         safeFlowGather {
             viewModel.checkOtp.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        Log.d("Ray", "success 400")
+                        prefs.userPhoneNumber = reg.msisdn
+                        prefs.token = it.data.accessToken
+                        prefs.refreshToken = it.data.refreshToken
+                        findNavController().navigate(R.id.loginStartFragment)
                     }
                     is ApiState.Failure -> {
-
-                        Log.d("Ray", it.msg.toString())
+                        Toast.makeText(requireContext(), "Неверный код", Toast.LENGTH_SHORT).show()
                     }
                     ApiState.Loading -> {
-                        //TODO показать прогресс бар
+
                     }
                 }
             }

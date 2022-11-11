@@ -1,25 +1,20 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
-import android.util.Log
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
-import androidx.lifecycle.Lifecycle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
-import kg.o.internlabs.omarket.R
-import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.utils.createCurrentNumber
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
@@ -37,27 +32,22 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         return FragmentRegistrationBinding.inflate(inflater)
     }
 
-    fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
-            }
-        }
-    }
-
-    private fun initObserver() {
+    private fun initObserver(password1: String, password2: String) {
         safeFlowGather {
+
+        val reg = RegisterEntity(msisdn = binding.cusNum.getVales().createCurrentNumber(binding.cusNum.getVales()), password = password1, password2 = password2)
+        viewModel.registerUser(reg)
             viewModel.registerUser.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        Log.d("Ray", it.data.toString())
+                        findNavController().navigate(RegistrationFragmentDirections
+                            .goToOtp(reg.msisdn.toString(), password2))
                     }
                     is ApiState.Failure -> {
-                        Log.d("Ray", "Failure" + it.msg.toString())
+                        Toast.makeText(requireContext(), "Номер уже существует в базе О!Маркет. Введите другие данные", Toast.LENGTH_SHORT).show()
 
                     }
                     ApiState.Loading -> {
-                        Log.d("Ray", "Loading epta")
                     }
                 }
             }
@@ -66,20 +56,14 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
 
     override fun initListener() = with(binding) {
         super.initListener()
-
-
-
         cusNum.setInterface(this@RegistrationFragment)
         cusPass.setInterface(this@RegistrationFragment)
         cusPass1.setInterface(this@RegistrationFragment, 1)
         cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
         btnSendOtp.buttonAvailability(false)
 
-        val reg = RegisterEntity(msisdn = "996500997007", password = "1234", password2 = "1234")
-        viewModel.registerUser(reg)
         btnSendOtp.setOnClickListener {
-            findNavController().navigate(RegistrationFragmentDirections
-                .goToOtp(cusNum.getVales(), cusPass1.getPasswordField()))
+            initObserver(binding.cusPass.getPasswordField(), binding.cusPass1.getPasswordField())
         }
     }
 

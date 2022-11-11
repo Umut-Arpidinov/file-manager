@@ -1,22 +1,23 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
-import android.util.Log
+import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.lifecycle.Lifecycle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
+import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
-import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.RegisterDto
+import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.utils.createCurrentNumber
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+
+
 
 @AndroidEntryPoint
 class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(),
@@ -29,6 +30,9 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
+    private val prefs: StoragePreferences by lazy {
+        StoragePreferences(requireContext())
+    }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginEndBinding {
         return FragmentLoginEndBinding.inflate(inflater)
@@ -36,66 +40,56 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        args = LoginEndFragmentArgs.fromBundle(requireArguments())
+        arguments?.let {
+            args = LoginEndFragmentArgs.fromBundle(it)
+
+        }
     }
 
     override fun initView() {
         super.initView()
-        println(args?.number)
-
+        println()
     }
 
-    override fun initViewModel() {
-        super.initViewModel()
-        initObserver()
-    }
+    private fun initObserver(number: String, password: String) {
 
+        val currentNumber = number.createCurrentNumber(number)
 
-    private fun initObserver() {
-            safeFlowGather {
-                viewModel.movieState.collectLatest {
-                    when (it) {
-                        is ApiState.Success -> {
-                            Log.d("Ray", it.data.toString())
-                        }
-                        is ApiState.Failure -> {
-                            Log.d("Ray", it.msg.toString())
+        val reg = RegisterEntity(msisdn = currentNumber, password = password)
+        viewModel.loginUser(reg)
+        safeFlowGather {
+            viewModel.movieState.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        findNavController().navigate(R.id.mainFragment)
+                        prefs.token = it.data.accessToken
+                        prefs.refreshToken = it.data.refreshToken
+                    }
+                    is ApiState.Failure -> {
+                        Toast.makeText(requireContext(), "Номер пользователя не найден!", Toast.LENGTH_SHORT).show()
 
-                        }
-                        ApiState.Loading -> {
-                            Log.d("Ray", "Loading ")
-                        }
+                    }
+                    ApiState.Loading -> {
                     }
                 }
             }
         }
+    }
 
-        fun safeFlowGather(action: suspend () -> Unit) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    action()
-                }
-            }
-        }
-
-        override fun initListener() = with(binding) {
-            super.initListener()
-            // setting watchers
-
-            cusNum.setInterface(this@LoginEndFragment)
-            cusPass.setInterface(this@LoginEndFragment)
     override fun initListener() = with(binding) {
         super.initListener()
         // setting watchers
+
+        cusNum.setInterface(this@LoginEndFragment)
+        cusPass.setInterface(this@LoginEndFragment)
+
         cusNum.setInterface(this@LoginEndFragment)
         cusPass.setInterface(this@LoginEndFragment)
         btn.buttonAvailability(false)
 
-            val reg = RegisterEntity(msisdn = "996702270242", password = "1234567890")
-            viewModel.loginUser(reg)
-        }
         btn.setOnClickListener {
-            findNavController().navigate(R.id.mainFragment)
+            initObserver(binding.cusNum.getVales(), binding.cusPass.getPasswordField())
+
         }
         btnPdf.setOnClickListener {
             findNavController().navigate(R.id.pdfFragment)
@@ -113,12 +107,6 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     }
 
     // следить за двумя полями одновременно
-
-
-    fun complexWatcher() = with(binding) {
-        println("num ------" + isNumberNotEmpty)
-        println("pass ------" + isPasswordNotEmpty)
-        println("--------------------------")
     private fun complexWatcher() = with(binding) {
 
         if (isNumberNotEmpty && isPasswordNotEmpty) {
@@ -133,6 +121,5 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         //btnSendOtp.buttonAvailability(isNumberNotEmpty && isPasswordNotEmpty)
     }
 
-    // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
-    // TODO чтобы получить значение пороля вызыаем геттер так binding.cusPass.getPasswordField()
+
 }
