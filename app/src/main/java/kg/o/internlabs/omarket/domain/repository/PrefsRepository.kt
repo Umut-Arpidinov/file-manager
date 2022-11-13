@@ -4,6 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface PrefsRepository {
 
-    fun checkPhoneNumberFromPrefs(number: String): Flow<Boolean>
+    fun checkPhoneNumberFromPrefs(): Flow<String?>
 
 }

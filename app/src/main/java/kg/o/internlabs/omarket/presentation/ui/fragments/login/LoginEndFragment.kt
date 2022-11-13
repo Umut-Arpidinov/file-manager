@@ -64,7 +64,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
 
     private fun initObserver() {
-        safeFlowGather {
+        /*safeFlowGather {
             viewModel.movieState.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
@@ -79,7 +79,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                     }
                 }
             }
-        }
+        }*/
     }
 
     fun safeFlowGather(action: suspend () -> Unit) {

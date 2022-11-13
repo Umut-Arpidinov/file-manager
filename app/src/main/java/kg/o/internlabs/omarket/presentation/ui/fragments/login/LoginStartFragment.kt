@@ -14,6 +14,8 @@ import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+private typealias coreString = kg.o.internlabs.core.R.string
+
 @AndroidEntryPoint
 class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>(),
     NumberInputHelper {
@@ -31,11 +33,6 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         cusBtnReg.buttonAvailability(0)
     }
 
-    override fun initViewModel() {
-        super.initViewModel()
-        observe()
-    }
-
     private fun observe() {
         safeFlowGather {
             viewModel.ate.collectLatest {
@@ -45,7 +42,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
                             .goLoginEnd(binding.cusNum.getVales())
                     )
                 } else {
-                    println("no00000000000000000000")
+                    binding.cusNum.setHintText(resources.getString(coreString.number_mistake))
                 }
             }
         }
@@ -67,6 +64,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         }
         cusBtnEnter.setOnClickListener {
             viewModel.checkNumber(cusNum.getVales())
+            observe()
         }
     }
 

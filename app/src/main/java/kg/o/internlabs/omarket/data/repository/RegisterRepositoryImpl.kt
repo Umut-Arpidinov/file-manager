@@ -7,15 +7,17 @@ import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.repository.RegisterRepository
 import kg.o.internlabs.omarket.toDto
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : RegisterRepository, BaseRepository() {
 
-    override fun checkOtp(reg: RegisterEntity): Flow<ApiState<RegisterDto>> = safeApiCall {
-        apiService.checkOtp(reg.toDto())
+    override fun checkOtp(reg: RegisterEntity): Flow<ApiState<RegisterDto>> = flow {
+        safeApiCall {
+            apiService.checkOtp(reg.toDto())
+        }
     }
 
     override fun loginUser(reg: RegisterEntity): Flow<ApiState<RegisterDto>> = safeApiCall {

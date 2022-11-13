@@ -30,7 +30,7 @@ class CustomNumberInputView : ConstraintLayout {
         binding.enterNumberEditText.setInterface(textWatcher, fieldsNumber)
     }
 
-    private fun setHintText(state: String) = with(binding) {
+    fun setHintText(state: String) = with(binding) {
         val numberNotFound = context.getString(R.string.number_mistake)
         val enterNumber = context.getString(R.string.enter_number)
         when (state) {

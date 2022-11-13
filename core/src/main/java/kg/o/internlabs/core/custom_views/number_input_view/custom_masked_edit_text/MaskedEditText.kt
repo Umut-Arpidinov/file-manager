@@ -135,8 +135,10 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        textWatcher?.numberWatcher(s[s.length-1] != 'X', fieldsNumber)
-        fieldValues = s.toString()
+        if (s.isNotEmpty()) {
+            textWatcher?.numberWatcher(s[s.length - 1] != 'X', fieldsNumber)
+            fieldValues = s.toString()
+        }
         var quantity = count
         if (!editingOnChanged && editingBefore) {
             editingOnChanged = true
