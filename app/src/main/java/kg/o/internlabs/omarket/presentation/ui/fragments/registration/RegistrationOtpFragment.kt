@@ -75,6 +75,8 @@ class RegistrationOtpFragment :
         }
     }
 
+        binding.tbRegistrationOtp.setNavigationOnClickListener { findNavController().navigateUp() }
+
     private fun safeFlowGather(action: suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -115,7 +117,3 @@ class RegistrationOtpFragment :
         binding.btnSendOtp.buttonAvailability(notEmpty)
     }
 }
-
-
-
-

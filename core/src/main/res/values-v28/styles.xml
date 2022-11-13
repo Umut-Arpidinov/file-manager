@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="OTPInputText">
 
         <item name="android:inputType">number</item>
@@ -29,6 +30,24 @@
 
     <style name="OtpTimer" parent="OTPResentButton">
         <item name="android:textColor">@color/gray_1</item>
+    </style>
+
+    <style name="termsStyle">
+        <item name="android:textColor">@color/black_1</item>
+        <item name="android:textColorLink">@color/magenta_1</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:lineHeight">@dimen/line_16.41dp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="toolbarTitle">
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:textColor">@color/black_1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:lineHeight">@dimen/line_17.9dp</item>
     </style>
 
 </resources>

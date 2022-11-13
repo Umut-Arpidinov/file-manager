@@ -88,11 +88,14 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                 action()
             }
         }
+
+        tbLoginEnd.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty
+        
         complexWatcher()
     }
 

@@ -6,16 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.registration.RegistrationOtpFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_registration_otp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back_black">
+
+        <TextView
+            style="@style/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/tv_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_40dp"
-        tools:text="@string/info"
         android:textAlignment="center"
         android:textAppearance="@style/OTPInputText"
         app:layout_constraintBottom_toTopOf="@id/cus_otp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tb_registration_otp"
+        tools:text="@string/info" />
+
     <kg.o.internlabs.core.custom_views.CustomOtpInputView
         android:id="@+id/cus_otp"
         android:layout_width="match_parent"
