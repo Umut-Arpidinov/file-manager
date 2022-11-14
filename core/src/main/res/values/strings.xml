@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="sign_in">Войти</string>
+    <string name="type_phone_number" translatable="false">Введите номер телефона</string>
     <string name="number_mistake">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
     <string name="message">Message</string>
     <string name="description">description</string>
@@ -11,8 +13,8 @@
     <string name="enter_number">Введите номер телефона</string>
     <string name="error_otp">Неверный код</string>
     <string name="resent">Отправить повторно</string>
+    <string name="underline_licence"><u>условия пользовательского соглашения</u></string>
     <string name="visibility_image">toggle eye</string>
-
     <string name="enter_password_hint">Введите пароль</string>
     <string name="incorrect_password">Неверный пароль</string>
     <string name="password_not_match">Пароли не совпадают</string>
@@ -21,5 +23,4 @@
     <string name="frame_error">Frame Error</string>
     <string name="helper_text_create_password">Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы</string>
     <string name="toggle">Union vector</string>
-    <string name="_02_00">02:00</string>
 </resources>
