@@ -13,6 +13,8 @@ import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.utils.getErrorMessage
+import kg.o.internlabs.omarket.utils.makeToast
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -68,7 +70,10 @@ class RegistrationOtpFragment :
                         findNavController().navigate(R.id.loginStartFragment)
                     }
                     is ApiState.Failure -> {
-                        Toast.makeText(requireContext(), "Неверный код", Toast.LENGTH_SHORT).show()
+
+                    }
+                    is ApiState.FailureError ->{
+                        requireActivity().makeToast(it.msg.getErrorMessage())
                     }
                     ApiState.Loading -> {
 
@@ -77,14 +82,12 @@ class RegistrationOtpFragment :
             }
         }
     }
-
     override fun sendOtpAgain() {
         Toast.makeText(
             requireContext(), "Would you not mind to send me, the otp one more time?",
             Toast.LENGTH_LONG
         ).show()
     }
-
     override fun watcher(notEmpty: Boolean) {
         binding.btnSendOtp.buttonAvailability(notEmpty)
     }

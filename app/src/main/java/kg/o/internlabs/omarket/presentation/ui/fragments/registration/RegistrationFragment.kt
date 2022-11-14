@@ -14,6 +14,8 @@ import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.utils.createCurrentNumber
+import kg.o.internlabs.omarket.utils.getErrorMessage
+import kg.o.internlabs.omarket.utils.makeToast
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -44,8 +46,10 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                             .goToOtp(reg.msisdn.toString(), password2))
                     }
                     is ApiState.Failure -> {
-                        Toast.makeText(requireContext(), "Номер уже существует в базе О!Маркет. Введите другие данные", Toast.LENGTH_SHORT).show()
 
+                    }
+                    is ApiState.FailureError ->{
+                        requireActivity().makeToast(it.msg.getErrorMessage())
                     }
                     ApiState.Loading -> {
                     }

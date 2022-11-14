@@ -31,6 +31,7 @@ class LoginViewModel @Inject constructor(
                     when(it){
                         is ApiState.Success -> _movieState.value = it
                         is ApiState.Failure -> _movieState.value = it
+                        is ApiState.FailureError -> _movieState.value = it
                         ApiState.Loading -> {
 
                         }

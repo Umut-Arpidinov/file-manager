@@ -30,6 +30,7 @@ class RegistrationViewModel @Inject constructor(
                 when (it) {
                     is ApiState.Success -> _checkOtp.value = it
                     is ApiState.Failure -> _checkOtp.value = it
+                    is ApiState.FailureError -> _checkOtp.value = it
                     ApiState.Loading -> {
                     }
                 }
@@ -42,6 +43,7 @@ class RegistrationViewModel @Inject constructor(
                 when (it) {
                     is ApiState.Success -> _registerUser.value = it
                     is ApiState.Failure -> _registerUser.value = it
+                    is ApiState.FailureError -> _registerUser.value = it
                     ApiState.Loading -> {
                     }
                 }

@@ -1,13 +1,14 @@
 package kg.o.internlabs.core.custom_views.number_input_view.custom_masked_edit_text
 
-import kg.o.internlabs.core.R
 import android.content.Context
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
+import android.util.Log
 import androidx.appcompat.widget.AppCompatEditText
+import kg.o.internlabs.core.R
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 
 class MaskedEditText : AppCompatEditText, TextWatcher {
@@ -21,6 +22,7 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     private var editingBefore = false
     private var editingOnChanged = false
     private var editingAfter = false
+    private var b = false
     private lateinit var maskToRaw: IntArray
     private var initialized = false
     private var ignore = false
@@ -29,6 +31,7 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     private var selectionChanged = false
     private var place: Int = 0
     private var isKeepingText = false
+
     constructor(context: Context?) : super(context!!) {
         init()
     }
@@ -61,7 +64,12 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         editingBefore = true
         editingOnChanged = true
         editingAfter = true
-        if (hasHint() && rawText.length() == 0) this.setText(makeMaskedTextWithHint())
+
+        if (hasHint() && rawText.length() == 0){
+            b = true
+            this.setText(charClear(makeMaskedTextWithHint(), b))
+            Log.d("Ray", "test")
+        }
         editingBefore = false
         editingOnChanged = false
         editingAfter = false
@@ -135,7 +143,7 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        textWatcher?.numberWatcher(s[s.length-1] != 'X', fieldsNumber)
+        textWatcher?.numberWatcher(s[s.length - 1] != 'X', fieldsNumber)
         fieldValues = s.toString()
         var quantity = count
         if (!editingOnChanged && editingBefore) {
@@ -157,7 +165,9 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     override fun afterTextChanged(s: Editable) {
         if (!editingAfter && editingBefore && editingOnChanged) {
             editingAfter = true
-            if (hasHint() || ( rawText.length() == 0)) setText(makeMaskedTextWithHint())
+            if (hasHint() || (rawText.length() == 0)) {
+                setText(makeMaskedTextWithHint())
+            }
             selectionChanged = false
             setSelection(place)
             editingBefore = false
@@ -222,6 +232,17 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         )
     }
 
+    private fun charClear(char: CharSequence, b: Boolean): CharSequence {
+        val span = SpannableStringBuilder()
+        span.append(char)
+        if (b) {
+            span.delete(0, 3)
+        }
+
+        Log.d("Ray", b.toString())
+        return span
+    }
+
     private fun makeMaskedTextWithHint(): CharSequence {
         val ssb = SpannableStringBuilder()
         var mtrv: Int
@@ -235,6 +256,8 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
                 ssb.setSpan(ForegroundColorSpan(currentHintTextColor), i, i + 1, 0)
             }
         }
+
+        Log.d("Ray", ssb.toString())
         return ssb
     }
 

@@ -15,6 +15,8 @@ import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.utils.createCurrentNumber
+import kg.o.internlabs.omarket.utils.getErrorMessage
+import kg.o.internlabs.omarket.utils.makeToast
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -66,8 +68,10 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                         prefs.refreshToken = it.data.refreshToken
                     }
                     is ApiState.Failure -> {
-                        Toast.makeText(requireContext(), "Номер пользователя не найден!", Toast.LENGTH_SHORT).show()
 
+                    }
+                    is ApiState.FailureError ->{
+                        requireActivity().makeToast(it.msg.getErrorMessage())
                     }
                     ApiState.Loading -> {
                     }
