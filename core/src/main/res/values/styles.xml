@@ -114,4 +114,45 @@
         <item name="android:textColor">@color/magenta_1</item>
     </style>
 
+    <style name="buttonTextStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="MyShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/radius_view_12dp</item>
+        <item name="cornerSizeBottomRight">@dimen/radius_view_12dp</item>
+        <item name="cornerSizeTopLeft">@dimen/radius_view_12dp</item>
+        <item name="cornerSizeBottomLeft">@dimen/radius_view_12dp</item>
+    </style>
+
+    <style name="MaterialButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAppearance">@style/buttonTextStyle</item>
+        <item name="android:insetTop">@dimen/inset_0dp</item>
+        <item name="android:insetBottom">@dimen/inset_0dp</item>
+    </style>
+
+    <style name="GreenButton" parent="MaterialButton">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="backgroundTint">@color/color_green_button</item>
+        <item name="strokeColor">@color/color_green_button</item>
+        <item name="rippleColor">@color/green_4</item>
+    </style>
+
+    <style name="GrayButton" parent="MaterialButton">
+        <item name="android:textColor">@color/black_1</item>
+        <item name="backgroundTint">@color/gray_5</item>
+        <item name="strokeColor">@color/gray_5</item>
+    </style>
+
+    <style name="progressBarStyle">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">@color/magenta_1</item>
+        <item name="android:indeterminateTintMode">src_atop</item>
+    </style>
+
 </resources>

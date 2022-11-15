@@ -101,4 +101,17 @@
         <item name="android:textColor">@color/magenta_1</item>
     </style>
 
+    <style name="GreenButton" parent="MaterialButton">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="backgroundTint">@color/color_green_button_dark</item>
+        <item name="strokeColor">@color/color_green_button_dark</item>
+        <item name="rippleColor">@color/green_4</item>
+    </style>
+
+    <style name="GrayButton" parent="MaterialButton">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="backgroundTint">@color/black_5</item>
+        <item name="strokeColor">@color/black_5</item>
+    </style>
+
 </resources>
