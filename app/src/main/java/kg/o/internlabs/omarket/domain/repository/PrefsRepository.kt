@@ -4,6 +4,19 @@ import kotlinx.coroutines.flow.Flow
 
 interface PrefsRepository {
 
-    fun checkPhoneNumberFromPrefs(): Flow<String?>
+    fun putNumberToPrefs(number: String)
+    fun checkNumberPrefs(): Flow<String?>
+
+    fun putPWDToPrefs(pwd: String)
+    fun checkPWDFromPrefs(): Flow<String?>
+
+    fun putAccessTokenToPrefs(accessToken: String)
+    fun getAccessTokenFromPrefs(): Flow<String?>
+
+    fun putRefTokenToPrefs(refToken: String)
+    fun getRefTokenFromPrefs(): Flow<String?>
+
+    fun setLoginStatusPrefs(isLogged: Boolean)
+    fun getLoginStatusPrefs(): Flow<Boolean?>
 
 }

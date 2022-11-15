@@ -28,4 +28,5 @@
 
     <string name="accept">нажимая \"Войти\" вы принимаете</string>
     <string name="terms_agreement"><u>условия пользовательского соглашения</u></string>
+    <string name="number_not_Exists">Номер не существует</string>
 </resources>

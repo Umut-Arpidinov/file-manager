@@ -1,8 +1,5 @@
 package kg.o.internlabs.core.common
 
-import okhttp3.Response
-
-
 sealed class ApiState<out T> {
 
     data class Success<out R>(val data: R) : ApiState<R>(
@@ -15,10 +12,8 @@ sealed class ApiState<out T> {
     override fun toString(): String {
         return when(this){
             is Success -> "Success $data"
-            is Failure -> "Failure ${msg}"
+            is Failure -> "Failure $msg"
             Loading -> "Loading"
         }
     }
-
-
 }

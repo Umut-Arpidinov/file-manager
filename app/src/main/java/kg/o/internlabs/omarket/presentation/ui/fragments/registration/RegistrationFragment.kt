@@ -1,7 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Lifecycle
@@ -15,7 +14,6 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.R
-import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
@@ -37,11 +35,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         return FragmentRegistrationBinding.inflate(inflater)
     }
 
-    override fun initViewModel() {
-        initObserver()
-    }
-
-    fun safeFlowGather(action: suspend () -> Unit) {
+    private fun safeFlowGather(action: suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 action()
@@ -49,43 +43,65 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         }
     }
 
-    private fun initObserver() {
+    private fun initObserver() = with(binding){
         safeFlowGather {
             viewModel.registerUser.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        Log.d("Ray", it.data.toString())
+                        btnSendOtp.buttonFinished()
+                        goNextPage()
                     }
                     is ApiState.Failure -> {
-                        Log.d("Ray", "Failure" + it.msg.toString())
-
+                        btnSendOtp.buttonFinished()
+                        btnSendOtp.buttonAvailability(false)
+                        it.msg.message?.let { it1 ->
+                            when(it1) {
+                                getString(R.string.time_out) -> {
+                                    // TODO  snack bar
+                                }
+                                getString(R.string.incorrect_number) -> {
+                                    cusNum.setHintText(it1)
+                                }
+                                else -> {
+                                    cusPass.setErrorMessage(it1)
+                                    cusPass1.setErrorMessage(it1)
+                                }
+                            }
+                        }
                     }
                     ApiState.Loading -> {
-                        Log.d("Ray", "Loading epta")
+                        btnSendOtp.buttonActivated()
                     }
                 }
             }
         }
     }
 
+    private fun goNextPage() {
+        findNavController().navigate(
+            RegistrationFragmentDirections
+                .goToOtp(binding.cusNum.getVales(), binding.cusPass.getPasswordField())
+        )
+    }
+
     override fun initListener() = with(binding) {
         super.initListener()
-        val reg = RegisterEntity(msisdn = "996500997007", password = "1234", password2 = "1234")
-        viewModel.registerUser(reg)
-
         cusNum.setInterface(this@RegistrationFragment)
         cusPass.setInterface(this@RegistrationFragment)
         cusPass1.setInterface(this@RegistrationFragment, 1)
 
-        tbRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
         cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
         btnSendOtp.buttonAvailability(false)
 
         btnSendOtp.setOnClickListener {
-            findNavController().navigate(
-                RegistrationFragmentDirections
-                    .goToOtp(cusNum.getVales(), cusPass1.getPasswordField())
+            viewModel.registerUser(
+                RegisterEntity(
+                    msisdn = viewModel.formattedValues(cusNum.getVales()),
+                    password = cusPass.getPasswordField(),
+                    password2 = cusPass.getPasswordField()
+                )
             )
+            initObserver()
         }
     }
 
@@ -102,7 +118,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         complexWatcher()
     }
 
-    // следить за тремья полями одновременно
     private fun complexWatcher() = with(binding) {
         if (isNumberNotEmpty && isFirstPasswordNotEmpty && isSecondPasswordNotEmpty) {
             if (cusPass.getPasswordField() == cusPass1.getPasswordField()) {

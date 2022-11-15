@@ -14,11 +14,9 @@ class RegisterRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : RegisterRepository, BaseRepository() {
 
-    override fun checkOtp(reg: RegisterEntity): Flow<ApiState<RegisterDto>> = flow {
-        safeApiCall {
+    override fun checkOtp(reg: RegisterEntity): Flow<ApiState<RegisterDto>> = safeApiCall {
             apiService.checkOtp(reg.toDto())
         }
-    }
 
     override fun loginUser(reg: RegisterEntity): Flow<ApiState<RegisterDto>> = safeApiCall {
         apiService.loginUser(reg.toDto())

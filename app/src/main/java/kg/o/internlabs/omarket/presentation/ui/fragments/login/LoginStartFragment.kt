@@ -35,17 +35,21 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
 
     private fun observe() {
         safeFlowGather {
-            viewModel.ate.collectLatest {
+            viewModel.num.collectLatest {
                 if (it) {
-                    findNavController().navigate(
-                        LoginStartFragmentDirections
-                            .goLoginEnd(binding.cusNum.getVales())
-                    )
+                    navigateOk()
                 } else {
                     binding.cusNum.setHintText(resources.getString(coreString.number_mistake))
                 }
             }
         }
+    }
+
+    private fun navigateOk() {
+        findNavController().navigate(
+            LoginStartFragmentDirections
+                .goLoginEnd(binding.cusNum.getVales())
+        )
     }
 
     private fun safeFlowGather(action: suspend () -> Unit) {
@@ -59,6 +63,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
     override fun initListener() = with(binding) {
         super.initListener()
         cusNum.setInterface(this@LoginStartFragment)
+
         cusBtnReg.setOnClickListener {
             findNavController().navigate(R.id.registrationFragment)
         }
