@@ -121,10 +121,13 @@
 
     <style name="MyShapeAppearance">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">@dimen/radius_view_12dp</item>
-        <item name="cornerSizeBottomRight">@dimen/radius_view_12dp</item>
-        <item name="cornerSizeTopLeft">@dimen/radius_view_12dp</item>
-        <item name="cornerSizeBottomLeft">@dimen/radius_view_12dp</item>
+        <item name="cornerSize">@dimen/radius_view_12dp</item>
+    </style>
+
+    <style name="ShapeAppearanceFirstPage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_view_8dp</item>
+
     </style>
 
     <style name="MaterialButton" parent="Widget.MaterialComponents.Button.OutlinedButton">

@@ -37,6 +37,7 @@
 
     <dimen name="radius_view_12dp">12dp</dimen>
     <dimen name="radius_view_4dp">4dp</dimen>
+    <dimen name="radius_view_8dp">8dp</dimen>
 
     <dimen name="margin_2dp">2dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
