@@ -32,8 +32,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
             recycle()
             initClick()
             initWatcher()
-            setErrorMessage("message")
-
+            setErrorMessage("error")
         }
     }
 
@@ -82,7 +81,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     }
 
     private fun setTextDefaultColor() = with(binding) {
-        passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.black_1))
+        passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.gray_5))
     }
 
     private fun initClick() = with(binding) {
