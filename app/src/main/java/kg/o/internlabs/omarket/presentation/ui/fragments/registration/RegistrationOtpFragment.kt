@@ -67,7 +67,7 @@ class RegistrationOtpFragment :
                         prefs.userPhoneNumber = reg.msisdn
                         prefs.token = it.data.accessToken
                         prefs.refreshToken = it.data.refreshToken
-                        findNavController().navigate(R.id.loginStartFragment)
+                        findNavController().navigate(R.id.mainFragment)
                     }
                     is ApiState.Failure -> {
 
