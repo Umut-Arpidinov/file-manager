@@ -35,13 +35,13 @@ class RegistrationOtpFragment :
 
         tvInfo.text = requireActivity().getString(R.string.info, args?.number)
         cusOtp.setInterface(this@RegistrationOtpFragment)
-        btnSendOtp.buttonAvailability(false)
+        btnSendOtp.isEnabled = false
     }
 
     override fun initListener() {
         super.initListener()
         binding.btnSendOtp.setOnClickListener {
-            findNavController().navigate(R.id.loginStartFragment)
+            findNavController().navigate(R.id.mainFragment)
         }
 
         binding.tbRegistrationOtp.setNavigationOnClickListener { findNavController().navigateUp() }
@@ -56,6 +56,6 @@ class RegistrationOtpFragment :
     }
 
     override fun watcher(notEmpty: Boolean) {
-        binding.btnSendOtp.buttonAvailability(notEmpty)
+        binding.btnSendOtp.isEnabled = notEmpty
     }
 }
