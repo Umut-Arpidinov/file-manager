@@ -22,6 +22,7 @@ class CustomNumberInputView : ConstraintLayout {
             getText(R.styleable.CustomNumberInputView_helperTextState)?.let {
                 setMessage(it.toString())
             }
+
             recycle()
             initClick()
         }
@@ -32,7 +33,9 @@ class CustomNumberInputView : ConstraintLayout {
     }
 
     fun getVales() = binding.enterNumberEditText.getValues()
-
+    fun setValue(message: String){
+        binding.enterNumberEditText.setText(message)
+    }
 
     fun setMessage(message: String) = with(binding){
         numberInputHelperText.text = message
@@ -52,6 +55,7 @@ class CustomNumberInputView : ConstraintLayout {
     }
     private fun setTextDefaultColor()=with(binding){
         numberInputHelperText.setTextColor(ContextCompat.getColor(context,R.color.black_1))
+        numberInputHelperText.setTextAppearance(R.style.hint)
     }
     private fun setFrameErrorColor() = with(binding){
         numberInputFrame.background = ResourcesCompat.getDrawable(
@@ -67,6 +71,7 @@ class CustomNumberInputView : ConstraintLayout {
     private fun initClick() = with(binding){
         numberInputCancelImage.setOnClickListener {
             setMessage("Введите номер телефона")
+            numberInputHelperText.setTextAppearance(R.style.hint)
             enterNumberEditText.eraseField()
 
         }
