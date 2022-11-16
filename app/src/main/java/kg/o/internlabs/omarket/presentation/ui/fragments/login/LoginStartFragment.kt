@@ -22,8 +22,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
 
     override fun initView() = with(binding) {
         super.initView()
-        cusBtnEnter.buttonAvailability(false)
-        cusBtnReg.buttonAvailability(0)
+        cusBtnEnter.isEnabled = false
     }
 
     override fun initListener() = with(binding) {
@@ -41,6 +40,6 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
     }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
-        binding.cusBtnEnter.buttonAvailability(notEmpty)
+        binding.cusBtnEnter.isEnabled = notEmpty
     }
 }
