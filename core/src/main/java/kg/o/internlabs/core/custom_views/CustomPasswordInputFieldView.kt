@@ -17,8 +17,10 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     private var textWatcher: PasswordInputHelper? = null
     private var fieldNumber = 0
 
-    private val binding = CustomPasswordInputViewBinding.inflate(LayoutInflater.from(context),
-        this, true)
+    private val binding = CustomPasswordInputViewBinding.inflate(
+        LayoutInflater.from(context),
+        this, true
+    )
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -46,13 +48,13 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         this.fieldNumber = fieldNumber
     }
 
-    fun setMessage(message: String) = with(binding){
-        passwordHelper.text  = message
+    fun setMessage(message: String) = with(binding) {
+        passwordHelper.text = message
         setFrameDefaultColor()
         setTextDefaultColor()
     }
 
-    fun setErrorMessage(message: String) = with(binding){
+    fun setErrorMessage(message: String) = with(binding) {
         setMessage(message)
         setFrameErrorColor()
         setTextErrorColor()
@@ -80,7 +82,8 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     }
 
     private fun setTextDefaultColor() = with(binding) {
-        passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.gray_5))
+        passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.black_1))
+        passwordHelper.setTextAppearance(R.style.hint)
     }
 
     private fun initClick() = with(binding) {
@@ -96,5 +99,9 @@ class CustomPasswordInputFieldView : ConstraintLayout {
             }
         }
     }
+
     fun getPasswordField(): String = binding.passwordInputField.text.toString()
+    fun setPasswordValue(message: String) {
+        binding.passwordInputField.setText(message)
+    }
 }
