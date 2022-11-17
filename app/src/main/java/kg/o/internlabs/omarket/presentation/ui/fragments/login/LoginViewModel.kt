@@ -8,9 +8,7 @@ import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.usecases.LoginUserUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,7 +33,7 @@ class LoginViewModel @Inject constructor(
 
     fun checkNumber(number: String) {
         viewModelScope.launch {
-            checkNumberPrefsUseCase().collectLatest {
+            checkNumberPrefsUseCase().take(1).collect {
                 if (it != null) {
                     _num.value = (it == formattedValues(number))
                 }
@@ -45,7 +43,7 @@ class LoginViewModel @Inject constructor(
 
     fun checkPassword(pwd: String) {
         viewModelScope.launch {
-            checkPasswordPrefsUseCase().collectLatest {
+            checkPasswordPrefsUseCase().take(1).collect {
                 if (it != null) {
                     _pwd.value = (it == pwd)
                 }
@@ -70,7 +68,7 @@ class LoginViewModel @Inject constructor(
 
     fun loginUser(reg: RegisterEntity) {
         viewModelScope.launch {
-            useCase(reg).collectLatest {
+            useCase(reg).take(1).collect {
                 when (it) {
                     is ApiState.Success -> {
                         _movieState.value = it

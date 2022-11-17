@@ -16,7 +16,7 @@ import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -45,7 +45,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
 
     private fun initObserver() = with(binding){
         safeFlowGather {
-            viewModel.registerUser.collectLatest {
+            viewModel.registerUser.take(1).collect {
                 when (it) {
                     is ApiState.Success -> {
                         btnSendOtp.buttonFinished()

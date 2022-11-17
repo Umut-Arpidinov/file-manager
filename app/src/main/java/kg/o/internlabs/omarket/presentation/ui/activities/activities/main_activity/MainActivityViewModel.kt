@@ -30,7 +30,7 @@ class MainActivityViewModel @Inject constructor(
         viewModelScope.launch {
             var status = false
             while (!status) {
-                getLoginStatus().collectLatest {
+                getLoginStatus().take(1).collect {
                     if (it != null) {
                         status = it
                         if (it) {
@@ -46,8 +46,8 @@ class MainActivityViewModel @Inject constructor(
     private fun startRepeatingJob(timeInterval: Long = 20_000L): Job {
         return CoroutineScope(Dispatchers.IO).launch {
             while (true) {
-                getRefreshTokenPrefs().collectLatest {
-                    refreshTokenRoute(it).collectLatest { response ->
+                getRefreshTokenPrefs().take(1).collect {
+                    refreshTokenRoute(it).take(1).collect { response ->
                         when (response) {
                             is ApiState.Success -> {
                                 println("main         good")

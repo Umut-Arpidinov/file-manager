@@ -18,7 +18,7 @@ import kg.o.internlabs.omarket.delete996
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.utils.InternetChecker
 import kg.o.internlabs.omarket.utils.NetworkStatus
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 private typealias coreStringRes = kg.o.internlabs.core.R.string
@@ -53,7 +53,6 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         if (args != null) {
             if (!args!!.number.isNullOrEmpty()) {
                 val a = "".delete996(args!!.number!!)
-                println("aaaaaa   $a")
                 cusNum.setHintText(a)
             }
         }
@@ -84,7 +83,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     private fun loadLocalState() {
         safeFlowGather {
-            viewModel.pwd.collectLatest {
+            viewModel.pwd.take(1).collect {
                 if (it) {
                     findNavController().navigate(R.id.mainFragment)
                 }
@@ -118,7 +117,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     private fun initObserver() = with(binding){
         safeFlowGather {
-            viewModel.movieState.collectLatest {
+            viewModel.movieState.take(1).collect {
                 when (it) {
                     is ApiState.Success -> {
                         viewModel.putNumber(viewModel.formattedValues(cusNum.getVales()))

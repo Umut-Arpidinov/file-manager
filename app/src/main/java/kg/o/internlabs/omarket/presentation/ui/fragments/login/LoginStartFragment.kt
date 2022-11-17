@@ -11,7 +11,7 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 private typealias coreString = kg.o.internlabs.core.R.string
@@ -35,9 +35,13 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
 
     private fun observe() {
         safeFlowGather {
-            viewModel.num.collectLatest {
+            viewModel.num.take(1).collect {
                 if (it) {
-                    navigateOk()
+                    try {
+                        navigateOk(binding.cusNum.getVales())
+                    } catch (e : IllegalArgumentException){
+                        println("hhhhhhh "+e.printStackTrace())
+                    }
                 } else {
                     binding.cusNum.setHintText(resources.getString(coreString.number_mistake))
                 }
@@ -45,10 +49,10 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         }
     }
 
-    private fun navigateOk() {
-        findNavController().navigate(
+    private fun navigateOk(vales: String) {
+    findNavController().navigate(
             LoginStartFragmentDirections
-                .goLoginEnd(binding.cusNum.getVales())
+                .goLoginEnd(vales)
         )
     }
 
