@@ -18,15 +18,13 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
     private var placeholder: String
     private var textWatcher: NumberInputHelper? = null
     private var fieldsNumber = 0
-    private var fieldValues = ""
 
     constructor(context: Context, mask: String = "", placeholder: Char = ' ') : this(
         context,
         null,
         mask,
         placeholder
-    ) {
-    }
+    )
 
     @JvmOverloads
     constructor(context: Context, attr: AttributeSet?, mask: String? = "") : this(
@@ -34,41 +32,43 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
         attr,
         "",
         ' '
-    ) {
-    }
+    )
 
     init {
-        var mask = mask
-        var placeholder = placeholder
+        var mMask = mask
+        var mPlaceholder = placeholder
         val a = context.obtainStyledAttributes(attr, R.styleable.MaskEditText)
-        val N = a.indexCount
-        for (i in 0 until N) {
-            val at = a.getIndex(i)
-            when (at) {
-                R.styleable.MaskEditText_masks -> mask =
-                    (if (mask.length > 0) mask else a.getString(at)!!)
-                R.styleable.MaskEditText_placeholder -> placeholder =
-                    (if (a.getString(at)!!.length > 0 && placeholder == ' ') a.getString(at)!![0] else placeholder)
+        val n = a.indexCount
+        for (i in 0 until n) {
+            when (val at = a.getIndex(i)) {
+                R.styleable.MaskEditText_masks -> mMask =
+                    (mMask.ifEmpty { a.getString(at)!! })
+                R.styleable.MaskEditText_placeholder -> mPlaceholder =
+                    (if (a.getString(at)!!.isNotEmpty() && mPlaceholder == ' ') a.getString(at)!![0]
+                    else mPlaceholder)
             }
         }
         a.recycle()
-        this.mask = mask
-        this.placeholder = placeholder.toString()
+        this.mask = mMask
+        this.placeholder = mPlaceholder.toString()
         addTextChangedListener(MaskTextWatcher())
-        if (mask.length > 0) text = text // sets the text to create the mask
+        if (mMask.isNotEmpty()) text = text // sets the text to create the mask
     }
+
     fun setInterface(textWatcher: NumberInputHelper, fieldsNumber: Int) {
         this.textWatcher = textWatcher
         this.fieldsNumber = fieldsNumber
     }
-    fun getValues() = fieldValues
 
-
-    fun getValue(): String{
+    fun getValue(): String {
         return text.toString()
     }
 
-    fun eraseField(){
+    fun setValue(number: String) {
+        this.setText(number)
+    }
+
+    fun eraseField() {
         this.setText(" ")
     }
 
@@ -90,7 +90,12 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
             if (!treatNextCharAsLiteral && isMaskChar(mask[i])) {
                 if (j >= value.length) {
                     value.insert(j, placeholder)
-                    value.setSpan(ForegroundColorSpan(resources.getColor(R.color.gray_2)), j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    value.setSpan(
+                        ForegroundColorSpan(resources.getColor(R.color.gray_2, null)),
+                        j,
+                        j + 1,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                     j++
                 } else if (!matchMask(mask[i], value[j])) {
                     value.delete(j, j + 1)
@@ -121,21 +126,19 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
     }
 
     private fun stripMaskChars(value: Editable) {
-        val pspans = value.getSpans(0, value.length, PlaceholderSpan::class.java)
-        val lspans = value.getSpans(0, value.length, LiteralSpan::class.java)
-        for (k in pspans.indices) {
-            value.delete(value.getSpanStart(pspans[k]), value.getSpanEnd(pspans[k]))
+        val pSpans = value.getSpans(0, value.length, PlaceholderSpan::class.java)
+        val lSpans = value.getSpans(0, value.length, LiteralSpan::class.java)
+        for (k in pSpans.indices) {
+            value.delete(value.getSpanStart(pSpans[k]), value.getSpanEnd(pSpans[k]))
         }
-        for (k in lspans.indices) {
-            value.delete(value.getSpanStart(lspans[k]), value.getSpanEnd(lspans[k]))
+        for (k in lSpans.indices) {
+            value.delete(value.getSpanStart(lSpans[k]), value.getSpanEnd(lSpans[k]))
         }
     }
 
     private fun matchMask(mask: Char, value: Char): Boolean {
-        var ret = mask == NUMBER_MASK && Character.isDigit(value)
-        return ret
+        return mask == NUMBER_MASK && Character.isDigit(value)
     }
-
 
 
     private fun isMaskChar(mask: Char): Boolean {
@@ -148,7 +151,7 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
     private inner class MaskTextWatcher : TextWatcher {
         private var updating = false
         override fun afterTextChanged(s: Editable) {
-            if (updating || mask.length == 0) return
+            if (updating || mask.isEmpty()) return
             if (!updating) {
                 updating = true
                 stripMaskChars(s)
@@ -159,10 +162,9 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
 
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
         }
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            textWatcher?.numberWatcher(s[s.length-1] != 'X', fieldsNumber)
-            fieldValues = s.toString()
 
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            textWatcher?.numberWatcher(s[s.length - 1] != 'X', fieldsNumber)
         }
     }
 
@@ -175,6 +177,5 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
     companion object {
         private const val NUMBER_MASK = '#'
         private const val ESCAPE_CHAR = '\\'
-
     }
 }
