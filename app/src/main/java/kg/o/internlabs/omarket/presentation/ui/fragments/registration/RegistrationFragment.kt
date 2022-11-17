@@ -60,7 +60,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                                     // TODO  snack bar
                                 }
                                 getString(R.string.incorrect_number) -> {
-                                    cusNum.setHintText(it1)
+                                    cusNum.setErrorMessage(it1)
                                 }
                                 else -> {
                                     cusPass.setErrorMessage(it1)

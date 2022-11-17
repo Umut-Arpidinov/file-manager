@@ -14,7 +14,6 @@ import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
-import kg.o.internlabs.omarket.delete996
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.utils.InternetChecker
 import kg.o.internlabs.omarket.utils.NetworkStatus
@@ -48,19 +47,15 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     override fun initView() = with(binding) {
         super.initView()
         btn.buttonAvailability(false)
-        //cusNum
-        println(args?.number)
         if (args != null) {
             if (!args!!.number.isNullOrEmpty()) {
-                val a = "".delete996(args!!.number!!)
-                cusNum.setHintText(a)
+               cusNum.setValue(args!!.number!!)
             }
         }
     }
 
     override fun initListener() = with(binding) {
         super.initListener()
-        // setting watchers
         cusNum.setInterface(this@LoginEndFragment)
         cusPass.setInterface(this@LoginEndFragment)
 
@@ -114,7 +109,6 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         }
     }
 
-
     private fun initObserver() = with(binding){
         safeFlowGather {
             viewModel.movieState.take(1).collect {
@@ -136,7 +130,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                                     }
                                 }
                                 getString(R.string.incorrect_number) -> {
-                                    cusNum.setHintText(it1)
+                                    cusNum.setErrorMessage(it1)
                                 }
                                 else -> {
                                     cusPass.setErrorMessage(it1)
@@ -159,7 +153,6 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
             }
         }
     }
-
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty

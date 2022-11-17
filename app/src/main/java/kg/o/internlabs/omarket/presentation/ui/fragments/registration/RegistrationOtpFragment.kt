@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -68,7 +69,6 @@ class RegistrationOtpFragment :
             viewModel.checkOtp.take(1).collect {
                 when (it) {
                     is ApiState.Success -> {
-                        btnSendOtp.buttonFinished()
                         if (args != null){
                             if (args!!.number != null) {
                                 viewModel.putNumber(viewModel.formattedValues(args!!.number!!))
@@ -80,12 +80,14 @@ class RegistrationOtpFragment :
                         findNavController().navigate(R.id.mainFragment)
                     }
                     is ApiState.Failure -> {
-                        btnSendOtp.buttonFinished()
-                        btnSendOtp.buttonAvailability(false)
+                        btnSendOtp.isVisible = true
+                        btnSendOtp.isEnabled = false
+                        progressBar.isVisible = false
                         it.msg.message?.let { it1 -> cusOtp.setError(it1) }
                     }
                     ApiState.Loading -> {
-                        btnSendOtp.buttonActivated()
+                        btnSendOtp.isVisible = false
+                        progressBar.isVisible = true
                     }
                 }
             }

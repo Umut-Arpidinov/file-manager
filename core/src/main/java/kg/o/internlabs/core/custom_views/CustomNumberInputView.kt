@@ -32,6 +32,7 @@ class CustomNumberInputView : ConstraintLayout {
     }
 
     fun getVales() = binding.enterNumberEditText.getValue()
+
     fun setValue(message: String){
         binding.enterNumberEditText.setValue(message.substringAfter(' '))
     }
@@ -64,47 +65,10 @@ class CustomNumberInputView : ConstraintLayout {
             resources, R.drawable.number_not_ok_style, null
         )
     }
-    private fun setTextErrorColor() = with(binding){
+    private fun setTextErrorColor() = with(binding) {
         numberInputHelperText.setTextColor(ContextCompat.getColor(context, R.color.red_1))
-    fun setHintText(state: String) = with(binding) {
-        val numberNotFound = context.getString(R.string.number_mistake)
-        val numberNotExists = context.getString(R.string.number_not_Exists)
-        val enterNumber = context.getString(R.string.enter_number)
-        when (state) {
-            numberNotFound -> {
-                cancelImageLogic()
-                with(numberInputHelperText) {
-                    text = numberNotFound
-                    setTextColor(ContextCompat.getColor(context, R.color.red_1))
-                }
-                numberInputCancelImage.visibility = View.VISIBLE
-                numberInputFrame.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.number_not_ok_style, null
-                )
-                enterNumberEditText.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.number_not_ok_style, null
-                )
-            }
-            numberNotExists -> {
-                cancelImageLogic()
-                with(numberInputHelperText) {
-                    text = numberNotExists
-                    setTextColor(ContextCompat.getColor(context, R.color.red_1))
-                }
-                numberInputCancelImage.visibility = View.VISIBLE
-                numberInputFrame.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.number_not_ok_style, null
-                )
-                enterNumberEditText.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.number_not_ok_style, null
-                )
-            }
-            enterNumber -> {
-                numberInputHelperText.text = enterNumber
-                numberInputCancelImage.visibility = View.INVISIBLE
-            }
-        }
     }
+
     private fun initClick() = with(binding){
         numberInputCancelImage.setOnClickListener {
             setMessage("Введите номер телефона")

@@ -42,7 +42,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
                         println("hhhhhhh "+e.printStackTrace())
                     }
                 } else {
-                    binding.cusNum.setHintText(resources.getString(coreString.number_mistake))
+                    binding.cusNum.setErrorMessage(resources.getString(coreString.number_mistake))
                 }
             }
         }
