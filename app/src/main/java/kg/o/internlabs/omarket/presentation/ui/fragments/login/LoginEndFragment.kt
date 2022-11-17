@@ -2,19 +2,32 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
+import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
+import kg.o.internlabs.omarket.delete996
+import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.utils.InternetChecker
+import kg.o.internlabs.omarket.utils.NetworkStatus
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.launch
+
+private typealias coreStringRes = kg.o.internlabs.core.R.string
 
 @AndroidEntryPoint
 class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(),
     NumberInputHelper, PasswordInputHelper {
 
+    private var hasInternet = false
     private var isNumberNotEmpty = false
     private var isPasswordNotEmpty = false
     private var args: LoginEndFragmentArgs? = null
@@ -32,10 +45,17 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         args = LoginEndFragmentArgs.fromBundle(requireArguments())
     }
 
-    override fun initView() {
+    override fun initView() = with(binding) {
         super.initView()
+        btn.buttonAvailability(false)
+        //cusNum
         println(args?.number)
-
+        if (args != null) {
+            if (!args!!.number.isNullOrEmpty()) {
+                val a = "".delete996(args!!.number!!)
+                cusNum.setHintText(a)
+            }
+        }
     }
 
     override fun initListener() = with(binding) {
@@ -43,21 +63,106 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         // setting watchers
         cusNum.setInterface(this@LoginEndFragment)
         cusPass.setInterface(this@LoginEndFragment)
-        btn.buttonAvailability(false)
 
         btn.setOnClickListener {
-            findNavController().navigate(R.id.mainFragment)
+            if (hasInternet) {
+                viewModel.loginUser(
+                    RegisterEntity(
+                        msisdn = viewModel.formattedValues(cusNum.getVales()),
+                        password = cusPass.getPasswordField()
+                    )
+                )
+                initObserver()
+            }
+            else {
+                viewModel.checkPassword(cusPass.getPasswordField())
+                loadLocalState()
+            }
         }
-        btnPdf.setOnClickListener {
-            findNavController().navigate(R.id.pdfFragment)
-        }
-
-        tbLoginEnd.setNavigationOnClickListener { findNavController().navigateUp() }
     }
+
+    private fun loadLocalState() {
+        safeFlowGather {
+            viewModel.pwd.take(1).collect {
+                if (it) {
+                    findNavController().navigate(R.id.mainFragment)
+                }
+                else {
+                    with(binding) {
+                        btn.buttonAvailability(false)
+                        cusPass.setErrorMessage(resources.getString(coreStringRes.incorrect_password))
+                    }
+                }
+            }
+        }
+    }
+
+    override fun checkInternet() {
+        super.checkInternet()
+        InternetChecker(requireContext()).observe(requireActivity()) {
+            when (it) {
+                NetworkStatus.Available -> {
+                    try {
+                        hasInternet = true
+                    } catch (_: Exception) {
+                    }
+                }
+                NetworkStatus.Unavailable -> {
+                    hasInternet = false
+                }
+            }
+        }
+    }
+
+
+    private fun initObserver() = with(binding){
+        safeFlowGather {
+            viewModel.movieState.take(1).collect {
+                when (it) {
+                    is ApiState.Success -> {
+                        viewModel.putNumber(viewModel.formattedValues(cusNum.getVales()))
+                        viewModel.putPwd(cusPass.getPasswordField())
+                        btn.buttonFinished()
+                        findNavController().navigate(R.id.mainFragment)
+                    }
+                    is ApiState.Failure -> {
+                        btn.buttonFinished()
+                        it.msg.message?.let { it1 ->
+                            btn.buttonAvailability(false)
+                            when(it1) {
+                                getString(R.string.time_out) -> {
+                                    if (!hasInternet) {
+                                        loadLocalState()
+                                    }
+                                }
+                                getString(R.string.incorrect_number) -> {
+                                    cusNum.setHintText(it1)
+                                }
+                                else -> {
+                                    cusPass.setErrorMessage(it1)
+                                }
+                            }
+                        }
+                    }
+                    is ApiState.Loading -> {
+                        btn.buttonActivated()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun safeFlowGather(action: suspend () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                action()
+            }
+        }
+    }
+
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isNumberNotEmpty = notEmpty
-        
         complexWatcher()
     }
 
@@ -66,21 +171,11 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         complexWatcher()
     }
 
-    // следить за двумя полями одновременно
     private fun complexWatcher() = with(binding) {
-
         if (isNumberNotEmpty && isPasswordNotEmpty) {
             btn.buttonAvailability(true)
         } else {
             btn.buttonAvailability(false)
-            // cusPass.setErrorMessage(getString(kg.o.internlabs.core.R.string.incorrect_password))
         }
-
-        // TODO Здесь можно управлять кнопкой если isNumberNotEmpty && isPasswordNotEmpty true то...
-        // TODO так можно переключать кнопку
-        //btnSendOtp.buttonAvailability(isNumberNotEmpty && isPasswordNotEmpty)
     }
-
-    // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
-    // TODO чтобы получить значение пороля вызыаем геттер так binding.cusPass.getPasswordField()
 }

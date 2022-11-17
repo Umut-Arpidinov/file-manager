@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginStartFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginStartFragment"
-        android:label="fragment_login_end"
+        android:label="fragment_login_start"
         tools:layout="@layout/fragment_login_start">
         <action
             android:id="@+id/go_login_end"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/loginEndFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginEndFragment"
-        android:label="fragment_login_start"
+        android:label="fragment_login_end"
         tools:layout="@layout/fragment_login_end">
 
         <argument
@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragment"
-        android:label="RegistrationFragment"
+        android:label="fragment_registration"
         tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/go_to_otp"
@@ -60,7 +60,7 @@
     <fragment
         android:id="@+id/registrationOtpFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationOtpFragment"
-        android:label="fragment_registration"
+        android:label="fragment_registration_otp"
         tools:layout="@layout/fragment_registration_otp">
         <argument
             android:name="number"
