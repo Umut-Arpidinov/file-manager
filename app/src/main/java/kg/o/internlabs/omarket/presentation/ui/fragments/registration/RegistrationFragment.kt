@@ -49,7 +49,11 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                 when (it) {
                     is ApiState.Success -> {
                         btnSendOtp.buttonFinished()
-                        goNextPage()
+                        try {
+                            goNextPage()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                     is ApiState.Failure -> {
                         btnSendOtp.buttonFinished()

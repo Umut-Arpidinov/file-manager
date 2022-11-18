@@ -50,7 +50,11 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         btn.buttonAvailability(false)
         if (args != null) {
             if (!args!!.number.isNullOrEmpty()) {
-               cusNum.setValue(args!!.number!!)
+                cusNum.setValue(args!!.number!!)
+                if (!cusNum.getVales().endsWith("X")) {
+                    isNumberNotEmpty = true
+                    complexWatcher()
+                }
             }
         }
     }

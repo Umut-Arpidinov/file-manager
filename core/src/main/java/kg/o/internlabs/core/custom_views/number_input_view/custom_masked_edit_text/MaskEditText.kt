@@ -164,7 +164,7 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            textWatcher?.numberWatcher(s[s.length - 1] != 'X', fieldsNumber)
+            textWatcher?.numberWatcher(!s.endsWith('X'), fieldsNumber)
         }
     }
 
