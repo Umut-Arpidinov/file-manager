@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.data.remote
 
 
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
+import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST

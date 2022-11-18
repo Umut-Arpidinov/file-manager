@@ -76,6 +76,6 @@ class CustomNumberInputView : ConstraintLayout {
     }
 
     fun clear() {
-        binding.enterNumberEditText.setText("")
+        binding.enterNumberEditText.cleanUp()
     }
 }
