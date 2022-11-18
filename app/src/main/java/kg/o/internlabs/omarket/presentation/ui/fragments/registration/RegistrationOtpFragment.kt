@@ -47,7 +47,8 @@ class RegistrationOtpFragment :
 
     override fun initListener() = with(binding){
         super.initListener()
-        binding.btnSendOtp.setOnClickListener {
+        tbRegistrationOtp.setNavigationOnClickListener { findNavController().navigateUp() }
+        btnSendOtp.setOnClickListener {
             viewModel.checkOtp(RegisterEntity(msisdn = args?.number?.let { it1 ->
                 viewModel.formattedValues(it1)
             }, otp = cusOtp.getValues()))

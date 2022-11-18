@@ -64,6 +64,8 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         cusNum.setInterface(this@LoginEndFragment)
         cusPass.setInterface(this@LoginEndFragment)
 
+        tbLoginEnd.setNavigationOnClickListener { findNavController().navigateUp() }
+
         btn.setOnClickListener {
             if (hasInternet) {
                 viewModel.loginUser(
