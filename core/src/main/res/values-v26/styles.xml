@@ -27,4 +27,10 @@
     <style name="OtpTimer" parent="OTPResentButton">
         <item name="android:textColor">@color/gray_1</item>
     </style>
+
+    <style name="buttonTextStyle" parent="AppPrimaryStyle">
+        <item name="android:fontWeight">500</item>
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
 </resources>
