@@ -46,8 +46,9 @@ class MainActivityViewModel @Inject constructor(
     private fun startRepeatingJob(timeInterval: Long = 20_000L): Job {
         return CoroutineScope(Dispatchers.IO).launch {
             while (true) {
-                getRefreshTokenPrefs().take(1).collect {
-                    refreshTokenRoute(it).take(1).collect { response ->
+                delay(timeInterval)
+                getRefreshTokenPrefs().collectLatest {
+                    refreshTokenRoute(it).collectLatest { response ->
                         when (response) {
                             is ApiState.Success -> {
                                 println("main         good")
@@ -57,7 +58,6 @@ class MainActivityViewModel @Inject constructor(
                                 response.data.accessToken?.let { it1 ->
                                     putAccessTokenPrefsUseCase.invoke(it1)
                                 }
-                                delay(timeInterval)
                                 myJob = startRepeatingJob(1_620_000) // 27 minutes
                             }
                             is ApiState.Failure -> {

@@ -68,7 +68,7 @@ class LoginViewModel @Inject constructor(
 
     fun loginUser(reg: RegisterEntity) {
         viewModelScope.launch {
-            useCase(reg).take(1).collect {
+            useCase(reg).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         _movieState.value = it
