@@ -18,6 +18,7 @@ import kg.o.internlabs.omarket.delete996
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.utils.InternetChecker
 import kg.o.internlabs.omarket.utils.NetworkStatus
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
@@ -117,7 +118,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     private fun initObserver() = with(binding){
         safeFlowGather {
-            viewModel.movieState.take(1).collect {
+            viewModel.movieState.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         viewModel.putNumber(viewModel.formattedValues(cusNum.getVales()))
