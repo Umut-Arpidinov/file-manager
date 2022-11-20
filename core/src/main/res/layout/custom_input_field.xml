@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/custom_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -36,8 +35,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <kg.o.internlabs.core.custom_views.number_input_view.custom_masked_edit_text.MaskedEditText
-                    android:id="@+id/enter_number_edit_text"
+                <kg.o.internlabs.core.custom_views.number_input_view.custom_masked_edit_text.MaskEditText
+                    android:id="@+id/enterNumberEditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_height_32dp"
                     android:layout_gravity="center"
@@ -46,20 +45,11 @@
                     android:autofillHints="phone"
                     android:background="@drawable/number_ok_style"
                     android:gravity="left|center"
-                    android:hint="@string/hint_for_number"
-                    android:inputType="number"
                     android:maxLines="1"
+                    app:placeholder="X"
                     android:textAppearance="@style/numberInput"
                     android:textCursorDrawable="@color/magenta_1"
-                    app:keep_hint="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:mask="+996 ### ### ###"
-                    tools:ignore="LabelFor">
-
-                </kg.o.internlabs.core.custom_views.number_input_view.custom_masked_edit_text.MaskedEditText>
+                    app:masks="+996 ### ### ###"/>
 
                 <ImageView
                     android:id="@+id/number_input_cancel_image"
@@ -69,7 +59,7 @@
                     android:layout_marginRight="@dimen/margin_2dp"
                     android:contentDescription="@string/image_description"
                     android:src="@drawable/ic_baseline_cancel_24"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </FrameLayout>
 
             <TextView

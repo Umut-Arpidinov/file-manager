@@ -1,7 +1,6 @@
 package kg.o.internlabs.core.data.local.prefs
 
 import android.content.SharedPreferences
-import java.lang.IllegalArgumentException
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 

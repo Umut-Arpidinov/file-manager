@@ -8,22 +8,19 @@
     android:layout_height="@dimen/view_height_48dp"
     app:cardCornerRadius="@dimen/corner_radius_12dp">
 
-
     <TextView
         android:id="@+id/custom_txt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@color/green_1"
-        android:fontFamily="@font/roboto"
-        android:gravity="center"
         android:clickable="true"
-        android:foreground="@drawable/progress_btn_effect"
-        android:text="@string/empty_text"
-        android:textFontWeight="500"
-        tools:targetApi="28"
         android:focusable="true"
-        android:lineHeight="@dimen/line_16dp"
+        android:fontFamily="@font/roboto"
+        android:foreground="@drawable/progress_btn_effect"
+        android:gravity="center"
+        android:text="@string/empty_text"
+        android:lineSpacingExtra="@dimen/extra_spacing_2dp"
         android:textColor="@color/white_1"
         android:textSize="@dimen/text_14sp" />
 

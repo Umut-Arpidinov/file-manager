@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseActivity
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.omarket.databinding.ActivitySplashScreenBinding
+import kg.o.internlabs.omarket.presentation.ui.activities.activities.main_activity.ClosingService
 import kg.o.internlabs.omarket.presentation.ui.activities.activities.main_activity.MainActivity
 
 @SuppressLint("CustomSplashScreen")
@@ -30,6 +31,7 @@ class SplashScreenActivity : BaseActivity<BaseViewModel, ActivitySplashScreenBin
 
     override fun initView() {
         super.initView()
+        startService(Intent(baseContext, ClosingService::class.java))
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
