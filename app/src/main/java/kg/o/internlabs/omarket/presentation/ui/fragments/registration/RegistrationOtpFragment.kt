@@ -90,6 +90,7 @@ class RegistrationOtpFragment :
                         btnSendOtp.isVisible = false
                         progressBar.isVisible = true
                     }
+                    else -> {}
                 }
             }
         }

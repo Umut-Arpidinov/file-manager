@@ -11,7 +11,7 @@ import kg.o.internlabs.omarket.domain.usecases.RegisterUserUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +25,6 @@ class RegistrationViewModel @Inject constructor(
     private val putAccessTokenPrefsUseCase: PutAccessTokenPrefsUseCase,
     private val setLoginStatusUseCase: SetLoginStatusUseCase
 ) : BaseViewModel() {
-
     private val _checkOtp = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
     private val _registerUser = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
     val checkOtp = _checkOtp.asStateFlow()
@@ -33,36 +32,24 @@ class RegistrationViewModel @Inject constructor(
 
     fun checkOtp(reg: RegisterEntity) {
         viewModelScope.launch {
-            checkOtpUseCase(reg).take(1).collect {
+            checkOtpUseCase(reg).collectLatest {
                 when (it) {
-                    is ApiState.Success -> {
-                        _checkOtp.value = it
-                        it.data.refreshToken?.let { it1 ->
-                            putRefreshTokenPrefsUseCase.invoke(it1)
-                        }
-                        it.data.accessToken?.let { it1 ->
-                            putAccessTokenPrefsUseCase.invoke(it1)
-                        }
-                        setLoginStatusUseCase.invoke(true)
-                    }
-                    is ApiState.Failure -> {
-                        setLoginStatusUseCase.invoke(false)
-                        _checkOtp.value = it
-                    }
+                    is ApiState.Success -> _checkOtp.value = it
+                    is ApiState.Failure -> _checkOtp.value = it
+                    is ApiState.FailureError -> _checkOtp.value = it
                     ApiState.Loading -> {
-                        setLoginStatusUseCase.invoke(false)
                     }
                 }
             }
         }
     }
-
     fun registerUser(reg: RegisterEntity) {
         viewModelScope.launch {
-            registerUserUseCase(reg).take(1).collect {
+            registerUserUseCase(reg).collectLatest {
                 when (it) {
                     is ApiState.Success -> _registerUser.value = it
                     is ApiState.Failure -> _registerUser.value = it
+                    is ApiState.FailureError -> _registerUser.value = it
                     ApiState.Loading -> {
                     }
                 }

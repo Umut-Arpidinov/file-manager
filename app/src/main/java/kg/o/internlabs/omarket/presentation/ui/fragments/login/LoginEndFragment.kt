@@ -148,11 +148,11 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                     is ApiState.Loading -> {
                         btn.buttonActivated()
                     }
+                    else -> {}
                 }
             }
         }
     }
-
     private fun safeFlowGather(action: suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

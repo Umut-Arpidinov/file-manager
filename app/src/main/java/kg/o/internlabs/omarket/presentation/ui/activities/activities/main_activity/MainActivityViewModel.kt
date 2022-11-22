@@ -68,6 +68,9 @@ class MainActivityViewModel @Inject constructor(
                             ApiState.Loading -> {
                                 println("main      loading")
                             }
+                            else -> {println("main          failError")
+                                _tokens.value = response
+                                myJob?.cancel()}
                         }
                     }
                 }
@@ -94,4 +97,3 @@ class MainActivityViewModel @Inject constructor(
         super.onCleared()
     }
 }
-

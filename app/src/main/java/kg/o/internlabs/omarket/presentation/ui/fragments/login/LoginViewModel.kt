@@ -87,6 +87,10 @@ class LoginViewModel @Inject constructor(
                     is ApiState.Loading -> {
                         setLoginStatusUseCase.invoke(false)
                     }
+                    else -> {
+                        setLoginStatusUseCase.invoke(false)
+                        _movieState.value = it
+                    }
                 }
             }
         }

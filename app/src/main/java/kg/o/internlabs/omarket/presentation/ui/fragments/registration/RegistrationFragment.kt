@@ -56,26 +56,12 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                         }
                     }
                     is ApiState.Failure -> {
-                        btnSendOtp.buttonFinished()
-                        btnSendOtp.buttonAvailability(false)
-                        it.msg.message?.let { it1 ->
-                            when(it1) {
-                                getString(R.string.time_out) -> {
-                                    // TODO  snack bar
-                                }
-                                getString(R.string.incorrect_number) -> {
-                                    cusNum.setErrorMessage(it1)
-                                }
-                                else -> {
-                                    cusPass.setErrorMessage(it1)
-                                    cusPass1.setErrorMessage(it1)
-                                }
-                            }
-                        }
+
                     }
                     ApiState.Loading -> {
                         btnSendOtp.buttonActivated()
                     }
+                    else -> {}
                 }
             }
         }
