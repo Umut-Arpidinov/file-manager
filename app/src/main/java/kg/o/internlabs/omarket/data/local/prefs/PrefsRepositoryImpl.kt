@@ -15,14 +15,14 @@ class PrefsRepositoryImpl @Inject constructor(private val prefs: StoragePreferen
     }
 
     override fun checkNumberPrefs(): Flow<String?> =
-        prefs.getStringFlow(StoragePreferences.Keys.MSISDN, "996243243243")
+        prefs.getStringFlow(StoragePreferences.Keys.MSISDN, "")
 
     override fun putPWDToPrefs(pwd: String) {
         prefs.password = pwd
     }
 
     override fun checkPWDFromPrefs(): Flow<String?> =
-        prefs.getStringFlow(StoragePreferences.Keys.PASSWORD, "1234567890")
+        prefs.getStringFlow(StoragePreferences.Keys.PASSWORD, "")
 
     override fun putAccessTokenToPrefs(accessToken: String) {
         prefs.token = accessToken

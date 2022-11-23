@@ -26,6 +26,9 @@
     <string name="terms_and_conditions">Нажимая "Регистрация" вы принимаете\n <a href="http://www.google.com/">условия пользовательского соглашения </a> </string>
     <string name="toggle">Union vector</string>
     <string name="_02_00">02:00</string>
+    <string name="registration">Регистрация</string>
+    <string name="time_out">java.net.SocketTimeoutException: connect timed out</string>
+    <string name="incorrect_number">Номер не существует</string>
 
     <string name="accept">нажимая \"Войти\" вы принимаете</string>
     <string name="terms_agreement"><u>условия пользовательского соглашения</u></string>

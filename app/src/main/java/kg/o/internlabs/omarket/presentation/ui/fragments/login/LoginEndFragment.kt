@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
-private typealias coreStringRes = kg.o.internlabs.core.R.string
+private typealias coreString = kg.o.internlabs.core.R.string
 
 @AndroidEntryPoint
 class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(),
@@ -30,6 +30,8 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
     private var hasInternet = false
     private var isNumberNotEmpty = false
     private var isPasswordNotEmpty = false
+    private var numberOk = false
+    private var passwordOk = false
     private var args: LoginEndFragmentArgs? = null
 
     override val viewModel: LoginViewModel by lazy {
@@ -75,27 +77,50 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                     )
                 )
                 initObserver()
-            }
-            else {
+            } else {
+                viewModel.checkNumber(cusNum.getVales())
                 viewModel.checkPassword(cusPass.getPasswordField())
                 loadLocalState()
             }
         }
     }
 
-    private fun loadLocalState() {
+    private fun loadLocalState() = with(binding) {
         safeFlowGather {
-            viewModel.pwd.take(1).collect {
+            viewModel.num.take(1).collect {
                 if (it) {
-                    findNavController().navigate(R.id.mainFragment)
-                }
-                else {
-                    with(binding) {
-                        btn.buttonAvailability(false)
-                        cusPass.setErrorMessage(resources.getString(coreStringRes.incorrect_password))
+                    numberOk = true
+                    cusNum.setMessage(resources.getString(coreString.enter_number))
+                    try {
+                        canNavigate()
+                    } catch (e: IllegalArgumentException) {
+                        println("nav problems " + e.printStackTrace())
                     }
+                } else {
+                    btn.buttonAvailability(false)
+                    cusNum.setErrorMessage(resources.getString(coreString.number_mistake))
                 }
             }
+            viewModel.pwd.take(1).collect {
+                if (it) {
+                    passwordOk = true
+                    binding.cusPass.setMessage("")
+                    try {
+                        canNavigate()
+                    } catch (e: IllegalArgumentException) {
+                        println("nav problems " + e.printStackTrace())
+                    }
+                } else {
+                    btn.buttonAvailability(false)
+                    cusPass.setErrorMessage(resources.getString(coreString.incorrect_password))
+                }
+            }
+        }
+    }
+
+    private fun canNavigate() {
+        if (numberOk && passwordOk) {
+            findNavController().navigate(R.id.mainFragment)
         }
     }
 
@@ -116,7 +141,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         }
     }
 
-    private fun initObserver() = with(binding){
+    private fun initObserver() = with(binding) {
         safeFlowGather {
             viewModel.movieState.collectLatest {
                 when (it) {
@@ -130,7 +155,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                         btn.buttonFinished()
                         it.msg.message?.let { it1 ->
                             btn.buttonAvailability(false)
-                            when(it1) {
+                            when (it1) {
                                 getString(R.string.time_out) -> {
                                     if (!hasInternet) {
                                         loadLocalState()
@@ -140,6 +165,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                                     cusNum.setErrorMessage(it1)
                                 }
                                 else -> {
+                                    cusNum.setMessage(resources.getString(coreString.enter_number))
                                     cusPass.setErrorMessage(it1)
                                 }
                             }
