@@ -3,7 +3,6 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
