@@ -1,6 +1,7 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Lifecycle
@@ -57,6 +58,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                         }
                     }
                     is ApiState.Failure -> {
+                        Log.d("Ray", "failure")
                         btnSendOtp.buttonFinished()
                         btnSendOtp.buttonAvailability(false)
                         it.msg.message?.let { it1 ->
@@ -64,12 +66,11 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                                 getString(R.string.time_out) -> {
                                     // TODO  snack bar
                                 }
-                                getString(R.string.incorrect_number), getString(R.string.number_exists) -> {
+                                getString(R.string.incorrect_number) -> {
                                     cusNum.setErrorMessage(it1)
                                 }
                                 else -> {
-                                    cusPass.setErrorMessage(it1)
-                                    cusPass1.setErrorMessage(it1)
+                                   cusNum.setErrorMessage(it1)
                                 }
                             }
                         }
