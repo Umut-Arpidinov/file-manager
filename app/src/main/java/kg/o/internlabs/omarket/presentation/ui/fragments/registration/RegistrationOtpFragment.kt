@@ -53,7 +53,6 @@ class RegistrationOtpFragment :
                 viewModel.formattedValues(it1)
             }, otp = cusOtp.getValues()))
             initObserver()
-
         }
     }
 
@@ -78,7 +77,11 @@ class RegistrationOtpFragment :
                                 viewModel.putPwd(args!!.password!!)
                             }
                         }
-                        findNavController().navigate(R.id.mainFragment)
+                        try {
+                            findNavController().navigate(R.id.mainFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                     is ApiState.Failure -> {
                         btnSendOtp.isVisible = true

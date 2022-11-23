@@ -11,6 +11,7 @@
     <string name="hint_for_number">XXXXXXXXXXXX</string>
     <string name="image_description">Cancel</string>
     <string name="enter_number">Введите номер телефона</string>
+    <string name="number_exists">номер уже существует в базе О!Маркет. Введите другие данные</string>
     <string name="error_otp">Неверный код</string>
     <string name="resent">Отправить повторно</string>
     <string name="underline_licence"><u>условия пользовательского соглашения</u></string>
