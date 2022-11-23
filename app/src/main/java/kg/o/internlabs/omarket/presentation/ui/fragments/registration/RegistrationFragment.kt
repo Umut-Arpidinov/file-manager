@@ -48,6 +48,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
             viewModel.registerUser.take(1).collect {
                 when (it) {
                     is ApiState.Success -> {
+                        cusNum.setMessage(resources.getString(R.string.enter_number))
                         btnSendOtp.buttonFinished()
                         try {
                             goNextPage()
@@ -63,7 +64,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                                 getString(R.string.time_out) -> {
                                     // TODO  snack bar
                                 }
-                                getString(R.string.incorrect_number) -> {
+                                getString(R.string.incorrect_number), getString(R.string.number_exists) -> {
                                     cusNum.setErrorMessage(it1)
                                 }
                                 else -> {

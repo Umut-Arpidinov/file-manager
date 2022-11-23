@@ -14,4 +14,6 @@
     <string name="registration">Регистрация</string>
     <string name="time_out">java.net.SocketTimeoutException: connect timed out</string>
     <string name="incorrect_number">Номер не существует</string>
+    <string name="number_exists">номер уже существует в базе О!Маркет. Введите другие данные</string>
+    <string name="enter_number">Введите номер телефона</string>
 </resources>
