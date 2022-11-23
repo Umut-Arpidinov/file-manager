@@ -20,6 +20,10 @@ abstract class BaseRepository {
             }
         } else{
            /* emit(ApiState.(response.errorBody()!!))*/
+            val raw = response.errorBody()?.string()
+            val jObject = raw?.let { org.json.JSONObject(it) }
+            val str: String = jObject?.get("message").toString()
+            emit(ApiState.Failure(Throwable(str)))
         }
     }. catch {e->
         e.printStackTrace()
