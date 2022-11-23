@@ -45,9 +45,10 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
 
     private fun initObserver() = with(binding){
         safeFlowGather {
-            viewModel.registerUser.take(1).collect {
+            viewModel.registerUser.take(2).collect {
                 when (it) {
                     is ApiState.Success -> {
+                        cusNum.setMessage(resources.getString(R.string.enter_number))
                         btnSendOtp.buttonFinished()
                         try {
                             goNextPage()
@@ -56,12 +57,26 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                         }
                     }
                     is ApiState.Failure -> {
-
+                        btnSendOtp.buttonFinished()
+                        btnSendOtp.buttonAvailability(false)
+                        it.msg.message?.let { it1 ->
+                            when(it1) {
+                                getString(R.string.time_out) -> {
+                                    // TODO  snack bar
+                                }
+                                getString(R.string.incorrect_number), getString(R.string.number_exists) -> {
+                                    cusNum.setErrorMessage(it1)
+                                }
+                                else -> {
+                                    cusPass.setErrorMessage(it1)
+                                    cusPass1.setErrorMessage(it1)
+                                }
+                            }
+                        }
                     }
                     ApiState.Loading -> {
                         btnSendOtp.buttonActivated()
                     }
-                    else -> {}
                 }
             }
         }

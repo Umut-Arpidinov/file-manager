@@ -19,7 +19,7 @@ abstract class BaseRepository {
                 emit(ApiState.Success(data))
             }
         } else{
-            emit(ApiState.FailureError(response.errorBody()!!))
+           /* emit(ApiState.(response.errorBody()!!))*/
         }
     }. catch {e->
         e.printStackTrace()

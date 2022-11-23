@@ -15,7 +15,7 @@ import kg.o.internlabs.core.custom_views.OtpHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -67,7 +67,7 @@ class RegistrationOtpFragment :
 
     private fun initObserver() = with(binding){
         safeFlowGather {
-            viewModel.checkOtp.take(1).collect {
+            viewModel.checkOtp.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         if (args != null){
