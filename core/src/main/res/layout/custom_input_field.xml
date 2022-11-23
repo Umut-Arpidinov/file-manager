@@ -39,6 +39,7 @@
                     android:id="@+id/enterNumberEditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/view_height_32dp"
+                    android:inputType="phone"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginEnd="@dimen/margin_16dp"
