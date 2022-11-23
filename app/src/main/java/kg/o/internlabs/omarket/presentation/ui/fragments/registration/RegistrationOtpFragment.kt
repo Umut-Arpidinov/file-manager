@@ -53,7 +53,7 @@ class RegistrationOtpFragment :
                 viewModel.formattedValues(it1)
             }, otp = cusOtp.getValues()))
             initObserver()
-            findNavController().navigate(R.id.mainFragment)
+
         }
     }
 
