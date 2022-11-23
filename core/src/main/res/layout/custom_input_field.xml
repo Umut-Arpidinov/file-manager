@@ -65,12 +65,12 @@
 
             <TextView
                 android:id="@+id/number_input_helper_text"
+                style="@style/PrimaryUnderFieldText"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height_32dp"
                 android:layout_marginStart="@dimen/margin_28dp"
                 android:layout_marginEnd="@dimen/margin_28dp"
                 android:text="@string/enter_number"
-                android:textAppearance="@style/hint"
                 app:layout_constraintBottom_toBottomOf="@id/number_input_frame"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

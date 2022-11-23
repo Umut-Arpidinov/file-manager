@@ -83,8 +83,6 @@ class CustomButtonView : ConstraintLayout {
             0 -> {
                 cardViewBtn.isClickable = false
                 customTxt.isVisible = false
-                customTxtGray.isVisible = true
-                customTxtGray.isClickable = false
             }
             else -> {
                 with(customTxt) {
