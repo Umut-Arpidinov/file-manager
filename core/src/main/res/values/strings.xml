@@ -50,7 +50,7 @@
     </string>
 
     <string name="helper_text_space">
-        <![CDATA[,
+        <![CDATA[
         <font color="red">Пароль не может содержать пустые строки!!!</font>
         ]]>
     </string>
