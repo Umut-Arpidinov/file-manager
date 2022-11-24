@@ -20,7 +20,7 @@
 
         <action
             android:id="@+id/go_to_registration"
-            app:destination="@id/loginEndFragment">
+            app:destination="@id/registrationFragment">
             <argument
                 android:name="number"
                 app:argType="string" />
