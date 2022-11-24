@@ -1,6 +1,7 @@
 package kg.o.internlabs.core.custom_views
 
 import android.content.Context
+import android.text.Html
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
@@ -49,7 +50,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     }
 
     fun setMessage(message: String) = with(binding) {
-        passwordHelper.text = message
+        passwordHelper.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
         setFrameDefaultColor()
         setTextDefaultColor()
     }
@@ -81,13 +82,40 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.red_1))
     }
 
+    private fun setPasswordInfo(password: String) {
+        when (password) {
+            "short" -> setMessage(resources.getString(R.string.helper_text_wrong_password_length))
+            "noUpperCaseLetter" -> setMessage(resources.getString(R.string.helper_text_no_upper_case_letters))
+            "noLowerCaseLetter" -> setMessage(resources.getString(R.string.helper_text_no_lower_case_letters))
+            "emptySpace" -> setMessage(resources.getString(R.string.helper_text_space))
+            "noDigits" -> setMessage(resources.getString(R.string.helper_text_no_digits))
+            "ok" -> setMessage(resources.getString(R.string.helper_text_create_password))
+        }
+    }
+
     private fun isPasswordStrong(password: String): Boolean {
-        if (password.length < 8) return false
-        if (!password.matches(".*[A-Z].*".toRegex())) return false
-        if (!password.matches(".*[a-z].*".toRegex())) return false
-        if (password.contains(" ")) return false
-        if(!password.matches(".*[!@#$%^&*()_+.-]".toRegex())) return false
-        return password.matches(".*[0-9].*".toRegex())
+        if (password.length < 8) {
+            setPasswordInfo("short")
+            return false
+        }
+        if (!password.matches(".*[A-Z].*".toRegex())) {
+            setPasswordInfo("noUpperCaseLetter")
+            return false
+        }
+        if (!password.matches(".*[a-z].*".toRegex())) {
+            setPasswordInfo("noLowerCaseLetter")
+            return false
+        }
+        if (password.contains(" ")) {
+            setPasswordInfo("emptySpace")
+            return false
+        }
+        if (!password.matches(".*[0-9].*".toRegex())) {
+            setPasswordInfo("noDigits")
+            return false
+        }
+        setPasswordInfo("ok")
+        return true
     }
 
     private fun setTextDefaultColor() = with(binding) {
