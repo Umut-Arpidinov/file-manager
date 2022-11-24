@@ -120,7 +120,11 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     private fun canNavigate() {
         if (numberOk && passwordOk) {
-            findNavController().navigate(R.id.mainFragment)
+            try {
+                findNavController().navigate(R.id.mainFragment)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
