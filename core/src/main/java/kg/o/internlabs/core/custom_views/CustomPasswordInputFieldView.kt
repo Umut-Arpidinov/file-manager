@@ -39,7 +39,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
 
     private fun initWatcher() {
         binding.passwordInputField.addTextChangedListener {
-            textWatcher?.passwordWatcher(it.toString().length >= 8, fieldNumber)
+            textWatcher?.passwordWatcher(isPasswordStrong(it.toString()), fieldNumber)
         }
     }
 
@@ -79,6 +79,16 @@ class CustomPasswordInputFieldView : ConstraintLayout {
 
     private fun setTextErrorColor() = with(binding) {
         passwordHelper.setTextColor(ContextCompat.getColor(context, R.color.red_1))
+    }
+
+    private fun isPasswordStrong(password: String): Boolean {
+        if (password.length < 8) return false
+        if (!password.matches(".*[A-Z].*".toRegex())) return false
+        if (!password.matches(".*[a-z].*".toRegex())) return false
+        if (password.matches("[?=\t\n/\\\\S+\$]".toRegex())) return false
+        if (password.contains(" ")) return false
+        if(!password.matches(".*[!@#$%^&*()_+.-]".toRegex())) return false
+        return password.matches(".*[0-9].*".toRegex())
     }
 
     private fun setTextDefaultColor() = with(binding) {

@@ -1,7 +1,7 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
+import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Lifecycle
@@ -18,7 +18,6 @@ import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,12 +28,24 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
     private var isFirstPasswordNotEmpty = false
     private var isSecondPasswordNotEmpty = false
 
+    private var args : RegistrationFragmentArgs? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        args = RegistrationFragmentArgs.fromBundle(requireArguments())
+    }
+
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentRegistrationBinding {
         return FragmentRegistrationBinding.inflate(inflater)
+    }
+
+    override fun initView() {
+        super.initView()
+        binding.cusNum.setValue(args?.number.toString())
     }
 
     private fun safeFlowGather(action: suspend () -> Unit) {
@@ -50,7 +61,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
             viewModel.registerUser.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        cusNum.setMessage(resources.getString(R.string.enter_number))
+                        cusNum.setMessage(resources.getString(kg.o.internlabs.core.R.string.enter_number))
                         btnSendOtp.buttonFinished()
                         try {
                             goNextPage()
@@ -66,11 +77,13 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                                 getString(R.string.time_out) -> {
                                     // TODO  snack bar
                                 }
-                                getString(R.string.incorrect_number) -> {
+                                getString(R.string.incorrect_number),
+                                getString(R.string.number_exists) -> {
                                     cusNum.setErrorMessage(it1)
                                 }
                                 else -> {
-                                   cusNum.setErrorMessage(it1)
+                                    cusPass.setErrorMessage(it1)
+                                    cusPass1.setErrorMessage(it1)
                                 }
                             }
                         }
@@ -84,10 +97,14 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
     }
 
     private fun goNextPage() {
-        findNavController().navigate(
-            RegistrationFragmentDirections
-                .goToOtp(binding.cusNum.getVales(), binding.cusPass.getPasswordField())
-        )
+        try {
+            findNavController().navigate(
+                RegistrationFragmentDirections
+                    .goToOtp(binding.cusNum.getVales(), binding.cusPass.getPasswordField())
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun initListener() = with(binding) {
