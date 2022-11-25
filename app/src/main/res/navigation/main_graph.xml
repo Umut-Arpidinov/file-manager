@@ -17,6 +17,15 @@
                 android:name="number"
                 app:argType="string" />
         </action>
+
+        <action
+            android:id="@+id/go_to_registration"
+            app:destination="@id/registrationFragment">
+            <argument
+                android:name="number"
+                app:argType="string" />
+        </action>
+
     </fragment>
 
     <fragment
@@ -55,6 +64,12 @@
                 android:name="password"
                 app:argType="string" />
         </action>
+
+        <argument
+            android:name="number"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment

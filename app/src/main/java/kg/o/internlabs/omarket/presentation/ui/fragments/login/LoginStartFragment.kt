@@ -6,7 +6,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
 
 @AndroidEntryPoint
@@ -23,6 +22,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
     override fun initView() = with(binding) {
         super.initView()
         cusBtnEnter.isEnabled = false
+        cusBtnReg.isEnabled = false
     }
 
     override fun initListener() = with(binding) {
@@ -30,17 +30,27 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         cusNum.setInterface(this@LoginStartFragment)
 
         cusBtnReg.setOnClickListener {
-            findNavController().navigate(R.id.registrationFragment)
+            try {
+                findNavController().navigate(LoginStartFragmentDirections
+                    .goToRegistration(cusNum.getVales()))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         cusBtnEnter.setOnClickListener {
-            findNavController().navigate(
-                LoginStartFragmentDirections
-                    .goLoginEnd(cusNum.getVales())
-            )
+            try {
+                findNavController().navigate(
+                    LoginStartFragmentDirections
+                        .goLoginEnd(cusNum.getVales())
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         binding.cusBtnEnter.isEnabled = notEmpty
+        binding.cusBtnReg.isEnabled = notEmpty
     }
 }
