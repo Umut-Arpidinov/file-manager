@@ -134,6 +134,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
                     PasswordTransformationMethod.getInstance()
                 passwordToggle.setImageResource(R.drawable.ic_outline_visibility_24)
             }
+            passwordInputField.setSelection(passwordInputField.text.length)
         }
     }
 
