@@ -19,7 +19,6 @@ abstract class BaseRepository {
                 emit(ApiState.Success(data))
             }
         } else{
-           /* emit(ApiState.(response.errorBody()!!))*/
             val raw = response.errorBody()?.string()
             val jObject = raw?.let { org.json.JSONObject(it) }
             val str: String = jObject?.get("message").toString()

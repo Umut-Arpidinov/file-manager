@@ -15,54 +15,32 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val useCase: LoginUserUseCase,
-    private val checkNumberPrefsUseCase: CheckNumberPrefsUseCase,
-    private val checkPasswordPrefsUseCase: CheckPasswordPrefsUseCase,
-    private val putAccessTokenPrefsUseCase: PutAccessTokenPrefsUseCase,
-    private val putNumberPrefsUseCase: PutNumberPrefsUseCase,
-    private val putPasswordPrefsUseCase: PutPasswordPrefsUseCase,
-    private val putRefreshTokenPrefsUseCase: PutRefreshTokenPrefsUseCase,
-    private val setLoginStatusUseCase: SetLoginStatusUseCase
+    private val saveAccessTokenToPrefsUseCase: SaveAccessTokenToPrefsUseCase,
+    private val saveNumberToPrefsUseCase: SaveNumberToPrefsUseCase,
+    private val saveRefreshTokenToPrefsUseCase: SaveRefreshTokenToPrefsUseCase,
+    private val saveLoginStatusToPrefsUseCase: SaveLoginStatusToPrefsUseCase,
+    private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase
 ) : BaseViewModel() {
 
     private val _movieState = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
-    private val _num = MutableStateFlow(false)
-    private val _pwd = MutableStateFlow(false)
     val movieState = _movieState.asStateFlow()
-    val num = _num.asStateFlow()
-    val pwd = _pwd.asStateFlow()
 
-    fun checkNumber(number: String) {
+    private val _isTokenSavedState = MutableSharedFlow<Boolean>()
+    val isTokenSavedState = _isTokenSavedState.asSharedFlow()
+
+    fun saveNumberToPrefs(number: String) {
+        saveNumberToPrefsUseCase.invoke(formattedValues(number))
+    }
+
+    fun formattedValues(number: String) = number.filter {
+        it.isWhitespace().not().and(it.isDigit())
+    }
+
+    fun getTokenState() {
         viewModelScope.launch {
-            checkNumberPrefsUseCase().take(1).collect {
-                if (it != null) {
-                    _num.value = (it == formattedValues(number))
-                }
+            getAccessTokenFromPrefsUseCase().collect{
+                _isTokenSavedState.emit(it.isNullOrEmpty().not())
             }
-        }
-    }
-
-    fun checkPassword(pwd: String) {
-        viewModelScope.launch {
-            checkPasswordPrefsUseCase().take(1).collect {
-                if (it != null) {
-                    _pwd.value = (it == pwd)
-                }
-            }
-        }
-    }
-
-    fun putNumber(number: String) {
-        putNumberPrefsUseCase.invoke(number)
-    }
-
-    fun putPwd(pwd: String) {
-        putPasswordPrefsUseCase.invoke(pwd)
-    }
-
-
-    fun formattedValues(number: String): String {
-        return number.filter {
-            !it.isWhitespace() && it.isDigit()
         }
     }
 
@@ -73,22 +51,22 @@ class LoginViewModel @Inject constructor(
                     is ApiState.Success -> {
                         _movieState.value = it
                         it.data.refreshToken?.let { it1 ->
-                            putRefreshTokenPrefsUseCase.invoke(it1)
+                            saveRefreshTokenToPrefsUseCase.invoke(it1)
                         }
                         it.data.accessToken?.let { it1 ->
-                            putAccessTokenPrefsUseCase.invoke(it1)
+                            saveAccessTokenToPrefsUseCase.invoke(it1)
                         }
-                        setLoginStatusUseCase.invoke(true)
+                        saveLoginStatusToPrefsUseCase.invoke(true)
                     }
                     is ApiState.Failure -> {
-                        setLoginStatusUseCase.invoke(false)
+                        saveLoginStatusToPrefsUseCase.invoke(false)
                         _movieState.value = it
                     }
                     is ApiState.Loading -> {
-                        setLoginStatusUseCase.invoke(false)
+                        saveLoginStatusToPrefsUseCase.invoke(false)
                     }
                     else -> {
-                        setLoginStatusUseCase.invoke(false)
+                        saveLoginStatusToPrefsUseCase.invoke(false)
                         _movieState.value = it
                     }
                 }

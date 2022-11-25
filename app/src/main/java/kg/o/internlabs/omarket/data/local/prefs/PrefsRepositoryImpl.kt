@@ -10,39 +10,32 @@ import javax.inject.Inject
 class PrefsRepositoryImpl @Inject constructor(private val prefs: StoragePreferences) :
     PrefsRepository {
 
-    override fun putNumberToPrefs(number: String) {
+    override fun saveNumberToPrefs(number: String) {
         prefs.msisdn = number
     }
 
-    override fun checkNumberPrefs(): Flow<String?> =
+    override fun checkNumberFromPrefs(): Flow<String?> =
         prefs.getStringFlow(StoragePreferences.Keys.MSISDN, "")
 
-    override fun putPWDToPrefs(pwd: String) {
-        prefs.password = pwd
-    }
-
-    override fun checkPWDFromPrefs(): Flow<String?> =
-        prefs.getStringFlow(StoragePreferences.Keys.PASSWORD, "")
-
-    override fun putAccessTokenToPrefs(accessToken: String) {
+    override fun saveAccessTokenToPrefs(accessToken: String) {
         prefs.token = accessToken
     }
 
     override fun getAccessTokenFromPrefs(): Flow<String?> =
         prefs.getStringFlow(StoragePreferences.Keys.ACCESS_TOKEN, "")
 
-    override fun putRefTokenToPrefs(refToken: String) {
+    override fun saveRefTokenToPrefs(refToken: String) {
         prefs.refreshToken = refToken
     }
 
     override fun getRefTokenFromPrefs(): Flow<String?> =
         prefs.getStringFlow(StoragePreferences.Keys.REFRESH_TOKEN, "")
 
-    override fun setLoginStatusPrefs(isLogged: Boolean) {
+    override fun setLoginStatusToPrefs(isLogged: Boolean) {
         prefs.isLoggedIn = isLogged
     }
 
-    override fun getLoginStatusPrefs(): Flow<Boolean?> =
+    override fun checkLoginStatusFromPrefs(): Flow<Boolean?> =
         prefs.getBooleanFlow(StoragePreferences.Keys.LOGIN_STATUS, false)
 }
 

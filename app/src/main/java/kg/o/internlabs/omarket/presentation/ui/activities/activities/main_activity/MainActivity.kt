@@ -40,7 +40,7 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
 
     override fun onDestroy() {
         println("main on destroy----")
-        viewModel.setLoginStatus(false)
+        viewModel.saveLoginStatusToPrefs(false)
         super.onDestroy()
     }
 }

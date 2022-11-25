@@ -11,8 +11,8 @@
         android:label="fragment_login_start"
         tools:layout="@layout/fragment_login_start">
         <action
-            android:id="@+id/go_login_end"
-            app:destination="@id/loginEndFragment">
+            android:id="@+id/go_login_by_password"
+            app:destination="@id/loginByPasswordFragment">
             <argument
                 android:name="number"
                 app:argType="string" />
@@ -29,10 +29,18 @@
     </fragment>
 
     <fragment
-        android:id="@+id/loginEndFragment"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginEndFragment"
-        android:label="fragment_login_end"
-        tools:layout="@layout/fragment_login_end">
+        android:id="@+id/loginByPasswordFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginByPasswordFragment"
+        android:label="fragment_login_by_password"
+        tools:layout="@layout/fragment_login_by_password">
+
+        <action
+            android:id="@+id/go_to_registration_fragment"
+            app:destination="@id/registrationFragment">
+            <argument
+                android:name="number"
+                app:argType="string" />
+        </action>
 
         <argument
             android:name="number"
@@ -59,10 +67,6 @@
             <argument
                 android:name="number"
                 app:argType="string" />
-
-            <argument
-                android:name="password"
-                app:argType="string" />
         </action>
 
         <argument
@@ -79,12 +83,6 @@
         tools:layout="@layout/fragment_registration_otp">
         <argument
             android:name="number"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
-
-        <argument
-            android:name="password"
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />

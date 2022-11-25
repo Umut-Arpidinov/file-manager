@@ -14,12 +14,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    private val getRefreshTokenPrefsUseCase: GetRefreshTokenPrefsUseCase,
-    private val putAccessTokenPrefsUseCase: PutAccessTokenPrefsUseCase,
-    private val putRefreshTokenPrefsUseCase: PutRefreshTokenPrefsUseCase,
+    private val getRefreshTokenFromPrefsUseCase: GetRefreshTokenFromPrefsUseCase,
+    private val saveAccessTokenToPrefsUseCase: SaveAccessTokenToPrefsUseCase,
+    private val saveRefreshTokenToPrefsUseCase: SaveRefreshTokenToPrefsUseCase,
     private val refreshTokenUseCase: RefreshTokenUseCase,
-    private val getLoginStatusUseCase: GetLoginStatusUseCase,
-    private val setLoginStatusUseCase: SetLoginStatusUseCase
+    private val checkLoginStatusFromPrefsUseCase: CheckLoginStatusFromPrefsUseCase,
+    private val saveLoginStatusToPrefsUseCase: SaveLoginStatusToPrefsUseCase
 ) :
     BaseViewModel() {
 
@@ -30,7 +30,7 @@ class MainActivityViewModel @Inject constructor(
         viewModelScope.launch {
             var status = false
             while (!status) {
-                getLoginStatus().take(1).collect {
+                checkLoginStatusFromPrefs().take(1).collect {
                     if (it != null) {
                         status = it
                         if (it) {
@@ -47,16 +47,16 @@ class MainActivityViewModel @Inject constructor(
         return CoroutineScope(Dispatchers.IO).launch {
             while (true) {
                 delay(timeInterval)
-                getRefreshTokenPrefs().collectLatest {
+                getRefreshTokenFromPrefs().collectLatest {
                     refreshTokenRoute(it).collectLatest { response ->
                         when (response) {
                             is ApiState.Success -> {
                                 println("main         good")
                                 response.data.refreshToken?.let { it1 ->
-                                    putRefreshTokenPrefsUseCase.invoke(it1)
+                                    saveRefreshTokenToPrefsUseCase.invoke(it1)
                                 }
                                 response.data.accessToken?.let { it1 ->
-                                    putAccessTokenPrefsUseCase.invoke(it1)
+                                    saveAccessTokenToPrefsUseCase.invoke(it1)
                                 }
                                 myJob = startRepeatingJob(1_620_000) // 27 minutes
                             }
@@ -78,20 +78,20 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
-    fun setLoginStatus(isLogged: Boolean) {
-        setLoginStatusUseCase.invoke(isLogged)
+    fun saveLoginStatusToPrefs(isLogged: Boolean) {
+        saveLoginStatusToPrefsUseCase.invoke(isLogged)
     }
 
-    private fun getLoginStatus(): Flow<Boolean?> = getLoginStatusUseCase.invoke()
+    private fun checkLoginStatusFromPrefs(): Flow<Boolean?> = checkLoginStatusFromPrefsUseCase.invoke()
 
     private fun refreshTokenRoute(it: String?) =
         refreshTokenUseCase(RegisterEntity(refreshToken = it))
 
-    private fun getRefreshTokenPrefs() = getRefreshTokenPrefsUseCase.invoke()
+    private fun getRefreshTokenFromPrefs() = getRefreshTokenFromPrefsUseCase.invoke()
 
     override fun onCleared() {
         println("onCleared ======")
-        setLoginStatusUseCase.invoke(false)
+        saveLoginStatusToPrefsUseCase.invoke(false)
         myJob?.cancel()
         myJob = null
         super.onCleared()

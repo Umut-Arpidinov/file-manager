@@ -19,11 +19,10 @@ import javax.inject.Inject
 class RegistrationViewModel @Inject constructor(
     private val checkOtpUseCase: CheckOtpUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
-    private val putNumberPrefsUseCase: PutNumberPrefsUseCase,
-    private val putRefreshTokenPrefsUseCase: PutRefreshTokenPrefsUseCase,
-    private val putPasswordPrefsUseCase: PutPasswordPrefsUseCase,
-    private val putAccessTokenPrefsUseCase: PutAccessTokenPrefsUseCase,
-    private val setLoginStatusUseCase: SetLoginStatusUseCase
+    private val saveNumberToPrefsUseCase: SaveNumberToPrefsUseCase,
+    private val saveRefreshTokenToPrefsUseCase: SaveRefreshTokenToPrefsUseCase,
+    private val saveAccessTokenToPrefsUseCase: SaveAccessTokenToPrefsUseCase,
+    private val saveLoginStatusToPrefsUseCase: SaveLoginStatusToPrefsUseCase
 ) : BaseViewModel() {
     private val _checkOtp = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
     private val _registerUser = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
@@ -36,9 +35,9 @@ class RegistrationViewModel @Inject constructor(
                 when (it) {
                     is ApiState.Success -> {
                         _checkOtp.value = it
-                        it.data.refreshToken?.let { it1 -> putRefreshTokenPrefsUseCase.invoke(it1) }
-                        it.data.accessToken?.let { it1 -> putAccessTokenPrefsUseCase.invoke(it1) }
-                        setLoginStatusUseCase.invoke(true)
+                        it.data.refreshToken?.let { it1 -> saveRefreshTokenToPrefsUseCase.invoke(it1) }
+                        it.data.accessToken?.let { it1 -> saveAccessTokenToPrefsUseCase.invoke(it1) }
+                        saveLoginStatusToPrefsUseCase.invoke(true)
                     }
                     is ApiState.Failure -> _checkOtp.value = it
                     ApiState.Loading -> {
@@ -47,6 +46,7 @@ class RegistrationViewModel @Inject constructor(
             }
         }
     }
+
     fun registerUser(reg: RegisterEntity) {
         viewModelScope.launch {
             registerUserUseCase(reg).collectLatest {
@@ -64,17 +64,11 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    fun putNumber(number: String) {
-        putNumberPrefsUseCase.invoke(number)
+    fun saveNumberToPrefs(number: String) {
+        saveNumberToPrefsUseCase.invoke(number)
     }
 
-    fun putPwd(pwd: String) {
-        putPasswordPrefsUseCase.invoke(pwd)
-    }
-
-    fun formattedValues(number: String): String {
-        return number.filter {
-            !it.isWhitespace() && it.isDigit()
-        }
+    fun formattedValues(number: String) = number.filter {
+        it.isWhitespace().not().and(it.isDigit())
     }
 }

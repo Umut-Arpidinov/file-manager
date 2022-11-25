@@ -13,58 +13,50 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.R
-import kg.o.internlabs.omarket.databinding.FragmentLoginEndBinding
+import kg.o.internlabs.omarket.databinding.FragmentLoginByPasswordBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.utils.InternetChecker
 import kg.o.internlabs.omarket.utils.NetworkStatus
+import kg.o.internlabs.omarket.utils.makeToast
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 private typealias coreString = kg.o.internlabs.core.R.string
 
 @AndroidEntryPoint
-class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>(),
+class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, LoginViewModel>(),
     NumberInputHelper, PasswordInputHelper {
 
     private var hasInternet = false
     private var isNumberNotEmpty = false
     private var isPasswordNotEmpty = false
-    private var numberOk = false
-    private var passwordOk = false
-    private var args: LoginEndFragmentArgs? = null
+    private var args: LoginByPasswordFragmentArgs? = null
 
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginEndBinding {
-        return FragmentLoginEndBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginByPasswordBinding {
+        return FragmentLoginByPasswordBinding.inflate(inflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        args = LoginEndFragmentArgs.fromBundle(requireArguments())
+        args = LoginByPasswordFragmentArgs.fromBundle(requireArguments())
     }
 
     override fun initView() = with(binding) {
         super.initView()
         btn.buttonAvailability(false)
-        if (args != null) {
-            if (!args!!.number.isNullOrEmpty()) {
-                cusNum.setValue(args!!.number!!)
-                if (!cusNum.getVales().endsWith("X")) {
-                    isNumberNotEmpty = true
-                    complexWatcher()
-                }
-            }
-        }
+        args?.number?.let { cusNum.setValue(it) }
+        isNumberNotEmpty = cusNum.getVales().endsWith("X").not()
+        complexWatcher()
     }
 
     override fun initListener() = with(binding) {
         super.initListener()
-        cusNum.setInterface(this@LoginEndFragment)
-        cusPass.setInterface(this@LoginEndFragment)
+        cusNum.setInterface(this@LoginByPasswordFragment)
+        cusPass.setInterface(this@LoginByPasswordFragment)
         cusPass.setMessage("")
 
         tbLoginEnd.setNavigationOnClickListener { findNavController().navigateUp() }
@@ -79,54 +71,39 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                 )
                 initObserver()
             } else {
-                viewModel.checkNumber(cusNum.getVales())
-                viewModel.checkPassword(cusPass.getPasswordField())
-                loadLocalState()
+                noConnectionState()
             }
         }
     }
 
-    private fun loadLocalState() = with(binding) {
-        safeFlowGather {
-            viewModel.num.take(1).collect {
-                if (it) {
-                    numberOk = true
-                    cusNum.setMessage(resources.getString(coreString.enter_number))
-                    try {
-                        canNavigate()
-                    } catch (e: IllegalArgumentException) {
-                        println("nav problems " + e.printStackTrace())
-                    }
-                } else {
-                    btn.buttonAvailability(false)
-                    cusNum.setErrorMessage(resources.getString(coreString.number_mistake))
-                }
-            }
-            viewModel.pwd.take(1).collect {
-                if (it) {
-                    passwordOk = true
-                    binding.cusPass.setMessage("")
-                    try {
-                        canNavigate()
-                    } catch (e: IllegalArgumentException) {
-                        println("nav problems " + e.printStackTrace())
-                    }
-                } else {
-                    btn.buttonAvailability(false)
-                    cusPass.setErrorMessage(resources.getString(coreString.incorrect_password))
-                }
-            }
-        }
-    }
-
-    private fun canNavigate() {
-        if (numberOk && passwordOk) {
+    private fun noConnectionState() {
+        if (isTokenExists().not()) {
             try {
-                findNavController().navigate(R.id.mainFragment)
+                requireActivity().makeToast(getString(coreString.user_not_found))
+                findNavController().navigate(LoginByPasswordFragmentDirections
+                    .goToRegistrationFragment(binding.cusNum.getVales()))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            return
         }
+
+        try {
+            findNavController().navigate(R.id.mainFragment)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun isTokenExists(): Boolean {
+        viewModel.getTokenState()
+        var tokenExists = false
+        safeFlowGather {
+            viewModel.isTokenSavedState.collectLatest {
+                tokenExists = it
+            }
+        }
+        return tokenExists
     }
 
     override fun checkInternet() {
@@ -136,7 +113,8 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                 NetworkStatus.Available -> {
                     try {
                         hasInternet = true
-                    } catch (_: Exception) {
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
                 NetworkStatus.Unavailable -> {
@@ -151,10 +129,13 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
             viewModel.movieState.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        viewModel.putNumber(viewModel.formattedValues(cusNum.getVales()))
-                        viewModel.putPwd(cusPass.getPasswordField())
+                        viewModel.saveNumberToPrefs(cusNum.getVales())
                         btn.buttonFinished()
-                        findNavController().navigate(R.id.mainFragment)
+                        try {
+                            findNavController().navigate(R.id.mainFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                     is ApiState.Failure -> {
                         btn.buttonFinished()
@@ -163,7 +144,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
                             when (it1) {
                                 getString(R.string.time_out) -> {
                                     if (!hasInternet) {
-                                        loadLocalState()
+                                        noConnectionState()
                                     }
                                 }
                                 getString(R.string.incorrect_number) -> {
@@ -184,6 +165,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
             }
         }
     }
+
     private fun safeFlowGather(action: suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -203,11 +185,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         complexWatcher()
     }
 
-    private fun complexWatcher() = with(binding) {
-        if (isNumberNotEmpty && isPasswordNotEmpty) {
-            btn.buttonAvailability(true)
-        } else {
-            btn.buttonAvailability(false)
-        }
-    }
+    private fun complexWatcher() = binding.btn.buttonAvailability(
+        isNumberNotEmpty.and(isPasswordNotEmpty)
+    )
 }
