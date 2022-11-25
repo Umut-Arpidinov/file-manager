@@ -61,7 +61,7 @@
     </style>
 
     <style name="Container.Cells">
-        <item name="android:background">@color/gray_4</item>
+        <item name="android:background">#00000000</item>
     </style>
 
     <style name="Divider">
