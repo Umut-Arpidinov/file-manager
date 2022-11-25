@@ -46,6 +46,11 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
     override fun initView() {
         super.initView()
         binding.cusNum.setValue(args?.number.toString())
+        if (!binding.cusNum.getVales().endsWith("X")) {
+            isNumberNotEmpty = true
+            complexWatcher()
+        }
+        binding.cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
     }
 
     private fun safeFlowGather(action: suspend () -> Unit) {
@@ -114,7 +119,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         cusPass1.setInterface(this@RegistrationFragment, 1)
         tbRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
 
-        cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
         btnSendOtp.buttonAvailability(false)
 
         btnSendOtp.setOnClickListener {
@@ -136,9 +140,14 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
 
     override fun passwordWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         when (fieldsNumber) {
-            0 -> isFirstPasswordNotEmpty = notEmpty
-            1 -> isSecondPasswordNotEmpty = notEmpty
+            0 -> {
+                isFirstPasswordNotEmpty = notEmpty
+            }
+            1 -> {
+                isSecondPasswordNotEmpty = notEmpty
+            }
         }
+
         complexWatcher()
     }
 
@@ -148,7 +157,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                 btnSendOtp.buttonAvailability(true)
                 textButton.visibility = View.VISIBLE
                 textButton.movementMethod = LinkMovementMethod.getInstance()
-                cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
                 cusPass1.setMessage("")
             } else {
                 btnSendOtp.buttonAvailability(false)
@@ -159,7 +167,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         } else {
             btnSendOtp.buttonAvailability(false)
             textButton.visibility = View.GONE
-            cusPass.setMessage(getString(kg.o.internlabs.core.R.string.helper_text_create_password))
             cusPass1.setMessage("")
         }
     }

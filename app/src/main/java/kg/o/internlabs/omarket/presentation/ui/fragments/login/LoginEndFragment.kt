@@ -65,6 +65,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
         super.initListener()
         cusNum.setInterface(this@LoginEndFragment)
         cusPass.setInterface(this@LoginEndFragment)
+        cusPass.setMessage("")
 
         tbLoginEnd.setNavigationOnClickListener { findNavController().navigateUp() }
 
@@ -198,6 +199,7 @@ class LoginEndFragment : BaseFragment<FragmentLoginEndBinding, LoginViewModel>()
 
     override fun passwordWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         isPasswordNotEmpty = notEmpty
+        binding.cusPass.setMessage("")
         complexWatcher()
     }
 
