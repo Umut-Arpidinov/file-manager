@@ -158,12 +158,14 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                 textButton.visibility = View.VISIBLE
                 textButton.movementMethod = LinkMovementMethod.getInstance()
                 cusPass1.setMessage("")
-            } else {
+            }
+            if(cusPass.getPasswordField() != cusPass1.getPasswordField()){
                 btnSendOtp.buttonAvailability(false)
                 textButton.visibility = View.GONE
                 cusPass1.setErrorMessage(getString(kg.o.internlabs.core.R.string.password_not_match))
                 cusPass.setErrorMessage("")
             }
+
         } else {
             btnSendOtp.buttonAvailability(false)
             textButton.visibility = View.GONE

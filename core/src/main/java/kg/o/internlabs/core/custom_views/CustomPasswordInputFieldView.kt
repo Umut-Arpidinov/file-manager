@@ -10,6 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
+import androidx.core.widget.doOnTextChanged
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomPasswordInputViewBinding
 
@@ -42,6 +45,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         binding.passwordInputField.addTextChangedListener {
             textWatcher?.passwordWatcher(isPasswordStrong(it.toString()), fieldNumber)
         }
+
     }
 
     fun setInterface(textWatcher: PasswordInputHelper, fieldNumber: Int = 0) {
