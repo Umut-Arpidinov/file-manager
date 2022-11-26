@@ -9,23 +9,28 @@
         <attr name="otp_custom_view" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="CustomOneTitleTextCellsView">
-        <attr name="position" format="string" />
-        <attr name="setRootBackground" format="integer" />
+    <declare-styleable name="CustomRoundedOneTitleTextCellsView">
+        <attr name="position" format="enum">
+            <enum name="SINGLE" value="0"/>
+            <enum name="TOP" value="1"/>
+            <enum name="MIDDLE" value="2"/>
+            <enum name="BOTTOM" value="3"/>
+        </attr>
         <attr name="setIcon" format="reference" />
         <attr name="setTitle" format="string" />
-        <attr name="setDetails" format="string" />
-        <attr name="setShevron" format="reference" />
+        <attr name="setInfo" format="string" />
+        <attr name="isShevronVisible" format="boolean"/>
+        <attr name="isSimpleCell" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="CustomSmallSubtitleTextCellsView" parent="CustomOneTitleTextCellsView">
+    <declare-styleable name="CustomSmallSubtitleTextCellsView" parent="CustomRoundedOneTitleTextCellsView">
         <attr name="setSubtitle" format="string" />
         <attr name="position" />
-        <attr name="setRootBackground" />
+        <attr name="setRootBackground" format="reference"/>
         <attr name="setIcon" />
         <attr name="setTitle" />
-        <attr name="setDetails" />
-        <attr name="setShevron" />
+        <attr name="setDetails" format="string"/>
+        <attr name="setShevron" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="CustomBigSubtitleTextCellsView" parent="CustomSmallSubtitleTextCellsView">

@@ -14,4 +14,11 @@ class LoginFinalStateFragment : BaseFragment<FragmentLoginFinalStateBinding, Log
          return FragmentLoginFinalStateBinding.inflate(inflater)
     }
 
+    override fun initView() {
+        super.initView()
+       /* binding.cottcv2.setSimpleCell(true)
+        binding.cottcv2.setInfo("Hello")
+        binding.cottcv2.setTitle("Joined")*/
+    }
+
 }

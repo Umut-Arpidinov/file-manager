@@ -12,6 +12,7 @@
     <dimen name="view_width_343dp">343dp</dimen>
     <dimen name="view_height_50dp">50dp</dimen>
     <dimen name="view_width_30dp">30dp</dimen>
+    <dimen name="view_width_32dp">32dp</dimen>
 
     <dimen name="radius_view_12dp">12dp</dimen>
     <dimen name="cells_corner_radius_4dp">4dp</dimen>
@@ -74,6 +75,9 @@
     <dimen name="cells_subTitle_text_size_15sp">15sp</dimen>
     <dimen name="margin_end_8dp">8dp</dimen>
     <dimen name="cells_info_text_size_15sp">15sp</dimen>
+    <dimen name="icon_width_28dp">28dp</dimen>
+    <dimen name="icon_height_28dp">28dp</dimen>
+    <dimen name="margin_horizontal_13dp">13dp</dimen>
 
 
 </resources>

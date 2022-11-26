@@ -36,11 +36,11 @@
 
             <ImageView
                 android:id="@+id/iv_shevron"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/view_height_32dp"
+                android:layout_height="@dimen/view_width_32dp"
                 android:layout_marginVertical="@dimen/margin_vertical_8.38dp"
                 android:layout_marginStart="@dimen/margin_end_16dp"
-                android:layout_marginEnd="@dimen/margin_end_21dp"
+                android:layout_marginEnd="@dimen/margin_end_8dp"
                 android:contentDescription="@string/spinner"
                 android:src="@drawable/ic_arrow_down"
                 android:visibility="visible"
@@ -66,7 +66,7 @@
                 style="@style/TextView.Cells.SubTitle.Faq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_vertical_12dp"
+                android:layout_marginVertical="@dimen/margin_vertical_12dp"
                 tools:text="@string/answer"/>
         </LinearLayout>
     </LinearLayout>

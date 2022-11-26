@@ -9,16 +9,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_with_icon"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="@dimen/view_height_48dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
         android:background="@drawable/cell_around_corners"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/iv_cells_icon"
-            android:layout_width="@dimen/icon_width_31.23dp"
-            android:layout_height="@dimen/icon_height_31.23dp"
-            android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
+            android:layout_width="@dimen/icon_width_28dp"
+            android:layout_height="@dimen/icon_height_28dp"
+            android:layout_margin="@dimen/margin_8dp"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -37,10 +38,10 @@
 
         <ImageView
             android:id="@+id/iv_shevron"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_18dp"
+            android:layout_width="@dimen/view_width_32dp"
+            android:layout_height="@dimen/view_height_32dp"
             android:src="@drawable/arrow_shevron"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -57,8 +58,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_no_icon"
         android:layout_width="match_parent"
-        android:visibility="visible"
-        android:layout_height="@dimen/view_height_48dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/view_height_48dp"
+        android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
         android:background="@drawable/cell_around_corners"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -68,6 +71,7 @@
             style="@style/TextView.Cells.SubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_13dp"
             tools:text="@string/title_in_cells"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/cells_info"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_13dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
