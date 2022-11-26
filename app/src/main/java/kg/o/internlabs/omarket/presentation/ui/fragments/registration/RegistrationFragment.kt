@@ -70,7 +70,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                 when (it) {
                     is ApiState.Success -> {
                         cusNum.setMessage(resources.getString(coreString.enter_number))
-                        btnSendOtp.buttonFinished()
+//                        btnSendOtp.buttonFinished()
+                        processFinished()
                         try {
                             goNextPage()
                         } catch (e: Exception) {
@@ -78,8 +79,10 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                         }
                     }
                     is ApiState.Failure -> {
-                        btnSendOtp.buttonFinished()
-                        btnSendOtp.buttonAvailability(false)
+//                        btnSendOtp.buttonFinished()
+//                        btnSendOtp.buttonAvailability(false)
+                        processFinished()
+                        buttonAvailable(false)
                         it.msg.message?.let { it1 ->
                             when (it1) {
                                 getString(R.string.time_out) -> {
@@ -99,7 +102,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                         }
                     }
                     ApiState.Loading -> {
-                        btnSendOtp.buttonActivated()
+//                        btnSendOtp.buttonActivated()
+                        processStarted()
                     }
                 }
             }
@@ -124,7 +128,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         cusPass1.setInterface(this@RegistrationFragment, 1)
         tbRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
 
-        btnSendOtp.buttonAvailability(false)
+//        btnSendOtp.buttonAvailability(false)
+        buttonAvailable(false)
 
         btnSendOtp.setOnClickListener {
             viewModel.registerUser(
@@ -158,23 +163,46 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
     private fun complexWatcher() = with(binding) {
         if (isNumberNotEmpty.and(isFirstPasswordNotEmpty).and(isSecondPasswordNotEmpty)) {
             if (cusPass.getPasswordField() == cusPass1.getPasswordField()) {
-                btnSendOtp.buttonAvailability(true)
+//                btnSendOtp.buttonAvailability(true)
+                buttonAvailable(true)
                 textButton.visibility = View.VISIBLE
                 textButton.movementMethod = LinkMovementMethod.getInstance()
                 cusPass.setMessage(getString(coreString.helper_text_create_password))
                 cusPass1.setMessage("")
             }
             if(cusPass.getPasswordField() != cusPass1.getPasswordField()){
-                btnSendOtp.buttonAvailability(false)
+//                btnSendOtp.buttonAvailability(false)
+                buttonAvailable(false)
                 textButton.visibility = View.GONE
                 cusPass1.setErrorMessage(getString(coreString.password_not_match))
                 cusPass.setErrorMessage("")
             }
 
         } else {
-            btnSendOtp.buttonAvailability(false)
+//            btnSendOtp.buttonAvailability(false)
+            buttonAvailable(false)
             textButton.visibility = View.GONE
             cusPass1.setMessage("")
+        }
+    }
+
+    private fun processFinished() = with(binding) {
+        progressBar.visibility = View.GONE
+        btnSendOtp.visibility = View.VISIBLE
+    }
+
+    private fun processStarted() = with(binding) {
+        btnSendOtp.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun buttonAvailable(state: Boolean) = with(binding) {
+        if (state) {
+            btnSendOtp.isClickable = true
+            btnSendOtp.isEnabled = true
+        } else {
+            btnSendOtp.isClickable = false
+            btnSendOtp.isEnabled = false
         }
     }
 }
