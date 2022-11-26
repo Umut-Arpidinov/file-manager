@@ -27,7 +27,14 @@
         <item name="android:textColor">@color/black_5</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:layout_marginStart">@dimen/margin_start_8dp</item>
-        <item name="android:textSize">@dimen/cells_title_text_size_16sp</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+    </style>
+
+    <style name="TextView.Cells.Info" parent="TextView">
+        <item name="android:textColor">@color/black_5</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:layout_marginStart">@dimen/margin_end_8dp</item>
+        <item name="android:textSize">@dimen/cells_info_text_size_15sp</item>
     </style>
 
     <style name="TextView.Cells.Title.Faq" parent="TextView">
@@ -44,7 +51,7 @@
 
     <style name="TextView.Cells.SubTitle" parent="TextView.Cells.Title">
         <item name="android:textColor">@color/gray_1</item>
-        <item name="android:textSize">@dimen/cells_title_text_size_16sp</item>
+        <item name="android:textSize">@dimen/cells_subTitle_text_size_15sp</item>
     </style>
 
     <style name="TextView.Cells.Details" parent="TextView.Cells.Title">

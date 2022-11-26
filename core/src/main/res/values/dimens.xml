@@ -63,13 +63,17 @@
     <dimen name="margin_start_16dp">16dp</dimen>
     <dimen name="cells_title_line_height_19dp">19dp</dimen>
     <dimen name="cells_title_line_height_20.4dp">20.4dp</dimen>
+    <dimen name="cells_title_line_height_20dp">20dp</dimen>
     <dimen name="cells_subTitle_line_height_17.9dp">17.9</dimen>
+    <dimen name="cells_info_line_height_17.9dp">17.9</dimen>
     <dimen name="line_16px">16dp</dimen>
     <dimen name="card_elevation_8dp">8dp</dimen>
     <dimen name="cells_title_text_size_17sp">17sp</dimen>
     <dimen name="margin_vertical_12dp">12dp</dimen>
     <dimen name="cells_corner_radius_8dp">8dp</dimen>
     <dimen name="cells_subTitle_text_size_15sp">15sp</dimen>
+    <dimen name="margin_end_8dp">8dp</dimen>
+    <dimen name="cells_info_text_size_15sp">15sp</dimen>
 
 
 </resources>

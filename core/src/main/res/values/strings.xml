@@ -18,5 +18,6 @@
     <string name="spinner">spinner</string>
     <string name="questions">Могу ли я оплатить товар через О!Деньги</string>
     <string name="answer">В данный момент оплата через O!Деньги находится в стадии разработки и будет доступна в ближайших обновлениях приложения.</string>
+    <string name="shevron">shevron</string>
 
 </resources>
