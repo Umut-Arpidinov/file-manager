@@ -40,7 +40,7 @@ class SplashScreenActivity : BaseActivity<BaseViewModel, ActivitySplashScreenBin
             // Close this activity
             finish()
 
-        }, 4000)
+        }, 1000)
     }
 
     private fun makeFullScreen() {

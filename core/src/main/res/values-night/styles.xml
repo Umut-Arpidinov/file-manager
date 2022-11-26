@@ -14,7 +14,7 @@
     </style>
 
     <style name="Theme.OMarket.Core.Cells">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/white_1</item>
     </style>
 
     <style name="TextView">
@@ -50,7 +50,7 @@
     </style>
 
     <style name="Container">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/white_1</item>
     </style>
 
     <style name="Container.Main">

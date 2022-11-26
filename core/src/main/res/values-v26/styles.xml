@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextView.Cells.Title.Faq" parent="TextView">
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+</resources>

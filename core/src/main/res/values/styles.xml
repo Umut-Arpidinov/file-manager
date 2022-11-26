@@ -5,7 +5,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/white_1</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -16,7 +16,7 @@
     </style>
 
     <style name="Theme.OMarket.Core.Cells">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/white_1</item>
     </style>
 
     <style name="TextView">
@@ -25,10 +25,22 @@
 
     <style name="TextView.Cells.Title" parent="TextView">
         <item name="android:textColor">@color/black_5</item>
-        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:layout_marginStart">@dimen/margin_start_8dp</item>
         <item name="android:textSize">@dimen/cells_title_text_size_16sp</item>
     </style>
+
+    <!--TODO here-->
+    <style name="TextView.Cells.Title.Faq" parent="TextView">
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:lineHeight">@dimen/cells_title_line_height_20.4dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+
 
     <style name="TextView.Cells.SubTitle" parent="TextView.Cells.Title">
         <item name="android:textColor">@color/gray_1</item>
@@ -99,5 +111,4 @@
         <item name="android:textColor">@color/black_1</item>
 
     </style>
-
 </resources>

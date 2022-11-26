@@ -62,7 +62,10 @@
     <dimen name="margin_end_21dp">21dp</dimen>
     <dimen name="margin_start_16dp">16dp</dimen>
     <dimen name="cells_title_line_height_19dp">19dp</dimen>
+    <dimen name="cells_title_line_height_20.4dp">20.4dp</dimen>
     <dimen name="line_16px">16dp</dimen>
+    <dimen name="card_elevation_8dp">8dp</dimen>
+    <dimen name="cells_title_text_size_17sp">17sp</dimen>
 
 
 </resources>
