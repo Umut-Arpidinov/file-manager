@@ -40,8 +40,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         cusBtnEnter.setOnClickListener {
             try {
                 findNavController().navigate(
-                    LoginStartFragmentDirections
-                        .goLoginEnd(cusNum.getVales())
+                    LoginStartFragmentDirections.goLoginByPassword(cusNum.getVales())
                 )
             } catch (e: Exception) {
                 e.printStackTrace()

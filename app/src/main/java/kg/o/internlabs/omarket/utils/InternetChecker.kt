@@ -15,7 +15,6 @@ class InternetChecker(context: Context) : LiveData<NetworkStatus>(){
     val connectivityManager: ConnectivityManager = context
         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-
     override fun onActive() {
         super.onActive()
         connectivityManagerCallback = internetCallBack()

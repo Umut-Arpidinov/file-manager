@@ -48,6 +48,7 @@ class RegistrationOtpFragment :
     override fun initListener() = with(binding){
         super.initListener()
         tbRegistrationOtp.setNavigationOnClickListener { findNavController().navigateUp() }
+
         btnSendOtp.setOnClickListener {
             viewModel.checkOtp(RegisterEntity(msisdn = args?.number?.let { it1 ->
                 viewModel.formattedValues(it1)
@@ -69,14 +70,7 @@ class RegistrationOtpFragment :
             viewModel.checkOtp.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        if (args != null){
-                            if (args!!.number != null) {
-                                viewModel.putNumber(viewModel.formattedValues(args!!.number!!))
-                            }
-                            if (args!!.password != null) {
-                                viewModel.putPwd(args!!.password!!)
-                            }
-                        }
+                        args?.number?.let { i -> viewModel.saveNumberToPrefs(i) }
                         try {
                             findNavController().navigate(R.id.mainFragment)
                         } catch (e: Exception) {

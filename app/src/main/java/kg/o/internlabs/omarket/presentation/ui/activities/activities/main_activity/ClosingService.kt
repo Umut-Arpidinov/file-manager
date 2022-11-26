@@ -3,11 +3,11 @@ package kg.o.internlabs.omarket.presentation.ui.activities.activities.main_activ
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.SetLoginStatusUseCase
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.SaveLoginStatusToPrefsUseCase
 import javax.annotation.Nullable
 
 class ClosingService : Service() {
-    private val setLoginStatusUseCase: SetLoginStatusUseCase? = null
+    private val saveLoginStatusToPrefsUseCase: SaveLoginStatusToPrefsUseCase? = null
 
     @Nullable
     override fun onBind(intent: Intent): IBinder? {
@@ -16,7 +16,7 @@ class ClosingService : Service() {
 
     override fun onDestroy() {
         println("----------onDest")
-        setLoginStatusUseCase?.invoke(false)
+        saveLoginStatusToPrefsUseCase?.invoke(false)
         super.onDestroy()
     }
 
@@ -27,7 +27,7 @@ class ClosingService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent) {
         println("--------service closed")
-        setLoginStatusUseCase?.invoke(false)
+        saveLoginStatusToPrefsUseCase?.invoke(false)
         stopSelf()
     }
 }

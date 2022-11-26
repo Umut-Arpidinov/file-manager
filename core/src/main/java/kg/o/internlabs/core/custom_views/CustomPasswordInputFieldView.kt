@@ -98,11 +98,12 @@ class CustomPasswordInputFieldView : ConstraintLayout {
             setPasswordInfo("short")
             return false
         }
-        if (!password.matches(".*[A-Z].*".toRegex())) {
+
+        if (password.matches(".*[A-Z].*".toRegex()).not()) {
             setPasswordInfo("noUpperCaseLetter")
             return false
         }
-        if (!password.matches(".*[a-z].*".toRegex())) {
+        if (password.matches(".*[a-z].*".toRegex()).not()) {
             setPasswordInfo("noLowerCaseLetter")
             return false
         }
@@ -110,10 +111,11 @@ class CustomPasswordInputFieldView : ConstraintLayout {
             setPasswordInfo("emptySpace")
             return false
         }
-        if (!password.matches(".*[0-9].*".toRegex())) {
+        if (password.matches(".*[0-9].*".toRegex()).not()) {
             setPasswordInfo("noDigits")
             return false
         }
+
         setPasswordInfo("ok")
         return true
     }
@@ -137,7 +139,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         }
     }
 
-    fun getPasswordField(): String = binding.passwordInputField.text.toString()
+    fun getPasswordField() = binding.passwordInputField.text.toString()
     fun setPasswordValue(message: String) {
         binding.passwordInputField.setText(message)
     }
