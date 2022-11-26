@@ -28,9 +28,21 @@
         <item name="android:textSize">@dimen/cells_title_text_size_16sp</item>
     </style>
 
+    <style name="TextView.Cells.Title.Faq" parent="TextView">
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+        <item name="android:letterSpacing">-0.0041</item>
+    </style>
+
     <style name="TextView.Cells.SubTitle" parent="TextView.Cells.Title">
         <item name="android:textColor">@color/gray_1</item>
         <item name="android:textSize">@dimen/cells_title_text_size_16sp</item>
+    </style>
+
+    <style name="TextView.Cells.SubTitle.Faq" parent="TextView.Cells.SubTitle">
+        <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
+        <item name="android:textSize">@dimen/cells_subTitle_text_size_15sp</item>
     </style>
 
     <style name="TextView.Cells.Details" parent="TextView.Cells.Title">

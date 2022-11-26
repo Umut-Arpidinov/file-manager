@@ -15,11 +15,4 @@ class RegistrationFragmentOtp :
         return FragmentRegistrationOtpBinding.inflate(inflater)
     }
 
-    override fun initView() {
-        super.initView()
-    }
-
-    override fun initViewModel() {
-        super.initViewModel()
-    }
 }

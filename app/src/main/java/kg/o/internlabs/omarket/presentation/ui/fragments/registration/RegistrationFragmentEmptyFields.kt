@@ -15,19 +15,4 @@ class RegistrationFragmentEmptyFields : BaseFragment<FragmentRegistrationEmptyFi
         return FragmentRegistrationEmptyFieldsBinding.inflate(inflater)
     }
 
-    override fun initView() {
-        super.initView()
-    }
-
-    override fun initViewModel() {
-        super.initViewModel()
-    }
-
-    override fun initListener() {
-        super.initListener()
-       /* val navHostFragment = requireActivity().supportFragmentManager
-            .findFragmentById(R.id.nav_host) as NavHostFragment
-        val navController = navHostFragment.navController
-        //navController.navigate(R.id.)*/
-    }
 }

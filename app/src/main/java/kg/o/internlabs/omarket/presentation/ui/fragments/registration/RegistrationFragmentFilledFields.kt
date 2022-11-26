@@ -15,13 +15,5 @@ class RegistrationFragmentFilledFields : BaseFragment<FragmentRegistrationFilled
         return FragmentRegistrationFilledFieldsBinding.inflate(inflater)
     }
 
-    override fun initView() {
-        super.initView()
-    }
-
-    override fun initViewModel() {
-        super.initViewModel()
-    }
-
 
 }
