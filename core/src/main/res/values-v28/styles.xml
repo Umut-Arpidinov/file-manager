@@ -144,4 +144,21 @@
         <item name="android:lineHeight">@dimen/line_17.9dp</item>
         <item name="android:fontWeight">400</item>
     </style>
+
+    <style name="AdsPriceStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:textColor">@color/black_5</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="AdsSecondaryStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_12sp</item>
+        <item name="android:textColor">@color/gray_1</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
+    </style>
+
+    <style name="AdsProductStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_13sp</item>
+        <item name="android:textColor">@color/black_5</item>
+    </style>
 </resources>
