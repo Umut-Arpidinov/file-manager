@@ -48,8 +48,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
     override fun initView() = with(binding) {
         super.initView()
         btn.buttonAvailability(false)
-        args?.number?.let { cusNum.setValue(it) }
-        isNumberNotEmpty = cusNum.getVales().endsWith("X").not()
+        args?.number?.let { cusNum.setValueToNumberField(it) }
+        isNumberNotEmpty = cusNum.getValueFromNumberField().endsWith("X").not()
         complexWatcher()
     }
 
@@ -65,8 +65,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
             if (hasInternet) {
                 viewModel.loginUser(
                     RegisterEntity(
-                        msisdn = viewModel.formattedValues(cusNum.getVales()),
-                        password = cusPass.getPasswordField()
+                        msisdn = viewModel.formattedValues(cusNum.getValueFromNumberField()),
+                        password = cusPass.getValueFromPasswordField()
                     )
                 )
                 initObserver()
@@ -81,7 +81,7 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
             try {
                 requireActivity().makeToast(getString(coreString.user_not_found))
                 findNavController().navigate(LoginByPasswordFragmentDirections
-                    .goToRegistrationFragment(binding.cusNum.getVales()))
+                    .goToRegistrationFragment(binding.cusNum.getValueFromNumberField()))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -129,7 +129,7 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
             viewModel.movieState.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        viewModel.saveNumberToPrefs(cusNum.getVales())
+                        viewModel.saveNumberToPrefs(cusNum.getValueFromNumberField())
                         btn.buttonFinished()
                         try {
                             findNavController().navigate(R.id.mainFragment)

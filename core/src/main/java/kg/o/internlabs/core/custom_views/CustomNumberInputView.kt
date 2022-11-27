@@ -31,9 +31,9 @@ class CustomNumberInputView : ConstraintLayout {
         binding.enterNumberEditText.setInterface(textWatcher, fieldsNumber)
     }
 
-    fun getVales() = binding.enterNumberEditText.getValue()
+    fun getValueFromNumberField() = binding.enterNumberEditText.getValue()
 
-    fun setValue(message: String){
+    fun setValueToNumberField(message: String){
         binding.enterNumberEditText.setValue(message.substringAfter(' '))
     }
 
