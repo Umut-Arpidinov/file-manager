@@ -20,5 +20,6 @@
     <string name="answer">В данный момент оплата через O!Деньги находится в стадии разработки и будет доступна в ближайших обновлениях приложения.</string>
     <string name="shevron">shevron</string>
     <string name="icon_of_o_dengi">icon of o dengi</string>
-
+    <string name="o_dengi">Продавец принимает О!Деньги, свяжитесь с продавцом для уточнения деталей</string>
+    <string name="number_verified">Подтвержденный номер</string>
 </resources>

@@ -11,6 +11,7 @@
     <include
         android:id="@+id/included"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
         layout="@layout/add_price_cell"
@@ -34,37 +35,36 @@
         android:layout_marginHorizontal="@dimen/margin_16dp"
         app:layout_constraintTop_toBottomOf="@id/included"
         android:layout_marginTop="@dimen/cells_corner_radius_5dp"
-        app:position="TOP"
-        app:setDetails="@string/cells_info"
+        app:setPriceWithoutCoins="$77."
+        app:setPriceWithCoins="47"
+        app:isNumberVerified="true"
+        app:isODengiAccepted="true"
         app:setIcon="@drawable/bg_cells_image"
-        app:setShevron="@drawable/arrow_shevron"
-        app:setSubtitle="@string/cells_subtitle"
-        app:setTitle="@string/title_in_cells" />
+        app:setTitle="Мадина" />
 
     <kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
         android:id="@+id/cottcv_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top_8dp"
         android:layout_marginHorizontal="@dimen/margin_16dp"
         app:layout_constraintTop_toBottomOf="@id/csstcv_1"
-        app:position ="MIDDLE"
+        app:position ="SINGLE"
         app:isShevronVisible="true"
         app:setIcon="@drawable/bg_cells_image"
         app:setTitle="@string/title_in_cells" />
 
-    <kg.o.internlabs.core.custom_views.cells.CustomTwoCellsLineView
+    <kg.o.internlabs.core.custom_views.cells.CustomProfileCellView
         android:id="@+id/cbstcv_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top_8dp"
         android:layout_marginHorizontal="@dimen/margin_16dp"
-        app:isEditable="true"
         app:layout_constraintTop_toBottomOf="@id/cottcv_2"
         app:position="BOTTOM"
-        app:setDetails="@string/cells_info"
         app:setIcon="@drawable/bg_cells_image"
-        app:setShevron="@drawable/arrow_shevron"
-        app:setSubtitle="@string/cells_subtitle"
-        app:setTitle="@string/title_in_cells" />
+        app:setSubtitle="г. Бишкек"
+        app:setTitle="+996 700 000 104" />
 
 
     <kg.o.internlabs.core.custom_views.cells.CustomDividerCellView
@@ -72,6 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_horizontal_8dp"
+        android:visibility="gone"
         android:layout_marginHorizontal="@dimen/margin_16dp"
         app:layout_constraintTop_toBottomOf="@id/cbstcv_1"
         app:setButton="@string/all"

@@ -16,32 +16,32 @@
             <enum name="MIDDLE" value="2"/>
             <enum name="BOTTOM" value="3"/>
         </attr>
-        <attr name="setIcon" format="string" />
-        <attr name="setTitle" format="integer" />
+        <attr name="setIcon" format="integer" />
+        <attr name="setTitle" format="string" />
         <attr name="setInfo" format="string" />
         <attr name="isShevronVisible" format="boolean"/>
         <attr name="isSimpleCell" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="CustomAddPriceCellView" parent="CustomRoundedOneTitleTextCellsView">
+    <declare-styleable name="CustomAddPriceCellView">
         <attr name="setPriceWithoutCoins" format="string"/>
         <attr name="setPriceWithCoins" format="string"/>
-        <attr name="setIcon" format="string"/>
-        <attr name="setTitle" />
+        <attr name="setIcon"/>
+        <attr name="setTitle"/>
         <attr name="isNumberVerified" format="boolean"/>
         <attr name="isODengiAccepted" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="CustomTwoCellsLineView" parent="CustomSmallSubtitleTextCellsView">
-        <attr name="setSubtitle" />
-        <attr name="setIcon" format="string"/>
+    <declare-styleable name="CustomProfileCellView" parent="CustomAddPriceCellView">
+        <attr name="setIcon"/>
         <attr name="setTitle" />
-        <attr name="setDetails" />
+        <attr name="setSubtitle" format="string"/>
+        <attr name="isShevronVisible"/>
     </declare-styleable>
 
     <declare-styleable name="CustomCompositeCellView">
         <attr name="setIcon" />
-        <attr name="setDetails" />
+        <attr name="setDetails" format="string"/>
         <attr name="setDate" format="string" />
     </declare-styleable>
 

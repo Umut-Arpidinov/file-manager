@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    //id 'kotlin-kapt'
 }
 
 android {
@@ -59,6 +59,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.13.1'
-    kapt 'com.github.bumptech.glide:compiler:4.13.1'
+    //implementation 'com.github.bumptech.glide:glide:4.13.1'
+    //kapt 'com.github.bumptech.glide:compiler:4.13.1'
 }

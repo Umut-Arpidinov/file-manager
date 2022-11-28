@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import com.bumptech.glide.Glide
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.AddPriceCellBinding
 
@@ -59,7 +58,7 @@ class CustomAddPriceCellView : ConstraintLayout {
     }
 
     fun isODengiAccepted(accept: Boolean) {
-        binding.flODengiAccept.isVisible = accept
+        binding.tvODengiAccepted.isVisible = accept
     }
 
     fun setPriceWithoutCoins(price: String) {
@@ -76,6 +75,6 @@ class CustomAddPriceCellView : ConstraintLayout {
 
     fun setIcon(uri: String) = with(binding.ivCellsIcon) {
         val mUri: Uri = Uri.parse(uri)
-        Glide.with(context).load(mUri).centerCrop().into(this)
+       // Glide.with(context).load(mUri).centerCrop().into(this)
     }
 }

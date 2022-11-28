@@ -69,6 +69,7 @@
 
     <style name="TextView.Price.Verifying.Texts" parent="TextView.Cells.SubTitle.Faq">
         <item name="android:textColor">@color/gray_4</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
     </style>
 
     <style name="TextView.Cells.Details" parent="TextView.Cells.Title">
