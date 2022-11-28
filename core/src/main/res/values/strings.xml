@@ -74,4 +74,9 @@
     <string name="terms_agreement"><u>условия пользовательского соглашения</u></string>
     <string name="number_not_Exists">Номер не существует</string>
     <string name="user_not_found">\ \ \ Пользователь не найден!\nЗарегистрируйтесь сначала</string>
+    <string name="sample_current_price">Current price</string>
+    <string name="sample_old_price">Old price</string>
+    <string name="Sample_name_of_product">Name of the product \nIn two lines</string>
+    <string name="sample_category_product">Category of the product</string>
+    <string name="place_dilevery_product">Place/dilevery of product</string>
 </resources>
