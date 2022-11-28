@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_2dp"
-                android:text="@string/place_dilevery_product" />
+                android:text="@string/place_delivery_product" />
 
 
         </LinearLayout>
