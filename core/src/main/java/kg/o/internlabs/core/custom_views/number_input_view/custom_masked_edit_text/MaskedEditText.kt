@@ -51,7 +51,7 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
 
     fun getValues() = fieldValues
 
-     fun  cleanUp() {
+    private fun cleanUp() {
         initialized = false
         if (mask == null || mask!!.isEmpty()) {
             return
@@ -66,7 +66,8 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         editingAfter = true
 
         if (hasHint() && rawText.length() == 0){
-            this.setText(makeMaskedTextWithHint())
+            b = true
+            this.setText(charClear(makeMaskedTextWithHint(), b))
             Log.d("Ray", "test")
         }
         editingBefore = false
@@ -144,8 +145,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         textWatcher?.numberWatcher(s[s.length - 1] != 'X', fieldsNumber)
         fieldValues = s.toString()
-       /* fieldValues.replace("+996", "")*/
-        Log.d("Ray", "Филд намбер $fieldValues")
         var quantity = count
         if (!editingOnChanged && editingBefore) {
             editingOnChanged = true
@@ -169,17 +168,12 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
             if (hasHint() || (rawText.length() == 0)) {
                 setText(makeMaskedTextWithHint())
             }
-            if (b){
-                Log.d("Ray", "СРАБОТАЛ")
-                cleanUp()
-            }
             selectionChanged = false
             setSelection(place)
             editingBefore = false
             editingOnChanged = false
             editingAfter = false
             ignore = false
-            b = true
         }
     }
 
@@ -238,6 +232,17 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         )
     }
 
+    private fun charClear(char: CharSequence, b: Boolean): CharSequence {
+        val span = SpannableStringBuilder()
+        span.append(char)
+        if (b) {
+            span.delete(0, 3)
+        }
+
+        Log.d("Ray", b.toString())
+        return span
+    }
+
     private fun makeMaskedTextWithHint(): CharSequence {
         val ssb = SpannableStringBuilder()
         var mtrv: Int
@@ -253,11 +258,8 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
         }
 
         Log.d("Ray", ssb.toString())
-
         return ssb
     }
-
-
 
     private fun calculateRange(start: Int, end: Int): Range {
         val range = Range()
@@ -274,7 +276,6 @@ class MaskedEditText : AppCompatEditText, TextWatcher {
             val newStart = previousValidPosition(range.start - 1)
             range.start = newStart
         }
-
         return range
     }
 }

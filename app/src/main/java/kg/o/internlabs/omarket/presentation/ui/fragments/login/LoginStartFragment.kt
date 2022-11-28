@@ -1,17 +1,12 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
-import kg.o.internlabs.core.data.local.prefs.StoragePreferences
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
-import kg.o.internlabs.omarket.utils.createCurrentNumber
-import kg.o.internlabs.omarket.utils.deleteCountryCode
 
 @AndroidEntryPoint
 class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>(),
@@ -20,42 +15,41 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    private val prefs: StoragePreferences by lazy {
-        StoragePreferences(requireContext())
-    }
-
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginStartBinding {
         return FragmentLoginStartBinding.inflate(inflater)
     }
 
     override fun initView() = with(binding) {
         super.initView()
-        cusBtnEnter.buttonAvailability(false)
-        cusBtnReg.buttonAvailability(0)
+        cusBtnEnter.isEnabled = false
+        cusBtnReg.isEnabled = false
     }
 
     override fun initListener() = with(binding) {
         super.initListener()
         cusNum.setInterface(this@LoginStartFragment)
+
         cusBtnReg.setOnClickListener {
-            findNavController().navigate(R.id.registrationFragment)
+            try {
+                findNavController().navigate(LoginStartFragmentDirections
+                    .goToRegistration(cusNum.getValueFromNumberField()))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         cusBtnEnter.setOnClickListener {
-            val currentNumber = binding.cusNum.getVales().createCurrentNumber(cusNum. getVales())
-            val numb = binding.cusNum.getVales().deleteCountryCode(cusNum.getVales())
-            if (currentNumber == prefs.userPhoneNumber) {
+            try {
                 findNavController().navigate(
-                    LoginStartFragmentDirections
-                        .goLoginEnd(numb)
+                    LoginStartFragmentDirections.goLoginByPassword(cusNum.getValueFromNumberField())
                 )
-            } else {
-                Toast.makeText(requireContext(), "Неверный номер телефона!", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
-        binding.cusBtnEnter.buttonAvailability(notEmpty)
+        binding.cusBtnEnter.isEnabled = notEmpty
+        binding.cusBtnReg.isEnabled = notEmpty
     }
-
 }

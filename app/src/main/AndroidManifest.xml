@@ -3,6 +3,7 @@
     package="kg.o.internlabs.omarket"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OMarket"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
             android:name=".presentation.ui.activities.SplashScreenActivity"
@@ -38,6 +39,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <service android:name=".presentation.ui.activities.activities.main_activity.ClosingService"
+            android:stopWithTask="false"/>
     </application>
 
 </manifest>

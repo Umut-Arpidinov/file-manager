@@ -36,6 +36,7 @@
     <dimen name="elevation_1dp">1dp</dimen>
     <dimen name="radius_view_12dp">12dp</dimen>
     <dimen name="radius_view_4dp">4dp</dimen>
+    <dimen name="radius_view_8dp">8dp</dimen>
     <dimen name="margin_2dp">2dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
     <dimen name="margin_10dp">10dp</dimen>
@@ -78,7 +79,12 @@
     <dimen name="view_88dp">88dp</dimen>
     <dimen name="margin_40dp">40dp</dimen>
     <dimen name="line_height29dp">20.29dp</dimen>
-    <dimen name="margin_horizontal_24dp">24dp</dimen>
     <dimen name="margin_start_4dp">4dp</dimen>
     <dimen name="margin_top_40dp">40dp</dimen>
+    <dimen name="extra_spacing_0dp">0dp</dimen>
+    <dimen name="margin_horizontal_24dp">24dp</dimen>
+    <dimen name="inset_0dp">0dp</dimen>
+    <dimen name="extra_spacing_6dp">6dp</dimen>
+    <dimen name="extra_spacing_3dp">3dp</dimen>
+    <dimen name="extra_spacing_2dp">2dp</dimen>
 </resources>

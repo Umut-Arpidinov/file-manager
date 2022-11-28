@@ -2,20 +2,21 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.OtpHelper
-import kg.o.internlabs.core.data.local.prefs.StoragePreferences
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
-import kg.o.internlabs.omarket.utils.getErrorMessage
-import kg.o.internlabs.omarket.utils.makeToast
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegistrationOtpFragment :
@@ -26,15 +27,10 @@ class RegistrationOtpFragment :
     override val viewModel: RegistrationViewModel by lazy {
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
-    private val prefs: StoragePreferences by lazy {
-        StoragePreferences(requireContext())
-    }
-
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentRegistrationOtpBinding {
         return FragmentRegistrationOtpBinding.inflate(inflater)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,49 +42,65 @@ class RegistrationOtpFragment :
 
         tvInfo.text = requireActivity().getString(R.string.info, args?.number)
         cusOtp.setInterface(this@RegistrationOtpFragment)
-        btnSendOtp.buttonAvailability(false)
+        btnSendOtp.isEnabled = false
     }
 
-    override fun initListener() {
+    override fun initListener() = with(binding){
         super.initListener()
-        binding.btnSendOtp.setOnClickListener {
+        tbRegistrationOtp.setNavigationOnClickListener { findNavController().navigateUp() }
+
+        btnSendOtp.setOnClickListener {
+            viewModel.checkOtp(RegisterEntity(msisdn = args?.number?.let { it1 ->
+                viewModel.formattedValues(it1)
+            }, otp = cusOtp.getValues()))
             initObserver()
         }
     }
 
+    private fun safeFlowGather(action: suspend () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                action()
+            }
+        }
+    }
 
-    private fun initObserver() {
-        val reg = RegisterEntity(msisdn = args?.number, otp = binding.cusOtp.getValues())
-        viewModel.checkOtp(reg)
+    private fun initObserver() = with(binding){
         safeFlowGather {
             viewModel.checkOtp.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        prefs.userPhoneNumber = reg.msisdn
-                        prefs.token = it.data.accessToken
-                        prefs.refreshToken = it.data.refreshToken
-                        findNavController().navigate(R.id.mainFragment)
+                        args?.number?.let { i -> viewModel.saveNumberToPrefs(i) }
+                        try {
+                            findNavController().navigate(R.id.mainFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                     is ApiState.Failure -> {
-
-                    }
-                    is ApiState.FailureError ->{
-                        requireActivity().makeToast(it.msg.getErrorMessage())
+                        btnSendOtp.isVisible = true
+                        btnSendOtp.isEnabled = false
+                        progressBar.isVisible = false
+                        it.msg.message?.let { it1 -> cusOtp.setError(it1) }
                     }
                     ApiState.Loading -> {
-
+                        btnSendOtp.isVisible = false
+                        progressBar.isVisible = true
                     }
+                    else -> {}
                 }
             }
         }
     }
+
     override fun sendOtpAgain() {
-        Toast.makeText(
-            requireContext(), "Would you not mind to send me, the otp one more time?",
-            Toast.LENGTH_LONG
-        ).show()
+        viewModel.checkOtp(RegisterEntity(msisdn = args?.number?.let { it1 ->
+            viewModel.formattedValues(it1)
+        }, otp = binding.cusOtp.getValues()))
+        initObserver()
     }
+
     override fun watcher(notEmpty: Boolean) {
-        binding.btnSendOtp.buttonAvailability(notEmpty)
+        binding.btnSendOtp.isEnabled = notEmpty
     }
 }

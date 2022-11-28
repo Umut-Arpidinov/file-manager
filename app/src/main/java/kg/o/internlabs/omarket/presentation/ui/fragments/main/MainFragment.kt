@@ -5,18 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.data.local.prefs.StoragePreferences
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
+class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() {
 
-    override val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
+    override val viewModel: MainFragmentViewModel by lazy {
+        ViewModelProvider(this)[MainFragmentViewModel::class.java]
     }
 
     private val prefs: StoragePreferences by lazy {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="OTPInputText">
 
+    <style name="OTPInputText">
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>
         <item name="android:textSize">@dimen/text_17sp</item>
@@ -31,7 +31,6 @@
         <item name="android:textColor">@color/gray_1</item>
     </style>
 
-
     <style name="AppTitleStyle">
         <item name="android:textColor">@color/black_5</item>
         <item name="android:textSize">@dimen/text_32sp</item>
@@ -50,6 +49,24 @@
         <item name="android:textFontWeight">400</item>
         <item name="android:textSize">@dimen/text_14sp</item>
         <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
+    </style>
+
+    <style name="termsStyle">
+        <item name="android:textColor">@color/black_1</item>
+        <item name="android:textColorLink">@color/magenta_1</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:lineHeight">@dimen/line_16.41dp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="toolbarTitle">
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:textColor">@color/black_1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:lineHeight">@dimen/line_17.9dp</item>
     </style>
 
     <style name="AppTopScreenStyle">
@@ -86,11 +103,6 @@
         <item name="android:textColor">@color/black_4</item>
     </style>
 
-    <style name="SentSMSText" parent="AppPrimaryStyle">
-        <item name="android:textSize">@dimen/text_15sp</item>
-        <item name="android:textColor">@color/black_1</item>
-    </style>
-
     <style name="TimerText" parent="AppPrimaryStyle">
         <item name="android:textSize">@dimen/text_15sp</item>
         <item name="android:textColor">@color/gray_1</item>
@@ -113,5 +125,23 @@
     <style name="licenseTouchableText" parent="AppRegStyle">
         <item name="android:textColor">@color/magenta_1</item>
     </style>
+    <style name="hint">
+        <item name="android:textSize">@dimen/text_13sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textColor">@color/black_1</item>
+    </style>
 
+    <style name="numberInput">
+        <item name="android:textSize">@dimen/text_17sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:textColor">@color/black_1</item>
+    </style>
+
+    <style name="SentSMSText" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:textColor">@color/black_1</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_0dp</item>
+        <item name="android:lineHeight">@dimen/line_17.9dp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
 </resources>

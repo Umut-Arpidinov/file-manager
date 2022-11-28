@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.launch
 
@@ -41,12 +39,5 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
     open fun initViewModel() {}// Обрабатываем все обзерверы
     open fun initView() {} // Инициализации вьюшек
     open fun initListener() {} // Прописываем все логику кликов
-    open fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
-            }
-        }
-    }
 
 }

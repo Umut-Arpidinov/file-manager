@@ -20,9 +20,10 @@ class CustomNumberInputView : ConstraintLayout {
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         context.obtainStyledAttributes(attributeSet, R.styleable.CustomNumberInputView).run {
             getText(R.styleable.CustomNumberInputView_helperTextState)?.let {
-                setHintText(it.toString())
+                setMessage(it.toString())
             }
             recycle()
+            initCancelIconClick()
         }
     }
 
@@ -30,52 +31,50 @@ class CustomNumberInputView : ConstraintLayout {
         binding.enterNumberEditText.setInterface(textWatcher, fieldsNumber)
     }
 
-    private fun setHintText(state: String) = with(binding) {
-        val numberNotFound = context.getString(R.string.number_mistake)
-        val enterNumber = context.getString(R.string.enter_number)
-        when (state) {
-            numberNotFound -> {
-                cancelImageLogic()
-                with(numberInputHelperText) {
-                    text = numberNotFound
-                    setTextColor(ContextCompat.getColor(context, R.color.red_1))
-                }
-                numberInputCancelImage.visibility = View.VISIBLE
-                numberInputFrame.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.number_not_ok_style, null
-                )
-                enterNumberEditText.background = ResourcesCompat.getDrawable(
-                    resources, R.drawable.number_not_ok_style, null
-                )
-            }
-            enterNumber -> {
-                numberInputHelperText.text = enterNumber
-                numberInputCancelImage.visibility = View.INVISIBLE
-            }
-        }
+    fun getValueFromNumberField() = binding.enterNumberEditText.getValue()
+
+    fun setValueToNumberField(message: String){
+        binding.enterNumberEditText.setValue(message.substringAfter(' '))
     }
 
-    fun getVales() = binding.enterNumberEditText.getValues()
+    fun setMessage(message: String) = with(binding){
+        numberInputHelperText.text = message
+        setFrameDefaultColor()
+        setTextDefaultColor()
+    }
 
-    fun setText(text: String) = binding.enterNumberEditText.setText(text)
+    fun setErrorMessage(message: String){
+        setMessage(message)
+        setFrameErrorColor()
+        setTextErrorColor()
+    }
+    private fun setFrameDefaultColor() = with(binding){
+        numberInputFrame.background = ResourcesCompat.getDrawable(resources,R.drawable.number_ok_style,null)
+        enterNumberEditText.background  = ResourcesCompat.getDrawable(resources,R.drawable.number_ok_style,null)
 
-    private fun cancelImageLogic() = with(binding) {
-        val enterNumber = context.getString(R.string.enter_number)
+    }
+    private fun setTextDefaultColor()=with(binding){
+        numberInputHelperText.setTextColor(ContextCompat.getColor(context,R.color.black_1))
+        numberInputHelperText.setTextAppearance(R.style.hint)
+    }
+    private fun setFrameErrorColor() = with(binding){
+        numberInputFrame.background = ResourcesCompat.getDrawable(
+            resources, R.drawable.number_not_ok_style, null
+        )
+        enterNumberEditText.background = ResourcesCompat.getDrawable(
+            resources, R.drawable.number_not_ok_style, null
+        )
+    }
+    private fun setTextErrorColor() = with(binding) {
+        numberInputHelperText.setTextColor(ContextCompat.getColor(context, R.color.red_1))
+    }
+
+    private fun initCancelIconClick() = with(binding){
         numberInputCancelImage.setOnClickListener {
-            numberInputHelperText.text = enterNumber
-            numberInputCancelImage.visibility = View.GONE
-            numberInputFrame.background = ResourcesCompat.getDrawable(
-                resources, R.drawable.number_ok_style, null
-            )
-            enterNumberEditText.background = ResourcesCompat.getDrawable(
-                resources, R.drawable.number_ok_style, null
-            )
-            numberInputHelperText.setTextColor(ContextCompat.getColor(context, R.color.black_1))
-            enterNumberEditText.text = null
-        }
-    }
+            setMessage("Введите номер телефона")
+            numberInputHelperText.setTextAppearance(R.style.hint)
+            enterNumberEditText.eraseField()
 
-    fun clear() {
-        binding.enterNumberEditText.cleanUp()
+        }
     }
 }
