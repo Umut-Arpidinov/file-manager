@@ -6,36 +6,50 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
 
 @AndroidEntryPoint
-class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>(), NumberInputHelper {
+class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewModel>(),
+    NumberInputHelper {
     override val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginStartBinding {
-         return FragmentLoginStartBinding.inflate(inflater)
+        return FragmentLoginStartBinding.inflate(inflater)
+    }
+
+    override fun initView() = with(binding) {
+        super.initView()
+        cusBtnEnter.isEnabled = false
+        cusBtnReg.isEnabled = false
     }
 
     override fun initListener() = with(binding) {
         super.initListener()
-
-        // setting watcher
         cusNum.setInterface(this@LoginStartFragment)
-        findNavController().navigate(R.id.loginEndFragment)
-    }
 
-    override fun initView() {
-        super.initView()
-
+        cusBtnReg.setOnClickListener {
+            try {
+                findNavController().navigate(LoginStartFragmentDirections
+                    .goToRegistration(cusNum.getValueFromNumberField()))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        cusBtnEnter.setOnClickListener {
+            try {
+                findNavController().navigate(
+                    LoginStartFragmentDirections.goLoginByPassword(cusNum.getValueFromNumberField())
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
-        // TODO Здесь можно управлять кнопкой если button.clickable = notEmpty
-        // TODO если поле номера введен не полностью notEmpty = false
+        binding.cusBtnEnter.isEnabled = notEmpty
+        binding.cusBtnReg.isEnabled = notEmpty
     }
-
-    // TODO чтобы получить значение номера телефона вызыаем геттер так binding.cusNum.getValues
 }

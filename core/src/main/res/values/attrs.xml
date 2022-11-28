@@ -2,24 +2,24 @@
 <resources>
     <declare-styleable name="CustomNumberInputView">
         <attr name="helperTextState" format="string"/>
-
     </declare-styleable>
-
     <declare-styleable name="CustomOtpInputView">
         <attr name="set_otp" format="integer" />
-        <attr name="set_timer" format="integer" />
     </declare-styleable>
-
     <declare-styleable name="MaskedEditText">
         <attr name="mask" format="string" />
         <attr name="keep_hint" format="boolean" />
     </declare-styleable>
-
     <declare-styleable name="CustomButtonView">
         <attr name="text" format="string" />
     </declare-styleable>
     <declare-styleable name="CustomPasswordInputFieldView">
-        <attr name ="setMessage" format="string"/>
-        <attr name ="setPasswordHint" format="string"/>
+        <attr name="setMessage" format="string" />
+        <attr name="setPasswordHint" format="string" />
+    </declare-styleable>
+    <declare-styleable name="MaskEditText">
+        <attr name="masks" format="string"/>
+        <attr name="placeholder" format="string"/>
+
     </declare-styleable>
 </resources>
