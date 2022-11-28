@@ -9,39 +9,34 @@
         <attr name="otp_custom_view" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="CustomRoundedOneTitleTextCellsView">
+    <declare-styleable name="CustomRoundedOneCellLineView">
         <attr name="position" format="enum">
             <enum name="SINGLE" value="0"/>
             <enum name="TOP" value="1"/>
             <enum name="MIDDLE" value="2"/>
             <enum name="BOTTOM" value="3"/>
         </attr>
-        <attr name="setIcon" format="reference" />
-        <attr name="setTitle" format="string" />
+        <attr name="setIcon" format="string" />
+        <attr name="setTitle" format="integer" />
         <attr name="setInfo" format="string" />
         <attr name="isShevronVisible" format="boolean"/>
         <attr name="isSimpleCell" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="CustomSmallSubtitleTextCellsView" parent="CustomRoundedOneTitleTextCellsView">
-        <attr name="setSubtitle" format="string" />
-        <attr name="position" />
-        <attr name="setRootBackground" format="reference"/>
-        <attr name="setIcon" />
+    <declare-styleable name="CustomAddPriceCellView" parent="CustomRoundedOneTitleTextCellsView">
+        <attr name="setPriceWithoutCoins" format="string"/>
+        <attr name="setPriceWithCoins" format="string"/>
+        <attr name="setIcon" format="string"/>
         <attr name="setTitle" />
-        <attr name="setDetails" format="string"/>
-        <attr name="setShevron" format="reference"/>
+        <attr name="isNumberVerified" format="boolean"/>
+        <attr name="isODengiAccepted" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="CustomBigSubtitleTextCellsView" parent="CustomSmallSubtitleTextCellsView">
-        <attr name="isEditable" format="boolean" />
+    <declare-styleable name="CustomTwoCellsLineView" parent="CustomSmallSubtitleTextCellsView">
         <attr name="setSubtitle" />
-        <attr name="position" />
-        <attr name="setRootBackground" />
-        <attr name="setIcon" />
+        <attr name="setIcon" format="string"/>
         <attr name="setTitle" />
         <attr name="setDetails" />
-        <attr name="setShevron" />
     </declare-styleable>
 
     <declare-styleable name="CustomCompositeCellView">

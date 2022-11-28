@@ -7,10 +7,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
-import kg.o.internlabs.core.databinding.RoundedOneTitleTextCellBinding
+import kg.o.internlabs.core.databinding.RoundedOneCellLineBinding
 
-class CustomRoundedOneTitleTextCellsView : ConstraintLayout {
-    private val binding: RoundedOneTitleTextCellBinding = RoundedOneTitleTextCellBinding.inflate(
+class CustomRoundedOneCellLineView : ConstraintLayout {
+    private val binding: RoundedOneCellLineBinding = RoundedOneCellLineBinding.inflate(
         LayoutInflater.from(context),
         this, true
     )
@@ -18,37 +18,37 @@ class CustomRoundedOneTitleTextCellsView : ConstraintLayout {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        context.obtainStyledAttributes(attrs, R.styleable.CustomRoundedOneTitleTextCellsView).run {
+        context.obtainStyledAttributes(attrs, R.styleable.CustomRoundedOneCellLineView).run {
 
             setPosition(
                 convertToEnum(
                     getInt(
-                        R.styleable.CustomRoundedOneTitleTextCellsView_position,
+                        R.styleable.CustomRoundedOneCellLineView_position,
                         0
                     )
                 )
             )
 
-            setIcon(getResourceId(R.styleable.CustomRoundedOneTitleTextCellsView_setIcon, 0))
+            setIcon(getResourceId(R.styleable.CustomRoundedOneCellLineView_setIcon, 0))
 
-            getString(R.styleable.CustomRoundedOneTitleTextCellsView_setTitle)?.let {
+            getString(R.styleable.CustomRoundedOneCellLineView_setTitle)?.let {
                 setTitle(it)
             }
 
-            getString(R.styleable.CustomRoundedOneTitleTextCellsView_setInfo)?.let {
+            getString(R.styleable.CustomRoundedOneCellLineView_setInfo)?.let {
                 setInfo(it)
             }
 
-            setSimpleCell(
+            isSimpleCell(
                 getBoolean(
-                    R.styleable.CustomRoundedOneTitleTextCellsView_isSimpleCell,
+                    R.styleable.CustomRoundedOneCellLineView_isSimpleCell,
                     false
                 )
             )
 
-            setShevron(
+            shevronVisibility(
                 getBoolean(
-                    R.styleable.CustomRoundedOneTitleTextCellsView_isShevronVisible,
+                    R.styleable.CustomRoundedOneCellLineView_isShevronVisible,
                     false
                 )
             )
@@ -67,12 +67,12 @@ class CustomRoundedOneTitleTextCellsView : ConstraintLayout {
         binding.tvCellInfo.text = info
     }
 
-    fun setSimpleCell(isSimpleCellSet: Boolean) = with(binding) {
+    fun isSimpleCell(isSimpleCellSet: Boolean) = with(binding) {
         clNoIcon.isVisible = isSimpleCellSet
         clWithIcon.isVisible = isSimpleCellSet.not()
     }
 
-    fun setShevron(isVisible: Boolean) {
+    fun shevronVisibility(isVisible: Boolean) {
         binding.ivShevron.isVisible = isVisible
     }
 
@@ -90,6 +90,7 @@ class CustomRoundedOneTitleTextCellsView : ConstraintLayout {
             return
         }
         isVisible = true
+
         setImageResource(res)
     }
 

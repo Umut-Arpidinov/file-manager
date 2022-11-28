@@ -12,6 +12,11 @@
     <style name="TextView.Cells.SubTitle.Faq" parent="TextView.Cells.SubTitle">
         <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
         <item name="android:textSize">@dimen/cells_subTitle_text_size_15sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextView.Price.Verifying.Texts" parent="TextView.Cells.SubTitle.Faq">
+        <item name="android:textColor">@color/gray_4</item>
     </style>
 
     <style name="TextView.Cells.Title" parent="TextView">
@@ -29,5 +34,11 @@
         <item name="android:layout_marginStart">@dimen/margin_end_8dp</item>
         <item name="android:textSize">@dimen/cells_info_text_size_15sp</item>
         <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextView.Price">
+        <item name="android:textColor">@color/gray_3</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:fontWeight">700</item>
     </style>
 </resources>

@@ -19,6 +19,7 @@ class LoginFinalStateFragment : BaseFragment<FragmentLoginFinalStateBinding, Log
        /* binding.cottcv2.setSimpleCell(true)
         binding.cottcv2.setInfo("Hello")
         binding.cottcv2.setTitle("Joined")*/
+
     }
 
 }
