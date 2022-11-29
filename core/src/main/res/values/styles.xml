@@ -130,6 +130,14 @@
 
     <style name="buttonTextStyle" parent="AppPrimaryStyle">
         <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="buttonMagentaTextStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_13sp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="fontWeight">400</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
@@ -141,7 +149,11 @@
     <style name="ShapeAppearanceFirstPage">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/radius_view_8dp</item>
+    </style>
 
+    <style name="MagentaShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_view_4dp</item>
     </style>
 
     <style name="MaterialButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -168,12 +180,21 @@
         <item name="backgroundTint">@color/color_green_button</item>
         <item name="strokeColor">@color/color_green_button</item>
         <item name="rippleColor">@color/green_4</item>
+        <item name="textAppearanceButton">@style/buttonTextStyle</item>
     </style>
 
     <style name="GrayButton" parent="MaterialButton">
         <item name="android:textColor">@color/black_1</item>
         <item name="backgroundTint">@color/gray_5</item>
         <item name="strokeColor">@color/gray_5</item>
+        <item name="textAppearanceButton">@style/buttonTextStyle</item>
+    </style>
+
+    <style name="MagentaButton" parent="MaterialButton">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="backgroundTint">@color/magenta_1</item>
+        <item name="strokeColor">@color/magenta_1</item>
+        <item name="textAppearanceButton">@style/buttonMagentaTextStyle</item>
     </style>
 
     <style name="progressBarStyle">
