@@ -58,6 +58,7 @@
     <dimen name="corner_radius_12dp">12dp</dimen>
     <dimen name="corner_radius_32dp">32dp</dimen>
     <dimen name="text_12sp">12sp</dimen>
+    <dimen name="text_11sp">11sp</dimen>
     <dimen name="text_13sp">13sp</dimen>
     <dimen name="text_14sp">14sp</dimen>
     <dimen name="text_15sp">15sp</dimen>

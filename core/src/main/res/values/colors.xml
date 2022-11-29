@@ -61,4 +61,6 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
+    <!-- Transparent Colors     -->
+    <color name="transparent_black_60">#99000000</color>
 </resources>
