@@ -28,21 +28,21 @@
             android:layout_width="match_parent"
             android:layout_height="26dp"
             android:layout_margin="@dimen/margin_8dp"
-            android:textAppearance="@style/buttonMagentaTextStyle"
             android:text="@string/sell_faster_string"
-            app:shapeAppearanceOverlay="@style/MagentaShapeAppearance"
+            android:textAppearance="@style/buttonMagentaTextStyle"
             app:layout_constraintBottom_toBottomOf="@id/img_ads"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:shapeAppearanceOverlay="@style/MagentaShapeAppearance" />
 
         <TextView
+            style="@style/styleTextViewers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sample_viewed_string"
-            app:layout_constraintEnd_toEndOf="@id/img_ads"
-            app:layout_constraintTop_toTopOf="@id/img_ads"
             app:drawableLeftCompat="@drawable/ic_viewed"
-            style="@style/styleTextViewers" />
+            app:layout_constraintEnd_toEndOf="@id/img_ads"
+            app:layout_constraintTop_toTopOf="@id/img_ads" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,10 +59,7 @@
                 style="@style/AdsPriceStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sample_current_price"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_ads" />
+                android:text="@string/sample_current_price" />
 
             <TextView
                 android:id="@+id/old_price_product"
