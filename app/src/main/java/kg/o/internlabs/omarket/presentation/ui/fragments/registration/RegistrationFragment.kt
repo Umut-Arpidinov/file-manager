@@ -70,7 +70,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                 when (it) {
                     is ApiState.Success -> {
                         cusNum.setMessage(resources.getString(coreString.enter_number))
-//                        btnSendOtp.buttonFinished()
                         processFinished()
                         try {
                             goNextPage()
@@ -79,8 +78,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                         }
                     }
                     is ApiState.Failure -> {
-//                        btnSendOtp.buttonFinished()
-//                        btnSendOtp.buttonAvailability(false)
                         processFinished()
                         buttonAvailable(false)
                         it.msg.message?.let { it1 ->
@@ -102,7 +99,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                         }
                     }
                     ApiState.Loading -> {
-//                        btnSendOtp.buttonActivated()
                         processStarted()
                     }
                 }
@@ -128,7 +124,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         cusPass1.setInterface(this@RegistrationFragment, 1)
         tbRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
 
-//        btnSendOtp.buttonAvailability(false)
         buttonAvailable(false)
 
         btnSendOtp.setOnClickListener {
@@ -163,7 +158,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
     private fun complexWatcher() = with(binding) {
         if (isNumberNotEmpty.and(isFirstPasswordNotEmpty).and(isSecondPasswordNotEmpty)) {
             if (cusPass.getValueFromPasswordField() == cusPass1.getValueFromPasswordField()) {
-//                btnSendOtp.buttonAvailability(true)
                 buttonAvailable(true)
                 textButton.visibility = View.VISIBLE
                 textButton.movementMethod = LinkMovementMethod.getInstance()
@@ -171,7 +165,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                 cusPass1.setMessage("")
             }
             if(cusPass.getValueFromPasswordField() != cusPass1.getValueFromPasswordField()){
-//                btnSendOtp.buttonAvailability(false)
                 buttonAvailable(false)
                 textButton.visibility = View.GONE
                 cusPass1.setErrorMessage(getString(coreString.password_not_match))
@@ -180,10 +173,10 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
 
 
         } else {
-//            btnSendOtp.buttonAvailability(false)
             buttonAvailable(false)
             textButton.visibility = View.GONE
             cusPass1.setMessage("")
+            cusPass.setMessage(getString(coreString.helper_text_create_password))
         }
     }
 
