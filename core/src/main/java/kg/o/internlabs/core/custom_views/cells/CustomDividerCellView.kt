@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.DividerCellBinding
 
@@ -20,31 +19,20 @@ class CustomDividerCellView : ConstraintLayout {
                 setTitle(it)
             }
 
-            getString(R.styleable.CustomDividerCellView_setButton)?.let {
-                setButtonText(it)
-            }
             recycle()
         }
-        initClick()
     }
 
     private fun initClick() = with(binding){
-        btnDetails.setOnClickListener {
+        //btnDetails.setOnClickListener {
            // TODO click
         }
     }
 
-    fun setButtonText(textInButton: String) = with(binding.btnDetails){
-        if (textInButton.isEmpty()) {
-            isVisible = false
-            return
-        }
-        isVisible = true
-        text = textInButton
+    fun setButtonText(textInButton: String) {
 
     }
 
     fun setTitle(title: String) {
-        binding.tvCellDate.text = title
+
     }
-}

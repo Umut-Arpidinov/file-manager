@@ -88,4 +88,5 @@
     <dimen name="view_width_32dp">32dp</dimen>
     <dimen name="view_width_343dp">343dp</dimen>
     <dimen name="view_width_41dp">41dp</dimen>
+    <dimen name="min_height_44dp">44dp</dimen>
 </resources>

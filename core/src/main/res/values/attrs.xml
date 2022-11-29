@@ -47,7 +47,6 @@
 
     <declare-styleable name="CustomDividerCellView">
         <attr name="setTitle" />
-        <attr name="setButton" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="CustomFAQCellView">
