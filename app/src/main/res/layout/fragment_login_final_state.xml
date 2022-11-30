@@ -11,10 +11,9 @@
     <include
         android:id="@+id/included"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_16dp"
-        layout="@layout/add_price_cell"
+        layout="@layout/composite_cell"
         app:layout_constraintTop_toTopOf="parent"/>
     <kg.o.internlabs.core.custom_views.cells.CustomCompositeCellView
         android:id="@+id/cccv"
@@ -34,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
         app:layout_constraintTop_toBottomOf="@id/included"
-        android:layout_marginTop="@dimen/cells_corner_radius_5dp"
+        android:layout_marginTop="15dp"
         app:setPriceWithoutCoins="$77."
         app:setPriceWithCoins="47"
         app:isNumberVerified="true"
