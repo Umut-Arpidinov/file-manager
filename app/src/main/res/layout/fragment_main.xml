@@ -19,16 +19,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_main"
-        android:layout_width="@dimen/view_60dp"
-        android:layout_height="@dimen/view_60dp"
+        android:id="@+id/floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_21dp"
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_plus_fab"
-        app:tint="@color/magenta_1"
         app:borderWidth="@dimen/dimen_0dp"
-        app:fabCustomSize="@dimen/view_60dp"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/magenta_1"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
