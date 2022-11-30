@@ -1,6 +1,5 @@
 package kg.o.internlabs.omarket
 
-import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 

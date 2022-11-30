@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.usecases.LoginUserUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
@@ -22,7 +21,7 @@ class LoginViewModel @Inject constructor(
     private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase
 ) : BaseViewModel() {
 
-    private val _movieState = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
+    private val _movieState = MutableStateFlow<ApiState<RegisterEntity>>(ApiState.Loading)
     val movieState = _movieState.asStateFlow()
 
     private val _isTokenSavedState = MutableSharedFlow<Boolean>()
