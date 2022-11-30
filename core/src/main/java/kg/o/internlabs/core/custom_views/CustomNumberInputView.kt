@@ -23,7 +23,7 @@ class CustomNumberInputView : ConstraintLayout {
                 setMessage(it.toString())
             }
             recycle()
-            initClick()
+            initCancelIconClick()
         }
     }
 
@@ -31,9 +31,9 @@ class CustomNumberInputView : ConstraintLayout {
         binding.enterNumberEditText.setInterface(textWatcher, fieldsNumber)
     }
 
-    fun getVales() = binding.enterNumberEditText.getValue()
+    fun getValueFromNumberField() = binding.enterNumberEditText.getValue()
 
-    fun setValue(message: String){
+    fun setValueToNumberField(message: String){
         binding.enterNumberEditText.setValue(message.substringAfter(' '))
     }
 
@@ -69,7 +69,7 @@ class CustomNumberInputView : ConstraintLayout {
         numberInputHelperText.setTextColor(ContextCompat.getColor(context, R.color.red_1))
     }
 
-    private fun initClick() = with(binding){
+    private fun initCancelIconClick() = with(binding){
         numberInputCancelImage.setOnClickListener {
             setMessage("Введите номер телефона")
             numberInputHelperText.setTextAppearance(R.style.hint)

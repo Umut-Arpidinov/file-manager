@@ -32,7 +32,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         cusBtnReg.setOnClickListener {
             try {
                 findNavController().navigate(LoginStartFragmentDirections
-                    .goToRegistration(cusNum.getVales()))
+                    .goToRegistration(cusNum.getValueFromNumberField()))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -40,7 +40,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         cusBtnEnter.setOnClickListener {
             try {
                 findNavController().navigate(
-                    LoginStartFragmentDirections.goLoginByPassword(cusNum.getVales())
+                    LoginStartFragmentDirections.goLoginByPassword(cusNum.getValueFromNumberField())
                 )
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -144,8 +144,8 @@ class CustomPasswordInputFieldView : ConstraintLayout {
         }
     }
 
-    fun getPasswordField() = binding.passwordInputField.text.toString()
-    fun setPasswordValue(message: String) {
+    fun getValueFromPasswordField() = binding.passwordInputField.text.toString()
+    fun setValueToPasswordField(message: String) {
         binding.passwordInputField.setText(message)
     }
 }
