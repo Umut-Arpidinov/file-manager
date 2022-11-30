@@ -11,20 +11,25 @@ interface ApiService {
     @POST("api/market-auth/register/")
     suspend fun registerUser(
         @Body reg: RegisterDto?
-    ): Response<RegisterDto>
+    ): Response<RegisterEntity>
 
     @POST("/api/market-auth/check-otp/")
     suspend fun checkOtp(
         @Body otp: RegisterDto?
-    ): Response<RegisterDto>
+    ): Response<RegisterEntity>
 
     @POST("api/market-auth/refresh-token/")
     suspend fun refreshToken(
         @Body reg: RegisterDto?
-    ): Response<RegisterDto>
+    ): Response<RegisterEntity>
 
     @POST("api/market-auth/auth/msisdn-password/")
     suspend fun loginUser(
         @Body reg: RegisterDto?
-    ): Response<RegisterDto>
+    ): Response<RegisterEntity>
+
+ /*   @GET("/api/ads-board/v1/ads/list/")
+    suspend fun getAds(
+        @
+    )*/
 }
