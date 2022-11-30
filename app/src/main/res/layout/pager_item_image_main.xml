@@ -6,7 +6,7 @@
     app:cardCornerRadius="@dimen/corner_radius_8dp">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/demo_page_label"
+        android:id="@+id/item_img_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
