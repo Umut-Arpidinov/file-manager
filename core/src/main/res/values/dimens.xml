@@ -7,6 +7,7 @@
     <dimen name="cells_corner_radius_5dp">5dp</dimen>
     <dimen name="cells_corner_radius_8dp">8dp</dimen>
     <dimen name="cells_info_line_height_17.9sp">17.9sp</dimen>
+    <dimen name="editable_text_line_height_20.29sp">20.29sp</dimen>
     <dimen name="cells_info_text_size_15sp">15sp</dimen>
     <dimen name="cells_subTitle_line_height_17.9sp">17.9sp</dimen>
     <dimen name="cells_subTitle_text_size_15sp">15sp</dimen>
@@ -89,4 +90,7 @@
     <dimen name="view_width_343dp">343dp</dimen>
     <dimen name="view_width_41dp">41dp</dimen>
     <dimen name="min_height_44dp">44dp</dimen>
+    <dimen name="min_height_48dp">48dp</dimen>
+    <dimen name="min_height_20dp">20dp</dimen>
+    <dimen name="padding_16dp">16dp</dimen>
 </resources>

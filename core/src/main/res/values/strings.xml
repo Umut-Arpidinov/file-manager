@@ -23,4 +23,6 @@
     <string name="o_dengi">Продавец принимает О!Деньги, свяжитесь с продавцом для уточнения деталей</string>
     <string name="number_verified">Подтвержденный номер</string>
     <string name="naming">Название</string>
+    <string name="category">Категория</string>
+    <string name="description">Описание</string>
 </resources>

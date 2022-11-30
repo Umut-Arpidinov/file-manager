@@ -17,6 +17,18 @@
         <item name="android:background">@color/white_1</item>
     </style>
 
+    <style name="EditableTextView">
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:minHeight">@dimen/min_height_20dp</item>
+        <item name="android:textColor">@color/gray_3</item>
+        <item name="android:textSize">@dimen/text_17sp</item>
+    </style>
+
+    <style name="EditableTextView.Hint" parent="EditableTextView">
+        <item name="android:textColorHint">@color/gray_1</item>
+        <item name="android:alpha">0.5</item>
+    </style>
+
     <style name="TextView">
         <item name="android:textColor">@color/black_1</item>
     </style>
@@ -98,6 +110,10 @@
 
     <style name="Container.Cells">
         <item name="android:background">@color/black_1</item>
+    </style>
+
+    <style name="Container.EditCells">
+        <item name="android:background">@color/black_3</item>
     </style>
 
     <style name="Divider">

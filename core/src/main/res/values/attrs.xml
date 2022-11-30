@@ -11,38 +11,39 @@
 
     <declare-styleable name="CustomRoundedOneCellLineView">
         <attr name="position" format="enum">
-            <enum name="SINGLE" value="0"/>
-            <enum name="TOP" value="1"/>
-            <enum name="MIDDLE" value="2"/>
-            <enum name="BOTTOM" value="3"/>
+            <enum name="SINGLE" value="0" />
+            <enum name="TOP" value="1" />
+            <enum name="MIDDLE" value="2" />
+            <enum name="BOTTOM" value="3" />
         </attr>
         <attr name="setIcon" format="integer" />
         <attr name="setTitle" format="string" />
         <attr name="setInfo" format="string" />
-        <attr name="isShevronVisible" format="boolean"/>
-        <attr name="isSimpleCell" format="boolean"/>
+        <attr name="isShevronVisible" format="boolean" />
+        <attr name="isSimpleCell" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="CustomAddPriceCellView">
-        <attr name="setPriceWithoutCoins" format="string"/>
-        <attr name="setPriceWithCoins" format="string"/>
-        <attr name="setIcon"/>
-        <attr name="setTitle"/>
-        <attr name="isNumberVerified" format="boolean"/>
-        <attr name="isODengiAccepted" format="boolean"/>
+        <attr name="setPriceWithoutCoins" format="string" />
+        <attr name="setPriceWithCoins" format="string" />
+        <attr name="setIcon" />
+        <attr name="setTitle" />
+        <attr name="isNumberVerified" format="boolean" />
+        <attr name="isODengiAccepted" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="CustomProfileCellView" parent="CustomAddPriceCellView">
-        <attr name="setIcon"/>
+        <attr name="setIcon" />
         <attr name="setTitle" />
-        <attr name="setSubtitle" format="string"/>
-        <attr name="isShevronVisible"/>
+        <attr name="setSubtitle" format="string" />
+        <attr name="isShevronVisible" />
     </declare-styleable>
 
-    <declare-styleable name="CustomCompositeCellView">
-        <attr name="setIcon" />
-        <attr name="setDetails" format="string"/>
-        <attr name="setDate" format="string" />
+    <declare-styleable name="CustomOneCellView">
+        <attr name="isEditableView" format="boolean" />
+        <attr name="setHint" format="string" />
+        <attr name="setText" format="string" />
+        <attr name="setDelimiter" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="CustomDividerCellView">
@@ -51,7 +52,7 @@
 
     <declare-styleable name="CustomFAQCellView">
         <attr name="setQuestions" format="string" />
-        <attr name="setAnswers" format="string"/>
+        <attr name="setAnswers" format="string" />
     </declare-styleable>
 
     <declare-styleable name="ProgressButtonView">

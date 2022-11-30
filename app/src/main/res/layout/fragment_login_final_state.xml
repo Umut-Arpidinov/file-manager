@@ -4,35 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:background="@color/gray_2"
+    android:background="@color/gray_4"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.login.LoginInitialStateFragment">
 
     <include
         android:id="@+id/included"
         android:layout_width="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_height="wrap_content"
-        layout="@layout/composite_cell"
+        layout="@layout/custom_one_cell_view"
         app:layout_constraintTop_toTopOf="parent"/>
-    <kg.o.internlabs.core.custom_views.cells.CustomCompositeCellView
+    <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+        android:id="@+id/cccv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:visibility="visible"
+        app:isEditableView="false"
+        app:setDelimiter="14"
+        app:setText="string/cells_info khkhgbkbk hkkft gfffb hjkkn tre tre trw 35664 786853 84768463 "
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
         android:id="@+id/cccv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_16dp"
         android:layout_marginTop="40dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:setDate="@string/_12_2022"
-        app:setDetails="@string/cells_info"
-        app:setIcon="@drawable/bg_cells_image" />
+        android:visibility="visible"
+        app:isEditableView="false"
+        app:setDelimiter="7"
+        app:layout_constraintTop_toBottomOf="@id/cccv1"
+        app:setHint="string/cells_info khkhgbkbk hkkft gfffb hjkkn tre tre trw tre tre tre tre tre trew "/>
 
     <kg.o.internlabs.core.custom_views.cells.CustomAddPriceCellView
         android:id="@+id/csstcv_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
-        app:layout_constraintTop_toBottomOf="@id/included"
+        app:layout_constraintTop_toBottomOf="@id/cccv"
         android:layout_marginTop="15dp"
         app:setPriceWithoutCoins="$77."
         app:setPriceWithCoins="47"
