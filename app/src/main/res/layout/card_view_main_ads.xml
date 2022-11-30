@@ -13,15 +13,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/img_ads"
             android:layout_width="176dp"
             android:layout_height="176dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/img_sample"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_6dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            app:spi_dotSize="5dp"
+            app:spi_dotSelectedSize="8dp"
+            app:spi_dotColor="@color/white"
+            app:spi_dotSpacing="@dimen/dots_spacing_6dp"
+            app:spi_dotSelectedColor="@color/gray_5"
+            app:spi_visibleDotCount="3"
+            app:layout_constraintBottom_toBottomOf="@id/img_ads"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"

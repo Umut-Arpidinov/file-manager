@@ -50,6 +50,7 @@
     <dimen name="margin_19dp">19dp</dimen>
     <dimen name="margin_20dp">20dp</dimen>
     <dimen name="margin_96dp">96dp</dimen>
+    <dimen name="margin_6dp">6dp</dimen>
     <dimen name="coursore_width_1dp">1dp</dimen>
     <dimen name="coursore_width_2dp">2dp</dimen>
     <dimen name="card_elevation_0dp">0dp</dimen>
@@ -88,4 +89,5 @@
     <dimen name="extra_spacing_6dp">6dp</dimen>
     <dimen name="extra_spacing_3dp">3dp</dimen>
     <dimen name="extra_spacing_2dp">2dp</dimen>
+    <dimen name="dots_spacing_6dp">6dp</dimen>
 </resources>
