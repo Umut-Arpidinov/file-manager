@@ -1,14 +1,20 @@
 <resources>
     <string name="app_name">O!Market</string>
-    <string name="hello_o_market_developers">Hello O!Market Developers</string>
-    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
+    <string name="number_mistake">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="hello">hi Hello</string>
+    <string name="splash_screen">splash_screen</string>
+    <string name="log_in">Зарегистрироваться</string>
+    <string name="enter">Войти</string>
+    <string name="enter_number">Введите номер телефона</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="info">SMS c кодом отправлено на номер \n %1$s</string>
+    <string name="registration">Регистрация</string>
+    <string name="time_out">java.net.SocketTimeoutException: connect timed out</string>
+    <string name="incorrect_number">Номер не существует</string>
+    <string name="number_exists">номер уже существует в базе О!Маркет. Введите другие данные</string>
+    <string name="no_connection">Нету соединение с интернетом!</string>
 </resources>

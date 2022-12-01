@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.fragments.registration.RegistrationFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_registration"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/back_black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            style="@style/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/textButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tb_registration" >
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <kg.o.internlabs.core.custom_views.CustomNumberInputView
+                android:id="@+id/cus_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_16dp"
+                app:layout_constraintBottom_toTopOf="@+id/cus_pass" />
+
+            <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
+                android:id="@+id/cus_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_vertical_16dp"
+                app:setPasswordHint="@string/create_new_password" />
+
+            <kg.o.internlabs.core.custom_views.CustomPasswordInputFieldView
+                android:id="@+id/cus_pass1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_vertical_16dp"
+                app:setPasswordHint="@string/confirm_password" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_32dp"
+        android:layout_marginVertical="@dimen/margin_vertical_16dp"
+        android:layout_marginHorizontal="@dimen/margin_28dp"
+        android:text="@string/terms_and_conditions"
+        style="@style/termsStyle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_send_otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_send_otp"
+        style="@style/GreenButton"
+        app:shapeAppearanceOverlay="@style/MyShapeAppearance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/enter" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/progressBarStyle"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/margin_28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

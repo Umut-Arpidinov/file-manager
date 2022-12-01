@@ -3,41 +3,93 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/loginStartFragment">
+
+    <fragment
+        android:id="@+id/loginStartFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginStartFragment"
+        android:label="fragment_login_start"
+        tools:layout="@layout/fragment_login_start">
+        <action
+            android:id="@+id/go_login_by_password"
+            app:destination="@id/loginByPasswordFragment">
+            <argument
+                android:name="number"
+                app:argType="string" />
+        </action>
+
+        <action
+            android:id="@+id/go_to_registration"
+            app:destination="@id/registrationFragment">
+            <argument
+                android:name="number"
+                app:argType="string" />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginByPasswordFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginByPasswordFragment"
+        android:label="fragment_login_by_password"
+        tools:layout="@layout/fragment_login_by_password">
+
+        <action
+            android:id="@+id/go_to_registration_fragment"
+            app:destination="@id/registrationFragment">
+            <argument
+                android:name="number"
+                app:argType="string" />
+        </action>
+
+        <argument
+            android:name="number"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/mainFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main" />
+
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration">
+        <action
+            android:id="@+id/go_to_otp"
+            app:destination="@id/registrationOtpFragment">
+            <argument
+                android:name="number"
+                app:argType="string" />
+        </action>
+
+        <argument
+            android:name="number"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
+
     <fragment
-        android:id="@+id/loginFragmentInitialState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginInitialStateFragment"
-        android:label="fragment_login_final_state"
-        tools:layout="@layout/fragment_login_final_state" >
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragmentProgressState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginProgressStateFragment"
-        android:label="LoginFragmentProgressState" >
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragmentFinalState"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginFinalStateFragment"
-        android:label="LoginFragmentFinalState" >
-    </fragment>
-    <fragment
-        android:id="@+id/registrationFragmentFilledFields"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentFilledFields"
-        android:label="RegistrationFragmentFilledFields" />
-    <fragment
-        android:id="@+id/registrationFragmentOtp"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentOtp"
-        android:label="RegistrationFragmentOtp" />
-    <fragment
-        android:id="@+id/registrationFragmentEmptyFields"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationFragmentEmptyFields"
+        android:id="@+id/registrationOtpFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.registration.RegistrationOtpFragment"
         android:label="fragment_registration_otp"
-        tools:layout="@layout/fragment_registration_otp" />
+        tools:layout="@layout/fragment_registration_otp">
+        <argument
+            android:name="number"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/pdfFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.PdfFragment"
+        android:label="fragment_pdf"
+        tools:layout="@layout/fragment_pdf" />
 </navigation>

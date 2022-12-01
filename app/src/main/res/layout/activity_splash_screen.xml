@@ -4,19 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/SplashScreenTheme"
     tools:context=".presentation.ui.activities.SplashScreenActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="splash"
-        android:textSize="@dimen/text_32sp" />
-
-    <kg.o.internlabs.core.custom_views.OtpInputCustomView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:src="@drawable/o_market"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:otp_custom_view="4" />
+        android:contentDescription="@string/splash_screen" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

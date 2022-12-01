@@ -1,28 +1,29 @@
 package kg.o.internlabs.omarket.data.remote
 
-import kg.o.internlabs.omarket.data.remote.model.Register
-import retrofit2.Call
+
+import kg.o.internlabs.omarket.data.remote.model.RegisterDto
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
     @POST("api/market-auth/register/")
-    fun registerUser(
-        @Body reg: Register?
-    ): Call<Register>
+    suspend fun registerUser(
+        @Body reg: RegisterDto?
+    ): Response<RegisterDto>
 
-    @POST("api/market-auth/check-otp/")
-    fun checkOtp(
-        @Body otp: Register?
-    ): Call<Register>
+    @POST("/api/market-auth/check-otp/")
+    suspend fun checkOtp(
+        @Body otp: RegisterDto?
+    ): Response<RegisterDto>
 
     @POST("api/market-auth/refresh-token/")
-    fun refreshToken(
-        @Body reg: Register?
-    ): Call<Register>
+    suspend fun refreshToken(
+        @Body reg: RegisterDto?
+    ): Response<RegisterDto>
 
     @POST("api/market-auth/auth/msisdn-password/")
-    fun loginUser(
-        @Body reg: Register?
-    ): Call<Register>
+    suspend fun loginUser(
+        @Body reg: RegisterDto?
+    ): Response<RegisterDto>
 }
