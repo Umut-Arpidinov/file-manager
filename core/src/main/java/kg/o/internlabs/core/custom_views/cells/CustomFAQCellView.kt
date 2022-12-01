@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.text.parseAsHtml
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.FAQCellBinding
@@ -45,6 +46,10 @@ class CustomFAQCellView : ConstraintLayout {
     }
 
     fun setAnswers(title: String) {
-        binding.tvCellAnswer.text = title
+        binding.tvCellAnswer.text = title.parseAsHtml()
     }
+
+    fun getAnswers() = binding.tvCellAnswer.text.toString()
+
+    fun getQuestions() = binding.tvCellQuestions.text.toString()
 }

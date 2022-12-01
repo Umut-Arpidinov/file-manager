@@ -6,10 +6,15 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import kg.o.internlabs.core.R
+import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomAddPriceCellViewClick
 import kg.o.internlabs.core.databinding.AddPriceCellBinding
 
 class CustomAddPriceCellView : ConstraintLayout {
+
+    private var aboutAdvertiser: CustomAddPriceCellViewClick? = null
+
     private val binding = AddPriceCellBinding.inflate(
         LayoutInflater.from(context),
         this, true
@@ -45,11 +50,21 @@ class CustomAddPriceCellView : ConstraintLayout {
             isNumberVerified(getBoolean(
                 R.styleable.CustomAddPriceCellView_isNumberVerified, false))
 
-            getString(R.styleable.CustomAddPriceCellView_setIcon)?.let {
+            getString(R.styleable.CustomAddPriceCellView_setImage)?.let {
                 setIcon(it)
             }
 
+            setIcon(getResourceId(R.styleable.CustomAddPriceCellView_setImage, 0))
+
+            initListener()
+
             recycle()
+        }
+    }
+
+    private fun initListener() {
+        binding.ivShevron.setOnClickListener {
+            aboutAdvertiser?.advertiserClicked()
         }
     }
 
@@ -73,8 +88,30 @@ class CustomAddPriceCellView : ConstraintLayout {
         binding.tvCellTitle.text = title
     }
 
-    fun setIcon(uri: String) = with(binding.ivCellsIcon) {
+    fun setIcon(uri: String): Unit = with(binding.ivCellsIcon) {
+        if (uri.startsWith("res")) return
         val mUri: Uri = Uri.parse(uri)
-       // Glide.with(context).load(mUri).centerCrop().into(this)
+        Glide.with(context).load(mUri).centerCrop().into(this)
+    }
+
+    fun setIcon(uri: Int): Unit = with(binding.ivCellsIcon){
+        if (uri == 0) return
+        Glide.with(context).load(uri)
+            .centerCrop()
+            .into(this)
+    }
+
+    fun isNumberVerified() = binding.tvNumberVerified.isVisible
+
+    fun isODengiAccepted() = binding.tvODengiAccepted.isVisible
+
+    fun getPrice() = with(binding){
+        tvPriceWithoutCoins.text.toString() + tvPriceWithCoins.text.toString()
+    }
+
+    fun getTitle() = binding.tvCellTitle.text.toString()
+
+    fun setInterface(addPriceClick: CustomAddPriceCellViewClick) {
+        aboutAdvertiser = addPriceClick
     }
 }

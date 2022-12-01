@@ -44,5 +44,5 @@ class CustomWithToggleCellView : ConstraintLayout {
         binding.tvTitle.text = title
     }
 
-    fun getTitle() = binding.tvTitle.text
+    fun getTitle() = binding.tvTitle.text.toString()
 }

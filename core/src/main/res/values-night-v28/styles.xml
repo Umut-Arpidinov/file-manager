@@ -108,6 +108,8 @@
     <style name="EditableTextView.Hint" parent="EditableTextView">
         <item name="android:textColorHint">@color/gray_1</item>
         <item name="android:alpha">0.5</item>
+    </style>
+
     <style name="OTPInputText">
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>
@@ -118,6 +120,7 @@
         <item name="android:lineHeight">20.29dp</item>
         <item name="android:fontWeight">500</item>
     </style>
+
     <style name="Widget.Theme.OMarket.MyView" parent="">
         <item name="android:background">@color/gray_600</item>
     </style>
@@ -217,6 +220,7 @@
         <item name="android:fontWeight">600</item>
         <item name="android:lineHeight">@dimen/line_17.9dp</item>
     </style>
+
     <style name="hint">
         <item name="android:textSize">@dimen/text_13sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>

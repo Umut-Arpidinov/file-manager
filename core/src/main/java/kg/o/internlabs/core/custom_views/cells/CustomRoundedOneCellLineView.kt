@@ -7,9 +7,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
+import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomRoundedOneCellLineViewClick
 import kg.o.internlabs.core.databinding.RoundedOneCellLineBinding
 
 class CustomRoundedOneCellLineView : ConstraintLayout {
+
+    private var buttonClicked: CustomRoundedOneCellLineViewClick? = null
+    private var positionOfCell = 0
+
     private val binding: RoundedOneCellLineBinding = RoundedOneCellLineBinding.inflate(
         LayoutInflater.from(context),
         this, true
@@ -46,15 +51,37 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
                 )
             )
 
+            isRadioButtonVisible(
+                getBoolean(
+                    R.styleable.CustomRoundedOneCellLineView_isRadioButtonVisible, false
+                )
+            )
+
             shevronVisibility(
                 getBoolean(
                     R.styleable.CustomRoundedOneCellLineView_isShevronVisible,
                     false
                 )
             )
+
+            initListener()
             recycle()
         }
     }
+
+    private fun initListener() {
+        binding.radioButton.setOnClickListener {
+            buttonClicked?.buttonClicked(positionOfCell)
+        }
+    }
+
+    fun isRadioButtonVisible(boolean: Boolean): Unit = with(binding){
+        radioButton.isVisible = boolean
+        if (radioButton.isVisible) {
+            ivShevron.isVisible = false
+        }
+    }
+
 
     private fun convertToEnum(index: Int) = when (index) {
         0 -> Position.SINGLE
@@ -72,8 +99,11 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
         clWithIcon.isVisible = isSimpleCellSet.not()
     }
 
-    fun shevronVisibility(isVisible: Boolean) {
-        binding.ivShevron.isVisible = isVisible
+    fun shevronVisibility(isVisible: Boolean): Unit = with(binding) {
+        ivShevron.isVisible = isVisible
+        if (ivShevron.isVisible) {
+            radioButton.isVisible = false
+        }
     }
 
     fun setTitle(title: String) = with(binding) {
@@ -94,6 +124,10 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
         setImageResource(res)
     }
 
+    fun setInterface(buttonClicked: CustomRoundedOneCellLineViewClick, positionOfCell: Int = 0){
+        this.buttonClicked = buttonClicked
+        this.positionOfCell = positionOfCell
+    }
 
     fun setPosition(pos: Position) = with(binding) {
         when (pos) {
@@ -121,4 +155,10 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
             }
         }
     }
+
+    fun getInfo() = binding.tvCellInfo.text.toString()
+
+    fun getTitle() = binding.tvCellTitle.text.toString()
+
+    fun getGrayTitle() = binding.tvCellTitleGray.text.toString()
 }

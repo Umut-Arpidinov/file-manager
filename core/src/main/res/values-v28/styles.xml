@@ -108,6 +108,7 @@
     <style name="EditableTextView.Hint" parent="EditableTextView">
         <item name="android:textColorHint">@color/gray_1</item>
         <item name="android:alpha">0.5</item>
+    </style>
     <style name="OTPInputText">
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>

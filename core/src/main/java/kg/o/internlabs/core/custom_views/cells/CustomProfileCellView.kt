@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.ProfileCellViewBinding
 
@@ -19,7 +20,7 @@ class CustomProfileCellView : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         context.obtainStyledAttributes(attrs, R.styleable.CustomProfileCellView).run {
 
-            getString(R.styleable.CustomProfileCellView_setIcon)?.let {
+            getString(R.styleable.CustomProfileCellView_setImage)?.let {
                 setIcon(it)
             }
 
@@ -33,6 +34,8 @@ class CustomProfileCellView : ConstraintLayout {
 
             isShevronVisible(getBoolean(R.styleable.CustomProfileCellView_isShevronVisible, false))
 
+            setIcon(getResourceId(R.styleable.CustomProfileCellView_setImage, 0))
+
             recycle()
         }
     }
@@ -41,7 +44,7 @@ class CustomProfileCellView : ConstraintLayout {
         binding.ivShevron.isVisible = isShevronVisible
     }
 
-    fun setSubtitle(subtitle: String) = with(binding.tvCellSubtitle) {
+    fun setSubtitle(subtitle: String): Unit = with(binding.tvCellSubtitle) {
         isVisible = subtitle.isNotEmpty()
         text = subtitle
     }
@@ -50,9 +53,20 @@ class CustomProfileCellView : ConstraintLayout {
         binding.tvCellTitle.text = title
     }
 
-    fun setIcon(res: String) = with(binding.ivCellsIcon){
-        isVisible = res.isNotEmpty()
-        val uri: Uri = Uri.parse(res)
-       // Glide.with(context).load(uri).centerCrop().into(this)
+    fun setIcon(uri: String): Unit = with(binding.ivCellsIcon) {
+        if (uri.startsWith("res")) return
+        val mUri: Uri = Uri.parse(uri)
+        Glide.with(context).load(mUri).centerCrop().into(this)
     }
+
+    fun setIcon(res: Int): Unit = with(binding.ivCellsIcon){
+        if (res == 0) return
+        Glide.with(context).load(res)
+            .centerCrop()
+            .into(this)
+    }
+
+    fun getTitle() = binding.tvCellTitle.text.toString()
+
+    fun getSubTitle() = binding.tvCellSubtitle.text.toString()
 }

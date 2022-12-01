@@ -54,6 +54,8 @@
     <style name="EditableTextView.Hint" parent="EditableTextView">
         <item name="android:textColorHint">@color/gray_1</item>
         <item name="android:alpha">0.5</item>
+    </style>
+
     <style name="OTPInputText">
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>
@@ -86,6 +88,7 @@
         <item name="android:lineSpacingExtra">@dimen/extra_spacing_0dp</item>
         <item name="android:fontWeight">400</item>
     </style>
+
     <style name="hint">
         <item name="android:textSize">@dimen/text_13sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
