@@ -93,4 +93,7 @@
     <dimen name="min_height_48dp">48dp</dimen>
     <dimen name="min_height_20dp">20dp</dimen>
     <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="margin_end_14dp">14dp</dimen>
+    <dimen name="min_height_31dp">31dp</dimen>
+    <dimen name="min_width_51dp">51dp</dimen>
 </resources>

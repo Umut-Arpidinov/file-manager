@@ -16,6 +16,7 @@
     <color name="red_5">#FFF5F4</color>
     <!--    Brand colors        -->
     <color name="magenta_1">#F0047F</color>
+    <color name="magenta_1.0">#66F0047F</color>
     <color name="magenta_2">#CC0D71</color>
     <color name="magenta_3">#F6A7D0</color>
     <!--    Mostly for Buttons  -->
@@ -61,4 +62,6 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
+    <color name="gray_toggle">#29787880</color>
+    <color name="green_toggle">#34C759</color>
 </resources>

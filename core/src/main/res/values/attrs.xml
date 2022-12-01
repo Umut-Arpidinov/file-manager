@@ -46,7 +46,7 @@
         <attr name="setDelimiter" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="CustomDividerCellView">
+    <declare-styleable name="CustomWithToggleCellView">
         <attr name="setTitle" />
     </declare-styleable>
 
