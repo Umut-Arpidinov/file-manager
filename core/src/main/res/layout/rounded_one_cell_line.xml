@@ -14,17 +14,26 @@
         android:background="@drawable/cell_around_corners"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_cells_icon"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv"
             android:layout_width="@dimen/icon_width_28dp"
             android:layout_height="@dimen/icon_height_28dp"
+            android:background="@drawable/bg_cells_image"
             android:layout_margin="@dimen/margin_8dp"
-            android:scaleType="centerInside"
+            app:cardCornerRadius="@dimen/corner_radius_12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/bg_cells_image"
-            android:contentDescription="@string/icon" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_cells_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_cells_image"
+                android:contentDescription="@string/icon" />
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tv_cell_title"
@@ -33,7 +42,7 @@
             android:layout_height="wrap_content"
             tools:text="@string/title_in_cells"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_cells_icon"
+            app:layout_constraintStart_toEndOf="@id/cv"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView

@@ -1,11 +1,13 @@
 package kg.o.internlabs.core.custom_views.cells
 
 import android.content.Context
+import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomRoundedOneCellLineViewClick
 import kg.o.internlabs.core.databinding.RoundedOneCellLineBinding
@@ -35,6 +37,10 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
             )
 
             setIcon(getResourceId(R.styleable.CustomRoundedOneCellLineView_setIcon, 0))
+
+            getString(R.styleable.CustomRoundedOneCellLineView_setIcon)?.let {
+                setIcon(it)
+            }
 
             getString(R.styleable.CustomRoundedOneCellLineView_setTitle)?.let {
                 setTitle(it)
@@ -114,14 +120,20 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
         tvCellTitle.text = title
     }
 
-    fun setIcon(res: Int) = with(binding.ivCellsIcon) {
-        if (res == 0) {
-            isVisible = false
-            return
-        }
+    fun setIcon(uri: String): Unit = with(binding.ivCellsIcon) {
+        if (uri.startsWith("res")) return
+        isVisible = true
+        val mUri: Uri = Uri.parse(uri)
+        Glide.with(context).load(mUri).centerCrop().into(this)
+    }
+
+    fun setIcon(res: Int): Unit = with(binding.ivCellsIcon){
+        if (res == 0) return
         isVisible = true
 
-        setImageResource(res)
+        Glide.with(context).load(res)
+            .centerCrop()
+            .into(this)
     }
 
     fun setInterface(buttonClicked: CustomRoundedOneCellLineViewClick, positionOfCell: Int = 0){
