@@ -30,7 +30,7 @@ internal class PagerImageAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
-            binding.itemImgMain.setImageResource(kg.o.internlabs.core.R.drawable.img_sample)
+//            binding.itemImgMain.setImageResource(kg.o.internlabs.core.R.drawable.img_sample)
         }
     }
 
