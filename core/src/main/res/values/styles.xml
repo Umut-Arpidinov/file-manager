@@ -265,6 +265,14 @@
 
     <style name="buttonTextStyle" parent="AppPrimaryStyle">
         <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="buttonMagentaTextStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_13sp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="fontWeight">400</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
@@ -276,7 +284,11 @@
     <style name="ShapeAppearanceFirstPage">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/radius_view_8dp</item>
+    </style>
 
+    <style name="MagentaShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_view_4dp</item>
     </style>
 
     <style name="MaterialButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -303,12 +315,21 @@
         <item name="backgroundTint">@color/color_green_button</item>
         <item name="strokeColor">@color/color_green_button</item>
         <item name="rippleColor">@color/green_4</item>
+        <item name="textAppearanceButton">@style/buttonTextStyle</item>
     </style>
 
     <style name="GrayButton" parent="MaterialButton">
         <item name="android:textColor">@color/black_1</item>
         <item name="backgroundTint">@color/gray_5</item>
         <item name="strokeColor">@color/gray_5</item>
+        <item name="textAppearanceButton">@style/buttonTextStyle</item>
+    </style>
+
+    <style name="MagentaButton" parent="MaterialButton">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="backgroundTint">@color/magenta_1</item>
+        <item name="strokeColor">@color/magenta_1</item>
+        <item name="textAppearanceButton">@style/buttonMagentaTextStyle</item>
     </style>
 
     <style name="progressBarStyle">
@@ -317,6 +338,34 @@
         <item name="android:indeterminate">true</item>
         <item name="android:indeterminateTint">@color/magenta_1</item>
         <item name="android:indeterminateTintMode">src_atop</item>
+    </style>
+
+    <style name="AdsPriceStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_15sp</item>
+        <item name="android:textColor">@color/black_5</item>
+    </style>
+
+    <style name="AdsSecondaryStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_12sp</item>
+        <item name="android:textColor">@color/gray_1</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
+    </style>
+
+    <style name="AdsProductStyle" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_13sp</item>
+        <item name="android:textColor">@color/black_5</item>
+    </style>
+
+    <style name="styleTextViewers">
+        <item name="android:drawablePadding">@dimen/margin_2dp</item>
+        <item name="android:background">@drawable/background_viewed_textview</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textSize">@dimen/text_11sp</item>
+        <item name="android:paddingStart">@dimen/padding_4dp</item>
+        <item name="android:paddingEnd">@dimen/padding_4dp</item>
+        <item name="android:layout_margin">@dimen/margin_8dp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
 </resources>

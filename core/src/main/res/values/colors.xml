@@ -64,4 +64,6 @@
     <color name="gray_600">#FF757575</color>
     <color name="gray_toggle">#29787880</color>
     <color name="green_toggle">#34C759</color>
+    <!-- Transparent Colors     -->
+    <color name="transparent_black_60">#99000000</color>
 </resources>

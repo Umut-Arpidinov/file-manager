@@ -84,6 +84,9 @@ dependencies {
     //Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
+    //Dots Pager
+    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.4"
+
     //kotlin Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4"
     //Glide
