@@ -1,11 +1,9 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import kg.o.internlabs.omarket.R
+import kg.o.internlabs.omarket.databinding.PagerItemImageMainBinding
 
 //#TODO(Make a RecyclerAdapter for main page and complete adapter that depends on INPUT)
 
@@ -15,31 +13,28 @@ internal class PagerImageAdapter internal constructor(
 ) :
     RecyclerView.Adapter<PagerImageAdapter.ViewHolder>() {
 
+    internal class ViewHolder(val binding: PagerItemImageMainBinding) : RecyclerView.ViewHolder(binding.root)
+
     fun setCount(count: Int) {
         this.count = count
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.pager_item_image_main, parent, false)
-        view.layoutParams.width = itemWidth
-        return ViewHolder(view)
+        val binding = PagerItemImageMainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        binding.itemImgMain.layoutParams.width = itemWidth
+
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.title.setImageResource(kg.o.internlabs.core.R.drawable.img_sample)
+        with(holder){
+            binding.itemImgMain.setImageResource(kg.o.internlabs.core.R.drawable.img_sample)
+        }
     }
 
     override fun getItemCount(): Int {
         return count
-    }
-
-    internal class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: ImageView
-
-        init {
-            title = itemView.findViewById(R.id.item_img_main)
-        }
     }
 }
