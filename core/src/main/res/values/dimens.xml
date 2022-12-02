@@ -14,6 +14,7 @@
     <dimen name="view_30dp">30dp</dimen>
     <dimen name="view_35dp">35dp</dimen>
     <dimen name="view_160dp">160dp</dimen>
+    <dimen name="view_176dp">176dp</dimen>
     <dimen name="view_4dp">4dp</dimen>
     <dimen name="view_44dp">4dp</dimen>
     <dimen name="view_28dp">28dp</dimen>
@@ -90,4 +91,6 @@
     <dimen name="extra_spacing_3dp">3dp</dimen>
     <dimen name="extra_spacing_2dp">2dp</dimen>
     <dimen name="dots_spacing_6dp">6dp</dimen>
+    <dimen name="dots_size_5dp">5dp</dimen>
+    <dimen name="dots_selected_size_8dp">8dp</dimen>
 </resources>

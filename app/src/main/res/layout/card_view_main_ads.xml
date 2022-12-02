@@ -15,8 +15,8 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/img_ads"
-            android:layout_width="176dp"
-            android:layout_height="176dp"
+            android:layout_width="@dimen/view_176dp"
+            android:layout_height="@dimen/view_176dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_6dp"
             android:layout_marginStart="@dimen/margin_8dp"
-            app:spi_dotSize="5dp"
-            app:spi_dotSelectedSize="8dp"
+            app:spi_dotSize="@dimen/dots_size_5dp"
+            app:spi_dotSelectedSize="@dimen/dots_selected_size_8dp"
             app:spi_dotColor="@color/white"
             app:spi_dotSpacing="@dimen/dots_spacing_6dp"
             app:spi_dotSelectedColor="@color/gray_5"
