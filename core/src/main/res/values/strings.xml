@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="underline_licence"><u>условия пользовательского соглашения</u></string>
     <string name="type_phone_number" translatable="false">Введите номер телефона</string>
     <string name="number_mistake">Веденный вами номер телефона не найден. Проверьте номер или зарегестрируйтесь. </string>
     <string name="message">Message</string>
-    <string name="description">description</string>
     <string name="toast_system_text">Системный</string>
     <string name="log_in">Войти</string>
     <string name="sign_in">Регистрация</string>
     <string name="empty_text">Empty text</string>
+    <string name="title_in_cells">Заголовок</string>
+    <string name="cells_info">Информация</string>
+    <string name="cells_subtitle">Подзаголовок</string>
+    <string name="svevron" translatable="false">svevron</string>
+    <string name="icon">icon</string>
+    <string name="edit_del_icon">edit/del icon</string>
+    <string name="icon_edit">edit icon</string>
+    <string name="_12_2022">12 декабря 2022</string>
+    <string name="comments">Поле ввода комментарий</string>
+    <string name="all">Все</string>
+    <string name="spinner">spinner</string>
+    <string name="questions">Могу ли я оплатить товар через О!Деньги</string>
+    <string name="answer">В данный момент оплата через O!Деньги находится в стадии разработки и будет доступна в ближайших обновлениях приложения.</string>
+    <string name="shevron">shevron</string>
+    <string name="icon_of_o_dengi">icon of o dengi</string>
+    <string name="o_dengi">Продавец принимает О!Деньги, свяжитесь с продавцом для уточнения деталей</string>
+    <string name="number_verified">Подтвержденный номер</string>
+    <string name="naming">Название</string>
+    <string name="category">Категория</string>
+    <string name="description">Описание</string>
+    <string name="location">Местоположение на карте</string>
     <string name="hint_for_number">XXXXXXXXXXXX</string>
     <string name="image_description">Cancel</string>
     <string name="enter_number">Введите номер телефона</string>
     <string name="number_exists">номер уже существует в базе О!Маркет. Введите другие данные</string>
     <string name="error_otp">Неверный код</string>
     <string name="resent">Отправить повторно</string>
-    <string name="underline_licence"><u>условия пользовательского соглашения</u></string>
     <string name="visibility_image">toggle eye</string>
     <string name="enter_password_hint">Введите пароль</string>
     <string name="forgot_password">забыли пароль ?</string>

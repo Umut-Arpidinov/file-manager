@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="TextView.Cells.Title.Faq" parent="TextView">
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+        <item name="android:letterSpacing">-0.0041</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextView.Cells.SubTitle.Faq" parent="TextView.Cells.SubTitle">
+        <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
+        <item name="android:textSize">@dimen/cells_subTitle_text_size_15sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextView.Price.Verifying.Texts" parent="TextView.Cells.SubTitle.Faq">
+        <item name="android:textColor">@color/gray_4</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+    </style>
+
+    <style name="TextView.Cells.Title" parent="TextView">
+        <item name="android:textColor">@color/gray_3</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:layout_marginStart">@dimen/margin_start_8dp</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+        <item name="android:fontWeight">400</item>
+
+    </style>
+
+    <style name="TextView.Cells.Info" parent="TextView">
+        <item name="android:textColor">@color/gray_3</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:layout_marginStart">@dimen/margin_end_8dp</item>
+        <item name="android:textSize">@dimen/cells_info_text_size_15sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextView.Price">
+        <item name="android:textColor">@color/gray_3</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:fontWeight">700</item>
+    </style>
+
+    <style name="EditableTextView">
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:minHeight">@dimen/min_height_20dp</item>
+        <item name="android:textColor">@color/gray_3</item>
+        <item name="android:textSize">@dimen/text_17sp</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="EditableTextView.Hint" parent="EditableTextView">
+        <item name="android:textColorHint">@color/gray_1</item>
+        <item name="android:alpha">0.5</item>
+    </style>
+
     <style name="OTPInputText">
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>
@@ -33,6 +88,7 @@
         <item name="android:lineSpacingExtra">@dimen/extra_spacing_0dp</item>
         <item name="android:fontWeight">400</item>
     </style>
+
     <style name="hint">
         <item name="android:textSize">@dimen/text_13sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>

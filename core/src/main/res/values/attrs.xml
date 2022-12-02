@@ -1,25 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CustomNumberInputView">
-        <attr name="helperTextState" format="string"/>
+        <attr name="helperTextState" format="string" />
     </declare-styleable>
     <declare-styleable name="CustomOtpInputView">
         <attr name="set_otp" format="integer" />
     </declare-styleable>
+    <declare-styleable name="CustomButtonView">
+        <attr name="text" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="MaskedEditText">
         <attr name="mask" format="string" />
         <attr name="keep_hint" format="boolean" />
     </declare-styleable>
-    <declare-styleable name="CustomButtonView">
-        <attr name="text" format="string" />
+
+    <declare-styleable name="CustomRoundedOneCellLineView">
+        <attr name="position" format="enum">
+            <enum name="SINGLE" value="0" />
+            <enum name="TOP" value="1" />
+            <enum name="MIDDLE" value="2" />
+            <enum name="BOTTOM" value="3" />
+        </attr>
+        <attr name="setIcon" format="string" />
+        <attr name="setTitle" format="string" />
+        <attr name="setInfo" format="string" />
+        <attr name="isRadioButtonVisible" format="boolean" />
+        <attr name="isShevronVisible" format="boolean" />
+        <attr name="isSimpleCell" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomAddPriceCellView">
+        <attr name="setPriceWithoutCoins" format="string" />
+        <attr name="setPriceWithCoins" format="string" />
+        <attr name="setImage" format="string" />
+        <attr name="setTitle" />
+        <attr name="isNumberVerified" format="boolean" />
+        <attr name="isODengiAccepted" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomProfileCellView" parent="CustomAddPriceCellView">
+        <attr name="setImage" />
+        <attr name="setTitle" />
+        <attr name="setSubtitle" format="string" />
+        <attr name="isShevronVisible" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomOneCellView">
+        <attr name="isEditableView" format="boolean" />
+        <attr name="setHint" format="string" />
+        <attr name="setText" format="string" />
+        <attr name="setDelimiter" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomWithToggleCellView">
+        <attr name="setTitle" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomFAQCellView">
+        <attr name="setQuestions" format="string" />
+        <attr name="setAnswers" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressButtonView">
+        <attr name="text" />
     </declare-styleable>
     <declare-styleable name="CustomPasswordInputFieldView">
         <attr name="setMessage" format="string" />
         <attr name="setPasswordHint" format="string" />
     </declare-styleable>
     <declare-styleable name="MaskEditText">
-        <attr name="masks" format="string"/>
-        <attr name="placeholder" format="string"/>
-
+        <attr name="masks" format="string" />
+        <attr name="placeholder" format="string" />
     </declare-styleable>
 </resources>
