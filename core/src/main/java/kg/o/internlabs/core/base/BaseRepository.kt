@@ -39,7 +39,11 @@ abstract class BaseRepository {
         }
     }.catch { e ->
         e.printStackTrace()
-        emit(ApiState.Failure(Exception(e)))
+        if(e is java.net.SocketTimeoutException) {
+            emit(ApiState.Failure(Exception(e)))
+            return@catch
+        }
+        emit(ApiState.Failure(Exception("Something went wrong")))
     }.flowOn(Dispatchers.IO)
 }
 
