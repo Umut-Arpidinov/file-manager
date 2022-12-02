@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -47,7 +48,7 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
 
     override fun initView() = with(binding) {
         super.initView()
-        btn.buttonAvailability(false)
+        // btn.buttonAvailability(false)
         args?.number?.let { cusNum.setValueToNumberField(it) }
         isNumberNotEmpty = cusNum.getValueFromNumberField().endsWith("X").not()
         complexWatcher()
@@ -74,14 +75,20 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                 noConnectionState()
             }
         }
+
+        btnPdf.setOnClickListener {
+            findNavController().navigate(R.id.pdfFragment)
+        }
     }
 
     private fun noConnectionState() {
         if (isTokenExists().not()) {
             try {
                 requireActivity().makeToast(getString(coreString.user_not_found))
-                findNavController().navigate(LoginByPasswordFragmentDirections
-                    .goToRegistrationFragment(binding.cusNum.getValueFromNumberField()))
+                findNavController().navigate(
+                    LoginByPasswordFragmentDirections
+                        .goToRegistrationFragment(binding.cusNum.getValueFromNumberField())
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -130,7 +137,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                 when (it) {
                     is ApiState.Success -> {
                         viewModel.saveNumberToPrefs(cusNum.getValueFromNumberField())
-                        btn.buttonFinished()
+                        // btn.buttonFinished()
+                        progressBar.isVisible = false
                         try {
                             findNavController().navigate(R.id.mainFragment)
                         } catch (e: Exception) {
@@ -138,9 +146,12 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                         }
                     }
                     is ApiState.Failure -> {
-                        btn.buttonFinished()
+                        // btn.buttonFinished()
+                        progressBar.isVisible = false
                         it.msg.message?.let { it1 ->
-                            btn.buttonAvailability(false)
+                            // btn.buttonAvailability(false)
+                            // btn.isEnabled = false
+
                             when (it1) {
                                 getString(R.string.time_out) -> {
                                     if (!hasInternet) {
@@ -158,7 +169,10 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                         }
                     }
                     is ApiState.Loading -> {
-                        btn.buttonActivated()
+                        btn.isVisible = false
+                        progressBar.isVisible = true
+                        // btn.buttonActivated()
+
                     }
                     else -> {}
                 }
@@ -185,7 +199,13 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
         complexWatcher()
     }
 
-    private fun complexWatcher() = binding.btn.buttonAvailability(
-        isNumberNotEmpty.and(isPasswordNotEmpty)
-    )
+    private fun complexWatcher() = with(binding) {
+        if (isNumberNotEmpty.and(isPasswordNotEmpty)) {
+            btn.isClickable = true
+            btn.isEnabled = true
+        } else {
+            btn.isClickable = false
+            btn.isEnabled = false
+        }
+    }
 }
