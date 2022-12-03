@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.data.remote
 
 
 import kg.o.internlabs.omarket.data.remote.model.CategoriesDto
+import kg.o.internlabs.omarket.data.remote.model.FAQDto
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -34,4 +35,9 @@ interface ApiService {
     suspend fun getCategories(
         @Header("Authorization") token: String?
     ): Response<CategoriesDto?>
+
+    @GET("api/ads-board/faq/")
+    suspend fun getFaq(
+        @Header("Authorization") token: String?
+    ): Response<FAQDto?>
 }

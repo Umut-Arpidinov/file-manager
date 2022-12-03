@@ -13,9 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainFragmentViewModel @Inject constructor(
-    private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
-    ) :
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase
+) :
     BaseViewModel() {
 
     private val _token = MutableStateFlow("")

@@ -71,7 +71,7 @@ class MainActivityViewModel @Inject constructor(
                                 println("main      loading")
                             }
                             else -> {println("main          failError")
-                                _tokens.value = response
+                                // _tokens.value = response
                                 myJob?.cancel()}
                         }
                     }

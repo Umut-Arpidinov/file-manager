@@ -13,7 +13,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         ViewModelProvider(this)[ProfileViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentProfileBinding {
-        return FragmentProfileBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentProfileBinding.inflate(inflater)
 }
