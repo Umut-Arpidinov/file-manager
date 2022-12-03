@@ -34,7 +34,7 @@ class RegistrationOtpFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        args = RegistrationOtpFragmentArgs.fromBundle(requireArguments())
+        args = RegistrationOtpFragmentArgs.fromBundle(requireArguments())//
     }
 
     override fun initView() = with(binding) {
