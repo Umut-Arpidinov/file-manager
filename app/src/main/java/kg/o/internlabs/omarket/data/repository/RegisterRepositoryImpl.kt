@@ -5,8 +5,8 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.remote.ApiService
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.repository.RegisterRepository
-import kg.o.internlabs.omarket.toDto
-import kotlinx.coroutines.flow.*
+import kg.o.internlabs.omarket.utils.toDto
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(

@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket
+package kg.o.internlabs.omarket.utils
 
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity

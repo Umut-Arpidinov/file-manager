@@ -17,4 +17,5 @@
     <string name="incorrect_number">Номер не существует</string>
     <string name="number_exists">номер уже существует в базе О!Маркет. Введите другие данные</string>
     <string name="no_connection">Нету соединение с интернетом!</string>
+    <string name="sample_views">sample Views</string>
 </resources>
