@@ -4,8 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import kg.o.internlabs.omarket.domain.repository.RegisterRepository
+import kg.o.internlabs.omarket.data.repository.AdsRepositoryImpl
 import kg.o.internlabs.omarket.data.repository.RegisterRepositoryImpl
+import kg.o.internlabs.omarket.domain.repository.AdsRepository
+import kg.o.internlabs.omarket.domain.repository.RegisterRepository
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -16,4 +18,8 @@ abstract class RepositoryModule {
         repo: RegisterRepositoryImpl
     ): RegisterRepository
 
+    @Binds
+    abstract fun provideAdsRepository(
+        ads: AdsRepositoryImpl
+    ): AdsRepository
 }

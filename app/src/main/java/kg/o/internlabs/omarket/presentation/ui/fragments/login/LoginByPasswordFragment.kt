@@ -2,10 +2,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
@@ -18,8 +15,8 @@ import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.utils.InternetChecker
 import kg.o.internlabs.omarket.utils.NetworkStatus
 import kg.o.internlabs.omarket.utils.makeToast
+import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 private typealias coreString = kg.o.internlabs.core.R.string
 
@@ -125,7 +122,7 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
     }
 
     private fun initObserver() = with(binding) {
-        safeFlowGather {
+        this@LoginByPasswordFragment.safeFlowGather {
             viewModel.movieState.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
@@ -160,16 +157,7 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                     is ApiState.Loading -> {
                         btn.buttonActivated()
                     }
-                    else -> {}
                 }
-            }
-        }
-    }
-
-    private fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
             }
         }
     }
