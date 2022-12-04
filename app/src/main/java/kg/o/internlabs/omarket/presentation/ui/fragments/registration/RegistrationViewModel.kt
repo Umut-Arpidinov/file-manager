@@ -4,11 +4,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.usecases.CheckOtpUseCase
 import kg.o.internlabs.omarket.domain.usecases.RegisterUserUseCase
-import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.SaveAccessTokenToPrefsUseCase
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.SaveLoginStatusToPrefsUseCase
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.SaveNumberToPrefsUseCase
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.SaveRefreshTokenToPrefsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -24,8 +26,8 @@ class RegistrationViewModel @Inject constructor(
     private val saveAccessTokenToPrefsUseCase: SaveAccessTokenToPrefsUseCase,
     private val saveLoginStatusToPrefsUseCase: SaveLoginStatusToPrefsUseCase
 ) : BaseViewModel() {
-    private val _checkOtp = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
-    private val _registerUser = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
+    private val _checkOtp = MutableStateFlow<ApiState<RegisterEntity>>(ApiState.Loading)
+    private val _registerUser = MutableStateFlow<ApiState<RegisterEntity>>(ApiState.Loading)
     val checkOtp = _checkOtp.asStateFlow()
     val registerUser = _registerUser.asStateFlow()
 
