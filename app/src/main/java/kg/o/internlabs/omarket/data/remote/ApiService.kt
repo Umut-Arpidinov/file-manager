@@ -3,6 +3,7 @@ package kg.o.internlabs.omarket.data.remote
 
 import kg.o.internlabs.omarket.data.remote.model.CategoriesDto
 import kg.o.internlabs.omarket.data.remote.model.FAQDto
+import kg.o.internlabs.omarket.data.remote.model.MyAdsDto
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -40,4 +41,10 @@ interface ApiService {
     suspend fun getFaq(
         @Header("Authorization") token: String?
     ): Response<FAQDto?>
+
+    @POST("api/ads-board/v1/user/my-ads/")
+    suspend fun getMyAds(
+        @Header("Authorization") token: String?,
+        @Body myAdsDto: MyAdsDto?
+    ): Response<MyAdsDto?>
 }

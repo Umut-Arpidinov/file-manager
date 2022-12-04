@@ -33,9 +33,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginByPasswordBinding {
-        return FragmentLoginByPasswordBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentLoginByPasswordBinding.inflate(inflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

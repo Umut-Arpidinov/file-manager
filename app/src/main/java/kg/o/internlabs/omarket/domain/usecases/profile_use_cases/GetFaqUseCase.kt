@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.domain.usecases
+package kg.o.internlabs.omarket.domain.usecases.profile_use_cases
 
 import kg.o.internlabs.omarket.domain.repository.ProfileRepository
 import javax.inject.Inject

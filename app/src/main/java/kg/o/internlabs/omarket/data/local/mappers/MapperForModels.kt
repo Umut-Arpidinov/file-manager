@@ -1,11 +1,18 @@
-package kg.o.internlabs.omarket.data
+package kg.o.internlabs.omarket.data.local.mappers
 
-import kg.o.internlabs.omarket.data.remote.model.*
-import kg.o.internlabs.omarket.domain.entity.*
+import kg.o.internlabs.omarket.data.remote.model.CategoriesDto
+import kg.o.internlabs.omarket.data.remote.model.RegisterDto
+import kg.o.internlabs.omarket.data.remote.model.ResultDto
+import kg.o.internlabs.omarket.data.remote.model.SubCategoriesDto
+import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
+import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.domain.entity.ResultEntity
+import kg.o.internlabs.omarket.domain.entity.SubCategoriesEntity
 import retrofit2.Response
 
 class MapperForModels {
 
+    //region Registration
     fun mapEntityToDbModel(reg: RegisterEntity?) = RegisterDto(
         accessToken = reg?.accessToken,
         refreshToken = reg?.refreshToken,
@@ -16,7 +23,6 @@ class MapperForModels {
         password = reg?.password,
         password2 = reg?.password2
     )
-
 
     private fun mapDbModelToEntity(regDto: RegisterDto?) = RegisterEntity(
         accessToken = regDto?.accessToken,
@@ -34,8 +40,9 @@ class MapperForModels {
     } else {
         list.errorBody()?.let { Response.error(list.code(), it) }
     }
+    //endregion
 
-    //region *** mapping for categories ***
+    //region *** Categories ***
     fun mapEntityToDbModel(cat: CategoriesEntity?) = CategoriesDto(
         result = cat?.result?.map { mapEntityToDbModel(it) },
         resultCode = cat?.resultCode,
@@ -134,30 +141,4 @@ class MapperForModels {
             resp.errorBody()?.let { Response.error(resp.code(), it) }
         }
     // endregion
-
-    // region Faq
-    fun mapEntityToDbModel(faq: FAQEntity?) = FAQDto(count = faq?.count,
-        next = faq?.next,
-        previous = faq?.previous,
-        results = faq?.results?.map { mapEntityToDbModel(it) })
-
-    private fun mapEntityToDbModel(res: ResultsEntity?) = ResultsDto(
-        id = res?.id, title = res?.title, content = res?.content
-    )
-
-    private fun mapDbModelToEntity(faq: FAQDto?) = FAQEntity(count = faq?.count,
-        next = faq?.next,
-        previous = faq?.previous,
-        results = faq?.results?.map { mapDbModelToEntity(it) })
-
-    private fun mapDbModelToEntity(res: ResultsDto?) = ResultsEntity(
-        id = res?.id, title = res?.title, content = res?.content
-    )
-
-    fun mapRespDbModelToRespEntityForFaq(resp: Response<FAQDto?>) = if (resp.isSuccessful) {
-        Response.success(mapDbModelToEntity(resp.body()))
-    } else {
-        resp.errorBody()?.let { Response.error(resp.code(), it) }
-    }
-    //endregion
 }
