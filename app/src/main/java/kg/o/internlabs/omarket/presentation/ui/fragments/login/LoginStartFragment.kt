@@ -6,7 +6,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
 
 @AndroidEntryPoint
@@ -16,9 +15,8 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginStartBinding {
-        return FragmentLoginStartBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentLoginStartBinding.inflate(inflater)
 
     override fun initView() = with(binding) {
         super.initView()
@@ -32,9 +30,8 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
 
         cusBtnReg.setOnClickListener {
             try {
-                findNavController().navigate(R.id.mainFragment)
-                /*findNavController().navigate(LoginStartFragmentDirections
-                    .goToRegistration(cusNum.getValueFromNumberField()))*/
+                findNavController().navigate(LoginStartFragmentDirections
+                    .goToRegistration(cusNum.getValueFromNumberField()))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
