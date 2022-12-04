@@ -166,6 +166,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                     is ApiState.Loading -> {
                         btn.isVisible = false
                         progressBar.isVisible = true
+                        btnPdf.isVisible = false
+                        text.isVisible = false
                         // btn.buttonActivated()
 
                     }
