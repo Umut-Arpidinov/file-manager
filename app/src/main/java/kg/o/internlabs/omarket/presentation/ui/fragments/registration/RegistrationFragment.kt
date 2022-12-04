@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -80,6 +81,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                     is ApiState.Failure -> {
                         processFinished()
                         buttonAvailable(false)
+                        textButton.isVisible = false
                         it.msg.message?.let { it1 ->
                             when (it1) {
                                 getString(R.string.time_out) -> {
@@ -100,6 +102,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                     }
                     ApiState.Loading -> {
                         processStarted()
+                        textButton.isVisible = false
                     }
                 }
             }
@@ -159,24 +162,19 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         if (isNumberNotEmpty.and(isFirstPasswordNotEmpty).and(isSecondPasswordNotEmpty)) {
             if (cusPass.getValueFromPasswordField() == cusPass1.getValueFromPasswordField()) {
                 buttonAvailable(true)
-                textButton.visibility = View.VISIBLE
+                textButton.isVisible = true
                 textButton.movementMethod = LinkMovementMethod.getInstance()
-                cusPass.setMessage(getString(coreString.helper_text_create_password))
                 cusPass1.setMessage("")
-            }
-            if(cusPass.getValueFromPasswordField() != cusPass1.getValueFromPasswordField()){
+            } else {
                 buttonAvailable(false)
-                textButton.visibility = View.GONE
+                textButton.isVisible = false
                 cusPass1.setErrorMessage(getString(coreString.password_not_match))
-                cusPass.setErrorMessage("")
             }
-
-
         } else {
             buttonAvailable(false)
-            textButton.visibility = View.GONE
+            textButton.isVisible = false
+            cusNum.setMessage(getString(coreString.enter_number))
             cusPass1.setMessage("")
-            cusPass.setMessage(getString(coreString.helper_text_create_password))
         }
     }
 
