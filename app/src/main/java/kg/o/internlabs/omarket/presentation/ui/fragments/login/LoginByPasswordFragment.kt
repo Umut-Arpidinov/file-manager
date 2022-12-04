@@ -3,7 +3,6 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.login
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -135,7 +134,6 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                 when (it) {
                     is ApiState.Success -> {
                         viewModel.saveNumberToPrefs(cusNum.getValueFromNumberField())
-                        // btn.buttonFinished()
                         progressBar.isVisible = false
                         try {
                             findNavController().navigate(R.id.mainFragment)
@@ -144,7 +142,6 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                         }
                     }
                     is ApiState.Failure -> {
-                        // btn.buttonFinished()
                         progressBar.isVisible = false
                         it.msg.message?.let { it1 ->
                             // btn.buttonAvailability(false)
