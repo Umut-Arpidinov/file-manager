@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.databinding.FragmentFAQBinding
@@ -9,6 +10,7 @@ import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
     override val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(this)[ProfileViewModel::class.java]

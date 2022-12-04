@@ -18,7 +18,7 @@ data class MyAdsResultEntity(
 data class MyAdsResultsEntity(
     val promotionType: PromotionTypeEntity? = null,
     val address: String? = null,
-    val author: AuthorDto? = null,
+    val author: AuthorEntity? = null,
     val latitude: String? = null,
     val currencyUsd: Double? = null,
     val description: String? = null,

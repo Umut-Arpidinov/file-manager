@@ -1,7 +1,7 @@
 package kg.o.internlabs.omarket.data.repository
 
 import kg.o.internlabs.core.base.BaseRepository
-import kg.o.internlabs.omarket.data.local.mappers.MapperForModels
+import kg.o.internlabs.omarket.data.local.mappers.MapperForFAQAndProfileModels
 import kg.o.internlabs.omarket.data.remote.ApiService
 import kg.o.internlabs.omarket.domain.entity.MyAdsEntity
 import kg.o.internlabs.omarket.domain.repository.ProfileRepository
@@ -11,7 +11,7 @@ class ProfileRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : ProfileRepository, BaseRepository() {
 
-    private val mapper = MapperForModels()
+    private val mapper = MapperForFAQAndProfileModels()
 
     override fun getFaq(token: String) = safeApiCall {
         mapper.mapRespDbModelToRespEntityForFaq(

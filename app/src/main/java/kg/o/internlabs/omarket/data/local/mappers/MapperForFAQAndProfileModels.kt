@@ -7,11 +7,6 @@ import retrofit2.Response
 class MapperForFAQAndProfileModels {
 
     //region Faq
-    private fun mapEntityToDbModel(res: ResultsEntity?) = ResultsDto(
-        id = res?.id,
-        title = res?.title,
-        content = res?.content
-    )
 
     private fun mapDbModelToEntity(faq: FAQDto?) = FAQEntity(
         count = faq?.count,
@@ -32,7 +27,7 @@ class MapperForFAQAndProfileModels {
     }
     //endregion
 
-    //region toDto
+    //region MyAds
     fun mapEntityToDbModel(faq: MyAdsEntity?) = MyAdsDto(
         count = faq?.count,
         next = faq?.next,
@@ -41,14 +36,14 @@ class MapperForFAQAndProfileModels {
         statuses = faq?.statuses
     )
 
-    fun mapEntityToDbModel(res: MyAdsResultEntity?) = MyAdsResultDto(
+    private fun mapEntityToDbModel(res: MyAdsResultEntity?) = MyAdsResultDto(
         next = res?.next,
         previous = res?.previous,
         count = res?.count,
         results = res?.results?.map { mapEntityToDbModel(it) }
     )
 
-    fun mapEntityToDbModel(res: MyAdsResultsEntity?) = MyAdsResultsDto(
+    private fun mapEntityToDbModel(res: MyAdsResultsEntity?) = MyAdsResultsDto(
         promotionType = mapEntityToDbModel(res?.promotionType),
         address = res?.address,
         author = mapEntityToDbModel(res?.author),
@@ -70,40 +65,79 @@ class MapperForFAQAndProfileModels {
         viewCount = res?.viewCount,
         longitude = res?.longitude,
         status = res?.status,
-        isOwn = res?.isOwn,
+        isOwn = res?.isOwn
     )
 
     private fun mapEntityToDbModel(promotionType: PromotionTypeEntity?) =
         PromotionTypeDto(type = promotionType?.type)
 
-    private fun mapEntityToDbModel(authorDto: AuthorEntity?) =
-        AuthorDto(verified = authorDto?.verified)
+    private fun mapEntityToDbModel(author: AuthorEntity?) =
+        AuthorDto(verified = author?.verified)
 
-    private fun mapEntityToDbModel(locationEntity: LocationEntity?) =
-        LocationDto(name = locationEntity?.name)
+    private fun mapEntityToDbModel(location: LocationEntity?) =
+        LocationDto(name = location?.name)
 
-    private fun mapEntityToDbModel(categoryEntity: CategoryEntity?) =
-        CategoryDto(name = categoryEntity?.name)
-    // endregion
+    private fun mapEntityToDbModel(category: CategoryEntity?) =
+        CategoryDto(name = category?.name)
 
 
     private fun mapDbModelToEntity(faq: MyAdsDto?) = MyAdsEntity(
         count = faq?.count,
         next = faq?.next,
         previous = faq?.previous,
-        results = faq?.results?.map { mapDbModelToEntity(it) },
+        result = mapDbModelToEntity(faq?.result),
         statuses = faq?.statuses
     )
 
-    private fun mapDbModelToEntity(res: MyAdsResultsDto?) = MyAdsResultsEntity(
-        id = res?.id,
-        title = res?.title,
-        content = res?.content
+    private fun mapDbModelToEntity(res: MyAdsResultDto?) = MyAdsResultEntity(
+        next = res?.next,
+        previous = res?.previous,
+        count = res?.count,
+        results = res?.results?.map { mapDbModelToEntity(it) }
     )
+
+    private fun mapDbModelToEntity(res: MyAdsResultsDto?) = MyAdsResultsEntity(
+        promotionType = mapDbModelToEntity(res?.promotionType),
+        address = res?.address,
+        author = mapDbModelToEntity(res?.author),
+        latitude = res?.latitude,
+        currencyUsd = res?.currencyUsd,
+        description = res?.description,
+        minifyImages = res?.minifyImages,
+        title = res?.title,
+        contractPrice = res?.contractPrice,
+        uuid = res?.uuid,
+        oMoneyPay = res?.oMoneyPay,
+        price = res?.price,
+        currency = res?.currency,
+        location = mapDbModelToEntity(res?.location),
+        id = res?.id,
+        modifiedAt = res?.modifiedAt,
+        category = mapDbModelToEntity(res?.category),
+        favorite = res?.favorite,
+        viewCount = res?.viewCount,
+        longitude = res?.longitude,
+        status = res?.status,
+        isOwn = res?.isOwn
+    )
+
+    private fun mapDbModelToEntity(promotionType: PromotionTypeDto?) =
+        PromotionTypeEntity(type = promotionType?.type)
+
+    private fun mapDbModelToEntity(author: AuthorDto?) =
+        AuthorEntity(verified = author?.verified)
+
+    private fun mapDbModelToEntity(location: LocationDto?) =
+        LocationEntity(name = location?.name)
+
+    private fun mapDbModelToEntity(category: CategoryDto?) =
+        CategoryEntity(name = category?.name)
 
     fun mapRespDbModelToRespEntityForMyAds(resp: Response<MyAdsDto?>) = if (resp.isSuccessful) {
         Response.success(mapDbModelToEntity(resp.body()))
     } else {
         resp.errorBody()?.let { Response.error(resp.code(), it) }
     }
+
+    // endregion
 }
