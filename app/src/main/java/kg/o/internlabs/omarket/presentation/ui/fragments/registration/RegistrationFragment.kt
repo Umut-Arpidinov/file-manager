@@ -81,7 +81,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                     is ApiState.Failure -> {
                         processFinished()
                         buttonAvailable(false)
-                        textButton.isVisible = false
+                        textButton.isVisible = true
                         it.msg.message?.let { it1 ->
                             when (it1) {
                                 getString(R.string.time_out) -> {
@@ -94,8 +94,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
                                     cusNum.setErrorMessage(it1)
                                 }
                                 else -> {
-                                    cusPass.setErrorMessage(it1)
-                                    cusPass1.setErrorMessage(it1)
+                                    cusNum.setErrorMessage(it1)
                                 }
                             }
                         }
