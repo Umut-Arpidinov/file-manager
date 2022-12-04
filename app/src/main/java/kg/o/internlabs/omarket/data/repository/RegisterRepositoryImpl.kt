@@ -46,6 +46,9 @@ class RegisterRepositoryImpl @Inject constructor(
     }
 
     override fun registerUser(reg: RegisterEntity): Flow<ApiState<RegisterEntity>> = safeApiCall {
+        println("========10====="+ apiService.registerUser( mapper.mapEntityToDbModel(
+            reg
+        )).headers().toString())
         mapper.mapRespDbModelToRespEntity(
             apiService.registerUser(
                 mapper.mapEntityToDbModel(

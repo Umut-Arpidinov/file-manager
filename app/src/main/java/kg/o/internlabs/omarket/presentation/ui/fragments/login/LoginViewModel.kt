@@ -18,7 +18,7 @@ class LoginViewModel @Inject constructor(
     private val saveNumberToPrefsUseCase: SaveNumberToPrefsUseCase,
     private val saveRefreshTokenToPrefsUseCase: SaveRefreshTokenToPrefsUseCase,
     private val saveLoginStatusToPrefsUseCase: SaveLoginStatusToPrefsUseCase,
-    private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase
+    private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
 ) : BaseViewModel() {
 
     private val _movieState = MutableStateFlow<ApiState<RegisterEntity>>(ApiState.Loading)
