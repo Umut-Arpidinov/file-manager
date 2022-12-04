@@ -23,7 +23,6 @@ class MapperForModels {
         password2 = reg?.password2
     )
 
-
     private fun mapDbModelToEntity(regDto: RegisterDto?) = RegisterEntity(
         accessToken = regDto?.accessToken,
         refreshToken = regDto?.refreshToken,
