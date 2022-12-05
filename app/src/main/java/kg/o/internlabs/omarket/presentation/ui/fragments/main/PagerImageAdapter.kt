@@ -35,7 +35,7 @@ internal class PagerImageAdapter internal constructor(
         with(holder) {
             if (arrayIsNotNull) {
                 Glide.with(context).load(imageURLs[position])
-                    .placeholder(kg.o.internlabs.core.R.drawable.ic_loading)
+                    .placeholder(R.drawable.loading_animation)
                     .error(kg.o.internlabs.core.R.drawable.who_knows_img).into(binding.itemImgMain)
             } else {
                 Glide.with(context).load(kg.o.internlabs.core.R.drawable.who_knows_img).into(binding.itemImgMain)
