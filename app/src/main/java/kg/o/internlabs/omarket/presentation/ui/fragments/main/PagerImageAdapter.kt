@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.PagerItemImageMainBinding
 
 //#TODO(Make a RecyclerAdapter for main page and complete adapter that depends on INPUT)
@@ -27,7 +29,7 @@ internal class PagerImageAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
-
+            Glide.with(context).load(imageURLs[position]).into(binding.itemImgMain)
         }
     }
 
