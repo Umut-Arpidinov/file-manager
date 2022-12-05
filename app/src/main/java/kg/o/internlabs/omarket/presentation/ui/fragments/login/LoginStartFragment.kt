@@ -15,9 +15,8 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginStartBinding {
-        return FragmentLoginStartBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentLoginStartBinding.inflate(inflater)
 
     override fun initView() = with(binding) {
         super.initView()

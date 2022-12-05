@@ -2,10 +2,8 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.lifecycle.Lifecycle
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
@@ -18,8 +16,8 @@ import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.utils.InternetChecker
 import kg.o.internlabs.omarket.utils.NetworkStatus
 import kg.o.internlabs.omarket.utils.makeToast
+import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 private typealias coreString = kg.o.internlabs.core.R.string
 
@@ -47,7 +45,7 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
 
     override fun initView() = with(binding) {
         super.initView()
-        btn.buttonAvailability(false)
+        // btn.buttonAvailability(false)
         args?.number?.let { cusNum.setValueToNumberField(it) }
         isNumberNotEmpty = cusNum.getValueFromNumberField().endsWith("X").not()
         complexWatcher()
@@ -74,14 +72,20 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                 noConnectionState()
             }
         }
+
+        btnPdf.setOnClickListener {
+            findNavController().navigate(R.id.pdfFragment)
+        }
     }
 
     private fun noConnectionState() {
         if (isTokenExists().not()) {
             try {
                 requireActivity().makeToast(getString(coreString.user_not_found))
-                findNavController().navigate(LoginByPasswordFragmentDirections
-                    .goToRegistrationFragment(binding.cusNum.getValueFromNumberField()))
+                findNavController().navigate(
+                    LoginByPasswordFragmentDirections
+                        .goToRegistrationFragment(binding.cusNum.getValueFromNumberField())
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -125,12 +129,12 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
     }
 
     private fun initObserver() = with(binding) {
-        safeFlowGather {
+        this@LoginByPasswordFragment.safeFlowGather {
             viewModel.movieState.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         viewModel.saveNumberToPrefs(cusNum.getValueFromNumberField())
-                        btn.buttonFinished()
+                        progressBar.isVisible = false
                         try {
                             findNavController().navigate(R.id.mainFragment)
                         } catch (e: Exception) {
@@ -138,9 +142,11 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                         }
                     }
                     is ApiState.Failure -> {
-                        btn.buttonFinished()
+                        progressBar.isVisible = false
                         it.msg.message?.let { it1 ->
-                            btn.buttonAvailability(false)
+                            // btn.buttonAvailability(false)
+                            // btn.isEnabled = false
+
                             when (it1) {
                                 getString(R.string.time_out) -> {
                                     if (!hasInternet) {
@@ -158,18 +164,14 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                         }
                     }
                     is ApiState.Loading -> {
-                        btn.buttonActivated()
-                    }
-                    else -> {}
-                }
-            }
-        }
-    }
+                        btn.isVisible = false
+                        progressBar.isVisible = true
+                        btnPdf.isVisible = false
+                        text.isVisible = false
+                        // btn.buttonActivated()
 
-    private fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
+                    }
+                }
             }
         }
     }
@@ -185,7 +187,13 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
         complexWatcher()
     }
 
-    private fun complexWatcher() = binding.btn.buttonAvailability(
-        isNumberNotEmpty.and(isPasswordNotEmpty)
-    )
+    private fun complexWatcher() = with(binding) {
+        if (isNumberNotEmpty.and(isPasswordNotEmpty)) {
+            btn.isClickable = true
+            btn.isEnabled = true
+        } else {
+            btn.isClickable = false
+            btn.isEnabled = false
+        }
+    }
 }

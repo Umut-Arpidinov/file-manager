@@ -1,14 +1,14 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
-import kg.o.internlabs.core.data.local.prefs.StoragePreferences
+import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
+import kg.o.internlabs.omarket.utils.makeToast
+import kg.o.internlabs.omarket.utils.safeFlowGather
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() {
@@ -17,22 +17,40 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
         ViewModelProvider(this)[MainFragmentViewModel::class.java]
     }
 
-    private val prefs: StoragePreferences by lazy {
-        StoragePreferences(requireContext())
-    }
-
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentMainBinding {
         return FragmentMainBinding.inflate(inflater)
     }
 
-    override fun initView() {
-        super.initView()
-        //findNavController().navigate(R.id.loginStartFragment)
+    override fun initViewModel() {
+        super.initViewModel()
+        viewModel.getAccessTokenFromPrefs()
+        viewModel.getCategories()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d("Ray", "ACCESS token ${prefs.token}")
-        Log.d("Ray", "REFRESH token ${prefs.refreshToken}")
+    override fun initView() {
+        super.initView()
+        getCategories()
+    }
+
+    private fun getCategories() {
+        this@MainFragment.safeFlowGather {
+            viewModel.categories.collectLatest {
+                when(it) {
+                    is ApiState.Success -> {
+                        //TODO it.date.result вернет List<ResultEntity> в нем хранятся
+                       //TODO it.data.result?.get(0)?.name  categoryName
+                       //TODO it.data.result?.get(0)?.iconImg  icon
+                       //TODO it.data.result   это для категорий все
+                    }
+                    is ApiState.Failure -> {
+                        // если что то пошло ни так
+                        requireActivity().makeToast(it.msg.message.toString())
+                    }
+                    is ApiState.Loading -> {
+                        // запрос обрабатывается сервером
+                    }
+                }
+            }
+        }
     }
 }
