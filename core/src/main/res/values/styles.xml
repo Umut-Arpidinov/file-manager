@@ -204,6 +204,13 @@
         <item name="android:textColor">@color/gray_1</item>
     </style>
 
+    <style name="MainSearchResultText" parent="AppPrimaryStyle">
+        <item name="android:textSize">@dimen/text_17sp</item>
+        <item name="android:textColor">@color/black_5</item>
+        <item name="android:padding">@dimen/padding_18dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_12dp</item>
+    </style>
+
     <style name="PrimaryUnderFieldText" parent="AppPrimaryStyle">
         <item name="android:textSize">@dimen/text_13sp</item>
         <item name="android:textColor">@color/black_4</item>
@@ -373,6 +380,8 @@
         <item name="android:textAppearance">@style/AppPrimaryStyle</item>
         <item name="android:background">@drawable/background_rounded_search_view</item>
         <item name="android:layout_marginEnd">@dimen/margin_50dp</item>
+        <item name="searchIcon">@drawable/ic_search</item>
     </style>
 
+    <dimen name="padding_18dp">18dp</dimen>
 </resources>

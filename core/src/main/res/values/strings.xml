@@ -100,4 +100,5 @@
     <string name="place_delivery_product">Place/delivery of product</string>
     <string name="sell_faster_string">Продать быстрее</string>
     <string name="sample_viewed_string">777</string>
+    <string name="search_text">Search\'s text</string>
 </resources>
