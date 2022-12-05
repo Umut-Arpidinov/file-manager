@@ -17,10 +17,14 @@ internal class PagerImageAdapter internal constructor(
 ) :
     RecyclerView.Adapter<PagerImageAdapter.ViewHolder>() {
 
-    internal class ViewHolder(val binding: PagerItemImageMainBinding) : RecyclerView.ViewHolder(binding.root)
+    private var arrayIsNotNull = true
+
+    internal class ViewHolder(val binding: PagerItemImageMainBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = PagerItemImageMainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            PagerItemImageMainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         binding.itemImgMain.layoutParams.width = itemWidth
 
@@ -29,11 +33,22 @@ internal class PagerImageAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            Glide.with(context).load(imageURLs[position]).error(kg.o.internlabs.core.R.drawable.who_knows_img).into(binding.itemImgMain)
+            if (arrayIsNotNull) {
+                Glide.with(context).load(imageURLs[position])
+                    .placeholder(kg.o.internlabs.core.R.drawable.ic_loading)
+                    .error(kg.o.internlabs.core.R.drawable.who_knows_img).into(binding.itemImgMain)
+            } else {
+                Glide.with(context).load(kg.o.internlabs.core.R.drawable.who_knows_img).into(binding.itemImgMain)
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return imageURLs.size
+        return if (imageURLs.isNotEmpty()) {
+            imageURLs.size
+        } else {
+            arrayIsNotNull = false
+            1
+        }
     }
 }
