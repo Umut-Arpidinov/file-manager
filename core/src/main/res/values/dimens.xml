@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="view_width_0dp">0dp</dimen>
+    <dimen name="view_24dp">24dp</dimen>
+    <dimen name="view_60dp">60dp</dimen>
     <dimen name="card_elevation_8dp">8dp</dimen>
     <dimen name="cells_corner_radius_4dp">4dp</dimen>
     <dimen name="cells_corner_radius_5dp">5dp</dimen>
@@ -48,8 +51,11 @@
     <dimen name="view_height_24dp">24dp</dimen>
     <dimen name="view_height_13dp">13dp</dimen>
     <dimen name="view_height_10dp">10dp</dimen>
+    <dimen name="view_width_41dp">41dp</dimen>
     <dimen name="view_width_311dp">311dp</dimen>
     <dimen name="view_width_343dp">343dp</dimen>
+    <dimen name="view_height_50dp">50dp</dimen>
+    <dimen name="view_width_30dp">30dp</dimen>
     <dimen name="view_width_23dp">23dp</dimen>
     <dimen name="view_width_26dp">26dp</dimen>
     <dimen name="view_width_4dp">4dp</dimen>
@@ -57,8 +63,11 @@
     <dimen name="view_width_24dp">24dp</dimen>
     <dimen name="view_width_15dp">15dp</dimen>
     <dimen name="elevation_1dp">1dp</dimen>
+    <dimen name="radius_view_12dp">12dp</dimen>
     <dimen name="radius_view_4dp">4dp</dimen>
     <dimen name="radius_view_8dp">8dp</dimen>
+    <dimen name="margin_2dp">2dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="margin_11dp">11dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
@@ -66,9 +75,7 @@
     <dimen name="margin_16dp">16dp</dimen>
     <dimen name="margin_18dp">18dp</dimen>
     <dimen name="margin_24dp">24dp</dimen>
-    <dimen name="margin_2dp">2dp</dimen>
     <dimen name="margin_50dp">50dp</dimen>
-    <dimen name="margin_8dp">8dp</dimen>
     <dimen name="margin_19dp">19dp</dimen>
     <dimen name="margin_20dp">20dp</dimen>
     <dimen name="margin_96dp">96dp</dimen>
@@ -99,7 +106,6 @@
     <dimen name="price_without_coins_min_height_26dp">26dp</dimen>
     <dimen name="price_without_coins_min_height_32dp">32dp</dimen>
     <dimen name="price_without_coins_text_size_22sp">22sp</dimen>
-    <dimen name="radius_view_12dp">12dp</dimen>
     <dimen name="margin_6dp">6dp</dimen>
     <dimen name="coursore_width_1dp">1dp</dimen>
     <dimen name="coursore_width_2dp">2dp</dimen>
@@ -126,6 +132,7 @@
     <dimen name="margin_horizontal_8dp">8dp</dimen>
     <dimen name="margin_horizontal_12dp">12dp</dimen>
     <dimen name="margin_vertical_16dp">16dp</dimen>
+    <dimen name="view_width_32dp">32dp</dimen>
     <dimen name="padding_4dp">4dp</dimen>
     <dimen name="view_88dp">88dp</dimen>
     <dimen name="margin_40dp">40dp</dimen>
@@ -138,12 +145,6 @@
     <dimen name="extra_spacing_6dp">6dp</dimen>
     <dimen name="extra_spacing_3dp">3dp</dimen>
     <dimen name="extra_spacing_2dp">2dp</dimen>
-    <dimen name="view_24dp">24dp</dimen>
-    <dimen name="view_height_50dp">50dp</dimen>
-    <dimen name="view_width_0dp">0dp</dimen>
-    <dimen name="view_width_30dp">30dp</dimen>
-    <dimen name="view_width_32dp">32dp</dimen>
-    <dimen name="view_width_41dp">41dp</dimen>
     <dimen name="min_height_44dp">44dp</dimen>
     <dimen name="min_height_48dp">48dp</dimen>
     <dimen name="min_height_20dp">20dp</dimen>
@@ -157,4 +158,5 @@
     <dimen name="dots_spacing_6dp">6dp</dimen>
     <dimen name="dots_size_5dp">5dp</dimen>
     <dimen name="dots_selected_size_8dp">8dp</dimen>
+    <dimen name="dimen_0dp">0dp</dimen>
 </resources>
