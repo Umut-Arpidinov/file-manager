@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_4"
+    android:background="@drawable/bg_profile"
     tools:context=".presentation.ui.fragments.profile.ProfileFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -14,8 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/arrow_left_magenta"
-        app:menu="@menu/menu_my_profile">
+        app:navigationIcon="@drawable/arrow_left_magenta">
 
         <TextView
             style="@style/toolbarTitle"
