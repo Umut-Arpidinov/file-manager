@@ -60,7 +60,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
     }
 
     fun setErrorMessage(message: String) = with(binding) {
-        setMessage(message)
+        passwordHelper.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
         setFrameErrorColor()
         setTextErrorColor()
     }
