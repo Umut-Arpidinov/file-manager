@@ -2,11 +2,15 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
-import android.view.LayoutInflater
+import android.view.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
@@ -25,6 +29,30 @@ import kotlinx.coroutines.flow.collectLatest
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(),
     CustomProfileCellViewClickers {
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_my_profile, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when(menuItem.itemId) {
+                    R.id.menu_faq_button -> {
+                        // ...
+                        findNavController().navigate(ProfileFragmentDirections
+                            .actionProfileFragmentToFAQFragment())
+                        println("menuItem clicked")
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
     override val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(this)[ProfileViewModel::class.java]
     }
@@ -42,9 +70,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun initListener() {
         super.initListener()
-        binding.what.setOnClickListener {
-            findNavController().navigate(R.id.FAQFragment)
-        }
     }
 
     private fun openSomeActivityForResult() {
