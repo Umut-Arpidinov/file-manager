@@ -2,9 +2,11 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
@@ -19,6 +21,12 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentMainBinding {
         return FragmentMainBinding.inflate(inflater)
+    }
+
+    override fun initListener() = with(binding) {
+        super.initListener()
+
+        tbMain.setNavigationOnClickListener { findNavController().navigate(R.id.myProfileFragment) }
     }
 
     override fun initViewModel() {
