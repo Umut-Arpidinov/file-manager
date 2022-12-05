@@ -4,12 +4,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.usecases.RefreshTokenUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,7 +25,7 @@ class MainActivityViewModel @Inject constructor(
 ) :
     BaseViewModel() {
 
-    private val _tokens = MutableStateFlow<ApiState<RegisterDto>>(ApiState.Loading)
+    private val _tokens = MutableStateFlow<ApiState<RegisterEntity>>(ApiState.Loading)
     private var myJob: Job? = null
 
     fun statusListener() {
