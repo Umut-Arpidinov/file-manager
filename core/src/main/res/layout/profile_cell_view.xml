@@ -30,8 +30,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/icon"
+                android:clickable="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_profile"/>
+                android:src="@drawable/ic_profile"
+                android:focusable="true" />
 
         </androidx.cardview.widget.CardView>
 

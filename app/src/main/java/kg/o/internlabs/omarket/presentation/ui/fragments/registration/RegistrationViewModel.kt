@@ -36,7 +36,7 @@ class RegistrationViewModel @Inject constructor(
             checkOtpUseCase(reg).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        _checkOtp.value = it
+                        //_checkOtp.value = it
                         it.data.refreshToken?.let { it1 -> saveRefreshTokenToPrefsUseCase.invoke(it1) }
                         it.data.accessToken?.let { it1 -> saveAccessTokenToPrefsUseCase.invoke(it1) }
                         saveLoginStatusToPrefsUseCase.invoke(true)
@@ -54,7 +54,7 @@ class RegistrationViewModel @Inject constructor(
             registerUserUseCase(reg).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        _registerUser.value = it
+                        //_registerUser.value = it
                     }
                     is ApiState.Failure -> {
                         _registerUser.value = it

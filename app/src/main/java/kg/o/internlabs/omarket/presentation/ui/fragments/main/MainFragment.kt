@@ -19,14 +19,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
         ViewModelProvider(this)[MainFragmentViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentMainBinding {
-        return FragmentMainBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) = FragmentMainBinding.inflate(inflater)
 
     override fun initListener() = with(binding) {
         super.initListener()
-
-        tbMain.setNavigationOnClickListener { findNavController().navigate(R.id.myProfileFragment) }
+        tbMain.setNavigationOnClickListener { findNavController().navigate(R.id.profileFragment) }
     }
 
     override fun initViewModel() {

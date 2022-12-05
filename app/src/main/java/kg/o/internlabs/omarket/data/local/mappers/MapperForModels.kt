@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.data
+package kg.o.internlabs.omarket.data.local.mappers
 
 import kg.o.internlabs.omarket.data.remote.model.CategoriesDto
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
@@ -12,6 +12,7 @@ import retrofit2.Response
 
 class MapperForModels {
 
+    //region Registration
     fun mapEntityToDbModel(reg: RegisterEntity?) = RegisterDto(
         accessToken = reg?.accessToken,
         refreshToken = reg?.refreshToken,
@@ -39,8 +40,9 @@ class MapperForModels {
     } else {
         list.errorBody()?.let { Response.error(list.code(), it) }
     }
+    //endregion
 
-    //region *** mapping for categories ***
+    //region *** Categories ***
     fun mapEntityToDbModel(cat: CategoriesEntity?) = CategoriesDto(
         result = cat?.result?.map { mapEntityToDbModel(it) },
         resultCode = cat?.resultCode,
@@ -48,8 +50,7 @@ class MapperForModels {
         errorCode = cat?.errorCode
     )
 
-    private fun mapEntityToDbModel(res: ResultEntity?) = ResultDto(
-        id = res?.id,
+    private fun mapEntityToDbModel(res: ResultEntity?) = ResultDto(id = res?.id,
         parent = res?.parent,
         name = res?.name,
         parentFilters = res?.parentFilters,
@@ -65,8 +66,7 @@ class MapperForModels {
         filters = res?.filters,
         adType = res?.adType,
         hasDynamicFilter = res?.hasDynamicFilter,
-        subCategories = res?.subCategories?.map { mapEntityToDbModel(it) }
-    )
+        subCategories = res?.subCategories?.map { mapEntityToDbModel(it) })
 
     private fun mapEntityToDbModel(subCat: SubCategoriesEntity?) = SubCategoriesDto(
         id = subCat?.id,
@@ -95,8 +95,7 @@ class MapperForModels {
         errorCode = cat?.errorCode
     )
 
-    private fun mapDbModelToEntity(res: ResultDto?) = ResultEntity(
-        id = res?.id,
+    private fun mapDbModelToEntity(res: ResultDto?) = ResultEntity(id = res?.id,
         parent = res?.parent,
         name = res?.name,
         parentFilters = res?.parentFilters,
@@ -112,8 +111,7 @@ class MapperForModels {
         filters = res?.filters,
         adType = res?.adType,
         hasDynamicFilter = res?.hasDynamicFilter,
-        subCategories = res?.subCategories?.map { mapDbModelToEntity(it) }
-    )
+        subCategories = res?.subCategories?.map { mapDbModelToEntity(it) })
 
     private fun mapDbModelToEntity(subCat: SubCategoriesDto?) = SubCategoriesEntity(
         id = subCat?.id,

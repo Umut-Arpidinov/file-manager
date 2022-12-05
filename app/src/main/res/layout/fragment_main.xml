@@ -71,4 +71,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/magenta_1"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
