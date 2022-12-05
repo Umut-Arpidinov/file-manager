@@ -8,9 +8,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import kg.o.internlabs.core.R
+import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomProfileCellViewClickers
 import kg.o.internlabs.core.databinding.ProfileCellViewBinding
 
 class CustomProfileCellView : ConstraintLayout {
+
+    private var clickers: CustomProfileCellViewClickers? = null
+
     private val binding = ProfileCellViewBinding.inflate(
         LayoutInflater.from(context),
         this, true
@@ -36,7 +40,19 @@ class CustomProfileCellView : ConstraintLayout {
 
             setIcon(getResourceId(R.styleable.CustomProfileCellView_setImage, 0))
 
+            initClickers()
             recycle()
+        }
+    }
+
+    private fun initClickers(): Unit = with(binding.ivCellsIcon){
+        setOnClickListener {
+            clickers?.iconClick()
+        }
+
+        setOnLongClickListener {
+            clickers?.iconLongClick()
+            return@setOnLongClickListener true
         }
     }
 
@@ -64,6 +80,10 @@ class CustomProfileCellView : ConstraintLayout {
         Glide.with(context).load(res)
             .centerCrop()
             .into(this)
+    }
+
+    fun setInterface(clickers: CustomProfileCellViewClickers) {
+        this.clickers = clickers
     }
 
     fun getTitle() = binding.tvCellTitle.text.toString()

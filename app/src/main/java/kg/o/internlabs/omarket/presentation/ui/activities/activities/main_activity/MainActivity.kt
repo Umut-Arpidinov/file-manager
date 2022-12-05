@@ -9,6 +9,7 @@ import kg.o.internlabs.omarket.databinding.ActivityMainBinding
 import kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginStartFragment
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
 
+
 @AndroidEntryPoint
 class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() {
 

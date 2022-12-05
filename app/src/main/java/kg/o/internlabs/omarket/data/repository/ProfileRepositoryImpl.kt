@@ -5,6 +5,7 @@ import kg.o.internlabs.omarket.data.local.mappers.MapperForFAQAndProfileModels
 import kg.o.internlabs.omarket.data.remote.ApiService
 import kg.o.internlabs.omarket.domain.entity.MyAdsEntity
 import kg.o.internlabs.omarket.domain.repository.ProfileRepository
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -22,14 +23,14 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
     override fun getMyActiveAds(token: String, myAds: MyAdsEntity) = safeApiCall {
-                mapper.mapRespDbModelToRespEntityForMyAds(
-                    apiService.getMyAds(
-                        token,
-                        mapper.mapEntityToDbModel(
-                            myAds
-                        )
-                    )
+        mapper.mapRespDbModelToRespEntityForMyAds(
+            apiService.getMyAds(
+                token,
+                mapper.mapEntityToDbModel(
+                    myAds
                 )
+            )
+        )
     }
 
     override fun getMyNonActiveAds(token: String, myAds: MyAdsEntity) = safeApiCall {
@@ -43,14 +44,16 @@ class ProfileRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getMyAds(token: String, myAds: MyAdsEntity) = safeApiCall {
-        mapper.mapRespDbModelToRespEntityForMyAds(
-            apiService.getMyAds(
-                token,
-                mapper.mapEntityToDbModel(
-                    myAds
-                )
-            )
+    override fun uploadAvatar(token: String, body: MultipartBody.Part) = safeApiCall {
+        mapper.mapRespDbModelToRespEntityForAvatar(
+            apiService.uploadAvatar(token, body)
         )
     }
+
+    override fun deleteAvatar(token: String) = safeApiCall {
+        mapper.mapRespDbModelToRespEntityForAvatarDel(
+            apiService.deleteAvatar(token)
+        )
+    }
+
 }

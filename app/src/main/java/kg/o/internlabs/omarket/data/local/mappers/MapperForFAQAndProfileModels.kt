@@ -138,6 +138,39 @@ class MapperForFAQAndProfileModels {
     } else {
         resp.errorBody()?.let { Response.error(resp.code(), it) }
     }
-
     // endregion
+
+    //region  for avatar
+
+     private fun mapDbModelToEntity(ava: AvatarDto?) = AvatarEntity(
+        result = mapDbModelToEntity(ava?.result),
+        resultCode = ava?.resultCode,
+        details = ava?.details,
+        errorCode = ava?.errorCode
+    )
+
+    private fun mapDbModelToEntity(res: AvatarResultDto?) = AvatarResultEntity(
+       url = res?.url
+    )
+
+    fun mapRespDbModelToRespEntityForAvatar(resp: Response<AvatarDto?>) = if (resp.isSuccessful) {
+        Response.success(mapDbModelToEntity(resp.body()))
+    } else {
+        resp.errorBody()?.let { Response.error(resp.code(), it) }
+    }
+
+    private fun mapDbModelToEntity(ava: AvatarDelDto?) = AvatarDelEntity(
+        result = ava?.result,
+        resultCode = ava?.resultCode,
+        details = ava?.details,
+        errorCode = ava?.errorCode
+    )
+
+    fun mapRespDbModelToRespEntityForAvatarDel(resp: Response<AvatarDelDto?>) =
+        if (resp.isSuccessful) {
+        Response.success(mapDbModelToEntity(resp.body()))
+    } else {
+        resp.errorBody()?.let { Response.error(resp.code(), it) }
+    }
+    //endregion
 }
