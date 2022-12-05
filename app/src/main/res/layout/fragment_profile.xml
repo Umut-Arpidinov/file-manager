@@ -30,7 +30,7 @@
         android:id="@+id/what"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="нажми сюда если не понял"
+        android:text="нажмите сюда, если не поняли"
         android:gravity="bottom"
         android:textSize="30sp"
         android:clickable="true"

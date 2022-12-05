@@ -23,8 +23,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
 
     override fun initListener() = with(binding) {
         super.initListener()
-
-        tbMain.setNavigationOnClickListener { findNavController().navigate(R.id.myProfileFragment) }
+        tbMain.setNavigationOnClickListener { findNavController().navigate(R.id.profileFragment) }
     }
 
     override fun initViewModel() {
@@ -36,13 +35,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
     override fun initView() {
         super.initView()
         getCategories()
-    }
-
-    override fun initListener() {
-        super.initListener()
-        binding.whoAmI.setOnClickListener {
-            findNavController().navigate(R.id.profileFragment)
-        }
     }
 
     private fun getCategories() {

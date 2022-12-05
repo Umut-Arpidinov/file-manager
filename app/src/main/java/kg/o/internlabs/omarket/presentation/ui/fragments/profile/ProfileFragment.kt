@@ -1,17 +1,12 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.Settings
 import android.view.LayoutInflater
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
@@ -36,21 +31,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun inflateViewBinding(inflater: LayoutInflater) =
         FragmentProfileBinding.inflate(inflater)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if (ContextCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            val intent = Intent(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.parse("package:${requireActivity().packageName}")
-            )
-            requireActivity().finish()
-            startActivity(intent)
-            return
-        }
-    }
 
     override fun initViewModel() {
         super.initViewModel()

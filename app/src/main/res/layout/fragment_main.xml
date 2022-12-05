@@ -37,7 +37,6 @@
         android:textColor="@color/white"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@id/tb_main" />
-    tools:context=".presentation.ui.fragments.main.MainFragment">
 
     <TextView
         android:id="@+id/result_text"
@@ -72,26 +71,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/magenta_1"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MainFragment \n Главный экран"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/who_am_i"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="bottom"
-        android:text="Who am I?\nClick me!!!\nI'll show you"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

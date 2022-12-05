@@ -89,13 +89,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/myProfileFragment"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.profile.ProfileFragment"
-        android:label="fragment_my_profile"
-        tools:layout="@layout/fragment_profile">
-    </fragment>
-
-    <fragment
         android:id="@+id/pdfFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.PdfFragment"
         android:label="fragment_pdf"
