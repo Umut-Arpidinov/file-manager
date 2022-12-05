@@ -89,7 +89,7 @@
     <string name="time_out">java.net.SocketTimeoutException: connect timed out</string>
     <string name="incorrect_number">Номер не существует</string>
 
-    <string name="accept">нажимая \"Войти\" вы принимаете</string>
+    <string name="accept">Нажимая \"Войти\" вы принимаете</string>
     <string name="terms_agreement"><u>условия пользовательского соглашения</u></string>
     <string name="number_not_Exists">Номер не существует</string>
     <string name="user_not_found">\ \ \ Пользователь не найден!\nЗарегистрируйтесь сначала</string>
