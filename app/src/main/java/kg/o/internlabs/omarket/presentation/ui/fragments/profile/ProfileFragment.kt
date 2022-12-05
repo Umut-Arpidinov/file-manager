@@ -1,12 +1,16 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.LayoutInflater
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
@@ -62,7 +66,27 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     )
 
+    fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            Intent(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse(
+                    "package:${requireActivity().packageName}"
+                )
+            ).apply {
+                addCategory(Intent.CATEGORY_DEFAULT)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(this)
+            }
+        }
+    }
+
     private fun uploadImage(imageUri: Uri) {
+        checkPermission()
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val loader = CursorLoader(
             requireActivity(), imageUri, proj,
