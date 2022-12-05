@@ -368,4 +368,11 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="StyleMainSearch" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">@dimen/text_17sp</item>
+        <item name="android:textAppearance">@style/AppPrimaryStyle</item>
+        <item name="android:background">@drawable/background_rounded_search_view</item>
+        <item name="android:layout_marginEnd">@dimen/margin_50dp</item>
+    </style>
+
 </resources>
