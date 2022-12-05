@@ -21,6 +21,12 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
 
     override fun inflateViewBinding(inflater: LayoutInflater) = FragmentMainBinding.inflate(inflater)
 
+    override fun initListener() = with(binding) {
+        super.initListener()
+
+        tbMain.setNavigationOnClickListener { findNavController().navigate(R.id.myProfileFragment) }
+    }
+
     override fun initViewModel() {
         super.initViewModel()
         viewModel.getAccessTokenFromPrefs()

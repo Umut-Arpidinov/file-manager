@@ -72,7 +72,7 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
             }
         }
 
-        btnPdf.setOnClickListener {
+        textButton1.setOnClickListener {
             findNavController().navigate(R.id.pdfFragment)
         }
     }
@@ -142,6 +142,9 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                     }
                     is ApiState.Failure -> {
                         progressBar.isVisible = false
+                        textButton.isVisible = true
+                        textButton1.isVisible = true
+                        btn.isVisible = true
                         it.msg.message?.let { it1 ->
                             // btn.buttonAvailability(false)
                             // btn.isEnabled = false
@@ -165,6 +168,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                     is ApiState.Loading -> {
                         btn.isVisible = false
                         progressBar.isVisible = true
+                        textButton.isVisible = false
+                        textButton1.isVisible = false
                         // btn.buttonActivated()
 
                     }

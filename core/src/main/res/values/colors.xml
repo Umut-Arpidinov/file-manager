@@ -66,4 +66,5 @@
     <color name="green_toggle">#34C759</color>
     <!-- Transparent Colors     -->
     <color name="transparent_black_60">#99000000</color>
+    <color name="transparent_gray_12">#1f8E8E93</color>
 </resources>
