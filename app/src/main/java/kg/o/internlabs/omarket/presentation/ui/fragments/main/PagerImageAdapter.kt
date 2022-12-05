@@ -28,8 +28,8 @@ internal class PagerImageAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder){
-            Glide.with(context).load(imageURLs[position]).into(binding.itemImgMain)
+        with(holder) {
+            Glide.with(context).load(imageURLs[position]).error(kg.o.internlabs.core.R.drawable.who_knows_img).into(binding.itemImgMain)
         }
     }
 
