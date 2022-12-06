@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -28,6 +29,13 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(),
     CustomProfileCellViewClickers {
+
+    private var args: ProfileFragmentArgs? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        args = ProfileFragmentArgs.fromBundle(requireArguments())
+    }
 
     override val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(this)[ProfileViewModel::class.java]
@@ -119,6 +127,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun initView() {
         super.initView()
+        args?.number?.let { binding.cusProfile.setTitle(it) }
         getActiveAds()
         getNonActiveAds()
     }

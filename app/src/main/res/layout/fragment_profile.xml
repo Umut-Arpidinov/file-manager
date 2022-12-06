@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:setTitle="+996 776 543 654"
-        app:setSubtitle="г. Токмок"
         android:layout_marginTop="@dimen/margin_top_11dp"
         android:layout_marginHorizontal="@dimen/margin_horizontal_13dp"
         app:layout_constraintTop_toTopOf="parent"/>

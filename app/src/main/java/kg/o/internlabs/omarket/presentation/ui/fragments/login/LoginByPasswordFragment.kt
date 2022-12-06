@@ -44,7 +44,6 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
 
     override fun initView() = with(binding) {
         super.initView()
-        // btn.buttonAvailability(false)
         args?.number?.let { cusNum.setValueToNumberField(it) }
         isNumberNotEmpty = cusNum.getValueFromNumberField().endsWith("X").not()
         complexWatcher()
@@ -135,7 +134,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                         viewModel.saveNumberToPrefs(cusNum.getValueFromNumberField())
                         progressBar.isVisible = false
                         try {
-                            findNavController().navigate(R.id.mainFragment)
+                            findNavController().navigate(
+                                LoginByPasswordFragmentDirections.goToMain(cusNum.getValueFromNumberField()))
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -146,9 +146,6 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                         textButton1.isVisible = true
                         btn.isVisible = true
                         it.msg.message?.let { it1 ->
-                            // btn.buttonAvailability(false)
-                            // btn.isEnabled = false
-
                             when (it1) {
                                 getString(R.string.time_out) -> {
                                     if (!hasInternet) {
@@ -170,8 +167,6 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                         progressBar.isVisible = true
                         textButton.isVisible = false
                         textButton1.isVisible = false
-                        // btn.buttonActivated()
-
                     }
                 }
             }

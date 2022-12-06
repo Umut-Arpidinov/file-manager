@@ -72,7 +72,8 @@ class RegistrationOtpFragment :
                     is ApiState.Success -> {
                         args?.number?.let { i -> viewModel.saveNumberToPrefs(i) }
                         try {
-                            findNavController().navigate(R.id.mainFragment)
+                            findNavController().navigate(
+                                RegistrationOtpFragmentDirections.goToMain(args?.number))
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
