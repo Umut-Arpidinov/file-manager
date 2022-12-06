@@ -97,7 +97,11 @@
         android:id="@+id/profileFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_FAQFragment"
+            app:destination="@id/FAQFragment" />
+    </fragment>
     <fragment
         android:id="@+id/FAQFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.profile.FAQFragment"

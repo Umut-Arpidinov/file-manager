@@ -28,6 +28,8 @@
     <string name="naming">Название</string>
     <string name="category">Категория</string>
     <string name="description">Описание</string>
+    <string name="my_profile">Мой профиль</string>
+    <string name="faq">Вопрос-ответ</string>
     <string name="location">Местоположение на карте</string>
     <string name="hint_for_number">XXXXXXXXXXXX</string>
     <string name="image_description">Cancel</string>
