@@ -34,9 +34,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
         ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentLoginByPasswordBinding {
-        return FragmentLoginByPasswordBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentLoginByPasswordBinding.inflate(inflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +72,7 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
             }
         }
 
-        btnPdf.setOnClickListener {
+        textButton1.setOnClickListener {
             findNavController().navigate(R.id.pdfFragment)
         }
     }
@@ -143,6 +142,9 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                     }
                     is ApiState.Failure -> {
                         progressBar.isVisible = false
+                        textButton.isVisible = true
+                        textButton1.isVisible = true
+                        btn.isVisible = true
                         it.msg.message?.let { it1 ->
                             // btn.buttonAvailability(false)
                             // btn.isEnabled = false
@@ -166,8 +168,8 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
                     is ApiState.Loading -> {
                         btn.isVisible = false
                         progressBar.isVisible = true
-                        btnPdf.isVisible = false
-                        text.isVisible = false
+                        textButton.isVisible = false
+                        textButton1.isVisible = false
                         // btn.buttonActivated()
 
                     }

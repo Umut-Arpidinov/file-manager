@@ -28,6 +28,8 @@
     <string name="naming">Название</string>
     <string name="category">Категория</string>
     <string name="description">Описание</string>
+    <string name="my_profile">Мой профиль</string>
+    <string name="faq">Вопрос-ответ</string>
     <string name="location">Местоположение на карте</string>
     <string name="hint_for_number">XXXXXXXXXXXX</string>
     <string name="image_description">Cancel</string>
@@ -89,7 +91,7 @@
     <string name="time_out">java.net.SocketTimeoutException: connect timed out</string>
     <string name="incorrect_number">Номер не существует</string>
 
-    <string name="accept">нажимая \"Войти\" вы принимаете</string>
+    <string name="accept">Нажимая \"Войти\" вы принимаете</string>
     <string name="terms_agreement"><u>условия пользовательского соглашения</u></string>
     <string name="number_not_Exists">Номер не существует</string>
     <string name="user_not_found">\ \ \ Пользователь не найден!\nЗарегистрируйтесь сначала</string>
@@ -100,4 +102,5 @@
     <string name="place_delivery_product">Place/delivery of product</string>
     <string name="sell_faster_string">Продать быстрее</string>
     <string name="sample_viewed_string">777</string>
+    <string name="search_text">Search\'s text</string>
 </resources>

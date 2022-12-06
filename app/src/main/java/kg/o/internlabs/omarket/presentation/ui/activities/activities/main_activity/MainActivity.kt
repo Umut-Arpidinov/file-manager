@@ -9,6 +9,7 @@ import kg.o.internlabs.omarket.databinding.ActivityMainBinding
 import kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginStartFragment
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
 
+
 @AndroidEntryPoint
 class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() {
 
@@ -16,9 +17,7 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
         ViewModelProvider(this)[MainActivityViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): ActivityMainBinding {
-        return ActivityMainBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {

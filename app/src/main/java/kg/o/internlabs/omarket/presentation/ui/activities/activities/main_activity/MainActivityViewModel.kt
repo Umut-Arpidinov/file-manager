@@ -8,7 +8,6 @@ import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.usecases.RefreshTokenUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.take
@@ -71,7 +70,7 @@ class MainActivityViewModel @Inject constructor(
                                 println("main      loading")
                             }
                             else -> {println("main          failError")
-                                _tokens.value = response
+                                // _tokens.value = response
                                 myJob?.cancel()}
                         }
                     }
@@ -84,7 +83,7 @@ class MainActivityViewModel @Inject constructor(
         saveLoginStatusToPrefsUseCase.invoke(isLogged)
     }
 
-    private fun checkLoginStatusFromPrefs(): Flow<Boolean?> = checkLoginStatusFromPrefsUseCase.invoke()
+    private fun checkLoginStatusFromPrefs() = checkLoginStatusFromPrefsUseCase.invoke()
 
     private fun refreshTokenRoute(it: String?) =
         refreshTokenUseCase(RegisterEntity(refreshToken = it))
