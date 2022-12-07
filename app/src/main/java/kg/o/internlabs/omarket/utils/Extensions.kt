@@ -29,25 +29,6 @@ fun Fragment.safeFlowGather(action: suspend () -> Unit) {
     }
 }
 
-fun Fragment.checkInternetConnection(): Boolean {
-    var hasInternet = false
-    InternetChecker(requireContext()).observe(requireActivity()) {
-        when (it) {
-            NetworkStatus.Available -> {
-                try {
-                    hasInternet = true
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-            NetworkStatus.Unavailable -> {
-                hasInternet = false
-            }
-        }
-    }
-    return hasInternet
-}
-
 fun Fragment.checkPermission() {
     if (ContextCompat.checkSelfPermission(
             requireContext(),

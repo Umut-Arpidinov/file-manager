@@ -4,7 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +26,6 @@ import kg.o.internlabs.omarket.utils.checkPermission
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(),
@@ -50,10 +52,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         viewModel.getActiveAds()
         viewModel.getNonActiveAds()
         viewModel.getAvatarUrlFromPrefs()
-    }
-
-    override fun initListener() {
-        super.initListener()
     }
 
     private fun openSomeActivityForResult() {
@@ -174,8 +172,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when(menuItem.itemId) {
                     R.id.menu_faq_button -> {
-                        findNavController().navigate(ProfileFragmentDirections
-                            .actionProfileFragmentToFAQFragment())
+                        findNavController().navigate(R.id.FAQFragment)
                         true
                     }
                     else -> false

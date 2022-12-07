@@ -13,7 +13,8 @@ import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginByPasswordBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
-import kg.o.internlabs.omarket.utils.checkInternetConnection
+import kg.o.internlabs.omarket.utils.InternetChecker
+import kg.o.internlabs.omarket.utils.NetworkStatus
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
@@ -109,7 +110,20 @@ class LoginByPasswordFragment : BaseFragment<FragmentLoginByPasswordBinding, Log
 
     override fun checkInternet() {
         super.checkInternet()
-        hasInternet = checkInternetConnection()
+        InternetChecker(requireContext()).observe(requireActivity()) {
+            when (it) {
+                NetworkStatus.Available -> {
+                    try {
+                        hasInternet = true
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                NetworkStatus.Unavailable -> {
+                    hasInternet = false
+                }
+            }
+        }
     }
 
     private fun initObserver() = with(binding) {
