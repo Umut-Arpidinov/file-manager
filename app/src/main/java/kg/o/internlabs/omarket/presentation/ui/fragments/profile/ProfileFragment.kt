@@ -1,17 +1,13 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.Settings
 import android.view.LayoutInflater
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
@@ -21,6 +17,7 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomProfileCellViewClickers
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
+import kg.o.internlabs.omarket.utils.checkPermission
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
@@ -50,6 +47,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         viewModel.getAccessTokenFromPrefs()
         viewModel.getActiveAds()
         viewModel.getNonActiveAds()
+        viewModel.getAvatarUrlFromPrefs()
     }
 
     override fun initListener() {
@@ -74,25 +72,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     )
 
-    fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            Intent(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse(
-                    "package:${requireActivity().packageName}"
-                )
-            ).apply {
-                addCategory(Intent.CATEGORY_DEFAULT)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(this)
-            }
-        }
-    }
-
     private fun uploadImage(imageUri: Uri) {
         checkPermission()
         val proj = arrayOf(MediaStore.Images.Media.DATA)
@@ -104,21 +83,29 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         setAvatar()
     }
 
-    private fun setAvatar() {
-        this@ProfileFragment.safeFlowGather {
+    private fun setImageToAvatar() {
+        safeFlowGather {
+            viewModel.avatarUrl.collectLatest {
+                binding.cusProfile.setIcon(it)
+            }
+        }
+    }
+
+    private fun setAvatar() = with(binding){
+        safeFlowGather {
             viewModel.avatar.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+                        cusProfile.isProgressVisible()
                         val uri = it.data.result?.url.toString()
-                        binding.cusProfile.setIcon(uri)
-                        //TODO it.date.result.url вернет ссылку на аватарку
+                        cusProfile.setIcon(uri)
                     }
                     is ApiState.Failure -> {
-                        // если что то пошло ни так
+                        cusProfile.isProgressVisible()
                         requireActivity().makeToast(it.msg.message.toString())
                     }
                     is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
+                        cusProfile.isProgressVisible(true)
                     }
                 }
             }
@@ -128,12 +115,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun initView() {
         super.initView()
         args?.number?.let { binding.cusProfile.setTitle(it) }
+        setImageToAvatar()
         getActiveAds()
         getNonActiveAds()
     }
 
     private fun getNonActiveAds() {
-        this@ProfileFragment.safeFlowGather {
+        safeFlowGather {
             viewModel.nonActiveAds.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
@@ -156,7 +144,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun getActiveAds() {
-        this@ProfileFragment.safeFlowGather {
+        safeFlowGather {
             viewModel.activeAds.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
@@ -181,21 +169,22 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         openSomeActivityForResult()
     }
 
-    override fun iconLongClick() {
+    override fun iconLongClick() = with(binding){
         viewModel.deleteAvatar()
         safeFlowGather {
             viewModel.deleteAvatar.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+                        cusProfile.isProgressVisible()
                         it.data.result?.let { it1 -> binding.cusProfile.setIcon(it1) }
                         requireActivity().makeToast(it.data.result.toString())
                     }
                     is ApiState.Failure -> {
-                        // если что то пошло ни так
+                        cusProfile.isProgressVisible()
                         requireActivity().makeToast(it.msg.message.toString())
                     }
                     is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
+                        cusProfile.isProgressVisible(true)
                     }
                 }
             }

@@ -31,9 +31,16 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/icon"
                 android:clickable="true"
+                android:visibility="visible"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_profile"
                 android:focusable="true" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/progressBarStyle"
+                android:layout_gravity="center"
+                android:visibility="gone" />
 
         </androidx.cardview.widget.CardView>
 

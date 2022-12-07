@@ -36,7 +36,7 @@
         <attr name="setImage" format="string" />
         <attr name="setTitle" />
         <attr name="isNumberVerified" format="boolean" />
-        <attr name="isODengiAccepted" format="boolean" />
+        <attr name="isOMoneyAccepted" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="CustomProfileCellView" parent="CustomAddPriceCellView">

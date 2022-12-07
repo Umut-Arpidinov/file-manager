@@ -1,8 +1,14 @@
 package kg.o.internlabs.omarket.utils
 
+import android.Manifest
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.Settings
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +25,44 @@ fun Fragment.safeFlowGather(action: suspend () -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
             action()
+        }
+    }
+}
+
+fun Fragment.checkInternetConnection(): Boolean {
+    var hasInternet = false
+    InternetChecker(requireContext()).observe(requireActivity()) {
+        when (it) {
+            NetworkStatus.Available -> {
+                try {
+                    hasInternet = true
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            NetworkStatus.Unavailable -> {
+                hasInternet = false
+            }
+        }
+    }
+    return hasInternet
+}
+
+fun Fragment.checkPermission() {
+    if (ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        != PackageManager.PERMISSION_GRANTED
+    ) {
+        Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse(
+                "package:${requireActivity().packageName}"
+            )
+        ).apply {
+            addCategory(Intent.CATEGORY_DEFAULT)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(this)
         }
     }
 }

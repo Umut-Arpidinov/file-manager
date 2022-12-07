@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import kg.o.internlabs.core.R
@@ -72,18 +73,28 @@ class CustomProfileCellView : ConstraintLayout {
     fun setIcon(uri: String): Unit = with(binding.ivCellsIcon) {
         if (uri.startsWith("res")) return
         val mUri: Uri = Uri.parse(uri)
-        Glide.with(context).load(mUri).centerCrop().into(this)
+        Glide.with(context).load(mUri)
+            .centerInside()
+            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_profile, null))
+            .centerCrop()
+            .into(this)
     }
 
     fun setIcon(res: Int): Unit = with(binding.ivCellsIcon){
         if (res == 0) return
         Glide.with(context).load(res)
+            .centerInside()
+            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_profile, null))
             .centerCrop()
             .into(this)
     }
 
     fun setInterface(clickers: CustomProfileCellViewClickers) {
         this.clickers = clickers
+    }
+
+    fun isProgressVisible(isVisible: Boolean = false) {
+        binding.progressBar.isVisible = isVisible
     }
 
     fun getTitle() = binding.tvCellTitle.text.toString()
