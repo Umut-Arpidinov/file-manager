@@ -3,10 +3,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.registration
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
@@ -15,8 +12,8 @@ import kg.o.internlabs.core.custom_views.OtpHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationOtpBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegistrationOtpFragment :
@@ -28,9 +25,8 @@ class RegistrationOtpFragment :
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentRegistrationOtpBinding {
-        return FragmentRegistrationOtpBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentRegistrationOtpBinding.inflate(inflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,14 +53,6 @@ class RegistrationOtpFragment :
         }
     }
 
-    private fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
-            }
-        }
-    }
-
     private fun initObserver() = with(binding){
         safeFlowGather {
             viewModel.checkOtp.collectLatest {
@@ -72,7 +60,8 @@ class RegistrationOtpFragment :
                     is ApiState.Success -> {
                         args?.number?.let { i -> viewModel.saveNumberToPrefs(i) }
                         try {
-                            findNavController().navigate(R.id.mainFragment)
+                            findNavController().navigate(
+                                RegistrationOtpFragmentDirections.goToMain(args?.number))
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

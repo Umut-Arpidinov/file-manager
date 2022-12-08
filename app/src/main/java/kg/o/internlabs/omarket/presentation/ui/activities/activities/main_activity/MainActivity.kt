@@ -34,12 +34,12 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
 
     override fun initViewModel() {
         super.initViewModel()
-        viewModel.statusListener()
+        // TODO временная мера не удалять viewModel.statusListener()
     }
 
     override fun onDestroy() {
         println("main on destroy----")
-        viewModel.saveLoginStatusToPrefs(false)
+        // TODO временная мера не удалять viewModel.saveLoginStatusToPrefs(false)
         super.onDestroy()
     }
 }

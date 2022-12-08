@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import kg.o.internlabs.core.R
@@ -45,7 +46,7 @@ class CustomAddPriceCellView : ConstraintLayout {
             }
 
             isODengiAccepted(getBoolean(
-                R.styleable.CustomAddPriceCellView_isODengiAccepted, false))
+                R.styleable.CustomAddPriceCellView_isOMoneyAccepted, false))
 
             isNumberVerified(getBoolean(
                 R.styleable.CustomAddPriceCellView_isNumberVerified, false))
@@ -73,7 +74,7 @@ class CustomAddPriceCellView : ConstraintLayout {
     }
 
     fun isODengiAccepted(accept: Boolean) {
-        binding.tvODengiAccepted.isVisible = accept
+        binding.tvOMoneyAccepted.isVisible = accept
     }
 
     fun setPriceWithoutCoins(price: String) {
@@ -97,13 +98,15 @@ class CustomAddPriceCellView : ConstraintLayout {
     fun setIcon(uri: Int): Unit = with(binding.ivCellsIcon){
         if (uri == 0) return
         Glide.with(context).load(uri)
+            .centerInside()
+            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_small_profile, null))
             .centerCrop()
             .into(this)
     }
 
     fun isNumberVerified() = binding.tvNumberVerified.isVisible
 
-    fun isODengiAccepted() = binding.tvODengiAccepted.isVisible
+    fun isOMoneyAccepted() = binding.tvOMoneyAccepted.isVisible
 
     fun getPrice() = with(binding){
         tvPriceWithoutCoins.text.toString() + tvPriceWithCoins.text.toString()

@@ -96,7 +96,7 @@
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_4dp"
@@ -104,31 +104,35 @@
 
         <TextView
             android:id="@+id/tv_response_message"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginVertical="@dimen/margin_vertical_16dp"
             tools:text="@string/error_otp"
-            android:textAppearance="@style/OTPErrorMessage" />
+            android:textAppearance="@style/OTPErrorMessage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tv_timer"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="end"
-            android:layout_marginVertical="@dimen/margin_vertical_16dp"
-            tools:text="@string/_02_00"
-            android:textAppearance="@style/OtpTimer" />
+            app:layout_constraintGuide_percent="0.56"
+            android:orientation="vertical" />
 
         <TextView
             android:id="@+id/tv_resent_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginVertical="@dimen/margin_vertical_16dp"
             android:text="@string/resent"
-            android:textAppearance="@style/OTPResentButton" />
-    </FrameLayout>
+            android:textAppearance="@style/OTPResentButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
