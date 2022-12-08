@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="@dimen/extra_spacing_3dp"
     app:cardElevation="@dimen/view_width_0dp"
     app:cardBackgroundColor="@color/transparent"
@@ -27,8 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="13dp"
             android:layout_marginTop="@dimen/margin_start_4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:gravity="center"
-            android:text="Недвижим..."
+            android:text="Недвижимость"
             android:textAppearance="@style/CategoryViewTextAppearance"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/category_image">

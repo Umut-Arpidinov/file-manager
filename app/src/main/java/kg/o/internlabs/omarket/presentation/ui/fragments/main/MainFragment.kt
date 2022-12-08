@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
@@ -21,7 +22,9 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         args = MainFragmentArgs.fromBundle(requireArguments())
+
     }
+
 
     override val viewModel: MainFragmentViewModel by lazy {
         ViewModelProvider(this)[MainFragmentViewModel::class.java]
@@ -46,6 +49,13 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
     override fun initView() {
         super.initView()
         getCategories()
+        initRecyclerViewAdapter()
+    }
+
+    private fun initRecyclerViewAdapter() = with(binding){
+        val adapter = CategoryRecyclerViewAdapter()
+        categoryRecycler.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        categoryRecycler.adapter = adapter
     }
 
     private fun getCategories() {
@@ -59,10 +69,10 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
                        //TODO it.data.result   это для категорий все
                         println("-------"+it.data.result?.get(0)?.iconImg)
                         println("-------"+it.data.result)
-                        it.data.result?.get(0)?.iconImg?.let { it1 ->
+                        /*it.data.result?.get(0)?.iconImg?.let { it1 ->
                             glide(this,
-                                it1, binding.imgAds)
-                        }
+                                it1,binding.image )
+                        }*/
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так
