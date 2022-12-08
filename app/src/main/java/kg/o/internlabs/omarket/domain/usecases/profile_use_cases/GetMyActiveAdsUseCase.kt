@@ -9,5 +9,6 @@ class GetMyActiveAdsUseCase @Inject constructor(
 ) {
     private var myAdsEntity = MyAdsEntity(statuses = listOf("active"))
 
-    operator fun invoke(token: String ) = profileRep.getMyActiveAds(token, myAdsEntity)
+    operator fun invoke(token: String, page: Int) =
+        profileRep.getMyActiveAds(token, myAdsEntity, page)
 }

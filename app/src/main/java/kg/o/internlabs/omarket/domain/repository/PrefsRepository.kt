@@ -16,4 +16,7 @@ interface PrefsRepository {
     fun setLoginStatusToPrefs(isLogged: Boolean)
     fun checkLoginStatusFromPrefs(): Flow<Boolean?>
 
+    fun saveAvatarUrlToPrefs(url: String?)
+    fun getAvatarUrlFromPrefs(): Flow<String?>
+
 }

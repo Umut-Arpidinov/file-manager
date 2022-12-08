@@ -2,11 +2,17 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
@@ -16,14 +22,21 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomProfileCellViewClickers
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
+import kg.o.internlabs.omarket.utils.checkPermission
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
 
-
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(),
     CustomProfileCellViewClickers {
+
+    private var args: ProfileFragmentArgs? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        args = ProfileFragmentArgs.fromBundle(requireArguments())
+    }
 
     override val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(this)[ProfileViewModel::class.java]
@@ -38,13 +51,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         viewModel.getAccessTokenFromPrefs()
         viewModel.getActiveAds()
         viewModel.getNonActiveAds()
-    }
-
-    override fun initListener() {
-        super.initListener()
-        binding.what.setOnClickListener {
-            findNavController().navigate(R.id.FAQFragment)
-        }
+        viewModel.getAvatarUrlFromPrefs()
     }
 
     private fun openSomeActivityForResult() {
@@ -63,6 +70,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     )
 
     private fun uploadImage(imageUri: Uri) {
+        checkPermission()
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val loader = CursorLoader(
             requireActivity(), imageUri, proj,
@@ -72,21 +80,29 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         setAvatar()
     }
 
-    private fun setAvatar() {
-        this@ProfileFragment.safeFlowGather {
+    private fun setImageToAvatar() {
+        safeFlowGather {
+            viewModel.avatarUrl.collectLatest {
+                binding.cusProfile.setIcon(it)
+            }
+        }
+    }
+
+    private fun setAvatar() = with(binding){
+        safeFlowGather {
             viewModel.avatar.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+                        cusProfile.isProgressVisible()
                         val uri = it.data.result?.url.toString()
-                        binding.cusProfile.setIcon(uri)
-                        //TODO it.date.result.url вернет ссылку на аватарку
+                        cusProfile.setIcon(uri)
                     }
                     is ApiState.Failure -> {
-                        // если что то пошло ни так
+                        cusProfile.isProgressVisible()
                         requireActivity().makeToast(it.msg.message.toString())
                     }
                     is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
+                        cusProfile.isProgressVisible(true)
                     }
                 }
             }
@@ -95,19 +111,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun initView() {
         super.initView()
+        args?.number?.let { binding.cusProfile.setTitle(it) }
+        setImageToAvatar()
         getActiveAds()
         getNonActiveAds()
+        getMenu()
     }
 
     private fun getNonActiveAds() {
-        this@ProfileFragment.safeFlowGather {
+        safeFlowGather {
             viewModel.nonActiveAds.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         println("---------all active ads --------\n" + it.data.result?.results.toString())
                         //TODO it.date.result.results вернет List<MyAdsResultsEntity> в нем хранятся
                         //TODO все свои не активные объявление такие как заблокированние,
-                        // в обработке, или просто деактивироаванные
+                        // в обработке, или просто деактивироаванные сервер отдает их по 10 шт,
+                        // и если объявление больше 10 то вызываем роут viewModel.getNonActiveAds(2)
                         //TODO it.data.result.count  количество не активных объявление
                     }
                     is ApiState.Failure -> {
@@ -123,13 +143,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun getActiveAds() {
-        this@ProfileFragment.safeFlowGather {
+        safeFlowGather {
             viewModel.activeAds.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         println("---------all non active ads --------\n" + it.data.result?.results.toString())
                         //TODO it.date.result.results вернет List<MyAdsResultsEntity> в нем хранятся
-                        //TODO все свои активные объявление
+                        //TODO все свои активные объявление сервер отдает их по 10 шт,
+                        // и если объявление больше 10 то вызываем роут viewModel.getNonActiveAds(2)
                         //TODO it.data.result.count  количество активных объявление
                     }
                     is ApiState.Failure -> {
@@ -144,25 +165,44 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
+    private fun getMenu() {
+        binding.tbProfile.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_my_profile, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when(menuItem.itemId) {
+                    R.id.menu_faq_button -> {
+                        findNavController().navigate(R.id.FAQFragment)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
     override fun iconClick() {
         openSomeActivityForResult()
     }
 
-    override fun iconLongClick() {
+    override fun iconLongClick() = with(binding){
         viewModel.deleteAvatar()
         safeFlowGather {
             viewModel.deleteAvatar.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+                        cusProfile.isProgressVisible()
                         it.data.result?.let { it1 -> binding.cusProfile.setIcon(it1) }
                         requireActivity().makeToast(it.data.result.toString())
                     }
                     is ApiState.Failure -> {
-                        // если что то пошло ни так
+                        cusProfile.isProgressVisible()
                         requireActivity().makeToast(it.msg.message.toString())
                     }
                     is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
+                        cusProfile.isProgressVisible(true)
                     }
                 }
             }

@@ -5,10 +5,7 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
@@ -19,8 +16,8 @@ import kg.o.internlabs.core.custom_views.PasswordInputHelper
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentRegistrationBinding
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 private typealias coreString = kg.o.internlabs.core.R.string
 
@@ -44,9 +41,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         ViewModelProvider(this)[RegistrationViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentRegistrationBinding {
-        return FragmentRegistrationBinding.inflate(inflater)
-    }
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentRegistrationBinding.inflate(inflater)
 
     override fun initView() = with(binding) {
         super.initView()
@@ -55,14 +51,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         complexWatcher()
 
         cusPass.setMessage(getString(coreString.helper_text_create_password))
-    }
-
-    private fun safeFlowGather(action: suspend () -> Unit) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                action()
-            }
-        }
     }
 
     private fun initObserver() = with(binding) {

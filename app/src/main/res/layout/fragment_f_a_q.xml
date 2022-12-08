@@ -3,12 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.ui.fragments.profile.FAQFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.ui.fragments.profile.FAQFragment"
+    android:background="@drawable/bg_profile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_faq"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="FAQ fragment" />
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/arrow_left_magenta"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            style="@style/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/faq" />
+
+    </androidx.appcompat.widget.Toolbar>
 
 </FrameLayout>
