@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
+import kg.o.internlabs.omarket.utils.glide
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
@@ -56,6 +57,12 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
                        //TODO it.data.result?.get(0)?.name  categoryName
                        //TODO it.data.result?.get(0)?.iconImg  icon
                        //TODO it.data.result   это для категорий все
+                        println("-------"+it.data.result?.get(0)?.iconImg)
+                        println("-------"+it.data.result)
+                        it.data.result?.get(0)?.iconImg?.let { it1 ->
+                            glide(this,
+                                it1, binding.imgAds)
+                        }
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так

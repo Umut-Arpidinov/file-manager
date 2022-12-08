@@ -69,9 +69,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun getActiveAds() {
+    fun getActiveAds(page: Int = 1) {
         viewModelScope.launch {
-            getMyActiveAdsUseCase(getAccessToken()).collectLatest {
+            getMyActiveAdsUseCase(getAccessToken(), page).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         _activeAds.emit(it)
@@ -87,9 +87,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun getNonActiveAds() {
+    fun getNonActiveAds(page: Int = 1) {
         viewModelScope.launch {
-            getMyNonActiveAdsUseCase(getAccessToken()).collectLatest {
+            getMyNonActiveAdsUseCase(getAccessToken(), page).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         _nonActiveAds.emit(it)

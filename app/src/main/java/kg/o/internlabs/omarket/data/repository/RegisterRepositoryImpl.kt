@@ -1,7 +1,7 @@
 package kg.o.internlabs.omarket.data.repository
 
 import kg.o.internlabs.core.base.BaseRepository
-import kg.o.internlabs.omarket.data.local.mappers.MapperForModels
+import kg.o.internlabs.omarket.data.mappers.MapperForModels
 import kg.o.internlabs.omarket.data.remote.ApiService
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.repository.RegisterRepository
