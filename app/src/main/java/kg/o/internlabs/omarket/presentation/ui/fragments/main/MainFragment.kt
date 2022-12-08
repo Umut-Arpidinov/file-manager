@@ -3,6 +3,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
@@ -19,7 +20,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
         ViewModelProvider(this)[MainFragmentViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater) = FragmentMainBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentMainBinding.inflate(inflater)
 
     override fun initListener() = with(binding) {
         super.initListener()
@@ -35,17 +37,26 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
     override fun initView() {
         super.initView()
         getCategories()
+        initCategoryAdapter()
+    }
+
+    private fun initCategoryAdapter() = with(binding) {
+        var adapter = CategoryRecyclerViewAdapter()
+        categoryRecycler.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        categoryRecycler.adapter = adapter
     }
 
     private fun getCategories() {
         this@MainFragment.safeFlowGather {
             viewModel.categories.collectLatest {
-                when(it) {
+                when (it) {
                     is ApiState.Success -> {
+
                         //TODO it.date.result вернет List<ResultEntity> в нем хранятся
-                       //TODO it.data.result?.get(0)?.name  categoryName
-                       //TODO it.data.result?.get(0)?.iconImg  icon
-                       //TODO it.data.result   это для категорий все
+                        //TODO it.data.result?.get(0)?.name  categoryName
+                        //TODO it.data.result?.get(0)?.iconImg  icon
+                        //TODO it.data.result   это для категорий все
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так

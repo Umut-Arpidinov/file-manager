@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
 
 @AndroidEntryPoint
@@ -38,9 +39,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         }
         cusBtnEnter.setOnClickListener {
             try {
-                findNavController().navigate(
-                    LoginStartFragmentDirections.goLoginByPassword(cusNum.getValueFromNumberField())
-                )
+                findNavController().navigate(R.id.mainFragment)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
