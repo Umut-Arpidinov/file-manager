@@ -55,4 +55,9 @@ interface ApiService {
         @Header("Authorization") token: String?
     ): Response<AvatarDelDto?>
 
+    @GET("api/ads-board/v1/category/list")
+    suspend fun getAds(
+        @Query("page") page: Int
+    ): Response<AdsDto?>
+
 }
