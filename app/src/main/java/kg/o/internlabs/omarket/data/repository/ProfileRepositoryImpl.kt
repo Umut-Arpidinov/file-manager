@@ -1,7 +1,7 @@
 package kg.o.internlabs.omarket.data.repository
 
 import kg.o.internlabs.core.base.BaseRepository
-import kg.o.internlabs.omarket.data.local.mappers.MapperForFAQAndProfileModels
+import kg.o.internlabs.omarket.data.mappers.MapperForFAQAndProfileModels
 import kg.o.internlabs.omarket.data.remote.ApiService
 import kg.o.internlabs.omarket.domain.entity.MyAdsEntity
 import kg.o.internlabs.omarket.domain.repository.ProfileRepository
@@ -22,24 +22,26 @@ class ProfileRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getMyActiveAds(token: String, myAds: MyAdsEntity) = safeApiCall {
+    override fun getMyActiveAds(token: String, myAds: MyAdsEntity, page: Int) = safeApiCall {
         mapper.mapRespDbModelToRespEntityForMyAds(
             apiService.getMyAds(
                 token,
                 mapper.mapEntityToDbModel(
                     myAds
-                )
+                ),
+                page
             )
         )
     }
 
-    override fun getMyNonActiveAds(token: String, myAds: MyAdsEntity) = safeApiCall {
+    override fun getMyNonActiveAds(token: String, myAds: MyAdsEntity, page: Int) = safeApiCall {
         mapper.mapRespDbModelToRespEntityForMyAds(
             apiService.getMyAds(
                 token,
                 mapper.mapEntityToDbModel(
                     myAds
-                )
+                ),
+                page
             )
         )
     }

@@ -126,7 +126,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                         println("---------all active ads --------\n" + it.data.result?.results.toString())
                         //TODO it.date.result.results вернет List<MyAdsResultsEntity> в нем хранятся
                         //TODO все свои не активные объявление такие как заблокированние,
-                        // в обработке, или просто деактивироаванные
+                        // в обработке, или просто деактивироаванные сервер отдает их по 10 шт,
+                        // и если объявление больше 10 то вызываем роут viewModel.getNonActiveAds(2)
                         //TODO it.data.result.count  количество не активных объявление
                     }
                     is ApiState.Failure -> {
@@ -148,7 +149,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                     is ApiState.Success -> {
                         println("---------all non active ads --------\n" + it.data.result?.results.toString())
                         //TODO it.date.result.results вернет List<MyAdsResultsEntity> в нем хранятся
-                        //TODO все свои активные объявление
+                        //TODO все свои активные объявление сервер отдает их по 10 шт,
+                        // и если объявление больше 10 то вызываем роут viewModel.getNonActiveAds(2)
                         //TODO it.data.result.count  количество активных объявление
                     }
                     is ApiState.Failure -> {

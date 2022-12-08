@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.data.local.mappers
+package kg.o.internlabs.omarket.data.mappers
 
 import kg.o.internlabs.omarket.data.remote.model.*
 import kg.o.internlabs.omarket.domain.entity.*
