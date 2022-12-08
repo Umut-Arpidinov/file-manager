@@ -8,7 +8,6 @@ import kg.o.internlabs.omarket.domain.entity.RegisterEntity
 import kg.o.internlabs.omarket.domain.usecases.RefreshTokenUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.take
 import javax.inject.Inject
@@ -24,13 +23,14 @@ class MainActivityViewModel @Inject constructor(
 ) :
     BaseViewModel() {
 
-    private val _tokens = MutableStateFlow<ApiState<RegisterEntity>>(ApiState.Loading)
     private var myJob: Job? = null
+    private var t = 0
 
     fun statusListener() {
         viewModelScope.launch {
             var status = false
             while (!status) {
+                println("here --------")
                 checkLoginStatusFromPrefs().take(1).collect {
                     if (it != null) {
                         status = it
@@ -59,18 +59,16 @@ class MainActivityViewModel @Inject constructor(
                                 response.data.accessToken?.let { it1 ->
                                     saveAccessTokenToPrefsUseCase.invoke(it1)
                                 }
-                                myJob = startRepeatingJob(1_620_000) // 27 minutes
+                                myJob = startRepeatingJob(30_000) // 27 minutes
                             }
                             is ApiState.Failure -> {
                                 println("main          fail")
-                                _tokens.value = response
                                 myJob?.cancel()
                             }
                             ApiState.Loading -> {
-                                println("main      loading")
+                                println("main   ${t++}   loading")
                             }
                             else -> {println("main          failError")
-                                // _tokens.value = response
                                 myJob?.cancel()}
                         }
                     }

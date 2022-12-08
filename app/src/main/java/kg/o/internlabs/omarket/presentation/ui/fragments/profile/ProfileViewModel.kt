@@ -11,6 +11,8 @@ import kg.o.internlabs.omarket.domain.entity.FAQEntity
 import kg.o.internlabs.omarket.domain.entity.MyAdsEntity
 import kg.o.internlabs.omarket.domain.usecases.profile_use_cases.*
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAvatarUrlFromPrefsUseCase
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.SaveAvatarUrlToPrefsUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +24,9 @@ class ProfileViewModel @Inject constructor(
     private val getMyActiveAdsUseCase: GetMyActiveAdsUseCase,
     private val getMyNonActiveAdsUseCase: GetMyNonActiveAdsUseCase,
     private val uploadAvatarUseCase: UploadAvatarUseCase,
-    private val deleteAvatarUseCase: DeleteAvatarUseCase
+    private val deleteAvatarUseCase: DeleteAvatarUseCase,
+    private val saveAvatarUrlToPrefsUseCase: SaveAvatarUrlToPrefsUseCase,
+    private val getAvatarUrlFromPrefsUseCase: GetAvatarUrlFromPrefsUseCase
 ) :
     BaseViewModel() {
 
@@ -44,6 +48,9 @@ class ProfileViewModel @Inject constructor(
     private val _deleteAvatar = MutableSharedFlow<ApiState<AvatarDelEntity>>()
     val deleteAvatar = _deleteAvatar.asSharedFlow()
 
+    private val _avatarUrl = MutableStateFlow("")
+    val avatarUrl = _avatarUrl.asStateFlow()
+
     fun getFaq() {
         viewModelScope.launch {
             faqUseCase(getAccessToken()).collectLatest {
@@ -55,6 +62,7 @@ class ProfileViewModel @Inject constructor(
                         _faqs.emit(it)
                     }
                     ApiState.Loading -> {
+                        _faqs.emit(it)
                     }
                 }
             }
@@ -72,6 +80,7 @@ class ProfileViewModel @Inject constructor(
                         _activeAds.emit(it)
                     }
                     ApiState.Loading -> {
+                        _activeAds.emit(it)
                     }
                 }
             }
@@ -89,6 +98,7 @@ class ProfileViewModel @Inject constructor(
                         _nonActiveAds.emit(it)
                     }
                     ApiState.Loading -> {
+                        _nonActiveAds.emit(it)
                     }
                 }
             }
@@ -100,13 +110,14 @@ class ProfileViewModel @Inject constructor(
             uploadAvatarUseCase(getAccessToken(), body).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        println(it.data.toString())
                         _avatar.emit(it)
+                        it.data.result?.url?.let { it1 -> setAvatarUrlToPrefs(it1) }
                     }
                     is ApiState.Failure -> {
                         _avatar.emit(it)
                     }
                     ApiState.Loading -> {
+                        _avatar.emit(it)
                     }
                 }
             }
@@ -118,13 +129,14 @@ class ProfileViewModel @Inject constructor(
             deleteAvatarUseCase(getAccessToken()).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        println(it.data.toString())
                         _deleteAvatar.emit(it)
+                        setAvatarUrlToPrefs(null)
                     }
                     is ApiState.Failure -> {
                         _deleteAvatar.emit(it)
                     }
                     ApiState.Loading -> {
+                        _deleteAvatar.emit(it)
                     }
                 }
             }
@@ -132,13 +144,27 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun getAccessTokenFromPrefs() {
-        viewModelScope.launch{
+        viewModelScope.launch {
             getAccessTokenFromPrefsUseCase().collectLatest {
                 if (it != null) {
                     _token.emit(it)
                 }
             }
         }
+    }
+
+    fun getAvatarUrlFromPrefs() {
+        viewModelScope.launch {
+            getAvatarUrlFromPrefsUseCase().collectLatest {
+                if (it != null) {
+                    _avatarUrl.emit(it)
+                }
+            }
+        }
+    }
+
+    private fun setAvatarUrlToPrefs(avatarUrl: String?) {
+        saveAvatarUrlToPrefsUseCase.invoke(avatarUrl)
     }
 
     private fun getAccessToken() = token.value

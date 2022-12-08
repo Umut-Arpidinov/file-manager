@@ -36,5 +36,12 @@ class PrefsRepositoryImpl @Inject constructor(private val prefs: StoragePreferen
 
     override fun checkLoginStatusFromPrefs() =
         prefs.getBooleanFlow(StoragePreferences.Keys.LOGIN_STATUS, false)
+
+    override fun saveAvatarUrlToPrefs(url: String?) {
+        prefs.avatarUrl = url
+    }
+
+    override fun getAvatarUrlFromPrefs() =
+        prefs.getStringFlow(StoragePreferences.Keys.AVATAR_URL, null)
 }
 
