@@ -22,11 +22,6 @@
             android:layout_height="@dimen/view_height_32dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ImageView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_recycler"

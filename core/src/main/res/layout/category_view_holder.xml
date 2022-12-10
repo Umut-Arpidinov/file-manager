@@ -13,25 +13,27 @@
             android:id="@+id/category_image"
             android:layout_width="@dimen/view_36dp"
             android:layout_height="@dimen/view_36dp"
+            android:scaleType="center"
             android:background="@drawable/categories_images_background"
-            android:src="@drawable/car"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/category_description">
         </ImageView>
+
         <TextView
             android:id="@+id/category_name"
             android:layout_width="match_parent"
             android:layout_height="13dp"
             android:layout_marginTop="@dimen/margin_start_4dp"
             android:ellipsize="end"
-            android:maxLines="1"
             android:gravity="center"
-            android:text="Недвижимость"
+            android:maxLines="1"
             android:textAppearance="@style/CategoryViewTextAppearance"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/category_image">
 
         </TextView>

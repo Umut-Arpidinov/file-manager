@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,16 +11,15 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
-import kg.o.internlabs.omarket.utils.glide
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-import org.w3c.dom.Entity
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() {
+class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),CategoryRecyclerViewAdapter.OnItemClickListener {
 
     private var args: MainFragmentArgs? = null
+    private var list: List<ResultEntity>? = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +33,14 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
     }
 
 
-
-    override fun inflateViewBinding(inflater: LayoutInflater) = FragmentMainBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentMainBinding.inflate(inflater)
 
     override fun initListener() = with(binding) {
         super.initListener()
         tbMain.setNavigationOnClickListener {
-            findNavController().navigate(MainFragmentDirections.goToProfile(args?.number)) }
+            findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
+        }
     }
 
     override fun initViewModel() {
@@ -51,31 +52,39 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
     override fun initView() {
         super.initView()
         getCategories()
-        initRecyclerViewAdapter()
-
+    }
+    override fun onItemClick(position: Int) {
+        Toast.makeText(requireActivity(), "Item $position clicked", Toast.LENGTH_SHORT).show()
     }
 
-    private fun initRecyclerViewAdapter() = with(binding){
-        val adapter = CategoryRecyclerViewAdapter()
-        categoryRecycler.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-        categoryRecycler.adapter = adapter
+    private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {
+        binding.categoryRecycler.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        binding.categoryRecycler.adapter = CategoryRecyclerViewAdapter(list, requireContext(),this)
     }
+
+
 
     private fun getCategories() {
         this@MainFragment.safeFlowGather {
             viewModel.categories.collectLatest {
-                when(it) {
+                when (it) {
                     is ApiState.Success -> {
                         //TODO it.date.result вернет List<ResultEntity> в нем хранятся
-                       //TODO it.data.result?.get(0)?.name  categoryName
-                       //TODO it.data.result?.get(0)?.iconImg  icon
-                       //TODO it.data.result   это для категорий все
-                        println("-------"+it.data.result?.get(4)?.iconImg)
-                        println("-------"+it.data.result?.size)
-                        it.data.result?.get(4)?.iconImg?.let { it1 ->
-                            glide(this,
-                                it1,binding.image )
-                        }
+                        //TODO it.data.result?.get(0)?.name  categoryName
+                        //TODO it.data.result?.get(0)?.iconImg  icon
+                        //TODO it.data.result   это для категорий все
+                        list = it.data.result
+
+                        val arr = list?.toMutableList()
+                        arr?.add(
+                            0,
+                            ResultEntity(
+                                iconImg = kg.o.internlabs.core.R.drawable.category_all_union.toString(),
+                                name = "Все"
+                            )
+                        )
+                        initRecyclerViewAdapter(arr)
 
                     }
                     is ApiState.Failure -> {
