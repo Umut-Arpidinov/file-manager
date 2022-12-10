@@ -1,17 +1,23 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
-import android.graphics.Paint
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+
 import android.view.LayoutInflater
-import android.view.View
+import android.graphics.Paint
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.data.remote.model.MainAdsDto
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
+import java.util.*
+
+private typealias coreString = kg.o.internlabs.core.R.string
+
 
 class AdsListAdapter internal constructor(
     var list: List<MainAdsDto>,
@@ -36,6 +42,7 @@ class AdsListAdapter internal constructor(
         val mList = list[position]
 
         with(holder.binding) {
+
             val pagerAdapter2 =
                 PagerImageAdapter(context, mList.minifyImages, ViewGroup.LayoutParams.MATCH_PARENT)
             imgAds.adapter = pagerAdapter2
@@ -43,25 +50,23 @@ class AdsListAdapter internal constructor(
             holder.binding.indicator.attachToPager(holder.binding.imgAds)
 
             isVIPStatus(mList.isVIP, vipIcon)
+
             isOMoney(mList.isO_pay, oPayIcon)
 
-            priceProduct.text = setPriceWithCurrency(mList.currency, mList.price)
-            val spannableString2 = SpannableString(priceProduct.text)
-            spannableString2.setSpan(UnderlineSpan(), priceProduct.text.lastIndex, priceProduct.text.length, 0)
-            priceProduct.text = spannableString2
+            setPriceWithCurrency(mList.currency, mList.price, priceProduct)
 
-            oldPriceProduct.apply {
-                if (mList.oldPrice == null || mList.oldPrice == "") {
-                    visibility = GONE
-                } else {
-                    visibility = VISIBLE
-                    paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    text = setPriceWithCurrency(mList.currency, mList.oldPrice)
-                }
+            setOldPriceWithCurrency(mList.currency, mList.oldPrice, oldPriceProduct)
+
+            nameProduct.text = mList.name?.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
             }
-
-            nameProduct.text = mList.name?.capitalize()
-            nameCategory.text = mList.category?.capitalize()
+            nameCategory.text = mList.category?.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }
 
             if (mList.delivery == true) {
                 var mText = mList.location + "/Доставка"
@@ -88,23 +93,39 @@ class AdsListAdapter internal constructor(
 
     private fun isVIPStatus(status: Boolean?, vipIcon: AppCompatImageView) {
         if (status != null) {
-            if (status) vipIcon.visibility = View.VISIBLE else vipIcon.visibility = View.GONE
-        } else vipIcon.visibility = View.GONE
+            if (status) vipIcon.visibility = VISIBLE else vipIcon.visibility = GONE
+        } else vipIcon.visibility = GONE
     }
 
     private fun isOMoney(status: Boolean?, oPayIcon: AppCompatImageView) {
         if (status != null) {
-            if (status) oPayIcon.visibility = View.VISIBLE else oPayIcon.visibility = View.GONE
-        } else oPayIcon.visibility = View.GONE
+            if (status) oPayIcon.visibility = VISIBLE else oPayIcon.visibility = GONE
+        } else oPayIcon.visibility = GONE
     }
 
-    private fun setPriceWithCurrency(currency: String?, price: String?): String {
-        var result = String.format("%,d", price?.toInt())
-        //add Underline
-        if (currency == "som") {
-            result += " c"
-        } else result += "$"
+    private fun setPriceWithCurrency(currency: String?, price: String?, priceProduct: TextView) {
+        if (currency.equals("som")){
+            val resultString = String.format(getString(coreString.som_underline), price?.toInt())
 
-        return result
+            val spannableString = SpannableString(resultString)
+            spannableString.setSpan(UnderlineSpan(), resultString.lastIndex, resultString.length, 0)
+
+            priceProduct.text = spannableString
+        } else
+            priceProduct.text = String.format(getString(coreString.dollar_price), price?.toInt())
+    }
+
+    private fun setOldPriceWithCurrency(currency: String?, oldPrice: String?, oldPriceProduct: TextView) {
+        if (oldPrice == null || oldPrice == "") {
+            oldPriceProduct.visibility = GONE
+        } else {
+            oldPriceProduct.visibility = VISIBLE
+            oldPriceProduct.paintFlags = oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            setPriceWithCurrency(currency, oldPrice, oldPriceProduct)
+        }
+    }
+
+    private fun getString(@StringRes resId: Int): String {
+        return context.resources.getString(resId)
     }
 }
