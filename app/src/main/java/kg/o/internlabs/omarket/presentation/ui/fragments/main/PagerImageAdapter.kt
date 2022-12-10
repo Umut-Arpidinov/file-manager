@@ -1,6 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
-import android.content.Context
+import  android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,11 +8,9 @@ import com.bumptech.glide.Glide
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.PagerItemImageMainBinding
 
-//#TODO(Make a RecyclerAdapter for main page and complete adapter that depends on INPUT)
-
 internal class PagerImageAdapter internal constructor(
     private val context: Context,
-    private val imageURLs: Array<String>,
+    private val imageURLs: List<String>?,
     private val itemWidth: Int
 ) :
     RecyclerView.Adapter<PagerImageAdapter.ViewHolder>() {
@@ -33,21 +31,23 @@ internal class PagerImageAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            if (arrayIsNotNull) {
-                Glide.with(context).load(imageURLs[position])
-                    .placeholder(R.drawable.loading_animation)
-                    .error(kg.o.internlabs.core.R.drawable.who_knows_img).into(binding.itemImgMain)
+            if (arrayIsNotNull) { //check for null list
+                Glide.with(context).load(imageURLs?.get(position))
+                    .placeholder(R.drawable.loading_animation) //animation during the loading
+                    .error(R.drawable.loading_img).into(binding.itemImgMain) //just img if error occurs
             } else {
-                Glide.with(context).load(kg.o.internlabs.core.R.drawable.who_knows_img).into(binding.itemImgMain)
+                Glide.with(context)
+                    .load(R.drawable.loading_img) // if list is null set the img
+                    .into(binding.itemImgMain)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return if (imageURLs.isNotEmpty()) {
+        return if (imageURLs != null) { // check for null
             imageURLs.size
         } else {
-            arrayIsNotNull = false
+            arrayIsNotNull = false // if null set the one img
             1
         }
     }
