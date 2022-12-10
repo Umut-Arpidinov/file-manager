@@ -1,6 +1,5 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
-import android.content.Context
 import android.graphics.Paint
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -17,7 +16,7 @@ import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
 class AdsListAdapter internal constructor(
     var list: List<MainAdsDto>,
     private val itemWidth: Int,
-    val context: Context
+    val context: MainFragment
 ) :
     RecyclerView.Adapter<AdsListAdapter.ViewHolder>() {
     private var favorite = true

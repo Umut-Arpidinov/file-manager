@@ -1,6 +1,5 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
-import  android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +8,7 @@ import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.PagerItemImageMainBinding
 
 internal class PagerImageAdapter internal constructor(
-    private val context: Context,
+    private val context: MainFragment,
     private val imageURLs: List<String>?,
     private val itemWidth: Int
 ) :
