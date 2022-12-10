@@ -2,7 +2,6 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-
 import android.view.LayoutInflater
 import android.graphics.Paint
 import android.view.View.GONE
@@ -62,18 +61,14 @@ class AdsListAdapter internal constructor(
                     Locale.getDefault()
                 ) else it.toString()
             }
+
             nameCategory.text = mList.category?.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(
                     Locale.getDefault()
                 ) else it.toString()
             }
 
-            if (mList.delivery == true) {
-                var mText = mList.location + "/Доставка"
-                placeProduct.text = mText
-            } else {
-                placeProduct.text = mList.location
-            }
+            defineDelivery(mList.delivery, placeProduct, mList.location)
 
             favoriteIcon.setOnClickListener{
                 if (mList.favorite == false || mList.favorite == null && !favorite) {
@@ -123,6 +118,12 @@ class AdsListAdapter internal constructor(
             oldPriceProduct.paintFlags = oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             setPriceWithCurrency(currency, oldPrice, oldPriceProduct)
         }
+    }
+    private fun defineDelivery(delivery: Boolean?, placeProduct: TextView, location: String?) {
+        if (delivery == true)
+            placeProduct.text = String.format(getString(coreString.delivery_available), location)
+        else
+            placeProduct.text = location
     }
 
     private fun getString(@StringRes resId: Int): String {
