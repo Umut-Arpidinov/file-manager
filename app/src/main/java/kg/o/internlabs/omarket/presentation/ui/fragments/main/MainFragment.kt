@@ -50,6 +50,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
         super.initView()
         getCategories()
         initRecyclerViewAdapter()
+
     }
 
     private fun initRecyclerViewAdapter() = with(binding){
@@ -67,12 +68,12 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
                        //TODO it.data.result?.get(0)?.name  categoryName
                        //TODO it.data.result?.get(0)?.iconImg  icon
                        //TODO it.data.result   это для категорий все
-                        println("-------"+it.data.result?.get(0)?.iconImg)
-                        println("-------"+it.data.result)
-                        /*it.data.result?.get(0)?.iconImg?.let { it1 ->
+                        println("-------"+it.data.result?.get(4)?.iconImg)
+                        println("-------"+it.data.result?.size)
+                        it.data.result?.get(4)?.iconImg?.let { it1 ->
                             glide(this,
                                 it1,binding.image )
-                        }*/
+                        }
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так

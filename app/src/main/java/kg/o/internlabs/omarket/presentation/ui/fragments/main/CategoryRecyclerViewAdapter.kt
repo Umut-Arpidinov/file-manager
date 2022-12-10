@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.core.R
 
-class CategoryRecyclerViewAdapter : RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>(){
+class CategoryRecyclerViewAdapter() : RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>(){
 
 
 

@@ -39,12 +39,15 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         }
         cusBtnEnter.setOnClickListener {
             try {
-                findNavController().navigate(R.id.mainFragment)
+                findNavController().navigate(
+                    LoginStartFragmentDirections.goLoginByPassword(cusNum.getValueFromNumberField())
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
+
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         binding.cusBtnEnter.isEnabled = notEmpty
