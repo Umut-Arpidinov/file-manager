@@ -103,4 +103,7 @@
     <string name="sell_faster_string">Продать быстрее</string>
     <string name="sample_viewed_string">777</string>
     <string name="search_text">Search\'s text</string>
+    <string name="som_underline">%,d <u>с</u></string>
+    <string name="dollar_price">%,d <u>$</u></string>
+    <string name="delivery_available">%s/Доставка</string>
 </resources>

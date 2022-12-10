@@ -160,4 +160,5 @@
     <dimen name="dots_size_5dp">5dp</dimen>
     <dimen name="dots_selected_size_8dp">8dp</dimen>
     <dimen name="dimen_0dp">0dp</dimen>
+    <dimen name="elevation_0dp">0dp</dimen>
 </resources>
