@@ -9,10 +9,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
+import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.utils.glide
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
+import org.w3c.dom.Entity
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() {
@@ -74,6 +76,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
                             glide(this,
                                 it1,binding.image )
                         }
+
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так
