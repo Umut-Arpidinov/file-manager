@@ -31,6 +31,7 @@ abstract class BaseRepository {
                     }
                 }
             } else {
+                if (response.code() == 404) throw Exception()
                 val raw = response.errorBody()?.string()
                 val jObject = raw?.let { org.json.JSONObject(it) }
                 val str: String = jObject?.get("message").toString()
