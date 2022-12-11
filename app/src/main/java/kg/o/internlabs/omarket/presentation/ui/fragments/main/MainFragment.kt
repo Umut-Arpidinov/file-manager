@@ -77,6 +77,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
                         list = it.data.result
 
                         val arr = list?.toMutableList()
+
                         arr?.add(
                             0,
                             ResultEntity(
