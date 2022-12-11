@@ -37,19 +37,11 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
         getCategories()
     }
 
-
     private fun getCategories() {
         this@FAQFragment.safeFlowGather {
             viewModel.faqs.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-
-//                        it.data.results
-//                        it.data.results?.get(0)?.title
-//                        it.data.results?.get(0)?.id
-//                        it.data.results?.get(0)?.content
-//                        it.data.results
-//                        println(it.data.results!! + "=============")
 
                         //TODO it.date.result вернет List<ResultsEntity> в нем хранятся
                         //TODO it.data.result?.get(0)?.title  questions
@@ -75,7 +67,6 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
     }
 
     private fun showFaq(list: List<ResultsEntity>?) {
-
         binding.recyclerFaq.layoutManager = LinearLayoutManager(activity)
         binding.recyclerFaq.adapter = FaqAdapter(list!!)
 

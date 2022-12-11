@@ -9,15 +9,11 @@ import kg.o.internlabs.omarket.domain.entity.ResultsEntity
 class FaqAdapter(private val results: List<ResultsEntity>) :
     RecyclerView.Adapter<FaqAdapter.Holder>() {
 
-
     class Holder(val binding: ItemFaqBinding) : RecyclerView.ViewHolder(binding.root) {
-
 
         fun bind(results: ResultsEntity) = with(binding) {
             itemFaq1.setQuestions(results.title.toString())
             itemFaq1.setAnswers(results.content.toString())
-//            tvCellQuestions.text = results.title
-//            tvCellAnswer.text = results.content
         }
 
     }
@@ -33,6 +29,5 @@ class FaqAdapter(private val results: List<ResultsEntity>) :
     }
 
     override fun getItemCount(): Int = results.size
-
 
 }
