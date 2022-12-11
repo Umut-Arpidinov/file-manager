@@ -1,44 +1,38 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.databinding.ItemFaqBinding
 import kg.o.internlabs.omarket.domain.entity.ResultsEntity
 
-class FaqAdapter(private val faq: ArrayList<ResultsEntity> = ArrayList()) : RecyclerView.Adapter<FaqAdapter.Holder>() {
+class FaqAdapter(private val results: List<ResultsEntity>) :
+    RecyclerView.Adapter<FaqAdapter.Holder>() {
 
 
-
-    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemFaqBinding.bind(itemView)
-        fun bind(faqEntity: ResultsEntity) = with(binding){
-            itemFaq1.setQuestions(faqEntity.id.toString())
-            itemFaq1.setQuestions(faqEntity.title.toString())
-            itemFaq1.setQuestions(faqEntity.content.toString())
-            itemFaq1.setAnswers(faqEntity.id.toString())
-            itemFaq1.setAnswers(faqEntity.title.toString())
-            itemFaq1.setAnswers(faqEntity.content.toString())
-            println("----------------------"+itemFaq1.setQuestions(faqEntity.title.toString()))
+    class Holder(val binding: ItemFaqBinding) : RecyclerView.ViewHolder(binding.root) {
 
 
+        fun bind(results: ResultsEntity) = with(binding) {
+            itemFaq1.setQuestions(results.title.toString())
+            itemFaq1.setAnswers(results.content.toString())
+//            tvCellQuestions.text = results.title
+//            tvCellAnswer.text = results.content
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(parent.context).inflate(kg.o.internlabs.omarket.R.layout.item_faq ,parent,false)
-        return Holder(view)
+
+        val binding = ItemFaqBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return Holder(binding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(faq[position])
-
-
+        holder.bind(results[position])
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(): Int = results.size
 
-      return faq.size
-    }
+
 }
