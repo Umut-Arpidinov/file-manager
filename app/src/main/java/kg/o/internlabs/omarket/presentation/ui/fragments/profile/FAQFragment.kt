@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
@@ -21,20 +22,22 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
         ViewModelProvider(this)[ProfileViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater) =
-        FragmentFAQBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater) = FragmentFAQBinding.inflate(inflater)
 
     override fun initViewModel() {
         super.initViewModel()
         viewModel.getAccessTokenFromPrefs()
         viewModel.getFaq()
-
-
     }
 
     override fun initView() {
         super.initView()
         getCategories()
+    }
+
+    override fun initListener() = with(binding) {
+        super.initListener()
+        tbFaq.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
     private fun getCategories() {
@@ -51,7 +54,7 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
 
                         list = it.data.results
 
-                            showFaq(list)
+                        showFaq(list)
 
                     }
                     is ApiState.Failure -> {
@@ -69,8 +72,7 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
     private fun showFaq(list: List<ResultsEntity>?) {
         binding.recyclerFaq.layoutManager = LinearLayoutManager(activity)
         binding.recyclerFaq.adapter = FaqAdapter(list!!)
-
-
     }
+
 
 }
