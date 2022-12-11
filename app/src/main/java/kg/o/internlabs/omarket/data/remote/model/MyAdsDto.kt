@@ -3,11 +3,11 @@ package kg.o.internlabs.omarket.data.remote.model
 import com.google.gson.annotations.SerializedName
 
 data class MyAdsDto(
-    val count: Long? = null,
-    val next: String? = null,
-    val previous: String? = null,
     @SerializedName("result")
     val result: MyAdsResultDto? = null,
+    val resultCode: String? = null,
+    val details: String? = null,
+    val errorCode: Int? = null,
     val statuses: List<String>? = null
 )
 

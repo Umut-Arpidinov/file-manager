@@ -1,10 +1,13 @@
 package kg.o.internlabs.omarket.domain.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class MyAdsEntity (
-    val count: Long? = null,
-    val next: String? = null,
-    val previous: String? = null,
+    @SerializedName("result")
     val result: MyAdsResultEntity? = null,
+    val resultCode: String? = null,
+    val details: String? = null,
+    val errorCode: Int? = null,
     val statuses: List<String>? = null
 )
 

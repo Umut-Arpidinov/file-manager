@@ -9,7 +9,7 @@ class GetMyNonActiveAdsUseCase @Inject constructor(
 ) {
     private var myAdsEntity = MyAdsEntity(statuses = listOf("cancelled", "moderate", "disabled"))
 
-    operator fun invoke(token: String, page: Int) =
-        profileRep.getMyNonActiveAds(token, myAdsEntity, page)
+    operator fun invoke(token: String) =
+        profileRep.getMyAds(token, myAdsEntity)
 
 }

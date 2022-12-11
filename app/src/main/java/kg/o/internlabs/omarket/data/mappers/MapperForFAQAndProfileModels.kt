@@ -29,10 +29,10 @@ class MapperForFAQAndProfileModels {
 
     //region MyAds
     fun mapEntityToDbModel(faq: MyAdsEntity?) = MyAdsDto(
-        count = faq?.count,
-        next = faq?.next,
-        previous = faq?.previous,
         result = mapEntityToDbModel(faq?.result),
+        resultCode = faq?.resultCode,
+        details = faq?.details,
+        errorCode = faq?.errorCode,
         statuses = faq?.statuses
     )
 
@@ -81,11 +81,11 @@ class MapperForFAQAndProfileModels {
         CategoryDto(name = category?.name)
 
 
-    private fun mapDbModelToEntity(faq: MyAdsDto?) = MyAdsEntity(
-        count = faq?.count,
-        next = faq?.next,
-        previous = faq?.previous,
+    fun mapDbModelToEntity(faq: MyAdsDto?) = MyAdsEntity(
         result = mapDbModelToEntity(faq?.result),
+        resultCode = faq?.resultCode,
+        details = faq?.details,
+        errorCode = faq?.errorCode,
         statuses = faq?.statuses
     )
 
