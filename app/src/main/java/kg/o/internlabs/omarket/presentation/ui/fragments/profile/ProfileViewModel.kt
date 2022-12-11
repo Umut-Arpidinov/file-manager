@@ -7,10 +7,7 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.domain.entity.AvatarDelEntity
-import kg.o.internlabs.omarket.domain.entity.AvatarEntity
-import kg.o.internlabs.omarket.domain.entity.FAQEntity
-import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
+import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.domain.usecases.profile_use_cases.*
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAvatarUrlFromPrefsUseCase
@@ -28,7 +25,8 @@ class ProfileViewModel @Inject constructor(
     private val uploadAvatarUseCase: UploadAvatarUseCase,
     private val deleteAvatarUseCase: DeleteAvatarUseCase,
     private val saveAvatarUrlToPrefsUseCase: SaveAvatarUrlToPrefsUseCase,
-    private val getAvatarUrlFromPrefsUseCase: GetAvatarUrlFromPrefsUseCase
+    private val getAvatarUrlFromPrefsUseCase: GetAvatarUrlFromPrefsUseCase,
+    private val getMyAllAdsUseCase: GetMyAllAdsUseCase
 ) :
     BaseViewModel() {
 
@@ -49,11 +47,20 @@ class ProfileViewModel @Inject constructor(
     private val _avatar = MutableSharedFlow<ApiState<AvatarEntity>>()
     val avatar = _avatar.asSharedFlow()
 
+    private val _allAds = MutableSharedFlow<ApiState<MyAdsEntity>>()
+    val allAds = _allAds.asSharedFlow()
+
     private val _deleteAvatar = MutableSharedFlow<ApiState<AvatarDelEntity>>()
     val deleteAvatar = _deleteAvatar.asSharedFlow()
 
     private val _avatarUrl = MutableStateFlow("")
     val avatarUrl = _avatarUrl.asStateFlow()
+
+
+    init {
+        getAccessTokenFromPrefs()
+        getAvatarUrlFromPrefs()
+    }
 
     fun getFaq() {
         viewModelScope.launch {
@@ -73,36 +80,36 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun getActiveAds() = launchPagingAsync({
+    private fun getActiveAds() = launchPagingAsync({
         getMyActiveAdsUseCase(getAccessToken()).cachedIn(viewModelScope)
     }, {
         _activeAds = it
     })
 
-    fun getNonActiveAds() = launchPagingAsync({
+    private fun getNonActiveAds() = launchPagingAsync({
             getMyNonActiveAdsUseCase(getAccessToken()).cachedIn(viewModelScope)
     }, {
         _nonActiveAds = it
     })
-/*
-    fun getNonActiveAds() {
+
+
+    private fun getMyAllAds() {
         viewModelScope.launch {
-            getMyNonActiveAdsUseCase(getAccessToken()).collectLatest {
+            getMyAllAdsUseCase(getAccessToken()).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        _nonActiveAds.emit(it)
+                        _allAds.emit(it)
                     }
                     is ApiState.Failure -> {
-                        _nonActiveAds.emit(it)
+                        _allAds.emit(it)
                     }
                     ApiState.Loading -> {
-                        _nonActiveAds.emit(it)
+                        _allAds.emit(it)
                     }
                 }
             }
         }
     }
-*/
 
     fun uploadAvatar(body: CursorLoader) {
         viewModelScope.launch {
@@ -142,17 +149,20 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun getAccessTokenFromPrefs() {
+    private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {
             getAccessTokenFromPrefsUseCase().collectLatest {
                 if (it != null) {
                     _token.emit(it)
+                    getActiveAds()
+                    getNonActiveAds()
+                    getMyAllAds()
                 }
             }
         }
     }
 
-    fun getAvatarUrlFromPrefs() {
+    private fun getAvatarUrlFromPrefs() {
         viewModelScope.launch {
             getAvatarUrlFromPrefsUseCase().collectLatest {
                 if (it != null) {

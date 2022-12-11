@@ -10,8 +10,9 @@ interface ProfileRepository {
 
     fun getFaq(token: String): Flow<ApiState<FAQEntity>>
 
-    fun getMyAds(token: String, myAds: MyAdsEntity):
-            Flow<PagingData<MyAdsResultsEntity>>//Flow<ApiState<MyAdsEntity>>
+    fun getMyAds(token: String, myAds: MyAdsEntity): Flow<PagingData<MyAdsResultsEntity>>
+
+    fun getMyAllAds(token: String, myAds: MyAdsEntity): Flow<ApiState<MyAdsEntity>>
 
     fun uploadAvatar(token: String, body: MultipartBody.Part): Flow<ApiState<AvatarEntity>>
 

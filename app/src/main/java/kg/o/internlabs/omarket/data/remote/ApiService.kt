@@ -41,7 +41,7 @@ interface ApiService {
     suspend fun getMyAds(
         @Header("Authorization") token: String?,
         @Body myAdsDto: MyAdsDto?,
-        @Query("page") page: Int
+        @Query("page") page: Int?
     ): Response<MyAdsDto?>
 
     @Multipart
