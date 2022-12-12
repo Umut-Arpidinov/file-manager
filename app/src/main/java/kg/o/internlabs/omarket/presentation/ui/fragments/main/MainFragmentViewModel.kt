@@ -30,6 +30,7 @@ class MainFragmentViewModel @Inject constructor(
                 when (it) {
                     is ApiState.Success -> {
                         _categories.emit(it)
+
                     }
                     is ApiState.Failure -> {
                         _categories.emit(it)

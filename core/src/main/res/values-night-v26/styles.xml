@@ -100,4 +100,12 @@
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
         <item name="android:textColor">@color/white_1</item>
     </style>
+    <style name="CategoryViewTextAppearance">
+        <item name="lineHeight">@dimen/line_height_13.13dp</item>
+        <item name="fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">@dimen/text_11sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
 </resources>
