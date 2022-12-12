@@ -1,3 +1,4 @@
+/*
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.text.SpannableString
@@ -11,15 +12,16 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
-import kg.o.internlabs.omarket.data.remote.model.MainAdsDto
+import kg.o.internlabs.omarket.data.remote.model.ResultX
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
+import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import java.util.*
 
 private typealias coreString = kg.o.internlabs.core.R.string
 
 
 class AdsListAdapter internal constructor(
-    var list: List<MainAdsDto>,
+    var list: MutableList<ResultX>?,
     private val itemWidth: Int,
     val context: MainFragment
 ) :
@@ -38,17 +40,19 @@ class AdsListAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val mList = list[position]
+        val mList = list?.get(position)
+
+
 
         with(holder.binding) {
 
             val pagerAdapter2 =
-                PagerImageAdapter(context, mList.minifyImages, ViewGroup.LayoutParams.MATCH_PARENT)
+                PagerImageAdapter(context, mList, ViewGroup.LayoutParams.MATCH_PARENT)
             imgAds.adapter = pagerAdapter2
             indicator.attachToPager(imgAds)
             holder.binding.indicator.attachToPager(holder.binding.imgAds)
 
-            isVIPStatus(mList.isVIP, vipIcon)
+            isVIPStatus(, vipIcon)
 
             isOMoney(mList.isO_pay, oPayIcon)
 
@@ -129,4 +133,4 @@ class AdsListAdapter internal constructor(
     private fun getString(@StringRes resId: Int): String {
         return context.resources.getString(resId)
     }
-}
+}*/

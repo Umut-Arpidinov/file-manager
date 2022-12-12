@@ -3,6 +3,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.R
+import kg.o.internlabs.omarket.data.remote.model.ResultX
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.utils.makeToast
@@ -21,6 +24,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     private var args: MainFragmentArgs? = null
     private var list: List<ResultEntity>? = listOf()
+    private var adsList: List<ResultX>? = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +67,16 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         binding.categoryRecycler.adapter = CategoryRecyclerViewAdapter(list, requireContext(),this)
     }
 
+
+/*
+    private fun initAdsAdapter(list: MutableList<ResultX>?){
+        val mainAdapter = AdsListAdapter(list, ViewGroup.LayoutParams.MATCH_PARENT, this@MainFragment)
+
+        binding.mainViewHolder.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(
+            R.dimen.item_margin_7dp)))
+        binding.mainViewHolder.adapter = mainAdapter
+    }
+*/
 
 
     private fun getCategories() {
@@ -110,6 +124,9 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
                 when(it) {
                     is ApiState.Success -> {
                        Log.d("Ray"," getAds" + it.data?.result?.results.toString())
+                        adsList = it.data?.result?.results
+                        val arr = adsList?.toMutableList()
+                        //initAdsAdapter(arr) ( РАСКОМЕНТЬ )
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так
