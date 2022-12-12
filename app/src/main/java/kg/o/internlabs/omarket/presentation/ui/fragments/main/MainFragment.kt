@@ -67,8 +67,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         binding.categoryRecycler.adapter = CategoryRecyclerViewAdapter(list, requireContext(),this)
     }
 
-
-/*
     private fun initAdsAdapter(list: MutableList<ResultX>?){
         val mainAdapter = AdsListAdapter(list, ViewGroup.LayoutParams.MATCH_PARENT, this@MainFragment)
 
@@ -76,7 +74,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             R.dimen.item_margin_7dp)))
         binding.mainViewHolder.adapter = mainAdapter
     }
-*/
 
 
     private fun getCategories() {
@@ -126,7 +123,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
                        Log.d("Ray"," getAds" + it.data?.result?.results.toString())
                         adsList = it.data?.result?.results
                         val arr = adsList?.toMutableList()
-                        //initAdsAdapter(arr) ( РАСКОМЕНТЬ )
+                        //#TODO(Something got wrong)
+//                        initAdsAdapter(arr)
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так
