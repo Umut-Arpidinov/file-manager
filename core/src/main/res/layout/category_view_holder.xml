@@ -31,7 +31,6 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="Транспорт"
             android:textAppearance="@style/CategoryViewTextAppearance"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

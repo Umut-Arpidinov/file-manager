@@ -16,7 +16,7 @@ import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),CategoryRecyclerViewAdapter.OnItemClickListener {
+class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),CategoryClickHandler{
 
     private var args: MainFragmentArgs? = null
     private var list: List<ResultEntity>? = listOf()
@@ -53,9 +53,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         super.initView()
         getCategories()
     }
-    override fun onItemClick(position: Int) {
-        Toast.makeText(requireActivity(), "Item $position clicked", Toast.LENGTH_SHORT).show()
-    }
+
 
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {
         binding.categoryRecycler.layoutManager =
@@ -98,5 +96,9 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
                 }
             }
         }
+    }
+
+    override fun clickedCategory(item: ResultEntity) {
+        Toast.makeText(requireActivity(), "${item.name} with id ${item.id} was clicked", Toast.LENGTH_SHORT).show()
     }
 }
