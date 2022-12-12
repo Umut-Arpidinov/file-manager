@@ -287,5 +287,9 @@
         <item name="android:textColor">@color/white_1</item>
         <item name="android:textSize">@dimen/text_11sp</item>
     </style>
+    <style name="StyleMainLayout">
+        <item name="android:background">@color/black_1</item>
+    </style>
+
 
 </resources>
