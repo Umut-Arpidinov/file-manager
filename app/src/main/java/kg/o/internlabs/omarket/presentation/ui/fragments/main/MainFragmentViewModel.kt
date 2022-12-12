@@ -26,7 +26,7 @@ class MainFragmentViewModel @Inject constructor(
     val token = _token.asStateFlow()
 
     private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
-    val categories = _categories.asSharedFlow()
+val categories = _categories.asSharedFlow()
 
     private val _ads = MutableSharedFlow<ApiState<AdsDto?>>()
     val ads = _ads.asSharedFlow()
@@ -54,7 +54,7 @@ class MainFragmentViewModel @Inject constructor(
             getAdsUseCase(page, getAccessToken()).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        _ads.emit(it)
+            _ads.emit(it)
 
                     }
                     is ApiState.Failure -> {

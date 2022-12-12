@@ -106,10 +106,10 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     private fun getAds() {
         this@MainFragment.safeFlowGather {
-            viewModel.categories.collectLatest {
+            viewModel.ads.collectLatest {
                 when(it) {
                     is ApiState.Success -> {
-                        Log.d("Ray", it.data.result.toString())
+                       Log.d("Ray"," getAds" + it.data?.result?.results.toString())
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так
