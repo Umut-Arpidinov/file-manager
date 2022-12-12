@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/gray_2"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
@@ -11,66 +12,49 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         app:contentInsetStartWithNavigation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_user_profile"
         app:titleMarginStart="@dimen/margin_13dp">
 
         <androidx.appcompat.widget.SearchView
             style="@style/StyleMainSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="@dimen/view_height_32dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/recycler_groups"
-        android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:layout_marginTop="@dimen/margin_10dp"
-        android:background="@color/gray_2"
-        android:gravity="center"
-        android:text="RecyclerView with Categories: Task Umut"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        app:layout_constraintTop_toBottomOf="@id/tb_main" />
 
-    <TextView
-        android:id="@+id/result_text"
-        style="@style/MainSearchResultText"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_recycler"
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin_10dp"
         android:layout_height="wrap_content"
-        android:text="@string/search_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_groups" />
+        app:layout_constraintTop_toBottomOf="@+id/tb_main">
+    </androidx.recyclerview.widget.RecyclerView>
+
 
     <ScrollView
         android:id="@+id/main_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/result_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="687dp"
+        tools:layout_editor_absoluteY="204dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_21dp"
+        app:layout_constraintBottom_toBottomOf="@id/main_scroll_view"
+        app:layout_constraintEnd_toStartOf="parent"
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_plus_fab"
         app:borderWidth="@dimen/dimen_0dp"
         app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/magenta_1"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="178dp"
+        tools:layout_editor_absoluteY="814dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

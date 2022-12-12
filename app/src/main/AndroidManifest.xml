@@ -41,7 +41,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <service android:name=".presentation.ui.activities.activities.main_activity.ClosingService"
             android:stopWithTask="false"/>
     </application>

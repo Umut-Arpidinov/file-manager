@@ -43,6 +43,7 @@ class CustomFAQCellView : ConstraintLayout {
 
     fun setQuestions(title: String) {
         binding.tvCellQuestions.text = title
+
     }
 
     fun setAnswers(title: String) {

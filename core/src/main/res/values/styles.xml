@@ -382,6 +382,13 @@
         <item name="android:layout_marginEnd">@dimen/margin_50dp</item>
         <item name="searchIcon">@drawable/ic_search</item>
     </style>
+    
+    <style name="CategoryViewTextAppearance">
+        <item name="lineHeight">@dimen/line_height_13.13dp</item>
+        <item name="fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textColor">@color/black_5</item>
+        <item name="android:textSize">@dimen/text_11sp</item>
+    </style>
 
     <dimen name="padding_18dp">18dp</dimen>
 </resources>

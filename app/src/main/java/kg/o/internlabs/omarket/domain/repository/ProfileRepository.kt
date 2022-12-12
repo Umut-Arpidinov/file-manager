@@ -12,9 +12,9 @@ interface ProfileRepository {
 
     fun getFaq(token: String): Flow<ApiState<FAQEntity>>
 
-    fun getMyActiveAds(token: String, myAds: MyAdsEntity): Flow<ApiState<MyAdsEntity>>
+    fun getMyActiveAds(token: String, myAds: MyAdsEntity, page: Int): Flow<ApiState<MyAdsEntity>>
 
-    fun getMyNonActiveAds(token: String, myAds: MyAdsEntity): Flow<ApiState<MyAdsEntity>>
+    fun getMyNonActiveAds(token: String, myAds: MyAdsEntity, page: Int): Flow<ApiState<MyAdsEntity>>
 
     fun uploadAvatar(token: String, body: MultipartBody.Part): Flow<ApiState<AvatarEntity>>
 

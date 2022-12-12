@@ -8,6 +8,7 @@ import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.ActivityMainBinding
 import kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginStartFragment
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
+import kg.o.internlabs.omarket.utils.lightStatusBar
 
 
 @AndroidEntryPoint
@@ -17,19 +18,26 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
         ViewModelProvider(this)[MainActivityViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        ActivityMainBinding.inflate(inflater)
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host)
         navHost?.let { navFragment ->
             navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-                when(fragment) {
+                when (fragment) {
                     is LoginStartFragment, is MainFragment -> finish()
                     else -> onBackPressedDispatcher.onBackPressed()
                 }
             }
         }
+    }
+
+    override fun initView() {
+        super.initView()
+       // setFullScreen(window)
+        lightStatusBar(window)
     }
 
     override fun initViewModel() {

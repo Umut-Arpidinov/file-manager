@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="@dimen/card_elevation_8dp"
     app:cardUseCompatPadding="true"
+    app:cardElevation="@dimen/card_elevation_4dp"
     app:cardCornerRadius="@dimen/cells_corner_radius_8dp"
     app:cardPreventCornerOverlap="false">
 

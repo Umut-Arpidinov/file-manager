@@ -40,7 +40,8 @@ interface ApiService {
     @POST("api/ads-board/v1/user/my-ads/")
     suspend fun getMyAds(
         @Header("Authorization") token: String?,
-        @Body myAdsDto: MyAdsDto?
+        @Body myAdsDto: MyAdsDto?,
+        @Query("page") page: Int
     ): Response<MyAdsDto?>
 
     @Multipart
