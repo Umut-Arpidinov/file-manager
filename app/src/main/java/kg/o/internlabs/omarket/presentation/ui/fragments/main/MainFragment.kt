@@ -1,6 +1,7 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -34,17 +35,22 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
         super.initListener()
         tbMain.setNavigationOnClickListener {
             findNavController().navigate(MainFragmentDirections.goToProfile(args?.number)) }
+        binding.btnTest.setOnClickListener{
+            getAds()
+        }
     }
 
     override fun initViewModel() {
         super.initViewModel()
         viewModel.getAccessTokenFromPrefs()
         viewModel.getCategories()
+        viewModel.getAds(1)
     }
 
     override fun initView() {
         super.initView()
         getCategories()
+
     }
 
     private fun getCategories() {
@@ -56,6 +62,25 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
                        //TODO it.data.result?.get(0)?.name  categoryName
                        //TODO it.data.result?.get(0)?.iconImg  icon
                        //TODO it.data.result   это для категорий все
+                    }
+                    is ApiState.Failure -> {
+                        // если что то пошло ни так
+                        requireActivity().makeToast(it.msg.message.toString())
+                    }
+                    is ApiState.Loading -> {
+                        // запрос обрабатывается сервером
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getAds() {
+        this@MainFragment.safeFlowGather {
+            viewModel.categories.collectLatest {
+                when(it) {
+                    is ApiState.Success -> {
+                        Log.d("Ray", it.data.result.toString())
                     }
                     is ApiState.Failure -> {
                         // если что то пошло ни так

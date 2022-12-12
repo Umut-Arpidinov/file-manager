@@ -9,6 +9,6 @@ interface AdsRepository {
 
     fun getCategories(token: String): Flow<ApiState<CategoriesEntity>>
 
-    fun getAds(page: Int): Flow<ApiState<AdsDto?>>
+    fun getAds(page: Int, token: String): Flow<ApiState<AdsDto?>>
 
 }
