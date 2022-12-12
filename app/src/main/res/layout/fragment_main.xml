@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/gray_2"
+    android:background="@color/gray_4"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="@drawable/ic_user_profile"
-        app:titleMarginStart="@dimen/margin_13dp">
+        app:titleMarginStart="@dimen/margin_13dp"
+        tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.SearchView
             style="@style/StyleMainSearch"
@@ -35,17 +36,36 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
-    <ScrollView
-        android:id="@+id/main_scroll_view"
+    <TextView
+        android:id="@+id/result_text"
+        style="@style/MainSearchResultText"
         android:layout_width="match_parent"
-        android:layout_height="687dp"
-        tools:layout_editor_absoluteY="204dp" />
+        android:layout_height="wrap_content"
+        android:text="@string/search_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category_recycler" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_view_holder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_2dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/result_text"
+        app:spanCount="2"
+        tools:listitem="@layout/card_view_main_ads" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/main_scroll_view"
+        app:layout_constraintBottom_toBottomOf="@id/main_view_holder"
         app:layout_constraintEnd_toStartOf="parent"
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_plus_fab"

@@ -118,6 +118,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         getMenu()
     }
 
+    override fun initListener() = with(binding) {
+        super.initListener()
+        tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
+    }
+
     private fun getNonActiveAds() {
         safeFlowGather {
             viewModel.nonActiveAds.collectLatest {
