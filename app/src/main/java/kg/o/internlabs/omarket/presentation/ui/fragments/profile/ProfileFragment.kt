@@ -66,6 +66,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         loadAllAds()
         getMenu()
     }
+    
+    override fun initListener() = with(binding){
+        super.initListener()
+        btnActive.setOnClickListener { getActiveAds() }
+        btnNonActive.setOnClickListener { getNonActiveAds() }
+        tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
+    }
 
     private fun initAdapter() = with(binding) {
         rec.adapter = adapter
@@ -87,12 +94,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 }
             }
         }
-    }
-
-    override fun initListener() = with(binding){
-        super.initListener()
-        btnActive.setOnClickListener { getActiveAds() }
-        btnNonActive.setOnClickListener { getNonActiveAds() }
     }
 
     private fun openSomeActivityForResult() {
@@ -174,19 +175,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
-    override fun initView() {
-        super.initView()
-        args?.number?.let { binding.cusProfile.setTitle(it) }
-        setImageToAvatar()
-        getActiveAds()
-        getNonActiveAds()
-        getMenu()
-    }
-
-    override fun initListener() = with(binding) {
-        super.initListener()
-        tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
-    }
 
     private fun getNonActiveAds() {
         safeFlowGather {
