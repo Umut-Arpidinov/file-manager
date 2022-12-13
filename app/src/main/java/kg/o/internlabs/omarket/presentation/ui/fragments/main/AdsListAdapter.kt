@@ -11,7 +11,8 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
-import kg.o.internlabs.omarket.data.remote.model.MainAdsDto
+import kg.o.internlabs.omarket.data.remote.model.PromotionType
+import kg.o.internlabs.omarket.data.remote.model.ResultX
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
 import java.util.*
 
@@ -19,7 +20,7 @@ private typealias coreString = kg.o.internlabs.core.R.string
 
 
 class AdsListAdapter internal constructor(
-    var list: List<MainAdsDto>,
+    var list: List<ResultX>,
     private val itemWidth: Int,
     val context: MainFragment
 ) :
@@ -43,32 +44,32 @@ class AdsListAdapter internal constructor(
         with(holder.binding) {
 
             val pagerAdapter2 =
-                PagerImageAdapter(context, mList.minifyImages, ViewGroup.LayoutParams.MATCH_PARENT)
+                PagerImageAdapter(context, mList.minify_images, ViewGroup.LayoutParams.MATCH_PARENT)
             imgAds.adapter = pagerAdapter2
             indicator.attachToPager(imgAds)
             holder.binding.indicator.attachToPager(holder.binding.imgAds)
 
-            isVIPStatus(mList.isVIP, vipIcon)
+            isVIPStatus(mList.promotion_type, vipIcon)
 
-            isOMoney(mList.isO_pay, oPayIcon)
+            isOMoney(mList.o_money_pay, oPayIcon)
 
             setPriceWithCurrency(mList.currency, mList.price, priceProduct)
 
-            setOldPriceWithCurrency(mList.currency, mList.oldPrice, oldPriceProduct)
+            setOldPriceWithCurrency(mList.currency, mList.old_price, oldPriceProduct)
 
-            nameProduct.text = mList.name?.replaceFirstChar {
+            nameProduct.text = mList.title?.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(
                     Locale.getDefault()
                 ) else it.toString()
             }
 
-            nameCategory.text = mList.category?.replaceFirstChar {
+            nameCategory.text = mList.category?.name?.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(
                     Locale.getDefault()
                 ) else it.toString()
             }
 
-            defineDelivery(mList.delivery, placeProduct, mList.location)
+            defineDelivery(mList.delivery, placeProduct, mList.location?.name)
 
             favoriteIcon.setOnClickListener{
                 if (mList.favorite == false || mList.favorite == null && !favorite) {
@@ -86,9 +87,9 @@ class AdsListAdapter internal constructor(
         return list.size
     }
 
-    private fun isVIPStatus(status: Boolean?, vipIcon: AppCompatImageView) {
+    private fun isVIPStatus(status: PromotionType?, vipIcon: AppCompatImageView) {
         if (status != null) {
-            if (status) vipIcon.visibility = VISIBLE else vipIcon.visibility = GONE
+            if (status.type.equals("vip")) vipIcon.visibility = VISIBLE else vipIcon.visibility = GONE
         } else vipIcon.visibility = GONE
     }
 
