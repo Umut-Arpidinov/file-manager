@@ -3,7 +3,7 @@ package kg.o.internlabs.omarket.data.remote.model.ads
 
 import com.google.gson.annotations.SerializedName
 
-data class MainResult(
+data class MainResultDto(
     @SerializedName("count")
     val count: Int?,
     @SerializedName("next")

@@ -2,7 +2,6 @@ package kg.o.internlabs.omarket.data.remote.model.ads
 
 
 import com.google.gson.annotations.SerializedName
-import kg.o.internlabs.omarket.domain.entity.AdsEntity
 
 data class AdsDto(
     @SerializedName("details")
@@ -10,8 +9,8 @@ data class AdsDto(
     @SerializedName("errorCode")
     val errorCode: Int?,
     @SerializedName("result")
-    val result: MainResult?,
+    val result: MainResultDto?,
     @SerializedName("resultCode")
     val resultCode: String?
 )
-fun AdsDto.toDomain() = AdsEntity(details, )
+//fun AdsDto.toDomain() = AdsEntity(details, )
