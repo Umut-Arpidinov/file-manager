@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    style="@style/StyleMainLayout"
     android:orientation="vertical"
     tools:context=".presentation.ui.fragments.main.MainFragment">
 
@@ -18,7 +18,9 @@
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.SearchView
-            style="@style/StyleMainSearch"
+            style="@style/AppSearchView"
+            app:iconifiedByDefault="false"
+            android:inputType="textMultiLine"
             android:layout_width="match_parent"
             android:layout_height="@dimen/view_height_32dp" />
     </androidx.appcompat.widget.Toolbar>
