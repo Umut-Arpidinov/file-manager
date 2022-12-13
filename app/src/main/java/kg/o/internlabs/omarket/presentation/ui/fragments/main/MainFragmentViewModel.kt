@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.AdsDto
+import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
 import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
 import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
@@ -51,7 +51,10 @@ class MainFragmentViewModel @Inject constructor(
 
     fun getAds(page: Int) {
         viewModelScope.launch {
-            getAdsUseCase(page, "eyJ1c2VyX2lkIjogNjUsICJ1dWlkIjogIjZjZmRhY2JhZjFlYzQ4ODZiZGI2MGU1MWIwOTEwZmZmIiwgImV4X3RpbWUiOiAxNjczMTEwNTI1fQ==:5YUyZJF1xLQ1K62GwPoYcJH8Ysc.6cfdacbaf1ec4886bdb60e51b0910fff").collectLatest {
+            getAdsUseCase(
+                page,
+                "eyJ1c2VyX2lkIjogNjUsICJ1dWlkIjogIjZjZmRhY2JhZjFlYzQ4ODZiZGI2MGU1MWIwOTEwZmZmIiwgImV4X3RpbWUiOiAxNjczMTEwNTI1fQ==:5YUyZJF1xLQ1K62GwPoYcJH8Ysc.6cfdacbaf1ec4886bdb60e51b0910fff"
+            ).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         _ads.emit(it)
