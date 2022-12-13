@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.data.remote
 
 
 import kg.o.internlabs.omarket.data.remote.model.*
+import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -55,5 +56,11 @@ interface ApiService {
     suspend fun deleteAvatar(
         @Header("Authorization") token: String?
     ): Response<AvatarDelDto?>
+
+    @GET("/api/ads-board/v1/ads/list/")
+    suspend fun getAds(
+        @Header("Authorization") token: String?,
+        @Query("page") page: Int
+    ): Response<AdsDto?>
 
 }
