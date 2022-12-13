@@ -94,7 +94,7 @@ data class ResultX(
     val latitude: Any?,
     val location: LocationX?,
     val longitude: Any?,
-    val minify_images: List<Any>?,
+    val minify_images: List<String>?,
     val moderator_id: Any?,
     val modified_at: String?,
     val o_money_pay: Boolean?,
