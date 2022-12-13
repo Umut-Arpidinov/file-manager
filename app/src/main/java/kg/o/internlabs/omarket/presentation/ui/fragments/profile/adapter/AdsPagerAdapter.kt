@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.adapter
+package kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -32,6 +32,19 @@ class AdsPagerAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagerAdapter.Ads
 
     class AdsViewHolder(val view: AdapterMovieBinding): RecyclerView.ViewHolder(view.root) {
         fun bind(item: MyAdsResultsEntity?) = with(view){
+            //<editor-fold desc="Инструктция по роуту мой объявление">
+            item?.minifyImages // массив ссылок на картинки
+            item?.viewCount  // количество просмотров
+            item?.price    // цена
+            item?.oldPrice   // стараая цена
+            item?.currency   // валюта
+            item?.title      // название товара
+            item?.description  // описание товара
+            item?.category?.name    // название категорий
+            item?.location       // местоположение или адресс
+            item?.category?.delivery  // есть доставка или нет
+            //</editor-fold>
+
             name.text = item?.uuid
             if (item?.minifyImages?.size != 0) {
                 Glide.with(root)

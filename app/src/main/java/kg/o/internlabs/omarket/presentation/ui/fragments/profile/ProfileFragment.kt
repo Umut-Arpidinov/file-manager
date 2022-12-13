@@ -26,8 +26,8 @@ import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomProfileCellView
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
 import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
-import kg.o.internlabs.omarket.presentation.ui.adapter.AdClicked
-import kg.o.internlabs.omarket.presentation.ui.adapter.AdsPagerAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdClicked
+import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagerAdapter
 import kg.o.internlabs.omarket.utils.checkPermission
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather

@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.adapter
+package kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter
 
 import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
 

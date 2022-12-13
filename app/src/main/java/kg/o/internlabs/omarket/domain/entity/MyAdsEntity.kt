@@ -31,6 +31,7 @@ data class MyAdsResultsEntity(
     val uuid: String? = null,
     val oMoneyPay: Boolean? = null,
     val price: String? = null,
+    val oldPrice: String? = null,
     val currency: String? = null,
     val location: LocationEntity? = null,
     val id: Int? = null,
@@ -44,7 +45,8 @@ data class MyAdsResultsEntity(
 )
 
 data class CategoryEntity(
-    val name: String? = null
+    val name: String? = null,
+    val delivery: Boolean? = null
 )
 
 data class LocationEntity(

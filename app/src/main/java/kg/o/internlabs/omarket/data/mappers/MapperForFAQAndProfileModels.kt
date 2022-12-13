@@ -56,6 +56,7 @@ class MapperForFAQAndProfileModels {
         uuid = res?.uuid,
         oMoneyPay = res?.oMoneyPay,
         price = res?.price,
+        oldPrice = res?.oldPrice,
         currency = res?.currency,
         location = mapEntityToDbModel(res?.location),
         id = res?.id,
@@ -78,7 +79,10 @@ class MapperForFAQAndProfileModels {
         LocationDto(name = location?.name)
 
     private fun mapEntityToDbModel(category: CategoryEntity?) =
-        CategoryDto(name = category?.name)
+        CategoryDto(
+            name = category?.name,
+            delivery = category?.delivery
+        )
 
 
     fun mapDbModelToEntity(faq: MyAdsDto?) = MyAdsEntity(
@@ -109,6 +113,7 @@ class MapperForFAQAndProfileModels {
         uuid = res?.uuid,
         oMoneyPay = res?.oMoneyPay,
         price = res?.price,
+        oldPrice = res?.oldPrice,
         currency = res?.currency,
         location = mapDbModelToEntity(res?.location),
         id = res?.id,
@@ -131,7 +136,10 @@ class MapperForFAQAndProfileModels {
         LocationEntity(name = location?.name)
 
     private fun mapDbModelToEntity(category: CategoryDto?) =
-        CategoryEntity(name = category?.name)
+        CategoryEntity(
+            name = category?.name,
+            delivery = category?.delivery
+            )
 
     fun mapRespDbModelToRespEntityForMyAds(resp: Response<MyAdsDto?>) = if (resp.isSuccessful) {
         Response.success(mapDbModelToEntity(resp.body()))

@@ -38,6 +38,8 @@ data class MyAdsResultsDto(
     @SerializedName("o_money_pay")
     val oMoneyPay: Boolean? = null,
     val price: String? = null,
+    @SerializedName("old_price")
+    val oldPrice: String? = null,
     val currency: String? = null,
     val location: LocationDto? = null,
     val id: Int? = null,
@@ -54,7 +56,8 @@ data class MyAdsResultsDto(
 )
 
 data class CategoryDto(
-    val name: String? = null
+    val name: String? = null,
+    val delivery: Boolean? = null
 )
 
 data class LocationDto(
