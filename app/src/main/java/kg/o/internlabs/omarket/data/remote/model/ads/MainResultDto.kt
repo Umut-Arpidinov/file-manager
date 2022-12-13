@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class MainResultDto(
     @SerializedName("count")
-    val count: Int?,
+    val count: Int? = null,
     @SerializedName("next")
-    val next: Int?,
+    val next: Int? = null,
     @SerializedName("previous")
-    val previous: Int?,
+    val previous: Int? = null,
     @SerializedName("results")
-    val results: List<ResultX>?
+    val results: List<ResultXDto>? = null
 )

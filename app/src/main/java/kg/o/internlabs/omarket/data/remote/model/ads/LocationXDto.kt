@@ -3,19 +3,19 @@ package kg.o.internlabs.omarket.data.remote.model.ads
 
 import com.google.gson.annotations.SerializedName
 
-data class LocationX(
+data class LocationXDto(
     @SerializedName("id")
-    val id: Int?,
+    val id: Int? = null,
     @SerializedName("is_popular")
-    val isPopular: Boolean?,
+    val isPopular: Boolean? = null,
     @SerializedName("location_type")
-    val locationType: String?,
+    val locationType: String? = null,
     @SerializedName("name")
-    val name: String?,
+    val name: String? = null,
     @SerializedName("order_num")
-    val orderNum: Int?,
+    val orderNum: Int? = null,
     @SerializedName("parent")
-    val parent: Int?,
+    val parent: Int? = null,
     @SerializedName("search_by_name")
-    val searchByName: String?
+    val searchByName: String? = null
 )

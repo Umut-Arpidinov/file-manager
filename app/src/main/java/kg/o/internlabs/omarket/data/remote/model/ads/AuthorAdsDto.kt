@@ -3,29 +3,29 @@ package kg.o.internlabs.omarket.data.remote.model.ads
 
 import com.google.gson.annotations.SerializedName
 
-data class Author(
+data class AuthorAdsDto(
     @SerializedName("avatar")
-    val avatar: String?,
+    val avatar: String? = null,
     @SerializedName("block_type")
-    val blockType: String?,
+    val blockType: String? = null,
     @SerializedName("contact_num_is_ident")
-    val contactNumIsIdent: Boolean?,
+    val contactNumIsIdent: Boolean? = null,
     @SerializedName("contact_number")
-    val contactNumber: String?,
+    val contactNumber: String? = null,
     @SerializedName("has_promotion")
-    val hasPromotion: Boolean?,
+    val hasPromotion: Boolean? = null,
     @SerializedName("id")
-    val id: Int?,
+    val id: Int? = null,
     @SerializedName("location")
-    val location: Location?,
+    val location: LocationAdsDto? = null,
     @SerializedName("msisdn")
-    val msisdn: String?,
+    val msisdn: String? = null,
     @SerializedName("partner_type")
-    val partnerType: String?,
+    val partnerType: String? = null,
     @SerializedName("rating")
-    val rating: Double?,
+    val rating: Double? = null,
     @SerializedName("username")
-    val username: String?,
+    val username: String? = null,
     @SerializedName("verified")
-    val verified: Boolean?
+    val verified: Boolean? = null
 )

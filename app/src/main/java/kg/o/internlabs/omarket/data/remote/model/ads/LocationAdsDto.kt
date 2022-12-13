@@ -3,13 +3,13 @@ package kg.o.internlabs.omarket.data.remote.model.ads
 
 import com.google.gson.annotations.SerializedName
 
-data class Location(
+data class LocationAdsDto(
     @SerializedName("id")
-    val id: Int?,
+    val id: Int? = null,
     @SerializedName("location_type")
-    val locationType: String?,
+    val locationType: String? = null,
     @SerializedName("name")
-    val name: String?,
+    val name: String? = null,
     @SerializedName("parent")
-    val parent: Int?
+    val parent: Int? = null
 )

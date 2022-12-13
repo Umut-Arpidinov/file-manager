@@ -11,9 +11,9 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
-import kg.o.internlabs.omarket.data.remote.model.ads.PromotionType
-import kg.o.internlabs.omarket.data.remote.model.ads.ResultX
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
+import kg.o.internlabs.omarket.domain.entity.ads.PromotionType
+import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import java.util.*
 
 private typealias coreString = kg.o.internlabs.core.R.string

@@ -3,41 +3,41 @@ package kg.o.internlabs.omarket.data.remote.model.ads
 
 import com.google.gson.annotations.SerializedName
 
-data class Category(
+data class ParentAdsDto(
     @SerializedName("ad_type")
-    val adType: List<Int?>?,
+    val adType: List<Int?>? = null,
     @SerializedName("category_type")
-    val categoryType: String?,
+    val categoryType: String? = null,
     @SerializedName("dark_icon")
-    val darkIcon: Any?,
+    val darkIcon: String? = null,
     @SerializedName("dark_icon_img")
-    val darkIconImg: String?,
+    val darkIconImg: String? = null,
     @SerializedName("delivery")
-    val delivery: Boolean?,
+    val delivery: Boolean? = null,
     @SerializedName("filters")
-    val filters: List<Any?>?,
+    val filters: List<Int?>? = null,
     @SerializedName("has_dynamic_filter")
-    val hasDynamicFilter: Any?,
+    val hasDynamicFilter: Boolean? = null,
     @SerializedName("has_map")
-    val hasMap: Boolean?,
+    val hasMap: Boolean? = null,
     @SerializedName("icon")
-    val icon: String?,
+    val icon: String? = null,
     @SerializedName("icon_img")
-    val iconImg: String?,
+    val iconImg: String? = null,
     @SerializedName("id")
-    val id: Int?,
+    val id: Int? = null,
     @SerializedName("is_popular")
-    val isPopular: Boolean?,
+    val isPopular: Boolean? = null,
     @SerializedName("linked_category")
-    val linkedCategory: List<Any?>?,
+    val linkedCategory: List<Int?>? = null,
     @SerializedName("name")
-    val name: String?,
+    val name: String? = null,
     @SerializedName("order_num")
-    val orderNum: Int?,
+    val orderNum: Int? = null,
     @SerializedName("parent")
-    val parent: Parent?,
+    val parent: Int? = null,
     @SerializedName("parent_filters")
-    val parentFilters: Boolean?,
+    val parentFilters: Boolean? = null,
     @SerializedName("required_price")
-    val requiredPrice: Boolean?
+    val requiredPrice: Boolean? = null
 )
