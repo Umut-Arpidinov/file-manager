@@ -130,6 +130,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             viewModel.ads.collectLatest {
                 when(it){
                     is ApiState.Success -> {
+                        //
 
                         Log.d("Ray", "AAAAAAAAAAAAAA" + it.data?.result?.results.toString())
 
