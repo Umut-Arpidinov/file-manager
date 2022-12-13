@@ -58,8 +58,8 @@ interface ApiService {
 
     @GET("api/ads-board/v1/category/list")
     suspend fun getAds(
-        @Query("page") page: Int,
-        @Header("Authorization") token: String?
-    ): Response<AdsDto>
+        @Header("Authorization") token: String?,
+        @Query("page") page: Int
+    ): Response<AdsDto?>
 
 }

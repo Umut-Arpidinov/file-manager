@@ -26,7 +26,7 @@ class MainFragmentViewModel @Inject constructor(
     val token = _token.asStateFlow()
 
     private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
-val categories = _categories.asSharedFlow()
+    val categories = _categories.asSharedFlow()
 
     private val _ads = MutableSharedFlow<ApiState<AdsDto?>>()
     val ads = _ads.asSharedFlow()
@@ -49,19 +49,20 @@ val categories = _categories.asSharedFlow()
         }
     }
 
-    fun getAds(page: Int){
+    fun getAds(page: Int) {
         viewModelScope.launch {
-            getAdsUseCase(page, getAccessToken()).collectLatest {
+            getAdsUseCase(page, "eyJ1c2VyX2lkIjogNjUsICJ1dWlkIjogIjZjZmRhY2JhZjFlYzQ4ODZiZGI2MGU1MWIwOTEwZmZmIiwgImV4X3RpbWUiOiAxNjczMTEwNTI1fQ==:5YUyZJF1xLQ1K62GwPoYcJH8Ysc.6cfdacbaf1ec4886bdb60e51b0910fff").collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-            _ads.emit(it)
-
+                        _ads.emit(it)
+                        Log.d("Ray", "Success")
                     }
                     is ApiState.Failure -> {
                         _ads.emit(it)
+                        Log.d("Ray", "Failure")
+
                     }
                     ApiState.Loading -> {
-                        Log.d("Ray", "loading")
                     }
                 }
             }
@@ -69,7 +70,7 @@ val categories = _categories.asSharedFlow()
     }
 
     fun getAccessTokenFromPrefs() {
-        viewModelScope.launch{
+        viewModelScope.launch {
             getAccessTokenFromPrefsUseCase().collectLatest {
                 if (it != null) {
                     _token.emit(it)

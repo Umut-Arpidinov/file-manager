@@ -19,8 +19,9 @@ class AdsRepositoryImpl @Inject constructor(
             )
         )
     }
+
     override fun getAds(page: Int, token: String) = safeApiCall {
-        apiService.getAds(page, token)
+        apiService.getAds(token, page)
     }
 
 }
