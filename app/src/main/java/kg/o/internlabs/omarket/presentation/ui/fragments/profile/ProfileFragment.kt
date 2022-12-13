@@ -174,6 +174,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
+    override fun initView() {
+        super.initView()
+        args?.number?.let { binding.cusProfile.setTitle(it) }
+        setImageToAvatar()
+        getActiveAds()
+        getNonActiveAds()
+        getMenu()
+    }
+
+    override fun initListener() = with(binding) {
+        super.initListener()
+        tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
+    }
+
     private fun getNonActiveAds() {
         safeFlowGather {
             viewModel.nonActiveAds.collectLatest {

@@ -11,32 +11,29 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         app:contentInsetStartWithNavigation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_user_profile"
-        app:titleMarginStart="@dimen/margin_13dp">
+        app:titleMarginStart="@dimen/margin_13dp"
+        tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.SearchView
             style="@style/StyleMainSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="@dimen/view_height_32dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/recycler_groups"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_recycler"
         android:layout_width="match_parent"
-        android:layout_height="53dp"
         android:layout_marginTop="@dimen/margin_10dp"
-        android:background="@color/gray_2"
-        android:gravity="center"
-        android:text="RecyclerView with Categories: Task Umut"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        app:layout_constraintTop_toBottomOf="@id/tb_main" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_main">
+    </androidx.recyclerview.widget.RecyclerView>
+
 
     <TextView
         android:id="@+id/result_text"
@@ -46,7 +43,8 @@
         android:text="@string/search_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_groups" />
+        app:layout_constraintTop_toBottomOf="@id/category_recycler" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_view_holder"
@@ -66,15 +64,15 @@
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_21dp"
+        app:layout_constraintBottom_toBottomOf="@id/main_view_holder"
+        app:layout_constraintEnd_toStartOf="parent"
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_plus_fab"
         app:borderWidth="@dimen/dimen_0dp"
         app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/magenta_1"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="178dp"
+        tools:layout_editor_absoluteY="814dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

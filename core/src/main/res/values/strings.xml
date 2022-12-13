@@ -106,4 +106,5 @@
     <string name="som_underline">%,d <u>с</u></string>
     <string name="dollar_price">%,d <u>$</u></string>
     <string name="delivery_available">%s/Доставка</string>
+    <string name="category_description">icons of categories</string>
 </resources>
