@@ -1,7 +1,10 @@
 package kg.o.internlabs.omarket.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import kg.o.internlabs.core.base.BaseRepository
 import kg.o.internlabs.omarket.data.mappers.MapperForFAQAndProfileModels
+import kg.o.internlabs.omarket.data.paging.ProfilePagingSource
 import kg.o.internlabs.omarket.data.remote.ApiService
 import kg.o.internlabs.omarket.domain.entity.MyAdsEntity
 import kg.o.internlabs.omarket.domain.repository.ProfileRepository
@@ -22,26 +25,22 @@ class ProfileRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getMyActiveAds(token: String, myAds: MyAdsEntity, page: Int) = safeApiCall {
-        mapper.mapRespDbModelToRespEntityForMyAds(
-            apiService.getMyAds(
-                token,
-                mapper.mapEntityToDbModel(
-                    myAds
-                ),
-                page
+    override fun getMyAds(token: String, myAds: MyAdsEntity) = Pager(
+        config = PagingConfig(pageSize = 10, prefetchDistance = 2),
+        pagingSourceFactory = {
+            ProfilePagingSource(
+                apiService,
+                mapper.mapEntityToDbModel(myAds), token
             )
-        )
-    }
+        }
+    ).flow
 
-    override fun getMyNonActiveAds(token: String, myAds: MyAdsEntity, page: Int) = safeApiCall {
+    override fun getMyAllAds(token: String, myAds: MyAdsEntity) = safeApiCall {
         mapper.mapRespDbModelToRespEntityForMyAds(
             apiService.getMyAds(
                 token,
-                mapper.mapEntityToDbModel(
-                    myAds
-                ),
-                page
+                mapper.mapEntityToDbModel(myAds),
+                null
             )
         )
     }
@@ -57,5 +56,4 @@ class ProfileRepositoryImpl @Inject constructor(
             apiService.deleteAvatar(token)
         )
     }
-
 }

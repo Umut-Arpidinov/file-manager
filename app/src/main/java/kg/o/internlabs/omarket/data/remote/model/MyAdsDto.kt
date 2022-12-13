@@ -3,11 +3,11 @@ package kg.o.internlabs.omarket.data.remote.model
 import com.google.gson.annotations.SerializedName
 
 data class MyAdsDto(
-    val count: Long? = null,
-    val next: String? = null,
-    val previous: String? = null,
     @SerializedName("result")
     val result: MyAdsResultDto? = null,
+    val resultCode: String? = null,
+    val details: String? = null,
+    val errorCode: Int? = null,
     val statuses: List<String>? = null
 )
 
@@ -38,6 +38,8 @@ data class MyAdsResultsDto(
     @SerializedName("o_money_pay")
     val oMoneyPay: Boolean? = null,
     val price: String? = null,
+    @SerializedName("old_price")
+    val oldPrice: String? = null,
     val currency: String? = null,
     val location: LocationDto? = null,
     val id: Int? = null,
@@ -54,7 +56,8 @@ data class MyAdsResultsDto(
 )
 
 data class CategoryDto(
-    val name: String? = null
+    val name: String? = null,
+    val delivery: Boolean? = null
 )
 
 data class LocationDto(

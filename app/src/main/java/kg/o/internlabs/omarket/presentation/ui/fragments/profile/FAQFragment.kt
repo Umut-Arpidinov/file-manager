@@ -26,7 +26,6 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
 
     override fun initViewModel() {
         super.initViewModel()
-        viewModel.getAccessTokenFromPrefs()
         viewModel.getFaq()
     }
 

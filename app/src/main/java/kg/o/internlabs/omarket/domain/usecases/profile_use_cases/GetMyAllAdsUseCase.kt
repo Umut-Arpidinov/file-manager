@@ -4,12 +4,14 @@ import kg.o.internlabs.omarket.domain.entity.MyAdsEntity
 import kg.o.internlabs.omarket.domain.repository.ProfileRepository
 import javax.inject.Inject
 
-class GetMyNonActiveAdsUseCase @Inject constructor(
+class GetMyAllAdsUseCase @Inject constructor(
     private val profileRep: ProfileRepository
 ) {
-    private var myAdsEntity = MyAdsEntity(statuses = listOf("cancelled", "moderate", "disabled"))
+    private var myAdsEntity = MyAdsEntity(
+        statuses = listOf("active","cancelled", "moderate", "disabled")
+    )
 
     operator fun invoke(token: String) =
-        profileRep.getMyAds(token, myAdsEntity)
+        profileRep.getMyAllAds(token, myAdsEntity)
 
 }

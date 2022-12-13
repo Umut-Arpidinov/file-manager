@@ -29,10 +29,10 @@ class MapperForFAQAndProfileModels {
 
     //region MyAds
     fun mapEntityToDbModel(faq: MyAdsEntity?) = MyAdsDto(
-        count = faq?.count,
-        next = faq?.next,
-        previous = faq?.previous,
         result = mapEntityToDbModel(faq?.result),
+        resultCode = faq?.resultCode,
+        details = faq?.details,
+        errorCode = faq?.errorCode,
         statuses = faq?.statuses
     )
 
@@ -56,6 +56,7 @@ class MapperForFAQAndProfileModels {
         uuid = res?.uuid,
         oMoneyPay = res?.oMoneyPay,
         price = res?.price,
+        oldPrice = res?.oldPrice,
         currency = res?.currency,
         location = mapEntityToDbModel(res?.location),
         id = res?.id,
@@ -78,14 +79,17 @@ class MapperForFAQAndProfileModels {
         LocationDto(name = location?.name)
 
     private fun mapEntityToDbModel(category: CategoryEntity?) =
-        CategoryDto(name = category?.name)
+        CategoryDto(
+            name = category?.name,
+            delivery = category?.delivery
+        )
 
 
-    private fun mapDbModelToEntity(faq: MyAdsDto?) = MyAdsEntity(
-        count = faq?.count,
-        next = faq?.next,
-        previous = faq?.previous,
+    fun mapDbModelToEntity(faq: MyAdsDto?) = MyAdsEntity(
         result = mapDbModelToEntity(faq?.result),
+        resultCode = faq?.resultCode,
+        details = faq?.details,
+        errorCode = faq?.errorCode,
         statuses = faq?.statuses
     )
 
@@ -109,6 +113,7 @@ class MapperForFAQAndProfileModels {
         uuid = res?.uuid,
         oMoneyPay = res?.oMoneyPay,
         price = res?.price,
+        oldPrice = res?.oldPrice,
         currency = res?.currency,
         location = mapDbModelToEntity(res?.location),
         id = res?.id,
@@ -131,7 +136,10 @@ class MapperForFAQAndProfileModels {
         LocationEntity(name = location?.name)
 
     private fun mapDbModelToEntity(category: CategoryDto?) =
-        CategoryEntity(name = category?.name)
+        CategoryEntity(
+            name = category?.name,
+            delivery = category?.delivery
+            )
 
     fun mapRespDbModelToRespEntityForMyAds(resp: Response<MyAdsDto?>) = if (resp.isSuccessful) {
         Response.success(mapDbModelToEntity(resp.body()))
