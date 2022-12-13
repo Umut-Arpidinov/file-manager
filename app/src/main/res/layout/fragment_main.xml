@@ -19,6 +19,7 @@
 
         <androidx.appcompat.widget.SearchView
             style="@style/StyleMainSearch"
+            app:queryBackground="@color/transparent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/view_height_32dp" />
     </androidx.appcompat.widget.Toolbar>
