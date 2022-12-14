@@ -4,10 +4,9 @@ import kg.o.internlabs.omarket.data.remote.model.CategoriesDto
 import kg.o.internlabs.omarket.data.remote.model.RegisterDto
 import kg.o.internlabs.omarket.data.remote.model.ResultDto
 import kg.o.internlabs.omarket.data.remote.model.SubCategoriesDto
-import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
-import kg.o.internlabs.omarket.domain.entity.RegisterEntity
-import kg.o.internlabs.omarket.domain.entity.ResultEntity
-import kg.o.internlabs.omarket.domain.entity.SubCategoriesEntity
+import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
+import kg.o.internlabs.omarket.data.remote.model.ads.MainResult
+import kg.o.internlabs.omarket.domain.entity.*
 import retrofit2.Response
 
 class MapperForModels {
@@ -95,6 +94,8 @@ class MapperForModels {
         errorCode = cat?.errorCode
     )
 
+
+
     private fun mapDbModelToEntity(res: ResultDto?) = ResultEntity(id = res?.id,
         parent = res?.parent,
         name = res?.name,
@@ -141,4 +142,6 @@ class MapperForModels {
             resp.errorBody()?.let { Response.error(resp.code(), it) }
         }
     // endregion
+
+
 }
