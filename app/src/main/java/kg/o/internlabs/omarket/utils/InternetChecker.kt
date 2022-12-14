@@ -1,13 +1,15 @@
 package kg.o.internlabs.omarket.utils
 
 import android.content.Context
-import android.net.*
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class InternetChecker(context: Context) : LiveData<NetworkStatus>(){
     val internetList: ArrayList<Network> = ArrayList()

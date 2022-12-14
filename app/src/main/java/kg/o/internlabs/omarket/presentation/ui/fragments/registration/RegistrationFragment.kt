@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.collectLatest
 
 private typealias coreString = kg.o.internlabs.core.R.string
 
-
 @AndroidEntryPoint
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
         RegistrationViewModel>(), NumberInputHelper, PasswordInputHelper {

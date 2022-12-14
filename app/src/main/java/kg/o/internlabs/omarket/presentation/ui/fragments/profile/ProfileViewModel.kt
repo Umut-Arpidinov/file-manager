@@ -56,7 +56,6 @@ class ProfileViewModel @Inject constructor(
     private val _avatarUrl = MutableStateFlow("")
     val avatarUrl = _avatarUrl.asStateFlow()
 
-
     init {
         getAccessTokenFromPrefs()
         getAvatarUrlFromPrefs()
@@ -91,7 +90,6 @@ class ProfileViewModel @Inject constructor(
     }, {
         _nonActiveAds = it
     })
-
 
     private fun getMyAllAds() {
         viewModelScope.launch {

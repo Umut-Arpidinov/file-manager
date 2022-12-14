@@ -114,35 +114,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         safeFlowGather {
             viewModel.ads.collectLatest {
                 adapter.submitData(it)
-                /*when (it) {
-                    is ApiState.Success -> {
-                        //
-
-                        Log.d("Ray", "AAAAAAAAAAAAAA" + it.data?.result?.results.toString())
-
-                        val mainAdapter =
-                            AdsListAdapter(
-                                it.data?.result?.results!!,
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                this@MainFragment
-                            )
-                        binding.mainViewHolder.addItemDecoration(
-                            MarginItemDecoration(
-                                resources.getDimensionPixelSize(
-                                    R.dimen.item_margin_7dp
-                                )
-                            )
-                        )
-                        binding.mainViewHolder.adapter = mainAdapter
-                    }
-                    is ApiState.Failure -> {
-                        Log.e("gaypop", it.msg.localizedMessage.toString())
-                        Log.d("Ray", it.msg.message.toString())
-                    }
-                    is ApiState.Loading -> {
-
-                    }
-                }*/
             }
         }
     }
@@ -152,6 +123,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     override fun adClicked(ad: ResultX) {
-        println("click---------")
+        println("click-----${ad.uuid}----")
     }
 }

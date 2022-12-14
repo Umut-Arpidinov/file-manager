@@ -85,7 +85,7 @@ class MapperForFAQAndProfileModels {
         )
 
 
-    fun mapDbModelToEntity(faq: MyAdsDto?) = MyAdsEntity(
+    private fun mapDbModelToEntity(faq: MyAdsDto?) = MyAdsEntity(
         result = mapDbModelToEntity(faq?.result),
         resultCode = faq?.resultCode,
         details = faq?.details,
