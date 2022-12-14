@@ -28,6 +28,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     private var args: MainFragmentArgs? = null
     private var adapter = PagerAdapterForMain()
 //    private var adapterForAdsByCategory = PagerAdapterForAdsByCategory()
+
+    //
     private var list: List<ResultEntity>? = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
