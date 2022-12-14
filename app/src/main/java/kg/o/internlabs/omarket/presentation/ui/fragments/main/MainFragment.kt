@@ -11,7 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.R
-import kg.o.internlabs.omarket.data.remote.model.MainAdsDto
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.utils.makeToast
@@ -55,6 +54,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     override fun initView() {
         super.initView()
         getCategories()
+        getAds()
     }
 
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {
