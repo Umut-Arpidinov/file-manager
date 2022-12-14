@@ -292,6 +292,10 @@
         <item name="android:background">@color/black_1</item>
     </style>
 
+    <style name="StyleAdsBackground">
+        <item name="android:background">@color/black_4</item>
+    </style>
+
     <style name="MainSearchResultText" parent="AppPrimaryStyle">
         <item name="android:textSize">@dimen/text_17sp</item>
         <item name="android:textColor">@color/white_1</item>

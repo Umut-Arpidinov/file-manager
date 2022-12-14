@@ -1,64 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StyleMainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/StyleMainLayout"
     android:orientation="vertical"
     tools:context=".presentation.ui.fragments.main.MainFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb_main"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_app_bar"
+        style="@style/StyleMainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contentInsetStartWithNavigation="0dp"
-        app:navigationIcon="@drawable/ic_user_profile"
-        app:titleMarginStart="@dimen/margin_13dp"
-        tools:ignore="MissingConstraints">
+        app:elevation="@dimen/elevation_0dp">
 
-        <androidx.appcompat.widget.SearchView
-            style="@style/AppSearchView"
-            app:iconifiedByDefault="false"
-            android:inputType="textMultiLine"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/tb_main"
+            style="@style/StyleMainLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/view_height_32dp" />
-    </androidx.appcompat.widget.Toolbar>
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp"
+            app:elevation="@dimen/elevation_0dp"
+            app:layout_scrollFlags="scroll|snap">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/category_recycler"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/margin_10dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_main">
-    </androidx.recyclerview.widget.RecyclerView>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_13dp"
+                    android:src="@drawable/ic_user_profile"
+                    app:layout_constraintBottom_toBottomOf="@+id/search_main"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/search_main" />
 
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_main"
+                    style="@style/AppSearchView"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/view_height_32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ic_profile"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/result_text"
-        style="@style/MainSearchResultText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/search_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_recycler" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/category_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_main"
+                    tools:listitem="@layout/category_view_holder" />
 
+                <TextView
+                    android:id="@+id/result_text"
+                    style="@style/MainSearchResultText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/category_recycler" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_view_holder"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_2dp"
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/result_text"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:spanCount="2"
         tools:listitem="@layout/card_view_main_ads" />
 
@@ -66,15 +89,13 @@
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/main_view_holder"
-        app:layout_constraintEnd_toStartOf="parent"
-        android:backgroundTint="@color/white"
+        android:layout_gravity="bottom|center"
+        android:backgroundTint="@color/color_fab_main"
         android:src="@drawable/ic_plus_fab"
+        android:layout_marginBottom="@dimen/margin_20dp"
         app:borderWidth="@dimen/dimen_0dp"
         app:fabSize="normal"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:tint="@color/magenta_1"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck"
-        tools:layout_editor_absoluteX="178dp"
-        tools:layout_editor_absoluteY="814dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:contentDescription="@string/app_name"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
