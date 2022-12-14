@@ -12,14 +12,17 @@
         android:id="@+id/main_app_bar"
         style="@style/StyleMainLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="@dimen/elevation_0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tb_main"
+            style="@style/StyleMainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetStart="0dp"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:elevation="@dimen/elevation_0dp"
+            app:layout_scrollFlags="scroll|snap">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -87,10 +90,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/color_fab_main"
         android:src="@drawable/ic_plus_fab"
+        android:layout_marginBottom="@dimen/margin_20dp"
         app:borderWidth="@dimen/dimen_0dp"
         app:fabSize="normal"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        app:tint="@color/magenta_1" />
+        app:tint="@color/magenta_1"
+        android:contentDescription="@string/app_name"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

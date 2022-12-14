@@ -385,9 +385,15 @@
         <item name="iconifiedByDefault">false</item>
         <item name="android:inputType">textMultiLine</item>
     </style>
+
     <style name="StyleMainLayout">
         <item name="android:background">@color/gray_5</item>
     </style>
+
+    <style name="StyleAdsBackground">
+        <item name="android:background">@color/gray_5</item>
+    </style>
+
     <style name="MainSearchView">
         <item name="android:textColor">@color/red</item>
     </style>
