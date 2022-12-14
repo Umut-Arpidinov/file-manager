@@ -1,5 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
+import android.content.Context
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
@@ -22,7 +23,7 @@ private typealias coreString = kg.o.internlabs.core.R.string
 class AdsListAdapter internal constructor(
     var list: List<ResultX>,
     private val itemWidth: Int,
-    val context: MainFragment
+    val context: Context
 ) :
     RecyclerView.Adapter<AdsListAdapter.ViewHolder>() {
     private var favorite = true
@@ -120,6 +121,7 @@ class AdsListAdapter internal constructor(
             setPriceWithCurrency(currency, oldPrice, oldPriceProduct)
         }
     }
+
     private fun defineDelivery(delivery: Boolean?, placeProduct: TextView, location: String?) {
         if (delivery == true)
             placeProduct.text = String.format(getString(coreString.delivery_available), location)
