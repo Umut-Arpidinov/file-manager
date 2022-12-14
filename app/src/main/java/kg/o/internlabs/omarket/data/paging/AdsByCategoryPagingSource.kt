@@ -28,9 +28,8 @@ class AdsByCategoryPagingSource(
         val res = response.body()?.resultL
         LoadResult.Page(
             data = res.orEmpty(),
-            prevKey = if (position == 1) null else position - 1,
-
-            nextKey = if (res?.isEmpty() == true) position + 1 else null
+            prevKey = if (position == 1) null else position + 1,
+            nextKey = if (res?.isEmpty() == true) position - 1 else null
         )
     } catch (e: Exception) {
         println("+++++++++++" + e.message)

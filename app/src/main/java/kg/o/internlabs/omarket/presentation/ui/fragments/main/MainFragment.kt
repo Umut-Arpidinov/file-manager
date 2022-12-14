@@ -27,7 +27,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     private var args: MainFragmentArgs? = null
     private var adapter = PagerAdapterForMain()
-//    private var adapterForAdsByCategory = PagerAdapterForAdsByCategory()
+    private var adapterForAdsByCategory = PagerAdapterForAdsByCategory()
 
     //
     private var list: List<ResultEntity>? = listOf()
@@ -125,7 +125,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     private fun getAdsByCategory() {
         safeFlowGather {
             viewModel.adsByCategory.collectLatest {
-                //adapterForAdsByCategory.submitData(it)
+                adapterForAdsByCategory.submitData(it)
             }
         }
     }

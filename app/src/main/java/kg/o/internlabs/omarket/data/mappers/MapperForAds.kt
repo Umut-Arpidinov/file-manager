@@ -309,7 +309,7 @@ class MapperForAds {
         whatsappNumIsIdent = v?.whatsappNumIsIdent
     )
 
-    fun toRespEntityForAds(resp: Response<AdsDto?>) =
+    fun toRespEntityForAds(resp: Response<MainResultDto?>) =
         if (resp.isSuccessful) {
             Response.success(toEntity(resp.body()))
         } else {

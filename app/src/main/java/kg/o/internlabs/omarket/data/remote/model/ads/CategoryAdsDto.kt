@@ -8,7 +8,7 @@ data class CategoryAdsDto(
     val adType: List<Int?>? = null,
     @SerializedName("category_type")
     val categoryType: String? = null,
-    @SerializedName("dark_icon")
+    @SerializedName("dark_ico")
     val darkIcon: String? = null,
     @SerializedName("dark_icon_img")
     val darkIconImg: String? = null,
