@@ -58,11 +58,9 @@ class MainFragmentViewModel @Inject constructor(
                 when (it) {
                     is ApiState.Success -> {
                         _ads.emit(it)
-                        Log.d("Ray", "Success")
                     }
                     is ApiState.Failure -> {
                         _ads.emit(it)
-                        Log.d("Ray", "Failure")
 
                     }
                     ApiState.Loading -> {
