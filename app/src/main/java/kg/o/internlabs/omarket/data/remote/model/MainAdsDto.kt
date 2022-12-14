@@ -13,4 +13,5 @@ data class MainAdsDto(
     val currency: String? = null, //Som or Dollars
     val delivery: Boolean? = null, //Is Delivery available
     val favorite: Boolean? = null //In list of favorite
-)
+) {
+}

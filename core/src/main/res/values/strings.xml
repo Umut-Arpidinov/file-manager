@@ -64,7 +64,7 @@
         ]]>
     </string>
 
-    <string name="helper_text_no_lower_case_letters">
+     <string name="helper_text_no_lower_case_letters">
         <![CDATA[
         Создайте пароль, минимум из 8 символов, включая цифры, заглавные и
         <font color="red"> строчные буквы</font>

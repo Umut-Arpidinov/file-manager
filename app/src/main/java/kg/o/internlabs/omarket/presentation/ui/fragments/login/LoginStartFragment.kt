@@ -53,7 +53,4 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         binding.cusBtnEnter.isEnabled = notEmpty
         binding.cusBtnReg.isEnabled = notEmpty
     }
-
-
-
 }
