@@ -52,7 +52,6 @@ class AdsPagerAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagerAdapter.Ads
                     .into(iv)
             }
         }
-
     }
 
     object AdsComparator: DiffUtil.ItemCallback<MyAdsResultsEntity>() {

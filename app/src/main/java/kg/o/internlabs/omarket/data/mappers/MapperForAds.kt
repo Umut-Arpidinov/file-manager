@@ -14,6 +14,14 @@ class MapperForAds {
         resultCode = v?.resultCode
     )
 
+     fun toDbModel(v: AdsByCategory?) = AdsByCategoryDto(
+        details = v?.details,
+        errorCode = v?.errorCode,
+        resultCode = v?.resultCode,
+        q = v?.q,
+        resultL = v?.resultL?.map { toDbModel(it) }
+    )
+
     fun toDbModel(v: Author?) = AuthorAdsDto(
         avatar = v?.avatar,
         blockType = v?.blockType,
@@ -158,6 +166,14 @@ class MapperForAds {
         resultCode = v?.resultCode
     )
 
+    fun toEntity(v: AdsByCategoryDto?) = AdsByCategory(
+        details = v?.details,
+        errorCode = v?.errorCode,
+        resultCode = v?.resultCode,
+        q = v?.q,
+        resultL = v?.resultL?.map { toEntity(it) }
+    )
+
     fun toEntity(v: AuthorAdsDto?) = Author(
         avatar = v?.avatar,
         blockType = v?.blockType,
@@ -299,5 +315,13 @@ class MapperForAds {
         } else {
             resp.errorBody()?.let { Response.error(resp.code(), it) }
         }
+
+    fun toRespEntityForAdsByCategory(resp: Response<AdsByCategoryDto?>) =
+        if (resp.isSuccessful) {
+            Response.success(toEntity(resp.body()))
+        } else {
+            resp.errorBody()?.let { Response.error(resp.code(), it) }
+        }
     // endregion
+
 }

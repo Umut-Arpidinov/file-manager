@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.data.remote
 
 
 import kg.o.internlabs.omarket.data.remote.model.*
+import kg.o.internlabs.omarket.data.remote.model.ads.AdsByCategoryDto
 import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -45,6 +46,13 @@ interface ApiService {
         @Query("page") page: Int?
     ): Response<MyAdsDto?>
 
+    @POST("api/ads-board/v1/protected/category/search-by-word/")
+    suspend fun getAdsByCategory(
+        @Header("Authorization") token: String?,
+        @Body adsDto: AdsByCategoryDto?,
+        @Query("page") page: Int?
+    ): Response<AdsByCategoryDto?>
+
     @Multipart
     @POST("api/ads-board/v1/user/upload-avatar/")
     suspend fun uploadAvatar(
@@ -62,5 +70,4 @@ interface ApiService {
         @Header("Authorization") token: String?,
         @Query("page") page: Int
     ): Response<AdsDto?>
-
 }

@@ -7,7 +7,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
+import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
+import kg.o.internlabs.omarket.domain.entity.ads.MainResult
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
+import kg.o.internlabs.omarket.domain.usecases.GetAdsByCategoryUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
@@ -19,7 +22,8 @@ import javax.inject.Inject
 class MainFragmentViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
-    private val getAdsUseCase: GetAdsUseCase
+    private val getAdsUseCase: GetAdsUseCase,
+    private val getAdsByCategoryUseCase: GetAdsByCategoryUseCase
 ) :
     BaseViewModel() {
 
@@ -32,6 +36,10 @@ class MainFragmentViewModel @Inject constructor(
     private lateinit var _ads: Flow<PagingData<ResultX>>
     val ads: Flow<PagingData<ResultX>>
         get() = _ads
+
+    private lateinit var _adsByCategory: Flow<PagingData<MainResult>>
+    val adsByCategory: Flow<PagingData<MainResult>>
+        get() = _adsByCategory
 
     init {
         getAccessTokenFromPrefs()
@@ -59,6 +67,12 @@ class MainFragmentViewModel @Inject constructor(
         getAdsUseCase(getAccessToken()).cachedIn(viewModelScope)
     },{
         _ads = it
+    })
+
+    fun getAdsByCategory(ads: AdsByCategory) = launchPagingAsync({
+        getAdsByCategoryUseCase(getAccessToken(), ads).cachedIn(viewModelScope)
+    },{
+        _adsByCategory = it
     })
 
     private fun getAccessTokenFromPrefs() {

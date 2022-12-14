@@ -2,10 +2,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kg.o.internlabs.core.R
@@ -29,6 +26,9 @@ class CategoryRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bind(listOfResult?.get(position), context)
+        holder.itemView.setOnClickListener {
+            clickHandler.clickedCategory(listOfResult?.get(position)?.name)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +37,7 @@ class CategoryRecyclerViewAdapter(
 
 
     inner class CategoryViewHolder(val binding: CategoryViewHolderBinding) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ResultEntity?, context: Context) = with(binding) {
             categoryName.text = item?.name
             if (item?.name == "Все") {
@@ -50,18 +50,7 @@ class CategoryRecyclerViewAdapter(
                     .fitCenter()
                     .into(categoryImage)
             }
-
         }
-
-        init {
-            binding.root.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            val currentItem = listOfResult!![adapterPosition]
-            clickHandler.clickedCategory(currentItem)
-        }
-
     }
 
 }

@@ -13,6 +13,7 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
+import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.PagerAdapterForMain
@@ -26,6 +27,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     private var args: MainFragmentArgs? = null
     private var adapter = PagerAdapterForMain()
+//    private var adapterForAdsByCategory = PagerAdapterForAdsByCategory()
     private var list: List<ResultEntity>? = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,8 +120,18 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         }
     }
 
-    override fun clickedCategory(item: ResultEntity) {
-        makeToast("${item.name} with id ${item.id} was clicked")
+    private fun getAdsByCategory() {
+        safeFlowGather {
+            viewModel.adsByCategory.collectLatest {
+                //adapterForAdsByCategory.submitData(it)
+            }
+        }
+    }
+
+    override fun clickedCategory(item: String?) {
+        viewModel.getAdsByCategory(AdsByCategory(q = item))
+        makeToast("$item with id was clicked")
+        getAdsByCategory()
     }
 
     override fun adClicked(ad: ResultX) {
