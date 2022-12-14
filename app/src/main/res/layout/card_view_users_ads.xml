@@ -39,6 +39,7 @@
 
         <com.google.android.material.button.MaterialButton
             style="@style/MagentaButton"
+            android:id="@+id/ads_btn"
             android:layout_width="match_parent"
             android:layout_height="26dp"
             android:layout_margin="@dimen/margin_8dp"
