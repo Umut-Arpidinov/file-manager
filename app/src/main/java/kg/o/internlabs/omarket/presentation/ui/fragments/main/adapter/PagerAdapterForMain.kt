@@ -23,15 +23,12 @@ class PagerAdapterForMain : PagingDataAdapter<ResultX, PagerAdapterForMain.AdsVi
 
     override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
         holder.bind(getItem(position))
-        println("rrrrrrrrrrrrrrrrrrrrrrrrr1rrrrrrrrrrrrrrrrrrrr")
         holder.itemView.setOnClickListener {
             getItem(position)?.let { it1 -> adClicked.adClicked(it1) }
         }
     }
 
     fun setInterface(adClicked: AdClickedInMain, mainFragment: MainFragment) {
-        println("rrrrrrrrrrrrrrrrrrrrrrrrr2rrrrrrrrrrrrrrrrrrrr")
-
         this.adClicked = adClicked
         fragmentContext = mainFragment
     }
@@ -44,11 +41,8 @@ class PagerAdapterForMain : PagingDataAdapter<ResultX, PagerAdapterForMain.AdsVi
         private var favorite = true
 
         fun bind(item: ResultX?) = with(binding) {
-            println("rrrrrrrrrrrrrrrrrrrrrrrrr3rrrrrrrrrrrrrrrrrrrr")
-
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false
-            favoriteIcon.isVisible = item?.favorite ?: false
             setPager(item?.minifyImages, binding)
             item?.let { setPrice(it) }
             oldPriceProduct.isVisible = item?.oldPrice.isNullOrEmpty().not()
@@ -111,7 +105,6 @@ class PagerAdapterForMain : PagingDataAdapter<ResultX, PagerAdapterForMain.AdsVi
                 oldPriceProduct.visibility = View.VISIBLE
                 oldPriceProduct.paintFlags =
                     oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                //setPriceWithCurrency(currency, oldPrice, oldPriceProduct)
             }
         }
     }
