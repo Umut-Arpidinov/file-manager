@@ -44,8 +44,9 @@
     <color name="gray_2">#C8C8C8</color>
     <color name="gray_3">#ECECEC</color>
     <color name="gray_4">#EFEFF4</color>
-    <color name="gray_5">#F7F7F7</color>
-    <color name="gray_6">#E0E0E5</color>
+    <color name="gray_5">#F5F5F5</color>
+    <color name="gray_6">#F7F7F7</color>
+    <color name="gray_7">#E0E0E5</color>
     <!--    Black               -->
     <color name="black_1">#010101</color>
     <color name="black_2">#111112</color>

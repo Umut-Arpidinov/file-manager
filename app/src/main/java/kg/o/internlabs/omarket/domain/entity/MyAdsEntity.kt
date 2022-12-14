@@ -1,10 +1,13 @@
 package kg.o.internlabs.omarket.domain.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class MyAdsEntity (
-    val count: Long? = null,
-    val next: String? = null,
-    val previous: String? = null,
+    @SerializedName("result")
     val result: MyAdsResultEntity? = null,
+    val resultCode: String? = null,
+    val details: String? = null,
+    val errorCode: Int? = null,
     val statuses: List<String>? = null
 )
 
@@ -28,6 +31,7 @@ data class MyAdsResultsEntity(
     val uuid: String? = null,
     val oMoneyPay: Boolean? = null,
     val price: String? = null,
+    val oldPrice: String? = null,
     val currency: String? = null,
     val location: LocationEntity? = null,
     val id: Int? = null,
@@ -41,7 +45,8 @@ data class MyAdsResultsEntity(
 )
 
 data class CategoryEntity(
-    val name: String? = null
+    val name: String? = null,
+    val delivery: Boolean? = null
 )
 
 data class LocationEntity(

@@ -8,20 +8,26 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomProfileCellViewClickers
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
+import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
+import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdClicked
+import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagerAdapter
 import kg.o.internlabs.omarket.utils.checkPermission
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
@@ -29,9 +35,10 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(),
-    CustomProfileCellViewClickers {
+    CustomProfileCellViewClickers, AdClicked {
 
     private var args: ProfileFragmentArgs? = null
+    private var adapter = AdsPagerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +55,45 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun initViewModel() {
         super.initViewModel()
         binding.cusProfile.setInterface(this@ProfileFragment)
-        viewModel.getAccessTokenFromPrefs()
-        viewModel.getActiveAds()
-        viewModel.getNonActiveAds()
-        viewModel.getAvatarUrlFromPrefs()
+    }
+
+    override fun initView() {
+        super.initView()
+        args?.number?.let { binding.cusProfile.setTitle(it) }
+        adapter.setInterface(this@ProfileFragment)
+        initAdapter()
+        setImageToAvatar()
+        loadAllAds()
+        getMenu()
+    }
+    
+    override fun initListener() = with(binding){
+        super.initListener()
+        btnActive.setOnClickListener { getActiveAds() }
+        btnNonActive.setOnClickListener { getNonActiveAds() }
+        tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
+    }
+
+    private fun initAdapter() = with(binding) {
+        rec.adapter = adapter
+
+        adapter.addLoadStateListener { loadState ->
+            if (loadState.refresh is LoadState.Loading ||
+                loadState.append is LoadState.Loading)
+                binding.prog.isVisible = true
+            else {
+                binding.prog.isVisible = false
+                val errorState = when {
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.prepend is LoadState.Error ->  loadState.prepend as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+                errorState?.let {
+                    Toast.makeText(requireActivity(), it.error.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     private fun openSomeActivityForResult() {
@@ -88,7 +130,31 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
-    private fun setAvatar() = with(binding){
+    private fun loadAllAds() = with(binding){
+        safeFlowGather {
+            viewModel.allAds.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        val count = it.data.result?.count
+                        if (count != null) {
+                            btnNonActive.isVisible = count > 0
+                            btnActive.isVisible = count > 0
+                        }
+                    }
+                    is ApiState.Failure -> {
+                        btnNonActive.isVisible = false
+                        btnActive.isVisible = false
+                    }
+                    is ApiState.Loading -> {
+                        btnNonActive.isVisible = false
+                        btnActive.isVisible = false
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setAvatar() = with(binding) {
         safeFlowGather {
             viewModel.avatar.collectLatest {
                 when (it) {
@@ -109,40 +175,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
-    override fun initView() {
-        super.initView()
-        args?.number?.let { binding.cusProfile.setTitle(it) }
-        setImageToAvatar()
-        getActiveAds()
-        getNonActiveAds()
-        getMenu()
-    }
-
-    override fun initListener() = with(binding) {
-        super.initListener()
-        tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
-    }
 
     private fun getNonActiveAds() {
         safeFlowGather {
             viewModel.nonActiveAds.collectLatest {
-                when (it) {
-                    is ApiState.Success -> {
-                        println("---------all active ads --------\n" + it.data.result?.results.toString())
-                        //TODO it.date.result.results вернет List<MyAdsResultsEntity> в нем хранятся
-                        //TODO все свои не активные объявление такие как заблокированние,
-                        // в обработке, или просто деактивироаванные сервер отдает их по 10 шт,
-                        // и если объявление больше 10 то вызываем роут viewModel.getNonActiveAds(2)
-                        //TODO it.data.result.count  количество не активных объявление
-                    }
-                    is ApiState.Failure -> {
-                        // если что то пошло ни так
-                        requireActivity().makeToast(it.msg.message.toString())
-                    }
-                    is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
-                    }
-                }
+                adapter.submitData(it)
             }
         }
     }
@@ -150,22 +187,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     private fun getActiveAds() {
         safeFlowGather {
             viewModel.activeAds.collectLatest {
-                when (it) {
-                    is ApiState.Success -> {
-                        println("---------all non active ads --------\n" + it.data.result?.results.toString())
-                        //TODO it.date.result.results вернет List<MyAdsResultsEntity> в нем хранятся
-                        //TODO все свои активные объявление сервер отдает их по 10 шт,
-                        // и если объявление больше 10 то вызываем роут viewModel.getNonActiveAds(2)
-                        //TODO it.data.result.count  количество активных объявление
-                    }
-                    is ApiState.Failure -> {
-                        // если что то пошло ни так
-                        requireActivity().makeToast(it.msg.message.toString())
-                    }
-                    is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
-                    }
-                }
+                adapter.submitData(it)
             }
         }
     }
@@ -212,5 +234,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 }
             }
         }
+    }
+
+    override fun adClicked(ad: MyAdsResultsEntity) {
+        println("ad--------"+ad.uuid)
+        ad.uuid?.let { makeToast(it) }
     }
 }

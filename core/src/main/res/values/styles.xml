@@ -375,12 +375,18 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="StyleMainSearch" parent="Widget.AppCompat.SearchView">
-        <item name="android:textSize">@dimen/text_17sp</item>
-        <item name="android:textAppearance">@style/AppPrimaryStyle</item>
+    <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@color/transparent</item>
+        <item name="android:textColorPrimary"> @color/red</item>
         <item name="android:background">@drawable/background_rounded_search_view</item>
         <item name="android:layout_marginEnd">@dimen/margin_50dp</item>
         <item name="searchIcon">@drawable/ic_search</item>
+    </style>
+    <style name="StyleMainLayout">
+        <item name="android:background">@color/gray_5</item>
+    </style>
+    <style name="MainSearchView">
+        <item name="android:textColor">@color/red</item>
     </style>
     
     <style name="CategoryViewTextAppearance">
