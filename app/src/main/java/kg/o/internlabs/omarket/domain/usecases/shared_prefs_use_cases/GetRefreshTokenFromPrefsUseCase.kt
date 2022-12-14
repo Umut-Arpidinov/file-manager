@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetRefreshTokenFromPrefsUseCase @Inject constructor(private val prefsRepository: PrefsRepository) {
 
-    operator fun invoke() = prefsRepository.getRefTokenFromPrefs()
+    operator fun invoke()  = prefsRepository.getRefTokenFromPrefs()
 
 }
