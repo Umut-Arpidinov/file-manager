@@ -1,12 +1,11 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments.main
+package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
 import android.content.Context
+import android.graphics.Paint
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
-import android.graphics.Paint
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
@@ -14,26 +13,26 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.data.remote.model.PromotionType
 import kg.o.internlabs.omarket.data.remote.model.ResultX
-import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
+import kg.o.internlabs.omarket.databinding.CardViewUsersAdsBinding
+import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
 import java.util.*
 
 private typealias coreString = kg.o.internlabs.core.R.string
 
-
-class AdsListAdapter internal constructor(
+class MyAdsListAdapter internal constructor(
     var list: List<ResultX>,
     private val itemWidth: Int,
     val context: Context
 ) :
-    RecyclerView.Adapter<AdsListAdapter.ViewHolder>() {
-    private var favorite = true
-
-    class ViewHolder(val binding: CardViewMainAdsBinding) : RecyclerView.ViewHolder(binding.root)
+    RecyclerView.Adapter<MyAdsListAdapter.ViewHolder>()
+{
+    class ViewHolder(val binding: CardViewUsersAdsBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            CardViewMainAdsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        binding.cardViewAds.layoutParams.width = itemWidth
+            CardViewUsersAdsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        binding.cardView.layoutParams.width = itemWidth
 
         return ViewHolder(binding)
     }
@@ -43,12 +42,13 @@ class AdsListAdapter internal constructor(
         val mList = list[position]
 
         with(holder.binding) {
-
             val pagerAdapter2 =
                 PagerImageAdapter(context, mList.minify_images, ViewGroup.LayoutParams.MATCH_PARENT)
             imgAds.adapter = pagerAdapter2
-            indicator.attachToPager(imgAds)
-            holder.binding.indicator.attachToPager(holder.binding.imgAds)
+
+            adsBtn.setOnClickListener{
+                // #TODO(Привяжи какое нибудь действие)
+            }
 
             isVIPStatus(mList.promotion_type, vipIcon)
 
@@ -71,16 +71,6 @@ class AdsListAdapter internal constructor(
             }
 
             defineDelivery(mList.delivery, placeProduct, mList.location?.name)
-
-            favoriteIcon.setOnClickListener{
-                if (mList.favorite == false || mList.favorite == null && !favorite) {
-                    favoriteIcon.setImageResource(kg.o.internlabs.core.R.drawable.ic_favorite_pressed)
-                    favorite = true
-                } else {
-                    favorite = false
-                    favoriteIcon.setImageResource(kg.o.internlabs.core.R.drawable.ic_favorite)
-                }
-            }
         }
     }
 
@@ -90,14 +80,15 @@ class AdsListAdapter internal constructor(
 
     private fun isVIPStatus(status: PromotionType?, vipIcon: AppCompatImageView) {
         if (status != null) {
-            if (status.type.equals("vip")) vipIcon.visibility = VISIBLE else vipIcon.visibility = GONE
-        } else vipIcon.visibility = GONE
+            if (status.type.equals("vip")) vipIcon.visibility = View.VISIBLE else vipIcon.visibility =
+                View.GONE
+        } else vipIcon.visibility = View.GONE
     }
 
     private fun isOMoney(status: Boolean?, oPayIcon: AppCompatImageView) {
         if (status != null) {
-            if (status) oPayIcon.visibility = VISIBLE else oPayIcon.visibility = GONE
-        } else oPayIcon.visibility = GONE
+            if (status) oPayIcon.visibility = View.VISIBLE else oPayIcon.visibility = View.GONE
+        } else oPayIcon.visibility = View.GONE
     }
 
     private fun setPriceWithCurrency(currency: String?, price: String?, priceProduct: TextView) {
@@ -114,9 +105,9 @@ class AdsListAdapter internal constructor(
 
     private fun setOldPriceWithCurrency(currency: String?, oldPrice: String?, oldPriceProduct: TextView) {
         if (oldPrice == null || oldPrice == "") {
-            oldPriceProduct.visibility = GONE
+            oldPriceProduct.visibility = View.GONE
         } else {
-            oldPriceProduct.visibility = VISIBLE
+            oldPriceProduct.visibility = View.VISIBLE
             oldPriceProduct.paintFlags = oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             setPriceWithCurrency(currency, oldPrice, oldPriceProduct)
         }
