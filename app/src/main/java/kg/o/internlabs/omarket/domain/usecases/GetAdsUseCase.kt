@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetAdsUseCase  @Inject constructor(
     private val adsRep: AdsRepository
 ) {
-    operator fun invoke(page: Int , token: String) = adsRep.getAds(page, token)
+    operator fun invoke(token: String) = adsRep.getAds(token)
 }

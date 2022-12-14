@@ -1,9 +1,11 @@
 package kg.o.internlabs.omarket.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import kg.o.internlabs.core.base.BaseRepository
 import kg.o.internlabs.omarket.data.mappers.MapperForModels
+import kg.o.internlabs.omarket.data.paging.AdsPagingSource
 import kg.o.internlabs.omarket.data.remote.ApiService
-import kg.o.internlabs.omarket.data.remote.model.ads.toDomain
 import kg.o.internlabs.omarket.domain.repository.AdsRepository
 import javax.inject.Inject
 
@@ -21,8 +23,14 @@ class AdsRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getAds(page: Int, token: String) = safeApiCall {
+    override fun getAds(token: String) = Pager(
+        config = PagingConfig(pageSize = 10, prefetchDistance = 2),
+        pagingSourceFactory = {
+            AdsPagingSource(
+                apiService,
+                token
+            )
+        }
+    ).flow
 
-        apiService.getAds(token, page)
-    }
 }

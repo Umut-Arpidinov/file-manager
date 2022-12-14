@@ -80,9 +80,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         adapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading ||
                 loadState.append is LoadState.Loading)
-                binding.prog.isVisible = true
+                prog.isVisible = true
             else {
-                binding.prog.isVisible = false
+                prog.isVisible = false
                 val errorState = when {
                     loadState.append is LoadState.Error -> loadState.append as LoadState.Error
                     loadState.prepend is LoadState.Error ->  loadState.prepend as LoadState.Error

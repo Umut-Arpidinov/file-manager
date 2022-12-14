@@ -1,24 +1,23 @@
 package kg.o.internlabs.omarket.data.paging
 
 import androidx.paging.PagingSource
-import kg.o.internlabs.omarket.data.mappers.MapperForFAQAndProfileModels
+import androidx.paging.PagingState
+import kg.o.internlabs.omarket.data.mappers.MapperForAds
 import kg.o.internlabs.omarket.data.remote.ApiService
-import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
-import kg.o.internlabs.omarket.domain.entity.ads.MainResult
+import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 
 class AdsPagingSource(
     private val apiService: ApiService,
-    private val mainResult: MainResult,
     private val token: String
 ) :
-    PagingSource<Int, MyAdsResultsEntity>() {
+    PagingSource<Int, ResultX>() {
 
-    private val map = MapperForFAQAndProfileModels()
+    private val map = MapperForAds()
 
     override suspend fun load(params: LoadParams<Int>) = try {
         val position = params.key ?: 1
-        val response = map.mapRespDbModelToRespEntityForMyAds(
-            apiService.getMyAds(token, mainResult, position)
+        val response = map.toRespEntityForAds(
+            apiService.getAds(token, position)
         )
         if (response?.body() == null) throw Exception("null")
 
@@ -42,7 +41,7 @@ class AdsPagingSource(
         LoadResult.Error(e)
     }
 
-    override fun getRefreshKey(state: PagingState<Int, MyAdsResultsEntity>) =
+    override fun getRefreshKey(state: PagingState<Int, ResultX>) =
         state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

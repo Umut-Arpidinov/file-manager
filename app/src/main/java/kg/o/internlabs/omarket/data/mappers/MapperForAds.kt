@@ -1,146 +1,303 @@
 package kg.o.internlabs.omarket.data.mappers
 
-import kg.o.internlabs.omarket.data.remote.model.*
-import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
-import kg.o.internlabs.omarket.domain.entity.*
-import kg.o.internlabs.omarket.domain.entity.ads.Ads
-import kg.o.internlabs.omarket.domain.entity.ads.Author
-import kg.o.internlabs.omarket.domain.entity.ads.LocationAds
+import kg.o.internlabs.omarket.data.remote.model.ads.*
+import kg.o.internlabs.omarket.domain.entity.ads.*
 import retrofit2.Response
 
 class MapperForAds {
 
     //region toDomain
-    fun mapEntityToDbModel(v: Ads?) = AdsDto(
+    fun toDbModel(v: Ads?) = AdsDto(
         details = v?.details,
         errorCode = v?.errorCode,
-        result = v?.result,
+        result = toDbModel(v?.result),
         resultCode = v?.resultCode
     )
 
-    fun mapEntityToDbModel(v: Author?) = AuthorDto(
-        class Author(
-    val avatar: String? = null,
-    val blockType: String? = null,
-    val contactNumIsIdent: Boolean? = null,
-    val contactNumber: String? = null,
-    val hasPromotion: Boolean? = null,
-    val id: Int? = null,
-    val location: LocationAds? = null,
-    val msisdn: String? = null,
-    val partnerType: String? = null,
-    val rating: Double? = null,
-    val username: String? = null,
-    val verified: Boolean? = null
+    fun toDbModel(v: Author?) = AuthorAdsDto(
+        avatar = v?.avatar,
+        blockType = v?.blockType,
+        contactNumIsIdent = v?.contactNumIsIdent,
+        contactNumber = v?.contactNumber,
+        hasPromotion = v?.hasPromotion,
+        id = v?.id,
+        location = toDbModel(v?.location),
+        msisdn = v?.msisdn,
+        partnerType = v?.partnerType,
+        rating = v?.rating,
+        username = v?.username,
+        verified = v?.verified
     )
 
+    fun toDbModel(v: CategoryAds?) = CategoryAdsDto(
+        adType = v?.adType,
+        categoryType = v?.categoryType,
+        darkIcon = v?.darkIcon,
+        darkIconImg = v?.darkIconImg,
+        delivery = v?.delivery,
+        filters = v?.filters,
+        hasDynamicFilter = v?.hasDynamicFilter,
+        hasMap = v?.hasMap,
+        icon = v?.icon,
+        iconImg = v?.iconImg,
+        id = v?.id,
+        isPopular = v?.isPopular,
+        linkedCategory = v?.linkedCategory,
+        name = v?.name,
+        orderNum = v?.orderNum,
+        parent = toDbModel(v?.parent),
+        parentFilters = v?.parentFilters,
+        requiredPrice = v?.requiredPrice
+    )
 
-    fun mapRespDbModelToRespEntity(list: Response<RegisterDto?>) = if (list.isSuccessful) {
-        Response.success(mapDbModelToEntity(list.body()))
-    } else {
-        list.errorBody()?.let { Response.error(list.code(), it) }
-    }
+    fun toDbModel(v: LocationAds?) = LocationAdsDto(
+        id = v?.id,
+        locationType = v?.locationType,
+        name = v?.name,
+        parent = v?.parent
+    )
+
+    fun toDbModel(v: LocationX?) = LocationXDto(
+        id = v?.id,
+        isPopular = v?.isPopular,
+        locationType = v?.locationType,
+        name = v?.name,
+        orderNum = v?.orderNum,
+        parent = v?.parent,
+        searchByName = v?.searchByName
+    )
+
+    fun toDbModel(v: MainResult?) = MainResultDto(
+        count = v?.count,
+        next = v?.next,
+        previous = v?.previous,
+        results = v?.results?.map { toDbModel(it) }
+    )
+
+    fun toDbModel(v: ParentAds?) = ParentAdsDto(
+        adType = v?.adType,
+        categoryType = v?.categoryType,
+        darkIcon = v?.darkIcon,
+        darkIconImg = v?.darkIconImg,
+        delivery = v?.delivery,
+        filters = v?.filters,
+        hasDynamicFilter = v?.hasDynamicFilter,
+        hasMap = v?.hasMap,
+        icon = v?.icon,
+        iconImg = v?.iconImg,
+        id = v?.id,
+        isPopular = v?.isPopular,
+        linkedCategory = v?.linkedCategory,
+        name = v?.name,
+        orderNum = v?.orderNum,
+        parent = v?.parent,
+        parentFilters = v?.parentFilters,
+        requiredPrice = v?.requiredPrice
+    )
+
+    fun toDbModel(v: PromotionType?) = PromotionTypeAdsDto(
+        description = v?.description,
+        id = v?.id,
+        img = v?.img,
+        type = v?.type
+    )
+
+    fun toDbModel(v: ResultX?) = ResultXDto(
+        adType = v?.adType,
+        address = v?.address,
+        author = toDbModel(v?.author),
+        authorId = v?.authorId,
+        category = toDbModel(v?.category),
+        commentary= v?.commentary,
+        complaintCount = v?.complaintCount,
+        contractPrice = v?.contractPrice,
+        createdAt = v?.createdAt,
+        currency = v?.currency,
+        currencyUsd = v?.currencyUsd,
+        delivery = v?.delivery,
+        description = v?.description,
+        detail = v?.detail,
+        favorite = v?.favorite,
+        filters = v?.filters,
+        hasImage = v?.hasImage,
+        id = v?.id,
+        images = v?.images,
+        isOwn = v?.isOwn,
+        latitude = v?.latitude,
+        location = toDbModel(v?.location),
+        longitude = v?.longitude,
+        minifyImages = v?.minifyImages,
+        moderatorId = v?.moderatorId,
+        modifiedAt = v?.modifiedAt,
+        numOfViewsInFeed = v?.numOfViewsInFeed,
+        oMoneyPay = v?.oMoneyPay,
+        oldPrice = v?.oldPrice,
+        openingAt = v?.openingAt,
+        price = v?.price,
+        priceSort = v?.priceSort,
+        promotionType = toDbModel(v?.promotionType),
+        publishedAt = v?.publishedAt,
+        removedAt = v?.removedAt,
+        reviewCount = v?.reviewCount,
+        status = v?.status,
+        telegramProfile = v?.telegramProfile,
+        telegramProfileIsIdent = v?.telegramProfileIsIdent,
+        title = v?.title,
+        uuid = v?.uuid,
+        viewCount = v?.viewCount,
+        whatsappNum = v?.whatsappNum,
+        whatsappNumIsIdent = v?.whatsappNumIsIdent
+    )
     //endregion
 
     //region *toEntity
-    fun mapEntityToDbModel(cat: CategoriesEntity?) = CategoriesDto(
-        result = cat?.result?.map { mapEntityToDbModel(it) },
-        resultCode = cat?.resultCode,
-        details = cat?.details,
-        errorCode = cat?.errorCode
+    fun toEntity(v: AdsDto?) = Ads(
+        details = v?.details,
+        errorCode = v?.errorCode,
+        result = toEntity(v?.result),
+        resultCode = v?.resultCode
     )
 
-    private fun mapEntityToDbModel(res: ResultEntity?) = ResultDto(id = res?.id,
-        parent = res?.parent,
-        name = res?.name,
-        parentFilters = res?.parentFilters,
-        orderNum = res?.orderNum,
-        isPopular = res?.isPopular,
-        delivery = res?.delivery,
-        hasMap = res?.hasMap,
-        requiredPrice = res?.requiredPrice,
-        iconImg = res?.iconImg,
-        darkIconImg = res?.darkIconImg,
-        categoryType = res?.categoryType,
-        linkedCategory = res?.linkedCategory,
-        filters = res?.filters,
-        adType = res?.adType,
-        hasDynamicFilter = res?.hasDynamicFilter,
-        subCategories = res?.subCategories?.map { mapEntityToDbModel(it) })
-
-    private fun mapEntityToDbModel(subCat: SubCategoriesEntity?) = SubCategoriesDto(
-        id = subCat?.id,
-        parent = subCat?.parent,
-        name = subCat?.name,
-        parentFilters = subCat?.parentFilters,
-        delivery = subCat?.delivery,
-        orderNum = subCat?.orderNum,
-        isPopular = subCat?.isPopular,
-        hasMap = subCat?.hasMap,
-        requiredPrice = subCat?.requiredPrice,
-        iconImg = subCat?.iconImg,
-        darkIconImg = subCat?.darkIconImg,
-        categoryType = subCat?.categoryType,
-        linkedCategory = subCat?.linkedCategory,
-        filters = subCat?.filters,
-        adType = subCat?.adType,
-        hasDynamicFilter = subCat?.hasDynamicFilter,
-        subCategories = subCat?.subCategories
+    fun toEntity(v: AuthorAdsDto?) = Author(
+        avatar = v?.avatar,
+        blockType = v?.blockType,
+        contactNumIsIdent = v?.contactNumIsIdent,
+        contactNumber = v?.contactNumber,
+        hasPromotion = v?.hasPromotion,
+        id = v?.id,
+        location = toEntity(v?.location),
+        msisdn = v?.msisdn,
+        partnerType = v?.partnerType,
+        rating = v?.rating,
+        username = v?.username,
+        verified = v?.verified
     )
 
-    private fun mapDbModelToEntity(cat: CategoriesDto?) = CategoriesEntity(
-        result = cat?.result?.map { mapDbModelToEntity(it) },
-        resultCode = cat?.resultCode,
-        details = cat?.details,
-        errorCode = cat?.errorCode
+    fun toEntity(v: CategoryAdsDto?) = CategoryAds(
+        adType = v?.adType,
+        categoryType = v?.categoryType,
+        darkIcon = v?.darkIcon,
+        darkIconImg = v?.darkIconImg,
+        delivery = v?.delivery,
+        filters = v?.filters,
+        hasDynamicFilter = v?.hasDynamicFilter,
+        hasMap = v?.hasMap,
+        icon = v?.icon,
+        iconImg = v?.iconImg,
+        id = v?.id,
+        isPopular = v?.isPopular,
+        linkedCategory = v?.linkedCategory,
+        name = v?.name,
+        orderNum = v?.orderNum,
+        parent = toEntity(v?.parent),
+        parentFilters = v?.parentFilters,
+        requiredPrice = v?.requiredPrice
     )
 
-    private fun mapDbModelToEntity(res: ResultDto?) = ResultEntity(id = res?.id,
-        parent = res?.parent,
-        name = res?.name,
-        parentFilters = res?.parentFilters,
-        orderNum = res?.orderNum,
-        isPopular = res?.isPopular,
-        delivery = res?.delivery,
-        hasMap = res?.hasMap,
-        requiredPrice = res?.requiredPrice,
-        iconImg = res?.iconImg,
-        darkIconImg = res?.darkIconImg,
-        categoryType = res?.categoryType,
-        linkedCategory = res?.linkedCategory,
-        filters = res?.filters,
-        adType = res?.adType,
-        hasDynamicFilter = res?.hasDynamicFilter,
-        subCategories = res?.subCategories?.map { mapDbModelToEntity(it) })
-
-    private fun mapDbModelToEntity(subCat: SubCategoriesDto?) = SubCategoriesEntity(
-        id = subCat?.id,
-        parent = subCat?.parent,
-        name = subCat?.name,
-        parentFilters = subCat?.parentFilters,
-        delivery = subCat?.delivery,
-        orderNum = subCat?.orderNum,
-        isPopular = subCat?.isPopular,
-        hasMap = subCat?.hasMap,
-        requiredPrice = subCat?.requiredPrice,
-        iconImg = subCat?.iconImg,
-        darkIconImg = subCat?.darkIconImg,
-        categoryType = subCat?.categoryType,
-        linkedCategory = subCat?.linkedCategory,
-        filters = subCat?.filters,
-        adType = subCat?.adType,
-        hasDynamicFilter = subCat?.hasDynamicFilter,
-        subCategories = subCat?.subCategories
+    fun toEntity(v: LocationAdsDto?) = LocationAds(
+        id = v?.id,
+        locationType = v?.locationType,
+        name = v?.name,
+        parent = v?.parent
     )
 
+    fun toEntity(v: LocationXDto?) = LocationX(
+        id = v?.id,
+        isPopular = v?.isPopular,
+        locationType = v?.locationType,
+        name = v?.name,
+        orderNum = v?.orderNum,
+        parent = v?.parent,
+        searchByName = v?.searchByName
+    )
 
-    fun mapRespDbModelToRespEntityForCategories(resp: Response<CategoriesDto?>) =
+    fun toEntity(v: MainResultDto?) = MainResult(
+        count = v?.count,
+        next = v?.next,
+        previous = v?.previous,
+        results = v?.results?.map { toEntity(it) }
+    )
+
+    fun toEntity(v: ParentAdsDto?) = ParentAds(
+        adType = v?.adType,
+        categoryType = v?.categoryType,
+        darkIcon = v?.darkIcon,
+        darkIconImg = v?.darkIconImg,
+        delivery = v?.delivery,
+        filters = v?.filters,
+        hasDynamicFilter = v?.hasDynamicFilter,
+        hasMap = v?.hasMap,
+        icon = v?.icon,
+        iconImg = v?.iconImg,
+        id = v?.id,
+        isPopular = v?.isPopular,
+        linkedCategory = v?.linkedCategory,
+        name = v?.name,
+        orderNum = v?.orderNum,
+        parent = v?.parent,
+        parentFilters = v?.parentFilters,
+        requiredPrice = v?.requiredPrice
+    )
+
+    fun toEntity(v: PromotionTypeAdsDto?) = PromotionType(
+        description = v?.description,
+        id = v?.id,
+        img = v?.img,
+        type = v?.type
+    )
+
+    fun toEntity(v: ResultXDto?) = ResultX(
+        adType = v?.adType,
+        address = v?.address,
+        author = toEntity(v?.author),
+        authorId = v?.authorId,
+        category = toEntity(v?.category),
+        commentary= v?.commentary,
+        complaintCount = v?.complaintCount,
+        contractPrice = v?.contractPrice,
+        createdAt = v?.createdAt,
+        currency = v?.currency,
+        currencyUsd = v?.currencyUsd,
+        delivery = v?.delivery,
+        description = v?.description,
+        detail = v?.detail,
+        favorite = v?.favorite,
+        filters = v?.filters,
+        hasImage = v?.hasImage,
+        id = v?.id,
+        images = v?.images,
+        isOwn = v?.isOwn,
+        latitude = v?.latitude,
+        location = toEntity(v?.location),
+        longitude = v?.longitude,
+        minifyImages = v?.minifyImages,
+        moderatorId = v?.moderatorId,
+        modifiedAt = v?.modifiedAt,
+        numOfViewsInFeed = v?.numOfViewsInFeed,
+        oMoneyPay = v?.oMoneyPay,
+        oldPrice = v?.oldPrice,
+        openingAt = v?.openingAt,
+        price = v?.price,
+        priceSort = v?.priceSort,
+        promotionType = toEntity(v?.promotionType),
+        publishedAt = v?.publishedAt,
+        removedAt = v?.removedAt,
+        reviewCount = v?.reviewCount,
+        status = v?.status,
+        telegramProfile = v?.telegramProfile,
+        telegramProfileIsIdent = v?.telegramProfileIsIdent,
+        title = v?.title,
+        uuid = v?.uuid,
+        viewCount = v?.viewCount,
+        whatsappNum = v?.whatsappNum,
+        whatsappNumIsIdent = v?.whatsappNumIsIdent
+    )
+
+    fun toRespEntityForAds(resp: Response<AdsDto?>) =
         if (resp.isSuccessful) {
-            Response.success(mapDbModelToEntity(resp.body()))
+            Response.success(toEntity(resp.body()))
         } else {
             resp.errorBody()?.let { Response.error(resp.code(), it) }
         }
     // endregion
-
-
 }

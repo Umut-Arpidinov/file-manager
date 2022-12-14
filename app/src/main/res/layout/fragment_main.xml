@@ -47,24 +47,34 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_view_holder"
-        android:layout_width="0dp"
+        android:id="@+id/rec_main"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/margin_2dp"
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/progress_bar"
         app:layout_constraintTop_toBottomOf="@id/result_text"
         app:spanCount="2"
+        tools:itemCount="10"
         tools:listitem="@layout/card_view_main_ads" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rec_main" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/main_view_holder"
+        app:layout_constraintBottom_toBottomOf="@id/rec_main"
         app:layout_constraintEnd_toStartOf="parent"
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_plus_fab"

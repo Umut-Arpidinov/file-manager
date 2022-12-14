@@ -2,20 +2,6 @@ package kg.o.internlabs.omarket.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class FAQDto (
-    val count: Long? = null,
-    var next: String? = null,
-    var previous: String? = null,
-    @SerializedName("results")
-    var results: List<ResultsDto>? = null
-)
-
-data class ResultsDto (
-    var id: Int? = null,
-    var title: String? = null,
-    var content: String? = null
-)
-
 data class CategoriesDto(
     @SerializedName("result")
     val result: List<ResultDto>? = null,
@@ -86,21 +72,4 @@ data class SubCategoriesDto (
     var hasDynamicFilter: Boolean? = null,
     @SerializedName("sub_categories")
     var subCategories: List<String>? = null
-)
-data class AvatarDto(
-    val result: AvatarResultDto? = null,
-    val resultCode: String? = null,
-    val details: String? = null,
-    val errorCode: Int? = null
-)
-
-data class AvatarResultDto (
-    val url: String? = null
-)
-
-data class AvatarDelDto(
-    val result: String? = null,
-    val resultCode: String? = null,
-    val details: String? = null,
-    val errorCode: Int? = null
 )

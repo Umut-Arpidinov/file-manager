@@ -1,12 +1,13 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
 import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
+import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
@@ -28,10 +29,15 @@ class MainFragmentViewModel @Inject constructor(
     private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
     val categories = _categories.asSharedFlow()
 
-    private val _ads = MutableSharedFlow<ApiState<AdsDto?>>()
-    val ads = _ads.asSharedFlow()
+    private lateinit var _ads: Flow<PagingData<ResultX>>
+    val ads: Flow<PagingData<ResultX>>
+        get() = _ads
 
-    fun getCategories() {
+    init {
+        getAccessTokenFromPrefs()
+    }
+
+    private fun getCategories() {
         viewModelScope.launch {
             getCategoriesUseCase(getAccessToken()).collectLatest {
                 when (it) {
@@ -49,34 +55,19 @@ class MainFragmentViewModel @Inject constructor(
         }
     }
 
-    fun getAds(page: Int) {
-        viewModelScope.launch {
-            getAdsUseCase(
-                page,
-                "eyJ1c2VyX2lkIjogNjUsICJ1dWlkIjogIjZjZmRhY2JhZjFlYzQ4ODZiZGI2MGU1MWIwOTEwZmZmIiwgImV4X3RpbWUiOiAxNjczMTEwNTI1fQ==:5YUyZJF1xLQ1K62GwPoYcJH8Ysc.6cfdacbaf1ec4886bdb60e51b0910fff"
-            ).collectLatest {
-                when (it) {
-                    is ApiState.Success -> {
-                        _ads.emit(it)
-                        Log.d("Ray", "Success")
-                    }
-                    is ApiState.Failure -> {
-                        _ads.emit(it)
-                        Log.d("Ray", "Failure")
+    private fun getAds() = launchPagingAsync({
+        getAdsUseCase(getAccessToken()).cachedIn(viewModelScope)
+    },{
+        _ads = it
+    })
 
-                    }
-                    ApiState.Loading -> {
-                    }
-                }
-            }
-        }
-    }
-
-    fun getAccessTokenFromPrefs() {
+    private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {
             getAccessTokenFromPrefsUseCase().collectLatest {
                 if (it != null) {
                     _token.emit(it)
+                    getCategories()
+                    getAds()
                 }
             }
         }

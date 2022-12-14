@@ -2,7 +2,6 @@ package kg.o.internlabs.omarket.data.remote.model.ads
 
 
 import com.google.gson.annotations.SerializedName
-import kg.o.internlabs.omarket.domain.entity.ads.Author
 
 data class ResultXDto(
     @SerializedName("ad_type")
@@ -10,7 +9,7 @@ data class ResultXDto(
     @SerializedName("address")
     val address: String? = null,
     @SerializedName("author")
-    val author: Author? = null,
+    val author: AuthorAdsDto? = null,
     @SerializedName("author_id")
     val authorId: Int? = null,
     @SerializedName("category")
