@@ -5,13 +5,12 @@
     android:layout_width="@dimen/view_176dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/corner_radius_8dp"
-    app:cardElevation="@dimen/elevation_0dp">
+    app:cardElevation="@dimen/elevation_0dp"
+    android:layout_margin="@dimen/margin_8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_8dp"
-        android:layout_gravity="center">
+        android:layout_height="match_parent" >
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/img_ads"
@@ -53,6 +52,7 @@
             app:shapeAppearanceOverlay="@style/MagentaShapeAppearance" />
 
         <TextView
+            android:id="@+id/view_count"
             style="@style/styleTextViewers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
