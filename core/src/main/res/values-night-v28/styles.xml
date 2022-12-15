@@ -56,6 +56,7 @@
         <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
         <item name="android:letterSpacing">-0.0041</item>
         <item name="android:fontWeight">400</item>
+        <item name="android:textColor">@color/white_1</item>
         <item name="android:lineHeight">@dimen/cells_title_line_height_20.4sp</item>
     </style>
 
@@ -63,6 +64,7 @@
         <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
         <item name="android:textSize">@dimen/cells_subTitle_text_size_15sp</item>
         <item name="android:lineHeight">@dimen/cells_subTitle_line_height_17.9sp</item>
+        <item name="android:textColor">@color/white_1</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
