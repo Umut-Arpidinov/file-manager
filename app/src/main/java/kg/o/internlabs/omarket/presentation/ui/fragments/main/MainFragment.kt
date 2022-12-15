@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.utils.makeToast
@@ -47,13 +49,19 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         super.initViewModel()
         viewModel.getAccessTokenFromPrefs()
         viewModel.getCategories()
+        viewModel.getAds(1)
     }
 
     override fun initView() {
         super.initView()
         getCategories()
+        getAds()
+        visibleStatusBar()
     }
 
+    private fun visibleStatusBar() {
+        WindowInsetsControllerCompat(requireActivity().window,requireView()).show((WindowInsetsCompat.Type.statusBars()))
+    }
 
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {
         binding.categoryRecycler.layoutManager =
@@ -94,6 +102,38 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
                 }
             }
         }
+    }
+
+    private fun getAds() {
+        this@MainFragment.safeFlowGather {
+            viewModel.ads.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        val mainAdapter =
+                            AdsListAdapter(
+                                it.data?.result?.results!!,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                requireContext()
+                            )
+                        binding.mainViewHolder.addItemDecoration(
+                            MarginItemDecoration(
+                                resources.getDimensionPixelSize(
+                                    R.dimen.item_margin_7dp
+                                )
+                            )
+                        )
+                        binding.mainViewHolder.adapter = mainAdapter
+                    }
+                    is ApiState.Failure -> {
+
+                    }
+                    is ApiState.Loading -> {
+
+                    }
+                }
+            }
+        }
+
     }
 
     override fun clickedCategory(item: ResultEntity) {
