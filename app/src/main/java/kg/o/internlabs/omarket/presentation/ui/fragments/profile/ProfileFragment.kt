@@ -62,7 +62,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun initView() {
         super.initView()
         args?.number?.let { binding.cusProfile.setTitle(it) }
-        adapter.setInterface(this@ProfileFragment)
+        adapter.setInterface(this@ProfileFragment, this)
         initAdapter()
         setImageToAvatar()
         loadAllAds()
@@ -244,7 +244,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     override fun adClicked(ad: MyAdsResultsEntity) {
-        println("ad--------"+ad.uuid)
         ad.uuid?.let { makeToast(it) }
     }
 }
