@@ -289,7 +289,7 @@
         <item name="android:textSize">@dimen/text_11sp</item>
     </style>
     <style name="StyleMainLayout">
-        <item name="android:background">@color/black_1</item>
+        <item name="android:background">@color/black_2</item>
     </style>
 
     <style name="StyleAdsBackground">

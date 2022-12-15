@@ -17,7 +17,6 @@ abstract class BaseActivity<VM: ViewModel, VB: ViewBinding> : AppCompatActivity(
         binding = inflateViewBinding(layoutInflater)
         operationBeforeSetContent()
         setContentView(binding.root)
-
         checkInternet()
         initViewModel()
         initView()
