@@ -52,12 +52,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     override fun initView() {
         super.initView()
         getCategories()
-        visibleStatusBar()
     }
 
-    private fun visibleStatusBar() {
-        WindowInsetsControllerCompat(requireActivity().window,requireView()).show((WindowInsetsCompat.Type.statusBars()))
-    }
 
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {
         binding.categoryRecycler.layoutManager =

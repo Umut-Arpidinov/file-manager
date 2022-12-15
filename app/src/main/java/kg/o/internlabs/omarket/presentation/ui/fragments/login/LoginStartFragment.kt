@@ -24,7 +24,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         super.initView()
         cusBtnEnter.isEnabled = false
         cusBtnReg.isEnabled = false
-        hideStatusBar()
+
     }
 
     override fun initListener() = with(binding) {
@@ -55,12 +55,6 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         binding.cusBtnEnter.isEnabled = notEmpty
         binding.cusBtnReg.isEnabled = notEmpty
     }
-    private fun hideStatusBar() {
-        WindowInsetsControllerCompat(requireActivity().window, requireView()).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.statusBars())
-            controller.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
+
 
 }
