@@ -13,6 +13,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -65,6 +67,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         setImageToAvatar()
         loadAllAds()
         getMenu()
+        visibleStatusBar()
     }
     
     override fun initListener() = with(binding){
@@ -72,6 +75,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         btnActive.setOnClickListener { getActiveAds() }
         btnNonActive.setOnClickListener { getNonActiveAds() }
         tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
+    }
+
+    private fun visibleStatusBar() {
+        WindowInsetsControllerCompat(requireActivity().window,requireView()).show((WindowInsetsCompat.Type.statusBars()))
     }
 
     private fun initAdapter() = with(binding) {
