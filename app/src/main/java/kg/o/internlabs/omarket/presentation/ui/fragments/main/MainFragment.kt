@@ -38,8 +38,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     override fun initListener() = with(binding) {
         super.initListener()
-        tbMain
-        tbMain.setNavigationOnClickListener {
+        icProfile.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
         }
     }
