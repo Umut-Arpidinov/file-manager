@@ -92,6 +92,7 @@
     <string name="registration">Регистрация</string>
     <string name="time_out">java.net.SocketTimeoutException: connect timed out</string>
     <string name="incorrect_number">Номер не существует</string>
+
     <string name="accept">Нажимая \"Войти\" вы принимаете</string>
     <string name="terms_agreement"><u>условия пользовательского соглашения</u></string>
     <string name="number_not_Exists">Номер не существует</string>
@@ -103,9 +104,9 @@
     <string name="place_delivery_product">Place/delivery of product</string>
     <string name="sell_faster_string">Продать быстрее</string>
     <string name="sample_viewed_string">777</string>
+    <string name="som_underline">%,s c</string>
+    <string name="dollar_price">%,d $</string>
     <string name="search_text">У вас в городе</string>
-    <string name="som_underline">%,d <u>с</u></string>
-    <string name="dollar_price">%,d <u>$</u></string>
     <string name="delivery_available">%s/Доставка</string>
     <string name="category_description">icons of categories</string>
 </resources>

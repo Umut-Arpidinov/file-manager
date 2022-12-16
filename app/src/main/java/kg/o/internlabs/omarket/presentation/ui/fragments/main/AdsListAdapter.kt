@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
-import kg.o.internlabs.omarket.data.remote.model.AdsDto
 import kg.o.internlabs.omarket.data.remote.model.PromotionType
 import kg.o.internlabs.omarket.data.remote.model.ResultX
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
@@ -103,15 +102,20 @@ class AdsListAdapter internal constructor(
     }
 
     private fun setPriceWithCurrency(currency: String?, price: String?, priceProduct: TextView) {
-        if (currency.equals("som")){
-            val resultString = String.format(price.toString())
 
-            val spannableString = SpannableString(resultString)
-            spannableString.setSpan(UnderlineSpan(), resultString.lastIndex, resultString.length, 0)
+        if (price == null) {
+            priceProduct.text = "Цена договорная"
+        } else {
+            if (currency.equals("som")){
+                val resultString = String.format(price.toString() + " c")
 
-            priceProduct.text = spannableString
-        } else
-            priceProduct.text = String.format(getString(coreString.dollar_price), price?.toInt())
+                val spannableString = SpannableString(resultString)
+                spannableString.setSpan(UnderlineSpan(), resultString.lastIndex, resultString.length, 0)
+
+                priceProduct.text = spannableString
+            } else
+                priceProduct.text = String.format(getString(coreString.dollar_price), price.toInt())
+        }
     }
 
     private fun setOldPriceWithCurrency(currency: String?, oldPrice: String?, oldPriceProduct: TextView) {
