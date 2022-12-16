@@ -48,4 +48,7 @@ class AdsRepositoryImpl @Inject constructor(
         }
     ).flow
 
+    override fun getAds(page: Int, token: String) = safeApiCall {
+        apiService.getAds(token, page)
+    }
 }

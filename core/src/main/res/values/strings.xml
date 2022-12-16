@@ -46,6 +46,8 @@
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="frame_error">Frame Error</string>
     <string name="helper_text_create_password">Создайте пароль минимум из 8 символов, включая цифры, заглавные и строчные буквы</string>
+    <string name="active">Активные</string>
+    <string name="non_active">Неактивные</string>
 
     <string name="helper_text_wrong_password_length">
         <![CDATA[
@@ -64,7 +66,7 @@
         ]]>
     </string>
 
-    <string name="helper_text_no_lower_case_letters">
+     <string name="helper_text_no_lower_case_letters">
         <![CDATA[
         Создайте пароль, минимум из 8 символов, включая цифры, заглавные и
         <font color="red"> строчные буквы</font>
@@ -102,9 +104,9 @@
     <string name="place_delivery_product">Place/delivery of product</string>
     <string name="sell_faster_string">Продать быстрее</string>
     <string name="sample_viewed_string">777</string>
-    <string name="search_text">Search\'s text</string>
-    <string name="som_underline">%,d <u>с</u></string>
-    <string name="dollar_price">%,d <u>$</u></string>
+    <string name="som_underline">%,s c</string>
+    <string name="dollar_price">%,d $</string>
+    <string name="search_text">У вас в городе</string>
     <string name="delivery_available">%s/Доставка</string>
     <string name="category_description">icons of categories</string>
 </resources>

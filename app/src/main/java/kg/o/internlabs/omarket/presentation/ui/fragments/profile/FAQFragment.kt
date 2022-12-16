@@ -1,6 +1,8 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.profile
 
 import android.view.LayoutInflater
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,11 +34,16 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
     override fun initView() {
         super.initView()
         getCategories()
+        visibleStatusBar()
     }
 
     override fun initListener() = with(binding) {
         super.initListener()
         tbFaq.setNavigationOnClickListener { findNavController().navigateUp() }
+    }
+
+    private fun visibleStatusBar() {
+        WindowInsetsControllerCompat(requireActivity().window,requireView()).show((WindowInsetsCompat.Type.statusBars()))
     }
 
     private fun getCategories() {

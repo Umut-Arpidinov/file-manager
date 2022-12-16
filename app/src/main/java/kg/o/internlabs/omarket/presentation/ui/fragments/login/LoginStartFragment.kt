@@ -1,12 +1,13 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.view.LayoutInflater
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.NumberInputHelper
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentLoginStartBinding
 
 @AndroidEntryPoint
@@ -23,6 +24,7 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         super.initView()
         cusBtnEnter.isEnabled = false
         cusBtnReg.isEnabled = false
+
     }
 
     override fun initListener() = with(binding) {
@@ -53,7 +55,6 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         binding.cusBtnEnter.isEnabled = notEmpty
         binding.cusBtnReg.isEnabled = notEmpty
     }
-
 
 
 }

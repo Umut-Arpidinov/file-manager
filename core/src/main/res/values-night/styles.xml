@@ -66,6 +66,7 @@
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
         <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+        <item name="android:textColor">@color/white_1</item>
         <item name="android:letterSpacing">-0.0041</item>
     </style>
 
@@ -77,6 +78,7 @@
     <style name="TextView.Cells.SubTitle.Faq" parent="TextView.Cells.SubTitle">
         <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
         <item name="android:textSize">@dimen/cells_subTitle_text_size_15sp</item>
+        <item name="android:textColor">@color/white_1</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
@@ -287,6 +289,13 @@
         <item name="fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:textColor">@color/white_1</item>
         <item name="android:textSize">@dimen/text_11sp</item>
+    </style>
+    <style name="StyleMainLayout">
+        <item name="android:background">@color/black_2</item>
+    </style>
+
+    <style name="StyleAdsBackground">
+        <item name="android:background">@color/black_4</item>
     </style>
 
     <style name="MainSearchResultText" parent="AppPrimaryStyle">

@@ -6,6 +6,7 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.data.remote.model.AdsDto
 import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
 import kg.o.internlabs.omarket.domain.entity.ads.MainResult
@@ -77,6 +78,29 @@ class MainFragmentViewModel @Inject constructor(
 
     private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {
+    fun getAds(page: Int) {
+        viewModelScope.launch {
+            getAdsUseCase(
+                page,
+                "eyJ1c2VyX2lkIjogNjUsICJ1dWlkIjogIjZjZmRhY2JhZjFlYzQ4ODZiZGI2MGU1MWIwOTEwZmZmIiwgImV4X3RpbWUiOiAxNjczMTEwNTI1fQ==:5YUyZJF1xLQ1K62GwPoYcJH8Ysc.6cfdacbaf1ec4886bdb60e51b0910fff"
+            ).collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        _ads.emit(it)
+                    }
+                    is ApiState.Failure -> {
+                        _ads.emit(it)
+
+                    }
+                    ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    fun getAccessTokenFromPrefs() {
+        viewModelScope.launch{
             getAccessTokenFromPrefsUseCase().collectLatest {
                 if (it != null) {
                     _token.emit(it)

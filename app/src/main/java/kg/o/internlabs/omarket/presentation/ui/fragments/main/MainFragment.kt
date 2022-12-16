@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -23,6 +25,7 @@ import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
+class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),CategoryClickHandler{
 class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     CategoryClickHandler, AdClickedInMain {
 
@@ -44,6 +47,20 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     override fun inflateViewBinding(inflater: LayoutInflater) =
         FragmentMainBinding.inflate(inflater)
 
+    override fun initListener() = with(binding) {
+        super.initListener()
+        icProfile.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
+        }
+    }
+
+    override fun initViewModel() {
+        super.initViewModel()
+        viewModel.getAccessTokenFromPrefs()
+        viewModel.getCategories()
+        viewModel.getAds(1)
+    }
+
     override fun initView() {
         super.initView()
         adapter.setInterface(this@MainFragment, this)
@@ -58,7 +75,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
         }
     }
+        visibleStatusBar()
+    }
 
+    private fun visibleStatusBar() {
+        WindowInsetsControllerCompat(requireActivity().window,requireView()).show((WindowInsetsCompat.Type.statusBars()))
     private fun initAdapter() = with(binding){
         recMain.adapter = adapter
 
@@ -84,7 +105,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {
         binding.categoryRecycler.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding.categoryRecycler.adapter = CategoryRecyclerViewAdapter(list, requireContext(), this)
+        binding.categoryRecycler.adapter = CategoryRecyclerViewAdapter(list, requireContext(),this)
     }
 
     private fun getCategories() {
@@ -125,6 +146,30 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         safeFlowGather {
             viewModel.adsByCategory.collectLatest {
                 adapterForAdsByCategory.submitData(it)
+                when (it) {
+                    is ApiState.Success -> {
+                        val mainAdapter =
+                            AdsListAdapter(
+                                it.data?.result?.results!!,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                requireContext()
+                            )
+                        binding.mainViewHolder.addItemDecoration(
+                            MarginItemDecoration(
+                                resources.getDimensionPixelSize(
+                                    R.dimen.item_margin_7dp
+                                )
+                            )
+                        )
+                        binding.mainViewHolder.adapter = mainAdapter
+                    }
+                    is ApiState.Failure -> {
+
+                    }
+                    is ApiState.Loading -> {
+
+                    }
+                }
             }
         }
     }*/
@@ -140,6 +185,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         getAds()
     }
 
+    override fun clickedCategory(item: ResultEntity) {
+        Toast.makeText(requireActivity(), "${item.name} with id ${item.id} was clicked", Toast.LENGTH_SHORT).show()
     override fun adClicked(ad: ResultX) {
         println("click-----${ad.uuid}----")
     }

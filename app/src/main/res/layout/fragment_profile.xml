@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,42 +32,63 @@
         app:layout_constraintTop_toBottomOf="@id/tb_profile"
         app:setTitle="+996 776 543 654" />
 
-    <Button
-        android:id="@+id/btn_active"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Active Ads"
-        app:layout_constraintTop_toBottomOf="@id/cus_profile"
-        app:layout_constraintStart_toStartOf="parent"/>
+    <RadioGroup
+        android:id="@+id/switch_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_30dp"
+        android:layout_margin="@dimen/margin_8dp"
+        android:background="@drawable/switch_outline"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cus_profile">
 
-    <Button
-        android:id="@+id/btn_non_active"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Disabled Ads"
-        app:layout_constraintTop_toBottomOf="@id/cus_profile"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/btn_active"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/switch_background"
+            android:button="@null"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/active"
+            android:textColor="@color/switch_text" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/btn_non_active"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/switch_background"
+            android:button="@null"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/non_active"
+            android:textColor="@color/switch_text" />
+    </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingStart="@dimen/margin_start_8dp"
+        android:paddingEnd="@dimen/dimen_0dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:layout_marginBottom="@dimen/margin_8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_active"
+        app:layout_constraintTop_toBottomOf="@id/switch_group"
         app:spanCount="2"
         tools:itemCount="10"
-        tools:listitem="@layout/adapter_movie" />
+        tools:listitem="@layout/card_view_users_ads" />
 
     <ProgressBar
         android:id="@+id/prog"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:visibility="gone"
         android:indeterminateTint="@color/black"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
