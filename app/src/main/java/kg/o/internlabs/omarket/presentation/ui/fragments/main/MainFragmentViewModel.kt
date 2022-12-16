@@ -63,17 +63,17 @@ class MainFragmentViewModel @Inject constructor(
         }
     }
 
-    private fun getAds() = launchPagingAsync({
-        getAdsUseCase(getAccessToken()).cachedIn(viewModelScope)
+    fun getAds(adsByCategory: AdsByCategory? = null) = launchPagingAsync({
+        getAdsUseCase(getAccessToken(), adsByCategory).cachedIn(viewModelScope)
     },{
         _ads = it
     })
-
+/*
     fun getAdsByCategory(ads: AdsByCategory) = launchPagingAsync({
         getAdsByCategoryUseCase(getAccessToken(), ads).cachedIn(viewModelScope)
     },{
         _adsByCategory = it
-    })
+    })*/
 
     private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {

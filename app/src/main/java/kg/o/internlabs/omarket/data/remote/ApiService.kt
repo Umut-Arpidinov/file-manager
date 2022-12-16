@@ -46,12 +46,12 @@ interface ApiService {
         @Query("page") page: Int?
     ): Response<MyAdsDto?>
 
-    @POST("api/ads-board/v1/protected/category/search-by-word/")
+    @POST("api/ads-board/trusted/ads-filter-old/")
     suspend fun getAdsByCategory(
         @Header("Authorization") token: String?,
         @Body adsDto: AdsByCategoryDto?,
         @Query("page") page: Int?
-    ): Response<AdsByCategoryDto?>
+    ): Response<AdsDto?>
 
     @Multipart
     @POST("api/ads-board/v1/user/upload-avatar/")

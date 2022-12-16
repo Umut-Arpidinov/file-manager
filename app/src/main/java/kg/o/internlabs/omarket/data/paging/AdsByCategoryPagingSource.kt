@@ -1,14 +1,7 @@
 package kg.o.internlabs.omarket.data.paging
 
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
-import kg.o.internlabs.omarket.data.mappers.MapperForAds
-import kg.o.internlabs.omarket.data.remote.ApiService
-import kg.o.internlabs.omarket.data.remote.model.ads.AdsByCategoryDto
-import kg.o.internlabs.omarket.domain.entity.ads.MainResult
-
-class AdsByCategoryPagingSource(
-    private val apiService: ApiService,
+class AdsByCategoryPagingSource()
+    /*private val apiService: ApiService,
     private val token: String,
     private val ads: AdsByCategoryDto,
     ) :
@@ -40,5 +33,5 @@ class AdsByCategoryPagingSource(
         state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-        }
-}
+        }*/
+

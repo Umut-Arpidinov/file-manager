@@ -4,22 +4,30 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import kg.o.internlabs.omarket.data.mappers.MapperForAds
 import kg.o.internlabs.omarket.data.remote.ApiService
-import kg.o.internlabs.omarket.domain.entity.ads.MainResult
+import kg.o.internlabs.omarket.data.remote.model.ads.AdsByCategoryDto
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 
 class AdsPagingSource(
     private val apiService: ApiService,
     private val token: String,
+    private val adsByCategoryDto: AdsByCategoryDto? = null
     ) :
-    PagingSource<Int, MainResult>() {
+    PagingSource<Int, ResultX>() {
 
     private val map = MapperForAds()
 
     override suspend fun load(params: LoadParams<Int>) = try {
         val position = params.key ?: 1
-        val response = map.toRespEntityForAdsByCategory(
+        val response = if (adsByCategoryDto?.mainFilter?.categoryId != null) {
+            println("----------"+adsByCategoryDto)
+            map.toRespEntityForAds(
+                apiService.getAdsByCategory(token, adsByCategoryDto, position)
+            )
+        } else {
+            map.toRespEntityForAds(
                 apiService.getAds(token, position)
             )
+        }
         if (response?.body() == null) throw Exception("null")
 
         if (response.body()!!.result == null) {

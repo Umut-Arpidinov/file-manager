@@ -14,12 +14,13 @@ class MapperForAds {
         resultCode = v?.resultCode
     )
 
-     fun toDbModel(v: AdsByCategory?) = AdsByCategoryDto(
-        details = v?.details,
-        errorCode = v?.errorCode,
-        resultCode = v?.resultCode,
-        q = v?.q,
-        resultL = v?.resultL?.map { toDbModel(it) }
+    fun toDbModel(v: AdsByCategory?) = AdsByCategoryDto(
+        mainFilter = toDbModel(v?.mainFilter)
+    )
+
+    fun toDbModel(v: MainFilter?) = MainFilterDto(
+        orderBy = v?.orderBy,
+        categoryId = v?.categoryId
     )
 
     fun toDbModel(v: Author?) = AuthorAdsDto(
@@ -167,11 +168,12 @@ class MapperForAds {
     )
 
     fun toEntity(v: AdsByCategoryDto?) = AdsByCategory(
-        details = v?.details,
-        errorCode = v?.errorCode,
-        resultCode = v?.resultCode,
-        q = v?.q,
-        resultL = v?.resultL?.map { toEntity(it) }
+        mainFilter = toEntity(v?.mainFilter)
+    )
+
+    fun toEntity(v: MainFilterDto?) = MainFilter(
+        orderBy = v?.orderBy,
+        categoryId = v?.categoryId
     )
 
     fun toEntity(v: AuthorAdsDto?) = Author(
@@ -309,7 +311,7 @@ class MapperForAds {
         whatsappNumIsIdent = v?.whatsappNumIsIdent
     )
 
-    fun toRespEntityForAds(resp: Response<MainResultDto?>) =
+    fun toRespEntityForAds(resp: Response<AdsDto?>) =
         if (resp.isSuccessful) {
             Response.success(toEntity(resp.body()))
         } else {

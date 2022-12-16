@@ -8,7 +8,7 @@
         android:id="@+id/til_editable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:boxBackgroundMode="none"
         app:hintEnabled="false"
         app:hintTextAppearance="@style/EditableTextView.Hint"

@@ -27,7 +27,7 @@ class CategoryRecyclerViewAdapter(
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bind(listOfResult?.get(position), context)
         holder.itemView.setOnClickListener {
-            clickHandler.clickedCategory(listOfResult?.get(position)?.name)
+            clickHandler.clickedCategory(listOfResult?.get(position)?.id)
         }
     }
 

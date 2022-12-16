@@ -5,7 +5,6 @@ import androidx.paging.PagingConfig
 import kg.o.internlabs.core.base.BaseRepository
 import kg.o.internlabs.omarket.data.mappers.MapperForAds
 import kg.o.internlabs.omarket.data.mappers.MapperForModels
-import kg.o.internlabs.omarket.data.paging.AdsByCategoryPagingSource
 import kg.o.internlabs.omarket.data.paging.AdsPagingSource
 import kg.o.internlabs.omarket.data.remote.ApiService
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
@@ -27,7 +26,7 @@ class AdsRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getAdsByCategory(token: String, ads: AdsByCategory?) = Pager(
+  /*  override fun getAdsByCategory(token: String, ads: AdsByCategory?) = Pager(
         config = PagingConfig(pageSize = 10, prefetchDistance = 2),
         pagingSourceFactory = {
             AdsByCategoryPagingSource(
@@ -36,14 +35,15 @@ class AdsRepositoryImpl @Inject constructor(
                 map.toDbModel(ads)
             )
         }
-    ).flow
+    ).flow*/
 
-    override fun getAds(token: String) = Pager(
+    override fun getAds(token: String, ads: AdsByCategory?) = Pager(
         config = PagingConfig(pageSize = 10, prefetchDistance = 2),
         pagingSourceFactory = {
             AdsPagingSource(
                 apiService,
-                token
+                token,
+                map.toDbModel(ads)
             )
         }
     ).flow
