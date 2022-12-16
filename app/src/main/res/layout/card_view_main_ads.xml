@@ -97,6 +97,9 @@
             android:text="@string/Sample_name_of_product"
             android:layout_marginStart="@dimen/margin_8dp"
             android:layout_marginEnd="@dimen/margin_8dp"
+            android:minLines="1"
+            android:lines="2"
+            android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/old_price_product"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
