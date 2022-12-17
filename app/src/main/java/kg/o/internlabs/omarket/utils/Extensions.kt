@@ -7,13 +7,18 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import com.bumptech.glide.Glide
+import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.PagingAdapterForMain
+import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagingAdapter
 import kotlinx.coroutines.launch
 import java.net.URI
 
@@ -29,6 +34,32 @@ fun Fragment.safeFlowGather(action: suspend () -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
             action()
+        }
+    }
+}
+
+fun Fragment.loadListener(adapter: BasePagingAdapter, progressBar: ProgressBar){
+    val mAdapter = when(adapter) {
+        is PagingAdapterForMain -> PagingAdapterForMain()
+        else -> AdsPagingAdapter()
+    }
+    mAdapter.addLoadStateListener { loadState ->
+        if (loadState.refresh is LoadState.Loading ||
+            loadState.append is LoadState.Loading
+        )
+            progressBar.isVisible = true
+        else {
+            progressBar.isVisible = false
+            val errorState = when {
+                loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                else -> null
+            }
+            errorState?.let {
+                Toast.makeText(requireActivity(), it.error.toString(), Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 }

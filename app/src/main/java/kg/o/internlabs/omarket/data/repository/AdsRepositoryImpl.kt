@@ -26,19 +26,8 @@ class AdsRepositoryImpl @Inject constructor(
         )
     }
 
-  /*  override fun getAdsByCategory(token: String, ads: AdsByCategory?) = Pager(
-        config = PagingConfig(pageSize = 10, prefetchDistance = 2),
-        pagingSourceFactory = {
-            AdsByCategoryPagingSource(
-                apiService,
-                token,
-                map.toDbModel(ads)
-            )
-        }
-    ).flow*/
-
     override fun getAds(token: String, ads: AdsByCategory?) = Pager(
-        config = PagingConfig(pageSize = 10, prefetchDistance = 2),
+        config = PagingConfig(pageSize = 2, prefetchDistance = 1, maxSize = 4),
         pagingSourceFactory = {
             AdsPagingSource(
                 apiService,
@@ -47,8 +36,4 @@ class AdsRepositoryImpl @Inject constructor(
             )
         }
     ).flow
-
-    override fun getAds(page: Int, token: String) = safeApiCall {
-        apiService.getAds(token, page)
-    }
 }

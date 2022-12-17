@@ -18,12 +18,12 @@ class MapperForAds {
         mainFilter = toDbModel(v?.mainFilter)
     )
 
-    fun toDbModel(v: MainFilter?) = MainFilterDto(
+    private fun toDbModel(v: MainFilter?) = MainFilterDto(
         orderBy = v?.orderBy,
         categoryId = v?.categoryId
     )
 
-    fun toDbModel(v: Author?) = AuthorAdsDto(
+    private fun toDbModel(v: Author?) = AuthorAdsDto(
         avatar = v?.avatar,
         blockType = v?.blockType,
         contactNumIsIdent = v?.contactNumIsIdent,
@@ -38,7 +38,7 @@ class MapperForAds {
         verified = v?.verified
     )
 
-    fun toDbModel(v: CategoryAds?) = CategoryAdsDto(
+    private fun toDbModel(v: CategoryAds?) = CategoryAdsDto(
         adType = v?.adType,
         categoryType = v?.categoryType,
         darkIcon = v?.darkIcon,
@@ -59,14 +59,14 @@ class MapperForAds {
         requiredPrice = v?.requiredPrice
     )
 
-    fun toDbModel(v: LocationAds?) = LocationAdsDto(
+    private fun toDbModel(v: LocationAds?) = LocationAdsDto(
         id = v?.id,
         locationType = v?.locationType,
         name = v?.name,
         parent = v?.parent
     )
 
-    fun toDbModel(v: LocationX?) = LocationXDto(
+    private fun toDbModel(v: LocationX?) = LocationXDto(
         id = v?.id,
         isPopular = v?.isPopular,
         locationType = v?.locationType,
@@ -76,14 +76,14 @@ class MapperForAds {
         searchByName = v?.searchByName
     )
 
-    fun toDbModel(v: MainResult?) = MainResultDto(
+    private fun toDbModel(v: MainResult?) = MainResultDto(
         count = v?.count,
         next = v?.next,
         previous = v?.previous,
         results = v?.results?.map { toDbModel(it) }
     )
 
-    fun toDbModel(v: ParentAds?) = ParentAdsDto(
+    private fun toDbModel(v: ParentAds?) = ParentAdsDto(
         adType = v?.adType,
         categoryType = v?.categoryType,
         darkIcon = v?.darkIcon,
@@ -104,20 +104,20 @@ class MapperForAds {
         requiredPrice = v?.requiredPrice
     )
 
-    fun toDbModel(v: PromotionType?) = PromotionTypeAdsDto(
+    private fun toDbModel(v: PromotionType?) = PromotionTypeAdsDto(
         description = v?.description,
         id = v?.id,
         img = v?.img,
         type = v?.type
     )
 
-    fun toDbModel(v: ResultX?) = ResultXDto(
+    private fun toDbModel(v: ResultX?) = ResultXDto(
         adType = v?.adType,
         address = v?.address,
         author = toDbModel(v?.author),
         authorId = v?.authorId,
         category = toDbModel(v?.category),
-        commentary= v?.commentary,
+        commentary = v?.commentary,
         complaintCount = v?.complaintCount,
         contractPrice = v?.contractPrice,
         createdAt = v?.createdAt,
@@ -160,7 +160,7 @@ class MapperForAds {
     //endregion
 
     //region *toEntity
-    fun toEntity(v: AdsDto?) = Ads(
+    private fun toEntity(v: AdsDto?) = Ads(
         details = v?.details,
         errorCode = v?.errorCode,
         result = toEntity(v?.result),
@@ -171,12 +171,12 @@ class MapperForAds {
         mainFilter = toEntity(v?.mainFilter)
     )
 
-    fun toEntity(v: MainFilterDto?) = MainFilter(
+    private fun toEntity(v: MainFilterDto?) = MainFilter(
         orderBy = v?.orderBy,
         categoryId = v?.categoryId
     )
 
-    fun toEntity(v: AuthorAdsDto?) = Author(
+    private fun toEntity(v: AuthorAdsDto?) = Author(
         avatar = v?.avatar,
         blockType = v?.blockType,
         contactNumIsIdent = v?.contactNumIsIdent,
@@ -191,7 +191,7 @@ class MapperForAds {
         verified = v?.verified
     )
 
-    fun toEntity(v: CategoryAdsDto?) = CategoryAds(
+    private fun toEntity(v: CategoryAdsDto?) = CategoryAds(
         adType = v?.adType,
         categoryType = v?.categoryType,
         darkIcon = v?.darkIcon,
@@ -212,14 +212,14 @@ class MapperForAds {
         requiredPrice = v?.requiredPrice
     )
 
-    fun toEntity(v: LocationAdsDto?) = LocationAds(
+    private fun toEntity(v: LocationAdsDto?) = LocationAds(
         id = v?.id,
         locationType = v?.locationType,
         name = v?.name,
         parent = v?.parent
     )
 
-    fun toEntity(v: LocationXDto?) = LocationX(
+    private fun toEntity(v: LocationXDto?) = LocationX(
         id = v?.id,
         isPopular = v?.isPopular,
         locationType = v?.locationType,
@@ -229,14 +229,14 @@ class MapperForAds {
         searchByName = v?.searchByName
     )
 
-    fun toEntity(v: MainResultDto?) = MainResult(
+    private fun toEntity(v: MainResultDto?) = MainResult(
         count = v?.count,
         next = v?.next,
         previous = v?.previous,
         results = v?.results?.map { toEntity(it) }
     )
 
-    fun toEntity(v: ParentAdsDto?) = ParentAds(
+    private fun toEntity(v: ParentAdsDto?) = ParentAds(
         adType = v?.adType,
         categoryType = v?.categoryType,
         darkIcon = v?.darkIcon,
@@ -257,20 +257,20 @@ class MapperForAds {
         requiredPrice = v?.requiredPrice
     )
 
-    fun toEntity(v: PromotionTypeAdsDto?) = PromotionType(
+    private fun toEntity(v: PromotionTypeAdsDto?) = PromotionType(
         description = v?.description,
         id = v?.id,
         img = v?.img,
         type = v?.type
     )
 
-    fun toEntity(v: ResultXDto?) = ResultX(
+    private fun toEntity(v: ResultXDto?) = ResultX(
         adType = v?.adType,
         address = v?.address,
         author = toEntity(v?.author),
         authorId = v?.authorId,
         category = toEntity(v?.category),
-        commentary= v?.commentary,
+        commentary = v?.commentary,
         complaintCount = v?.complaintCount,
         contractPrice = v?.contractPrice,
         createdAt = v?.createdAt,
@@ -317,13 +317,5 @@ class MapperForAds {
         } else {
             resp.errorBody()?.let { Response.error(resp.code(), it) }
         }
-
-    fun toRespEntityForAdsByCategory(resp: Response<AdsByCategoryDto?>) =
-        if (resp.isSuccessful) {
-            Response.success(toEntity(resp.body()))
-        } else {
-            resp.errorBody()?.let { Response.error(resp.code(), it) }
-        }
     // endregion
-
 }

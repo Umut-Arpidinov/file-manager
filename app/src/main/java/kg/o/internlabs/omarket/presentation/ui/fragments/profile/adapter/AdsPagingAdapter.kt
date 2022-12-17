@@ -1,25 +1,25 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter
+package kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Paint
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
-import kg.o.internlabs.omarket.domain.entity.ads.ResultX
-import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
+import kg.o.internlabs.omarket.databinding.CardViewUsersAdsBinding
+import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.profile.ProfileFragment
+import kg.o.internlabs.omarket.utils.BasePagingAdapter
+import kg.o.internlabs.omarket.utils.makeToast
 
-class PagerAdapterForMain : PagingDataAdapter<ResultX, PagerAdapterForMain.AdsViewHolder>
-    (AdsComparatorForMain) {
-    private lateinit var adClicked: AdClickedInMain
-    private var fragmentContext: MainFragment? = null
+class AdsPagingAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagingAdapter.AdsViewHolder>
+    (AdsComparator), BasePagingAdapter {
+    private lateinit var adClicked: AdClicked
+    private var fragmentContext: ProfileFragment? = null
 
     override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
         holder.bind(getItem(position))
@@ -28,19 +28,21 @@ class PagerAdapterForMain : PagingDataAdapter<ResultX, PagerAdapterForMain.AdsVi
         }
     }
 
-    fun setInterface(adClicked: AdClickedInMain, mainFragment: MainFragment) {
+    fun setInterface(adClicked: AdClicked, profileFragment: ProfileFragment) {
         this.adClicked = adClicked
-        fragmentContext = mainFragment
+        fragmentContext = profileFragment
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        AdsViewHolder(CardViewMainAdsBinding.inflate(LayoutInflater.from(parent.context)))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdsViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = CardViewUsersAdsBinding.inflate(inflater, parent, false)
+        return AdsViewHolder(binding)
+    }
 
-    inner class AdsViewHolder(private val binding: CardViewMainAdsBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        private var favorite = true
+    inner class AdsViewHolder(val binding: CardViewUsersAdsBinding)
+        : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ResultX?) = with(binding) {
+        fun bind(item: MyAdsResultsEntity?) = with(binding) {
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false
             setPager(item?.minifyImages, binding)
@@ -52,35 +54,29 @@ class PagerAdapterForMain : PagingDataAdapter<ResultX, PagerAdapterForMain.AdsVi
             nameProduct.text = item?.title
             nameCategory.text = item?.category?.name
             placeProduct.text = item?.let { placeAndDelivery(it) }
+            viewCount.text = item?.viewCount
 
-            favoriteIcon.setOnClickListener {
-                if (item?.favorite == false || item?.favorite == null && !favorite) {
-                    favoriteIcon.setImageResource(kg.o.internlabs.core.R.drawable.ic_favorite_pressed)
-                    favorite = true
-                } else {
-                    favorite = false
-                    favoriteIcon.setImageResource(kg.o.internlabs.core.R.drawable.ic_favorite)
-                }
+            adsBtn.setOnClickListener {
+                fragmentContext?.requireActivity()?.makeToast("Sell faster clicked")
             }
         }
 
-        private fun setPager(minifyImages: List<String>?, binding: CardViewMainAdsBinding) =
+        private fun setPager(minifyImages: List<String>?, binding: CardViewUsersAdsBinding) =
             with(binding) {
                 val pagerAdapter2 =
                     fragmentContext?.let {
                         PagerImageAdapter(
-                            it,
+                            it.requireActivity(),
                             minifyImages,
                             ViewGroup.LayoutParams.MATCH_PARENT
                         )
                     }
                 imgAds.adapter = pagerAdapter2
-                indicator.attachToPager(imgAds)
-                indicator.attachToPager(imgAds)
             }
 
+
         @SuppressLint("SetTextI18n")
-        private fun setPrice(item: ResultX): Unit = with(binding) {
+        private fun setPrice(item: MyAdsResultsEntity): Unit = with(binding) {
             with(item) {
                 if (currency == "som") {
                     val resultString = "$price c"
@@ -98,33 +94,39 @@ class PagerAdapterForMain : PagingDataAdapter<ResultX, PagerAdapterForMain.AdsVi
             }
         }
 
-        private fun setOldPriceWithCurrency(item: ResultX) = with(binding) {
+        private fun setOldPriceWithCurrency(item: MyAdsResultsEntity) = with(binding) {
             if (item.oldPrice == null || item.oldPrice == "") {
-                oldPriceProduct.visibility = View.GONE
+                oldPriceProduct.visibility = android.view.View.GONE
             } else {
-                oldPriceProduct.visibility = View.VISIBLE
+                oldPriceProduct.visibility = android.view.View.VISIBLE
                 oldPriceProduct.paintFlags =
-                    oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    oldPriceProduct.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
             }
         }
     }
 
-    private fun placeAndDelivery(item: ResultX) =
-        if (item.delivery == true) {
+    private fun placeAndDelivery(item: MyAdsResultsEntity?) =
+        if (item?.category?.delivery == true) {
             fragmentContext?.requireActivity()
                 ?.getString(kg.o.internlabs.core.R.string.delivery_available)
                 ?.let { String.format(it, item.location?.name) }
         } else {
-            item.location?.name
+            item?.location?.name
         }
-}
 
-object AdsComparatorForMain : DiffUtil.ItemCallback<ResultX>() {
-    override fun areItemsTheSame(oldItem: ResultX, newItem: ResultX): Boolean {
-        return oldItem.uuid == newItem.uuid
-    }
+    object AdsComparator : DiffUtil.ItemCallback<MyAdsResultsEntity>() {
+        override fun areItemsTheSame(
+            oldItem: MyAdsResultsEntity,
+            newItem: MyAdsResultsEntity
+        ): Boolean {
+            return oldItem.uuid == newItem.uuid
+        }
 
-    override fun areContentsTheSame(oldItem: ResultX, newItem: ResultX): Boolean {
-        return oldItem == newItem
+        override fun areContentsTheSame(
+            oldItem: MyAdsResultsEntity,
+            newItem: MyAdsResultsEntity
+        ): Boolean {
+            return oldItem == newItem
+        }
     }
 }

@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +19,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
@@ -29,8 +27,9 @@ import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
 import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdClicked
-import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagerAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagingAdapter
 import kg.o.internlabs.omarket.utils.checkPermission
+import kg.o.internlabs.omarket.utils.loadListener
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
@@ -40,7 +39,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     CustomProfileCellViewClickers, AdClicked {
 
     private var args: ProfileFragmentArgs? = null
-    private var adapter = AdsPagerAdapter()
+    private var adapter = AdsPagingAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,8 +82,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     private fun initAdapter() = with(binding) {
         rec.adapter = adapter
-
-        adapter.addLoadStateListener { loadState ->
+        loadListener(adapter, prog)
+       /* adapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading ||
                 loadState.append is LoadState.Loading)
                 prog.isVisible = true
@@ -100,7 +99,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                     Toast.makeText(requireActivity(), it.error.toString(), Toast.LENGTH_LONG).show()
                 }
             }
-        }
+        }*/
     }
 
     private fun openSomeActivityForResult() {

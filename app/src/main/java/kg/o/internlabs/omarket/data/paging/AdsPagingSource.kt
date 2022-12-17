@@ -19,7 +19,6 @@ class AdsPagingSource(
     override suspend fun load(params: LoadParams<Int>) = try {
         val position = params.key ?: 1
         val response = if (adsByCategoryDto?.mainFilter?.categoryId != null) {
-            println("----------"+adsByCategoryDto)
             map.toRespEntityForAds(
                 apiService.getAdsByCategory(token, adsByCategoryDto, position)
             )
