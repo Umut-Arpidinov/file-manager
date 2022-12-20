@@ -95,11 +95,9 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
                     }
                     is ApiState.Failure -> {
-                        // если что то пошло ни так
                         requireActivity().makeToast(it.msg.message.toString())
                     }
                     is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
                     }
                 }
             }
