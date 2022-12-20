@@ -74,7 +74,7 @@ class AdsListAdapter internal constructor(
             defineDelivery(mList.delivery, placeProduct, mList.location?.name)
 
             favoriteIcon.setOnClickListener{
-                if (mList.favorite == false || mList.favorite == null && !favorite) {
+                if (!favorite) {
                     favoriteIcon.setImageResource(kg.o.internlabs.core.R.drawable.ic_favorite_pressed)
                     favorite = true
                 } else {
