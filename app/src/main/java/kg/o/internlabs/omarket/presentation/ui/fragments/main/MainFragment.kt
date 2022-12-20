@@ -2,6 +2,8 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
@@ -93,11 +95,9 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
                     }
                     is ApiState.Failure -> {
-                        // если что то пошло ни так
                         requireActivity().makeToast(it.msg.message.toString())
                     }
                     is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
                     }
                 }
             }
@@ -109,6 +109,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             viewModel.ads.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+                        binding.loadingAnim.visibility = GONE
                         val mainAdapter =
                             AdsListAdapter(
                                 it.data?.result?.results!!,
@@ -128,7 +129,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
                     }
                     is ApiState.Loading -> {
-
+                        binding.loadingAnim.visibility = VISIBLE
                     }
                 }
             }
