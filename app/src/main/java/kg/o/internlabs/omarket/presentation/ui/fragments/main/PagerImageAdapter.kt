@@ -15,8 +15,6 @@ internal class PagerImageAdapter internal constructor(
 ) :
     RecyclerView.Adapter<PagerImageAdapter.ViewHolder>() {
 
-    private var arrayIsNotNull = true
-
     internal class ViewHolder(val binding: PagerItemImageMainBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -31,24 +29,19 @@ internal class PagerImageAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            if (arrayIsNotNull) { //check for null list
-                Glide.with(context).load(imageURLs?.get(position))
-                    .placeholder(R.drawable.loading_animation) //animation during the loading
-                    .error(R.drawable.loading_img).into(binding.itemImgMain) //just img if error occurs
+            if (!imageURLs.isNullOrEmpty()) {
+                Glide.with(context).load(imageURLs[position])
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.loading_img).into(binding.itemImgMain)
             } else {
                 Glide.with(context)
-                    .load(R.drawable.loading_img) // if list is null set the img
+                    .load(R.drawable.loading_img)
                     .into(binding.itemImgMain)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return if (imageURLs != null) { // check for null
-            imageURLs.size
-        } else {
-            arrayIsNotNull = false // if null set the one img
-            1
-        }
+        return imageURLs?.size ?: 0
     }
 }
