@@ -107,10 +107,10 @@
         <action
             android:id="@+id/go_to_main"
             app:destination="@id/mainFragment">
-        <argument
-            android:name="number"
-            app:nullable="true"
-            app:argType="string"/>
+            <argument
+                android:name="number"
+                app:nullable="true"
+                app:argType="string"/>
         </action>
         <argument
             android:name="number"

@@ -68,25 +68,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         recMain.adapter = adapter
 
         loadListener(adapter, binding.progressBar)
-        /*adapter.addLoadStateListener { loadState ->
-            if (loadState.refresh is LoadState.Loading ||
-                loadState.append is LoadState.Loading
-            )
-                progressBar.isVisible = true
-            else {
-                progressBar.isVisible = false
-                val errorState = when {
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-                errorState?.let {
-                    Toast.makeText(requireActivity(), it.error.toString(), Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
-        }*/
     }
 
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {
@@ -124,9 +105,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     private fun getAds() {
         safeFlowGather {
-            println("======1=====")
             viewModel.ads?.collectLatest {
-                println("=========="+it.toString())
                 adapter.submitData(it)
             }
         }
@@ -134,7 +113,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     override fun clickedCategory(item: Int?) {
         if (item == null) {
-            println("-------33---$item")
             viewModel.getAds()
             getAds()
             return
@@ -152,6 +130,5 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     override fun adClicked(ad: ResultX) {
-        println("click-----${ad.uuid}----")
     }
 }

@@ -1,8 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.login
 
 import android.view.LayoutInflater
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,11 +48,8 @@ class LoginStartFragment : BaseFragment<FragmentLoginStartBinding, LoginViewMode
         }
     }
 
-
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {
         binding.cusBtnEnter.isEnabled = notEmpty
         binding.cusBtnReg.isEnabled = notEmpty
     }
-
-
 }

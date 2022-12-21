@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.activities.activities.main_activity
+package kg.o.internlabs.omarket.presentation.ui.activities.main_activity
 
 import android.app.Service
 import android.content.Intent

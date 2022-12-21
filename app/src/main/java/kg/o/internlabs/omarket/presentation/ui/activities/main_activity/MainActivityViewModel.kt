@@ -1,13 +1,16 @@
-package kg.o.internlabs.omarket.presentation.ui.activities.activities.main_activity
+package kg.o.internlabs.omarket.presentation.ui.activities.main_activity
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
+import kg.o.internlabs.omarket.domain.entity.TokenData
+import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
 import kg.o.internlabs.omarket.domain.usecases.RefreshTokenUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.take
 import javax.inject.Inject
@@ -18,13 +21,16 @@ class MainActivityViewModel @Inject constructor(
     private val saveAccessTokenToPrefsUseCase: SaveAccessTokenToPrefsUseCase,
     private val saveRefreshTokenToPrefsUseCase: SaveRefreshTokenToPrefsUseCase,
     private val refreshTokenUseCase: RefreshTokenUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val checkLoginStatusFromPrefsUseCase: CheckLoginStatusFromPrefsUseCase,
+    private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
     private val saveLoginStatusToPrefsUseCase: SaveLoginStatusToPrefsUseCase
 ) :
     BaseViewModel() {
 
     private var myJob: Job? = null
     private var t = 0
+    private val _token = MutableStateFlow("")
 
     fun statusListener() {
         viewModelScope.launch {
@@ -81,6 +87,10 @@ class MainActivityViewModel @Inject constructor(
         saveLoginStatusToPrefsUseCase.invoke(isLogged)
     }
 
+    init {
+        getAccessTokenFromPrefs()
+    }
+
     private fun checkLoginStatusFromPrefs() = checkLoginStatusFromPrefsUseCase.invoke()
 
     private fun refreshTokenRoute(it: String?) =
@@ -95,4 +105,35 @@ class MainActivityViewModel @Inject constructor(
         myJob = null
         super.onCleared()
     }
+
+    fun isTokenExpired() {
+        viewModelScope.launch {
+            getCategoriesUseCase(getAccessToken()).collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        TokenData.isTokenExpired = false
+                    }
+                    is ApiState.Failure -> {
+                        if (it.msg.message == "Учетные данные не были предоставлены.") {
+                            TokenData.isTokenExpired = true
+                        }
+                    }
+                    ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getAccessTokenFromPrefs() {
+        viewModelScope.launch {
+            getAccessTokenFromPrefsUseCase().collectLatest {
+                if (it != null) {
+                    _token.emit(it)
+                }
+            }
+        }
+    }
+
+    private fun getAccessToken() = _token.value
 }

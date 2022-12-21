@@ -33,7 +33,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".presentation.ui.activities.activities.main_activity.MainActivity"
+            android:name=".presentation.ui.activities.main_activity.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
@@ -41,7 +41,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <service android:name=".presentation.ui.activities.activities.main_activity.ClosingService"
+        <service android:name=".presentation.ui.activities.main_activity.ClosingService"
             android:stopWithTask="false"/>
     </application>
 

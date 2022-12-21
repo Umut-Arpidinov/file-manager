@@ -83,23 +83,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     private fun initAdapter() = with(binding) {
         rec.adapter = adapter
         loadListener(adapter, prog)
-       /* adapter.addLoadStateListener { loadState ->
-            if (loadState.refresh is LoadState.Loading ||
-                loadState.append is LoadState.Loading)
-                prog.isVisible = true
-            else {
-                prog.isVisible = false
-                val errorState = when {
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.prepend is LoadState.Error ->  loadState.prepend as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-                errorState?.let {
-                    Toast.makeText(requireActivity(), it.error.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-        }*/
     }
 
     private fun openSomeActivityForResult() {
