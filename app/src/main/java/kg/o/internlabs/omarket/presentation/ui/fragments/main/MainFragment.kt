@@ -2,10 +2,6 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
@@ -48,6 +44,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     override fun inflateViewBinding(inflater: LayoutInflater) =
         FragmentMainBinding.inflate(inflater)
 
+    override fun initViewModel() {
+        super.initViewModel()
+        viewModel.getCategories()
+    }
+
     override fun initView() {
         super.initView()
         adapter.setInterface(this@MainFragment, this)
@@ -74,8 +75,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
         )
-
-        loadListener(adapter, progressBar, recMain)
+        loadListener(adapter, loadingAnim, recMain)
     }
 
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {

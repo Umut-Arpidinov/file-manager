@@ -26,7 +26,6 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
     override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
         holder.bind(getItem(position))
 
-        println("----${itemCount}--------1-----${count++}--------")
         holder.itemView.setOnClickListener {
             getItem(position)?.let { it1 -> adClicked.adClicked(it1) }
         }

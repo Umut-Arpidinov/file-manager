@@ -38,7 +38,7 @@ class MainFragmentViewModel @Inject constructor(
         getAccessTokenFromPrefs()
     }
 
-    private fun getCategories() {
+    fun getCategories() {
         viewModelScope.launch {
             getCategoriesUseCase(getAccessToken()).collectLatest {
                 when (it) {
@@ -67,7 +67,6 @@ class MainFragmentViewModel @Inject constructor(
             getAccessTokenFromPrefsUseCase().collectLatest {
                 if (it != null) {
                     _token.emit(it)
-                    getCategories()
                     getAds()
                 }
             }

@@ -77,8 +77,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl"
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_main"
@@ -92,40 +92,30 @@
             tools:itemCount="10"
             tools:listitem="@layout/card_view_main_ads" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:visibility="gone"
-            android:indeterminateTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rec_main" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
         android:id="@+id/loading_anim"
         style="@style/progressBarStyle"
-        android:layout_marginTop="@dimen/margin_30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_30dp"
+        android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:backgroundTint="@color/color_fab_main"
-        app:layout_constraintBottom_toBottomOf="@id/rec_main"
-        app:layout_constraintEnd_toStartOf="parent"
-        android:src="@drawable/ic_plus_fab"
         android:layout_marginBottom="@dimen/margin_20dp"
+        android:backgroundTint="@color/color_fab_main"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_plus_fab"
         app:borderWidth="@dimen/dimen_0dp"
         app:fabSize="normal"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        app:tint="@color/magenta_1"
-        android:contentDescription="@string/app_name"/>
+        app:layout_constraintBottom_toBottomOf="@id/rec_main"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:tint="@color/magenta_1" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
