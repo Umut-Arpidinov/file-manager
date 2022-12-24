@@ -1,17 +1,21 @@
 package kg.o.internlabs.omarket.presentation.ui.activities.main_activity
 
 import android.view.LayoutInflater
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseActivity
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.ActivityMainBinding
-import kg.o.internlabs.omarket.domain.entity.TokenData
 import kg.o.internlabs.omarket.presentation.ui.fragments.login.LoginStartFragment
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
 import kg.o.internlabs.omarket.utils.lightStatusBar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -41,8 +45,25 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
 
     override fun initView() {
         super.initView()
-        setupNavigation()
         lightStatusBar(window)
+        viewModel.isTokenExpired()
+        checkToken()
+    }
+
+    private fun checkToken() {
+        safeFlowGather {
+            viewModel.accessToken.collectLatest {
+                setupNavigation(it)
+            }
+        }
+    }
+
+    private fun safeFlowGather(action: suspend () -> Unit) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                action()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -51,24 +72,20 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
         super.onDestroy()
     }
 
-
-
-    private fun setupNavigation() {
+    private fun setupNavigation(s: String) {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = navHostFragment.navController
 
         val navGraph = navController.navInflater.inflate(R.navigation.main_graph)
-        when {
-            TokenData.isTokenExpired -> {
+        when(s) {
+            "403" -> {
                 navGraph.setStartDestination(R.id.loginStartFragment)
             }
-            !TokenData.isTokenExpired -> {
+            "200" -> {
                 navGraph.setStartDestination(R.id.mainFragment)
             }
         }
         navController.graph = navGraph
     }
 }
-
-

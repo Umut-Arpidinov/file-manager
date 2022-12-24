@@ -5,14 +5,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.RegisterEntity
-import kg.o.internlabs.omarket.domain.entity.TokenData
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
 import kg.o.internlabs.omarket.domain.usecases.RefreshTokenUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +28,8 @@ class MainActivityViewModel @Inject constructor(
     private var myJob: Job? = null
     private var t = 0
     private val _token = MutableStateFlow("")
+    private val _accessToken = MutableSharedFlow<String>()
+    val accessToken = _accessToken.asSharedFlow()
 
     fun statusListener() {
         viewModelScope.launch {
@@ -111,11 +110,11 @@ class MainActivityViewModel @Inject constructor(
             getCategoriesUseCase(getAccessToken()).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        TokenData.isTokenExpired = false
+                        _accessToken.emit("200")
                     }
                     is ApiState.Failure -> {
                         if (it.msg.message == "Учетные данные не были предоставлены.") {
-                            TokenData.isTokenExpired = true
+                            _accessToken.emit("403")
                         }
                     }
                     ApiState.Loading -> {
