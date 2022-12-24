@@ -36,7 +36,8 @@ interface ApiService {
 
     @GET("api/ads-board/faq/")
     suspend fun getFaq(
-        @Header("Authorization") token: String?
+        @Header("Authorization") token: String?,
+        @Query("page") page: Int?
     ): Response<FAQDto?>
 
     @POST("api/ads-board/v1/user/my-ads/")

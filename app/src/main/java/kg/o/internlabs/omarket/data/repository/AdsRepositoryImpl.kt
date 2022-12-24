@@ -27,7 +27,8 @@ class AdsRepositoryImpl @Inject constructor(
     }
 
     override fun getAds(token: String, ads: AdsByCategory?) = Pager(
-        config = PagingConfig(pageSize = 2, prefetchDistance = 1, maxSize = 4),
+        config = PagingConfig(pageSize = 10, prefetchDistance = 1, maxSize = 60,
+            initialLoadSize = 20),
         pagingSourceFactory = {
             AdsPagingSource(
                 apiService,

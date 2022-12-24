@@ -28,10 +28,7 @@ import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
 import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdClicked
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagingAdapter
-import kg.o.internlabs.omarket.utils.checkPermission
-import kg.o.internlabs.omarket.utils.loadListener
-import kg.o.internlabs.omarket.utils.makeToast
-import kg.o.internlabs.omarket.utils.safeFlowGather
+import kg.o.internlabs.omarket.utils.*
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -81,8 +78,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun initAdapter() = with(binding) {
-        rec.adapter = adapter
-        loadListener(adapter, prog)
+        rec.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = LoaderStateAdapter(),
+            footer = LoaderStateAdapter()
+        )
+        loadListener(adapter, prog, rec)
     }
 
     private fun openSomeActivityForResult() {

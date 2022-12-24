@@ -16,17 +16,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.PagingAdapterForMain
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagingAdapter
 import kotlinx.coroutines.launch
 import java.net.URI
 
-fun Context.makeToast(msg: String){
+fun Context.makeToast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
 
-fun Fragment.makeToast(msg: String){
+fun Fragment.makeToast(msg: String) {
     Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
 }
 
@@ -38,28 +39,29 @@ fun Fragment.safeFlowGather(action: suspend () -> Unit) {
     }
 }
 
-fun Fragment.loadListener(adapter: BasePagingAdapter, progressBar: ProgressBar){
-    val mAdapter = when(adapter) {
+fun Fragment.loadListener(
+    adapter: BasePagingAdapter,
+    progressBar: ProgressBar,
+    recMain: RecyclerView
+) {
+    val mAdapter = when (adapter) {
         is PagingAdapterForMain -> PagingAdapterForMain()
         else -> AdsPagingAdapter()
     }
-    mAdapter.addLoadStateListener { loadState ->
-        if (loadState.refresh is LoadState.Loading ||
-            loadState.append is LoadState.Loading
-        )
-            progressBar.isVisible = true
-        else {
-            progressBar.isVisible = false
-            val errorState = when {
-                loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                else -> null
-            }
-            errorState?.let {
-                Toast.makeText(requireActivity(), it.error.toString(), Toast.LENGTH_LONG)
-                    .show()
-            }
+
+    mAdapter.addLoadStateListener { state ->
+        recMain.isVisible = state.refresh != LoadState.Loading
+        progressBar.isVisible = state.refresh == LoadState.Loading
+
+        val errorState = when {
+            state.append is LoadState.Error -> state.append as LoadState.Error
+            state.prepend is LoadState.Error -> state.prepend as LoadState.Error
+            state.refresh is LoadState.Error -> state.refresh as LoadState.Error
+            else -> null
+        }
+        errorState?.let {
+            Toast.makeText(requireActivity(), it.error.toString(), Toast.LENGTH_LONG)
+                .show()
         }
     }
 }
@@ -83,14 +85,14 @@ fun Fragment.checkPermission() {
     }
 }
 
-fun Fragment.glide(fragment: Fragment, uri: URI, imageView: ImageView){
+fun Fragment.glide(fragment: Fragment, uri: URI, imageView: ImageView) {
     Glide.with(fragment).load(uri).centerCrop().into(imageView)
 }
 
-fun Fragment.glide(fragment: Fragment, uri: Int, imageView: ImageView){
+fun Fragment.glide(fragment: Fragment, uri: Int, imageView: ImageView) {
     Glide.with(fragment).load(uri).centerCrop().into(imageView)
 }
 
-fun glide(fragment: Fragment, uri: String, imageView: ImageView){
+fun glide(fragment: Fragment, uri: String, imageView: ImageView) {
     Glide.with(fragment).load(uri).centerCrop().into(imageView)
 }

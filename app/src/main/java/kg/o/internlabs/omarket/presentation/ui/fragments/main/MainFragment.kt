@@ -17,6 +17,7 @@ import kg.o.internlabs.omarket.domain.entity.ads.MainFilter
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.PagingAdapterForMain
+import kg.o.internlabs.omarket.utils.LoaderStateAdapter
 import kg.o.internlabs.omarket.utils.loadListener
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
@@ -54,7 +55,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     override fun initListener() = with(binding) {
         super.initListener()
-        tbMain.setNavigationOnClickListener {
+        icProfile.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
         }
     }
@@ -65,9 +66,12 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     private fun initAdapter() = with(binding) {
-        recMain.adapter = adapter
+        recMain.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = LoaderStateAdapter(),
+            footer = LoaderStateAdapter()
+        )
 
-        loadListener(adapter, binding.progressBar)
+        loadListener(adapter, progressBar, recMain)
     }
 
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {

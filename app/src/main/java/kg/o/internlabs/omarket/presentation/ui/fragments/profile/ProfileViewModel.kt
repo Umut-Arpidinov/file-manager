@@ -33,8 +33,9 @@ class ProfileViewModel @Inject constructor(
     private val _token = MutableStateFlow("")
     val token = _token.asStateFlow()
 
-    private val _faqs = MutableSharedFlow<ApiState<FAQEntity>>()
-    val faqs = _faqs.asSharedFlow()
+    private lateinit var _faqs: Flow<PagingData<ResultsEntity>>
+    val faqs: Flow<PagingData<ResultsEntity>>
+        get() = _faqs
 
     private lateinit var _activeAds: Flow<PagingData<MyAdsResultsEntity>>
     val activeAds: Flow<PagingData<MyAdsResultsEntity>>
@@ -61,23 +62,11 @@ class ProfileViewModel @Inject constructor(
         getAvatarUrlFromPrefs()
     }
 
-    fun getFaq() {
-        viewModelScope.launch {
-            faqUseCase(getAccessToken()).collectLatest {
-                when (it) {
-                    is ApiState.Success -> {
-                        _faqs.emit(it)
-                    }
-                    is ApiState.Failure -> {
-                        _faqs.emit(it)
-                    }
-                    ApiState.Loading -> {
-                        _faqs.emit(it)
-                    }
-                }
-            }
-        }
-    }
+    fun getFaq() = launchPagingAsync({
+        faqUseCase(getAccessToken()).cachedIn(viewModelScope)
+    }, {
+        _faqs = it
+    })
 
     private fun getActiveAds() = launchPagingAsync({
         getMyActiveAdsUseCase(getAccessToken()).cachedIn(viewModelScope)
@@ -86,7 +75,7 @@ class ProfileViewModel @Inject constructor(
     })
 
     private fun getNonActiveAds() = launchPagingAsync({
-            getMyNonActiveAdsUseCase(getAccessToken()).cachedIn(viewModelScope)
+        getMyNonActiveAdsUseCase(getAccessToken()).cachedIn(viewModelScope)
     }, {
         _nonActiveAds = it
     })

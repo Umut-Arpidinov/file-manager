@@ -8,7 +8,8 @@ import okhttp3.MultipartBody
 
 interface ProfileRepository {
 
-    fun getFaq(token: String): Flow<ApiState<FAQEntity>>
+    //fun getFaq(token: String): Flow<ApiState<FAQEntity>>
+    fun getFaq(token: String): Flow<PagingData<ResultsEntity>>
 
     fun getMyAds(token: String, myAds: MyAdsEntity): Flow<PagingData<MyAdsResultsEntity>>
 

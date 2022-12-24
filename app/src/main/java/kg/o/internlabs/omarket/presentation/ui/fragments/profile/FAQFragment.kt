@@ -5,20 +5,19 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
-import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.databinding.FragmentFAQBinding
-import kg.o.internlabs.omarket.domain.entity.ResultsEntity
-import kg.o.internlabs.omarket.utils.makeToast
+import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.FaqPagingAdapter
+import kg.o.internlabs.omarket.utils.LoaderStateAdapter
+import kg.o.internlabs.omarket.utils.loadListener
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
 
-    private var list: List<ResultsEntity>? = listOf()
+    private var adapter = FaqPagingAdapter()
 
     override val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(this)[ProfileViewModel::class.java]
@@ -33,8 +32,9 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
 
     override fun initView() {
         super.initView()
-        getCategories()
+        initAdapter()
         visibleStatusBar()
+        getFaqs()
     }
 
     override fun initListener() = with(binding) {
@@ -42,31 +42,23 @@ class FAQFragment : BaseFragment<FragmentFAQBinding, ProfileViewModel>() {
         tbFaq.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
+    private fun initAdapter() = with(binding) {
+        recyclerFaq.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = LoaderStateAdapter(),
+            footer = LoaderStateAdapter()
+        )
+        loadListener(adapter, progress, recyclerFaq)
+    }
+
     private fun visibleStatusBar() {
         WindowInsetsControllerCompat(requireActivity().window,requireView()).show((WindowInsetsCompat.Type.statusBars()))
     }
 
-    private fun getCategories() {
+    private fun getFaqs() {
         safeFlowGather {
             viewModel.faqs.collectLatest {
-                when (it) {
-                    is ApiState.Success -> {
-                        list = it.data.results
-                        showFaq(list)
-                    }
-                    is ApiState.Failure -> {
-                        requireActivity().makeToast(it.msg.message.toString())
-                    }
-                    is ApiState.Loading -> {
-                        // запрос обрабатывается сервером
-                    }
-                }
+                adapter.submitData(it)
             }
         }
-    }
-
-    private fun showFaq(list: List<ResultsEntity>?) {
-        binding.recyclerFaq.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerFaq.adapter = FaqAdapter(list!!)
     }
 }
