@@ -23,6 +23,7 @@
             <enum name="BOTTOM" value="3" />
         </attr>
         <attr name="setIcon" format="string" />
+        <attr name="hasIcon" format="boolean"/>
         <attr name="setTitle" format="string" />
         <attr name="setInfo" format="string" />
         <attr name="isRadioButtonVisible" format="boolean" />

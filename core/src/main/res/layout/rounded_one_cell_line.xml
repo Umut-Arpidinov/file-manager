@@ -10,7 +10,8 @@
         android:id="@+id/cl_with_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
+        android:minHeight="@dimen/min_height_44dp"
         android:background="@drawable/cell_around_corners"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -58,7 +59,7 @@
             app:layout_constraintTop_toTopOf="@id/guideline4"
             android:contentDescription="@string/shevron" />
 
-       <!-- <com.google.android.material.radiobutton.MaterialRadioButton
+        <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,22 +70,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginEnd="0dp"
             app:useMaterialThemeColors="false"
-            tools:ignore="TouchTargetSizeCheck" />-->
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintGuide_percent="0.11"
-            android:orientation="vertical" />
+            tools:ignore="TouchTargetSizeCheck" />
 
         <View
             android:id="@+id/v_divider"
             style="@style/Divider.Horizontal"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/view_width_0dp"
+            android:layout_height="@dimen/view_height_1dp"
+            android:visibility="visible"
+            android:layout_marginStart="@dimen/margin_start_8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="2dp"
-            app:layout_constraintStart_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/cv"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.constraintlayout.widget.Guideline
@@ -100,8 +96,7 @@
         android:layout_width="match_parent"
         android:visibility="gone"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/view_height_48dp"
-        android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
+        android:minHeight="@dimen/min_height_44dp"
         android:background="@drawable/cell_around_corners"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -123,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/cells_info"
-            android:layout_marginHorizontal="@dimen/margin_horizontal_13dp"
+            android:layout_marginEnd="@dimen/margin_12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -131,9 +126,11 @@
         <View
             android:id="@+id/v_divider2"
             style="@style/Divider.Horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/view_width_0dp"
+            android:layout_height="@dimen/view_height_1dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_cell_title_gray" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

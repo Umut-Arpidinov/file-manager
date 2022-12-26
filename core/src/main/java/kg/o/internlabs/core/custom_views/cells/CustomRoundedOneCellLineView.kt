@@ -27,6 +27,13 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         context.obtainStyledAttributes(attrs, R.styleable.CustomRoundedOneCellLineView).run {
 
+            isSimpleCell(
+                getBoolean(
+                    R.styleable.CustomRoundedOneCellLineView_isSimpleCell,
+                    false
+                )
+            )
+
             setPosition(
                 convertToEnum(
                     getInt(
@@ -42,6 +49,12 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
                 setIcon(it)
             }
 
+            hasIcon(
+                getBoolean(
+                    R.styleable.CustomRoundedOneCellLineView_hasIcon, false
+                )
+            )
+
             getString(R.styleable.CustomRoundedOneCellLineView_setTitle)?.let {
                 setTitle(it)
             }
@@ -49,13 +62,6 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
             getString(R.styleable.CustomRoundedOneCellLineView_setInfo)?.let {
                 setInfo(it)
             }
-
-            isSimpleCell(
-                getBoolean(
-                    R.styleable.CustomRoundedOneCellLineView_isSimpleCell,
-                    false
-                )
-            )
 
             isRadioButtonVisible(
                 getBoolean(
@@ -75,17 +81,21 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
         }
     }
 
-    private fun initListener() {
-        /*binding.radioButton.setOnClickListener {
-            buttonClicked?.buttonClicked(positionOfCell)
-        }*/
+    fun hasIcon(hasIcon: Boolean) {
+        binding.cv.isVisible = hasIcon
     }
 
-    fun isRadioButtonVisible(boolean: Boolean): Unit = with(binding){
-        /*radioButton.isVisible = boolean
+    private fun initListener() {
+        binding.radioButton.setOnClickListener {
+            buttonClicked?.buttonClicked(positionOfCell)
+        }
+    }
+
+    fun isRadioButtonVisible(boolean: Boolean): Unit = with(binding) {
+        radioButton.isVisible = boolean
         if (radioButton.isVisible) {
             ivShevron.isVisible = false
-        }*/
+        }
     }
 
 
@@ -108,7 +118,7 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
     fun shevronVisibility(isVisible: Boolean): Unit = with(binding) {
         ivShevron.isVisible = isVisible
         if (ivShevron.isVisible) {
-            //radioButton.isVisible = false
+            radioButton.isVisible = false
         }
     }
 
@@ -127,7 +137,7 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
         Glide.with(context).load(mUri).centerCrop().into(this)
     }
 
-    fun setIcon(res: Int): Unit = with(binding.ivCellsIcon){
+    fun setIcon(res: Int): Unit = with(binding.ivCellsIcon) {
         if (res == 0) return
         isVisible = true
 
@@ -136,7 +146,7 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
             .into(this)
     }
 
-    fun setInterface(buttonClicked: CustomRoundedOneCellLineViewClick, positionOfCell: Int = 0){
+    fun setInterface(buttonClicked: CustomRoundedOneCellLineViewClick, positionOfCell: Int = 0) {
         this.buttonClicked = buttonClicked
         this.positionOfCell = positionOfCell
     }
@@ -147,23 +157,29 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_around_corners, null
                 )
+                vDivider.isVisible = false
+                vDivider2.isVisible = false
             }
             Position.TOP -> {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_top_corners, null
                 )
-                vDivider.isVisible = true
+                vDivider.isVisible = clWithIcon.isVisible
+                vDivider2.isVisible = clNoIcon.isVisible
             }
             Position.BOTTOM -> {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_bottom_corners, null
                 )
+                vDivider.isVisible = false
+                vDivider2.isVisible = false
             }
             Position.MIDDLE -> {
                 root.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.cell_middle_background, null
                 )
-                vDivider.isVisible = true
+                vDivider.isVisible = clWithIcon.isVisible
+                vDivider2.isVisible = clNoIcon.isVisible
             }
         }
     }
