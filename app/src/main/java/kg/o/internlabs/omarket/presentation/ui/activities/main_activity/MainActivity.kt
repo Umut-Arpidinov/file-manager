@@ -83,7 +83,7 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
                 navGraph.setStartDestination(R.id.loginStartFragment)
             }
             "200" -> {
-                navGraph.setStartDestination(R.id.mainFragment)
+                navGraph.setStartDestination(R.id.createAdsFragment)
             }
         }
         navController.graph = navGraph

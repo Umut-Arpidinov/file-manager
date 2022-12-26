@@ -140,4 +140,9 @@
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.profile.FAQFragment"
         android:label="fragment_f_a_q"
         tools:layout="@layout/fragment_f_a_q" />
+    <fragment
+        android:id="@+id/createAdsFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.ads.CreateAdsFragment"
+        android:label="fragment_create_ads"
+        tools:layout="@layout/fragment_create_ads" />
 </navigation>

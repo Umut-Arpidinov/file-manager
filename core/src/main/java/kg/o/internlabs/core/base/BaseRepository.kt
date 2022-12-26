@@ -32,6 +32,7 @@ abstract class BaseRepository {
                 }
             } else {
                 if (response.code() == 404) throw Exception()
+                if (response.code() == 403) throw Exception("Token is invalid")
                 val raw = response.errorBody()?.string()
                 val jObject = raw?.let { org.json.JSONObject(it) }
                 val str: String = jObject?.get("message").toString()
@@ -42,6 +43,10 @@ abstract class BaseRepository {
         e.printStackTrace()
         if(e is java.net.SocketTimeoutException) {
             emit(ApiState.Failure(Exception(e)))
+            return@catch
+        }
+        if (e.message == "Token is invalid") {
+            emit(ApiState.Failure(Exception("403")))
             return@catch
         }
         emit(ApiState.Failure(Exception("Something went wrong")))

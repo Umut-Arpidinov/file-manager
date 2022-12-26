@@ -113,7 +113,7 @@ class MainActivityViewModel @Inject constructor(
                         _accessToken.emit("200")
                     }
                     is ApiState.Failure -> {
-                        if (it.msg.message == "Учетные данные не были предоставлены.") {
+                        if (it.msg.message == "403") {
                             _accessToken.emit("403")
                         }
                     }

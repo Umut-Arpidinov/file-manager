@@ -76,16 +76,16 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
     }
 
     private fun initListener() {
-        binding.radioButton.setOnClickListener {
+        /*binding.radioButton.setOnClickListener {
             buttonClicked?.buttonClicked(positionOfCell)
-        }
+        }*/
     }
 
     fun isRadioButtonVisible(boolean: Boolean): Unit = with(binding){
-        radioButton.isVisible = boolean
+        /*radioButton.isVisible = boolean
         if (radioButton.isVisible) {
             ivShevron.isVisible = false
-        }
+        }*/
     }
 
 
@@ -108,7 +108,7 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
     fun shevronVisibility(isVisible: Boolean): Unit = with(binding) {
         ivShevron.isVisible = isVisible
         if (ivShevron.isVisible) {
-            radioButton.isVisible = false
+            //radioButton.isVisible = false
         }
     }
 
