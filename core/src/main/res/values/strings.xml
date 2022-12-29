@@ -113,4 +113,6 @@
     <string name="sample_description_of_the_product">Line 1\nLine2\nLine3\n</string>
     <string name="more_details">Все описание</string>
     <string name="sample_indicator">1 / 1</string>
+    <string name="write">Написать</string>
+    <string name="call">Позвонить</string>
 </resources>
