@@ -109,4 +109,8 @@
     <string name="search_text">У вас в городе</string>
     <string name="delivery_available">%s/Доставка</string>
     <string name="category_description">icons of categories</string>
+    <string name="sample_title_of_the_product">Sample title of the product</string>
+    <string name="sample_description_of_the_product">Line 1\nLine2\nLine3\n</string>
+    <string name="more_details">Все описание</string>
+    <string name="sample_indicator">1 / 1</string>
 </resources>
