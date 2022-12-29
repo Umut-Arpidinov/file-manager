@@ -7,6 +7,7 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -44,6 +45,10 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
         private var favorite = true
 
         fun bind(item: ResultX?) = with(binding) {
+            imgAds.layoutParams.width = LayoutParams.MATCH_PARENT
+            val width = imgAds.width
+            imgAds.layoutParams.width = width
+
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false
             setPager(item?.minifyImages, binding)
@@ -74,7 +79,7 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
                         PagerImageAdapter(
                             it.requireActivity(),
                             minifyImages,
-                            ViewGroup.LayoutParams.MATCH_PARENT
+                            LayoutParams.MATCH_PARENT
                         )
                     }
                 imgAds.adapter = pagerAdapter2
