@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true"
-    app:cardElevation="@dimen/card_elevation_4dp"
     app:cardCornerRadius="@dimen/cells_corner_radius_8dp"
-    app:cardPreventCornerOverlap="false">
+    app:cardElevation="@dimen/card_elevation_4dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,12 +27,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/margin_vertical_12dp"
-                tools:text="@string/questions"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/iv_shevron"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/questions" />
 
             <ImageView
                 android:id="@+id/iv_shevron"
@@ -52,14 +52,15 @@
 
         <View
             android:id="@+id/v_divider"
-            style="@style/Divider.Horizontal"/>
+            style="@style/Divider.Horizontal"
+            android:layout_width="match_parent" />
 
         <LinearLayout
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_cell_answer"
@@ -67,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/margin_vertical_12dp"
-                tools:text="@string/answer"/>
+                tools:text="@string/answer" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

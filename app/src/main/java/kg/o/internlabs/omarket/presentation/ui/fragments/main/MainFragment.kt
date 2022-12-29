@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
@@ -62,6 +63,10 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         super.initListener()
         icProfile.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
+        }
+
+        floatingButton.setOnClickListener {
+            findNavController().navigate(R.id.createAdsFragment)
         }
     }
 
@@ -138,5 +143,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     override fun adClicked(ad: ResultX) {
+        makeToast("Ad with ${ad.uuid} uuid was clicked")
     }
 }

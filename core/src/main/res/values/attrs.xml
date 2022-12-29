@@ -50,6 +50,7 @@
     <declare-styleable name="CustomOneCellView">
         <attr name="isEditableView" format="boolean" />
         <attr name="setHint" format="string" />
+        <attr name="setMaxLine" format="integer"/>
         <attr name="setText" format="string" />
         <attr name="setDelimiter" format="integer" />
     </declare-styleable>

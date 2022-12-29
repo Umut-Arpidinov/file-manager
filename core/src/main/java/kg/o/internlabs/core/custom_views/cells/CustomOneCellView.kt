@@ -38,9 +38,16 @@ class CustomOneCellView : ConstraintLayout {
 
             setDelimiter(getInteger(R.styleable.CustomOneCellView_setDelimiter, 0))
 
+            setMaxLine(getInteger(R.styleable.CustomOneCellView_setMaxLine, 0))
+
             initListeners()
             recycle()
         }
+    }
+
+    fun setMaxLine(line: Int) {
+        binding.etEditable.setLines(line)
+        //binding.tilEditable
     }
 
     fun setDelimiter(delimiter: Int) = with(binding) {
