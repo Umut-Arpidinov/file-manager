@@ -115,4 +115,5 @@
     <string name="sample_indicator">1 / 1</string>
     <string name="write">Написать</string>
     <string name="call">Позвонить</string>
+    <string name="similar_ads">Похожие объявления</string>
 </resources>
