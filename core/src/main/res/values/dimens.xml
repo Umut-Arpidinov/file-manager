@@ -44,7 +44,7 @@
     <dimen name="view_160dp">160dp</dimen>
     <dimen name="view_176dp">176dp</dimen>
     <dimen name="view_4dp">4dp</dimen>
-    <dimen name="view_44dp">4dp</dimen>
+    <dimen name="view_44dp">44dp</dimen>
     <dimen name="view_28dp">28dp</dimen>
     <dimen name="view_height_32dp">32dp</dimen>
     <dimen name="view_height_48dp">48dp</dimen>

@@ -19,4 +19,10 @@
     <string name="no_connection">Нет соединение с интернетом!</string>
     <string name="terms_and_conditions">Нажимая "Регистрация" вы принимаете\n<a href="">условия пользовательского соглашения </a> </string>
     <string name="sample_views">sample Views</string>
+    <string name="ad_type_title">Тип сделки</string>
+    <string name="ad_type_sell">Продать</string>
+    <string name="ad_type_buy">Купить</string>
+    <string name="kgs">Сомы</string>
+    <string name="us_dollars">Доллары</string>
+    <string name="choose_currency">Выберите валюту</string>
 </resources>

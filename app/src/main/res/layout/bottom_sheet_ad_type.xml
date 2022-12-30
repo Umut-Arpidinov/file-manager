@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rounded_bottom_sheet"
+    tools:context=".presentation.ui.fragments.new_ads.AdTypeBottomSheet">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/cancel_icon_ad_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10dp"
+        android:src="@drawable/ic_baseline_cancel_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ad_type_title"
+        style="@style/TextView.Cells.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_18dp"
+        android:text="@string/ad_type_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cancel_icon_ad_type" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_8dp"
+        android:layout_marginVertical="@dimen/margin_18dp"
+        app:cardCornerRadius="@dimen/margin_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ad_type_title">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatCheckedTextView
+                style="@style/TextView.Cells.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_12dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:checkMark="@drawable/ic_check_mark"
+                android:checked="false"
+                android:gravity="center"
+                android:text="@string/ad_type_buy" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height_1dp"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:background="@drawable/rounded_bottom_sheet" />
+
+            <androidx.appcompat.widget.AppCompatCheckedTextView
+                style="@style/TextView.Cells.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_12dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:checkMark="@drawable/ic_check_mark"
+                android:checked="false"
+                android:gravity="center"
+                android:text="@string/ad_type_sell" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
