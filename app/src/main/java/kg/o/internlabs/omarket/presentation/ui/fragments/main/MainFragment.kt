@@ -66,7 +66,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         }
 
         floatingButton.setOnClickListener {
-            findNavController().navigate(R.id.createAdsFragment)
+            findNavController().navigate(R.id.newAdsFragment)
         }
     }
 

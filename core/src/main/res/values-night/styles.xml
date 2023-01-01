@@ -30,6 +30,11 @@
         <item name="android:alpha">0.5</item>
     </style>
 
+    <style name="EditableTextView.AsHint" parent="EditableTextView">
+        <item name="android:textColor">@color/gray_1</item>
+        <item name="android:alpha">0.5</item>
+    </style>
+
     <style name="TextView">
         <item name="android:textColor">@color/black_1</item>
     </style>

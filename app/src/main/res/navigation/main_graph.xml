@@ -145,4 +145,9 @@
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.ads.CreateAdsFragment"
         android:label="fragment_create_ads"
         tools:layout="@layout/fragment_create_ads" />
+    <fragment
+        android:id="@+id/newAdsFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.NewAdsFragment"
+        android:label="fragment_new_ads"
+        tools:layout="@layout/fragment_new_ads" />
 </navigation>

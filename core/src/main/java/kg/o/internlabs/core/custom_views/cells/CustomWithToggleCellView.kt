@@ -24,6 +24,8 @@ class CustomWithToggleCellView : ConstraintLayout {
                 setTitle(it)
             }
 
+            getBoolean()
+
             initListeners()
             recycle()
         }
