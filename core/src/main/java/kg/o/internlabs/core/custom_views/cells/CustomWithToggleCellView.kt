@@ -24,11 +24,15 @@ class CustomWithToggleCellView : ConstraintLayout {
                 setTitle(it)
             }
 
-            getBoolean()
+            isChecked(getBoolean(R.styleable.CustomWithToggleCellView_isChecked, false))
 
             initListeners()
             recycle()
         }
+    }
+
+    fun isChecked(isChecked: Boolean) {
+        binding.btnSwitch.isChecked = isChecked
     }
 
     private fun initListeners() {
