@@ -22,4 +22,17 @@
     <string name="sub_category">Подкатегория</string>
     <string name="description">Описания</string>
     <string name="order_type">Тип сделки</string>
+    <string name="price_is_neg">Цена договорная</string>
+    <string name="currency">Валюта</string>
+    <string name="price">Цена</string>
+    <string name="create_ad">Подать объявление</string>
+    <string name="bishkek">Бишкек</string>
+    <string name="location_on_the_map">Местоположение на карте</string>
+    <string name="o_money_pay">Оплата через О!Деньги</string>
+    <string name="o_money_agreement">Доставка товара обговаривается между покупателем и продавцом. Поступление/возврат денежных средств гарантировано сервисом «О!Деньги».</string>
+    <string name="whatsapp_me">Писать мне в Whats App</string>
+    <string name="write_me_in_telegram">Писать мне в Telegram</string>
+    <string name="at_sign">\@</string>
+    <string name="image_load_information">Для загрузки фото дайте доступ приложению Мой О! к камере в настройках телефона</string>
+    <string name="main_image">Главное \n   фото</string>
 </resources>

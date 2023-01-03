@@ -18,6 +18,10 @@
         <item name="android:background">@color/white_1</item>
     </style>
 
+    <style name="TextView.Telegram_Hint" parent="TextView.O_Money_Agreement">
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
     <style name="EditableTextView">
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
         <item name="android:minHeight">@dimen/min_height_20dp</item>
@@ -124,9 +128,24 @@
         <item name="android:background">@color/black_3</item>
     </style>
 
+    <style name="Container.OneCell">
+        <item name="android:background">@color/black_3</item>
+    </style>
+
     <style name="Divider">
         <item name="android:background">?android:attr/listDivider</item>
         <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="ProgressBar">
+        <item name="android:indeterminate">true</item>
+    </style>
+
+    <style name="ProgressBar.ImageLoad">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">@color/white_1</item>
     </style>
 
     <style name="OTPInputText">

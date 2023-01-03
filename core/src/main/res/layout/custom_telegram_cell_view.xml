@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_input"
+        style="@style/Container.OneCell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_bottom_8dp"
+        android:minHeight="@dimen/min_height_48dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/et_telegram_nick"
+            style="@style/Container.OneCell"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="text"
+            android:hint="@string/space"
+            android:inputType="textMultiLine"
+            android:minHeight="@dimen/min_height_48dp"
+            android:paddingStart="@dimen/padding_start_16dp"
+            android:paddingEnd="@dimen/padding_end_16dp"
+            android:text="@string/at_sign"
+            android:textAppearance="@style/EditableTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/number_input_cancel_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/number_input_cancel_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginHorizontal="@dimen/margin_16dp"
+            android:contentDescription="@string/image_description"
+            android:minHeight="@dimen/min_height_48dp"
+            android:src="@drawable/ic_baseline_cancel_24"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_vertical_8dp"
+        android:layout_marginStart="@dimen/margin_start_16dp"
+        android:text="@string/telegram_hint"
+        android:textAppearance="@style/TextView.Telegram_Hint"
+        app:layout_constraintTop_toBottomOf="@id/cl_input" />
+</androidx.constraintlayout.widget.ConstraintLayout>

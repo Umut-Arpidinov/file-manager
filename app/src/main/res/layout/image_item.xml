@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_add_image"
+        android:layout_width="@dimen/icon_width_100dp"
+        android:layout_height="@dimen/icon_height_100dp"
+        android:background="@drawable/bg_image"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/corner_radius_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_add_image"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/ic_image_add" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_load_image"
+        android:layout_width="@dimen/icon_width_100dp"
+        android:layout_height="@dimen/icon_height_100dp"
+        android:background="@drawable/bg_main_image"
+        app:cardCornerRadius="@dimen/corner_radius_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_load_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:alpha="0.4"
+            android:contentDescription="@string/icon"
+            tools:src="@drawable/ic_profile" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_end_4dp"
+            android:layout_marginTop="@dimen/margin_top_4dp"
+            android:layout_gravity="end|top"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/tv_main_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextView.Main_Image"
+            android:text="@string/main_image"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/ProgressBar.ImageLoad"
+            android:layout_gravity="center"
+            android:visibility="visible" />
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

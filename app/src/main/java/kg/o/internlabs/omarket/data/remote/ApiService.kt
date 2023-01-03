@@ -65,6 +65,7 @@ interface ApiService {
     suspend fun deleteAvatar(
         @Header("Authorization") token: String?
     ): Response<AvatarDelDto?>
+
     @GET("/api/ads-board/v1/ads/list/")
     suspend fun getAds(
         @Header("Authorization") token: String?,

@@ -140,4 +140,19 @@
         <item name="android:textSize">@dimen/text_11sp</item>
         <item name="android:fontWeight">400</item>
     </style>
+
+    <style name="TextView.O_Money_Agreement">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textColor">@color/gray_1</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextView.Main_Image" parent="TextView.O_Money_Agreement">
+        <item name="android:textColor">@color/white_1</item>
+    </style>
+
+    <style name="TextView.Telegram_Hint" parent="TextView.O_Money_Agreement">
+        <item name="android:textColor">@color/black_5</item>
+    </style>
 </resources>

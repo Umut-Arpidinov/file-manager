@@ -51,4 +51,6 @@ class CustomWithToggleCellView : ConstraintLayout {
     }
 
     fun getTitle() = binding.tvTitle.text.toString()
+
+    fun isChecked() = binding.btnSwitch.isChecked
 }

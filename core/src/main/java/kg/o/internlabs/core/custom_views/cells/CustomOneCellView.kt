@@ -2,8 +2,10 @@ package kg.o.internlabs.core.custom_views.cells
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Editable
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -37,24 +39,24 @@ class CustomOneCellView : ConstraintLayout {
                 setText(it)
             }
 
-            setDelimiter(getInteger(R.styleable.CustomOneCellView_setDelimiter, 0))
+            inputType(getInteger(R.styleable.CustomOneCellView_android_inputType, 0))
 
-            setMaxLine(getInteger(R.styleable.CustomOneCellView_setMaxLine, 0))
+            setDelimiter(getInteger(R.styleable.CustomOneCellView_setDelimiter, 0))
 
             initListeners()
             recycle()
         }
     }
 
-    fun setMaxLine(line: Int) {
-        //binding.etEditable.setLines(line)
-        //binding.tilEditable
+    fun inputType(type: Int) {
+        binding.etEditable.inputType = type
     }
 
     fun setDelimiter(delimiter: Int) = with(binding) {
         if (delimiter == 0) return
         tilEditable.counterMaxLength = delimiter
         tilEditable.isCounterEnabled = false
+
         etEditable.filters = arrayOf<InputFilter>(
             LengthFilter(delimiter)
         )
@@ -102,6 +104,21 @@ class CustomOneCellView : ConstraintLayout {
                 tilEditable.isCounterEnabled = hasFocus
             }
         }
+
+        etEditable.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int){
+                var converted: String = s.toString()
+                if (converted.contains("\n")) {
+                    converted = converted.replace("\n", "")
+                    etEditable.setText(converted)
+                    etEditable.text?.let { etEditable.setSelection(it.length) }
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
         ivShevron.setOnClickListener {
             cellListener?.cellClicked(getHint(), posOfCell)
