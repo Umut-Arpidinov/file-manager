@@ -117,4 +117,7 @@
     <string name="write">Написать</string>
     <string name="call">Позвонить</string>
     <string name="similar_ads">Похожие объявления</string>
+    <string name="null_price">Похожие объявления</string>
+    <string name="som_price">%,d c</string>
+    <string name="dollar_price_overview">$%,d</string>
 </resources>

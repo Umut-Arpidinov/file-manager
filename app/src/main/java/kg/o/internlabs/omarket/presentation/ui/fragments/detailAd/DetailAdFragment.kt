@@ -3,6 +3,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd
 import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
+import kg.o.internlabs.core.custom_views.cells.CustomAddPriceCellView
 import kg.o.internlabs.omarket.databinding.FragmentDetailedAdBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
@@ -37,6 +39,12 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private var moreDetailIsPressed = false
 
     //Data for test-------------
+    val currentPrice = "10000.99"
+    val currency = "dollar"
+    val verified = true
+    val oMoney = false
+    val seller = "Murat"
+
     val imgURL2 =
         "https://play-lh.googleusercontent.com/p51P1MutZJY9410vLPCsF-IAUVBmPxt8hi4W-3PTFwZBSPJmraaGyMT5Uv49cRZYSw0"
 
@@ -48,7 +56,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             Pair("Подкатегория", "Телефоны"),
             Pair("Дата публикации", "11.11.22"),
             Pair("Тип сделки", "Продам"),
-            Pair("Город", "Бишкек"))
+            Pair("Город", "Бишкек")
+        )
     //--------------------------
 
     override val viewModel: DetailAdViewModel by lazy {
@@ -61,13 +70,15 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     override fun initView() = with(binding) {
         super.initView()
+        title.text = getString(coreString.sample_title_of_the_product)
+        setMainCardView(customMainView)
+
         adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
         initAdapter()
         getAds()
-        title.text = getString(coreString.sample_title_of_the_product)
     }
 
-    override fun initListener() = with(binding){
+    override fun initListener() = with(binding) {
         super.initListener()
         tbAds.setOnClickListener {
             findNavController().navigateUp()
@@ -127,22 +138,67 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     }
 
     private fun initViewPagerAdapter(imageViewPager: ViewPager2, currentPos: TextView) {
-        val pagerAdapter = DetailedImageAdapter(requireContext(), arrayOfString, ViewGroup.LayoutParams.MATCH_PARENT)
+        val pagerAdapter = DetailedImageAdapter(
+            requireContext(),
+            arrayOfString,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         imageViewPager.adapter = pagerAdapter
 
-        currentPos.text = String.format(getString(coreString.sample_indicator), 1, pagerAdapter.itemCount)
+        currentPos.text =
+            String.format(getString(coreString.sample_indicator), 1, pagerAdapter.itemCount)
 
         imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                currentPos.text = String.format(getString(coreString.sample_indicator), position+1, pagerAdapter.itemCount)
+                currentPos.text = String.format(
+                    getString(coreString.sample_indicator),
+                    position + 1,
+                    pagerAdapter.itemCount
+                )
             }
         })
     }
 
+    private fun setMainCardView(customMainView: CustomAddPriceCellView) {
+        if (currentPrice == null)
+            customMainView.setPriceWithoutCoins(getString(coreString.null_price))
+        else {
+            if (currency == "som")
+                customMainView.setPriceWithoutCoins(
+                String.format(getString(coreString.som_price), currentPrice.toInt())
+            )
+            else {
+                try {
+                    customMainView.setPriceWithoutCoins(
+                        String.format(getString(coreString.dollar_price_overview), currentPrice.toInt())
+                    )
+                } catch (e: NumberFormatException) {
+                    var dol: String
+                    var coin: String
+                    if (currentPrice.contains(',')) {
+                        dol = currentPrice.substringBefore(',')
+                        coin = currentPrice.substringAfter(',')
+                    } else {
+                        dol = currentPrice.substringBefore('.')
+                        coin = currentPrice.substringAfter('.')
+                    }
+                    customMainView.setPriceWithoutCoins(
+                        String.format(getString(coreString.dollar_price_overview), dol.toInt())
+                    )
+                    customMainView.setPriceWithCoins(coin)
+                }
+            }
+        }
+        customMainView.isNumberVerified(verified)
+        customMainView.isODengiAccepted(oMoney)
+        customMainView.setTitle(seller)
+    }
+
     private fun initCellAdapter(cellRecycler: RecyclerView) {
         cellRecycler.adapter = CellAdapter(listOfDetails)
-        cellRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        cellRecycler.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun callByNumber(number: String) {
