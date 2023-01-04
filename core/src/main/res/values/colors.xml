@@ -71,4 +71,5 @@
     <color name="transparent_gray_12">#1f8E8E93</color>
 
     <color name="icon_bg">#4A4A4A</color>
+    <color name="location_bg">#ECECEC</color>
 </resources>

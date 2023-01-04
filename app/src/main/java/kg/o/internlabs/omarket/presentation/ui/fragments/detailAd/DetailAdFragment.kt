@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
-import kg.o.internlabs.omarket.databinding.FragmentCreateAdsBinding
+import kg.o.internlabs.omarket.databinding.FragmentDetailedAdBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.SimilarAdsPagingAdapter
@@ -25,7 +26,7 @@ import kotlinx.coroutines.flow.collectLatest
 private typealias coreString = kg.o.internlabs.core.R.string
 
 @AndroidEntryPoint
-class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewModel>(),
+class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewModel>(),
     AdClickedInMain {
 
     private val args: DetailAdFragmentArgs by navArgs()
@@ -43,8 +44,8 @@ class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewMode
         ViewModelProvider(this)[DetailAdViewModel::class.java]
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): FragmentCreateAdsBinding {
-        return FragmentCreateAdsBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater): FragmentDetailedAdBinding {
+        return FragmentDetailedAdBinding.inflate(inflater)
     }
 
     override fun initView() = with(binding) {
@@ -56,11 +57,17 @@ class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewMode
 
         val pagerAdapter =
             DetailedImageAdapter(
-                requireContext(),
-                arrayOfString,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+                requireContext(), arrayOfString, ViewGroup.LayoutParams.MATCH_PARENT)
         imageViewPager.adapter = pagerAdapter
+
+        currentPos.text = String.format(getString(kg.o.internlabs.core.R.string.sample_indicator), 1, pagerAdapter.itemCount)
+        imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                currentPos.text = String.format(getString(kg.o.internlabs.core.R.string.sample_indicator), position+1, pagerAdapter.itemCount)
+            }
+        })
+
 
         moreDetails.setOnClickListener {
             pressMoreDetails(moreDetails, description)

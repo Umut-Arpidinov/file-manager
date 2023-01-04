@@ -113,7 +113,7 @@
     <string name="sample_description_of_the_product">Line 1\nLine2\nLine3\nLine4\nLine5\nLine6\n</string>
     <string name="more_details">Все описание</string>
     <string name="less_details">Скрыть описание</string>
-    <string name="sample_indicator">1 / 1</string>
+    <string name="sample_indicator">%s / %s</string>
     <string name="write">Написать</string>
     <string name="call">Позвонить</string>
     <string name="similar_ads">Похожие объявления</string>

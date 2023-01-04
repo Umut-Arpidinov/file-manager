@@ -123,10 +123,13 @@
                 tools:listitem="@layout/card_overview_cell" />
 
             <kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
+                android:id="@+id/cell_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
                 app:isShevronVisible="true"
+                app:hasIcon="true"
+                app:setIcon="@drawable/ic_location"
                 app:setTitle="@string/location" />
 
             <TextView
