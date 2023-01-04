@@ -5,7 +5,7 @@
     style="@style/StyleAdsBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.fragments.ads.CreateAdsFragment">
+    tools:context=".presentation.ui.fragments.detailAd.DetailAdFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -155,6 +155,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
                 android:text="@string/similar_ads" />
+
+            <ProgressBar
+                android:id="@+id/loading_anim"
+                style="@style/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_similar_ads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/card_view_main_ads"/>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

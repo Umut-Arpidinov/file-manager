@@ -80,7 +80,14 @@
         <action
             android:id="@+id/go_to_ads"
             app:destination="@id/createAdsFragment"
-            app:popUpTo="@id/mainFragment"/>
+            app:popUpTo="@id/mainFragment">
+
+            <argument
+                android:name="uuid"
+                app:nullable="true"
+                app:argType="string" />
+
+        </action>
 
     </fragment>
 
@@ -148,7 +155,13 @@
         tools:layout="@layout/fragment_f_a_q" />
     <fragment
         android:id="@+id/createAdsFragment"
-        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.ads.CreateAdsFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.DetailAdFragment"
         android:label="fragment_create_ads"
-        tools:layout="@layout/fragment_create_ads" />
+        tools:layout="@layout/fragment_create_ads">
+        <argument
+            android:name="uuid"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

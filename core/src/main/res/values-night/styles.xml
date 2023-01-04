@@ -78,7 +78,7 @@
     <style name="TextView.Cells.SubTitle.Faq" parent="TextView.Cells.SubTitle">
         <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
         <item name="android:textSize">@dimen/cells_subTitle_text_size_15sp</item>
-        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textColor">@color/gray_1</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
