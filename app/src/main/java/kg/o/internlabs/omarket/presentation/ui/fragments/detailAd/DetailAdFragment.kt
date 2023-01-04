@@ -1,5 +1,7 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd
 
+import android.content.Intent
+import android.net.Uri
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,14 +25,16 @@ import kotlinx.coroutines.flow.collectLatest
 private typealias coreString = kg.o.internlabs.core.R.string
 
 @AndroidEntryPoint
-class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewModel>(),AdClickedInMain{
+class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewModel>(),
+    AdClickedInMain {
 
     private val args: DetailAdFragmentArgs by navArgs()
     private var adapter = SimilarAdsPagingAdapter()
     private var moreDetailIsPressed = false
 
     //Data for test-------------
-    val imgURL2 = "https://play-lh.googleusercontent.com/p51P1MutZJY9410vLPCsF-IAUVBmPxt8hi4W-3PTFwZBSPJmraaGyMT5Uv49cRZYSw0"
+    val imgURL2 =
+        "https://play-lh.googleusercontent.com/p51P1MutZJY9410vLPCsF-IAUVBmPxt8hi4W-3PTFwZBSPJmraaGyMT5Uv49cRZYSw0"
 
     val arrayOfString: List<String> = listOf(imgURL2, imgURL2, imgURL2)
     //--------------------------
@@ -45,14 +49,18 @@ class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewMode
 
     override fun initView() = with(binding) {
         super.initView()
-        adapter.setInterface(this@DetailAdFragment,this@DetailAdFragment)
+        adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
         initAdapter()
         getAds()
         args.uuid.let { title.text = it }
 
         val pagerAdapter =
-            DetailedImageAdapter(requireContext(), arrayOfString, ViewGroup.LayoutParams.MATCH_PARENT)
-            imageViewPager.adapter = pagerAdapter
+            DetailedImageAdapter(
+                requireContext(),
+                arrayOfString,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        imageViewPager.adapter = pagerAdapter
 
         moreDetails.setOnClickListener {
             pressMoreDetails(moreDetails, description)
@@ -61,6 +69,14 @@ class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewMode
         // Recycler for Ad details
 //        cellRecycler.adapter = CellAdapter(list)
 //        cellRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+
+        callBtn.setOnClickListener {
+            callByNumber("+996555160301")
+        }
+
+        writeBtn.setOnClickListener {
+            writeByPhone("+996555160301")
+        }
     }
 
     override fun initListener() {
@@ -84,7 +100,7 @@ class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewMode
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
         )
-        loadListener(adapter,loadingAnim,recSimilarAds)
+        loadListener(adapter, loadingAnim, recSimilarAds)
     }
 
     private fun getAds() {
@@ -106,5 +122,17 @@ class DetailAdFragment : BaseFragment<FragmentCreateAdsBinding, DetailAdViewMode
             description.ellipsize = TextUtils.TruncateAt.END
             moreDetails.text = getString(coreString.more_details)
         }
+    }
+
+    private fun callByNumber(number: String) {
+        val callIntent = Intent(Intent.ACTION_DIAL)
+        callIntent.data = Uri.parse("tel:$number")
+        startActivity(callIntent)
+    }
+
+    private fun writeByPhone(number: String) {
+        val smsIntent = Intent(Intent.ACTION_VIEW)
+        smsIntent.data = Uri.parse("sms:$number")
+        startActivity(smsIntent)
     }
 }
