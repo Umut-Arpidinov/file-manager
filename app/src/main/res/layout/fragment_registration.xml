@@ -64,12 +64,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textButton"
+        style="@style/termsStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_32dp"
-        android:layout_marginVertical="@dimen/margin_vertical_16dp"
         android:layout_marginHorizontal="@dimen/margin_28dp"
+        android:layout_marginVertical="@dimen/margin_vertical_16dp"
         android:text="@string/terms_and_conditions"
-        style="@style/termsStyle"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_send_otp"
         app:layout_constraintEnd_toEndOf="parent"

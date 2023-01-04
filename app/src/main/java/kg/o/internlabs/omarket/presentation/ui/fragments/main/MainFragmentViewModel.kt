@@ -11,6 +11,7 @@ import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.CheckNumberFromPrefsUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -20,12 +21,16 @@ import javax.inject.Inject
 class MainFragmentViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
-    private val getAdsUseCase: GetAdsUseCase
+    private val getAdsUseCase: GetAdsUseCase,
+    private val getNumber: CheckNumberFromPrefsUseCase
 ) :
     BaseViewModel() {
 
     private val _token = MutableStateFlow("")
     val token = _token.asStateFlow()
+
+    private val _number = MutableStateFlow("")
+    val number = _number.asStateFlow()
 
     private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
     val categories = _categories.asSharedFlow()
@@ -68,6 +73,16 @@ class MainFragmentViewModel @Inject constructor(
                 if (it != null) {
                     _token.emit(it)
                     getAds()
+                }
+            }
+        }
+    }
+
+    fun getNumberFromPrefs() {
+        viewModelScope.launch {
+            getNumber().collectLatest {
+                if (it != null) {
+                    _number.emit(it)
                 }
             }
         }

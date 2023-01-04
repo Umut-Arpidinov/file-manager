@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
@@ -62,12 +61,36 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     override fun initListener() = with(binding) {
         super.initListener()
         icProfile.setOnClickListener {
-            findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
+            if (args?.number.isNullOrEmpty()) {
+                viewModel.getNumberFromPrefs()
+                findNavController().navigate(MainFragmentDirections.goToProfile(getNumber()))
+            } else {
+                findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
+            }
         }
 
         floatingButton.setOnClickListener {
-            findNavController().navigate(R.id.newAdsFragment)
+            if (args?.number.isNullOrEmpty()) {
+                viewModel.getNumberFromPrefs()
+                try {
+                    findNavController().navigate(MainFragmentDirections.goToCreateAd(getNumber()))
+                } catch (e: java.lang.Exception){
+                    e.printStackTrace()
+                }
+            } else {
+                findNavController().navigate(MainFragmentDirections.goToCreateAd(args?.number))
+            }
         }
+    }
+
+    private fun getNumber(): String {
+        var args = ""
+        safeFlowGather {
+            viewModel.number.collectLatest {
+                args = it
+            }
+        }
+        return args
     }
 
     private fun visibleStatusBar() {

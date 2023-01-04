@@ -25,6 +25,10 @@
         <item name="android:textColor">@color/gray_1</item>
     </style>
 
+    <style name="TextView.Add_Ads_Agreement" parent="TextView.O_Money_Agreement">
+        <item name="android:textColorLink">@color/magenta_1</item>
+    </style>
+
     <style name="TextView.Main_Image" parent="TextView.O_Money_Agreement">
         <item name="android:textColor">@color/white_1</item>
     </style>

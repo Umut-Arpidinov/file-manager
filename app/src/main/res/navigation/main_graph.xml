@@ -71,6 +71,15 @@
                 app:nullable="true"
                 app:argType="string" />
         </action>
+         <action
+            android:id="@+id/go_to_create_ad"
+            app:destination="@id/newAdsFragment">
+            <argument
+                android:name="number"
+                app:nullable="true"
+                app:argType="string" />
+        </action>
+
         <argument
             android:name="number"
             android:defaultValue="@null"
@@ -149,5 +158,12 @@
         android:id="@+id/newAdsFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.NewAdsFragment"
         android:label="fragment_new_ads"
-        tools:layout="@layout/fragment_new_ads" />
+        tools:layout="@layout/fragment_new_ads" >
+
+        <argument
+            android:name="number"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
