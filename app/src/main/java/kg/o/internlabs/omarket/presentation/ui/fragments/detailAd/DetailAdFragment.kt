@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.databinding.FragmentCreateAdsBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.CellAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.SimilarAdsPagingAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
