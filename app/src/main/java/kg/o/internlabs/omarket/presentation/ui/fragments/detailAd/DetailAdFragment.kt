@@ -142,4 +142,10 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         smsIntent.data = Uri.parse("sms:$number")
         startActivity(smsIntent)
     }
+
+    private fun writeByWA(number: String) {
+        val intentWA = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:$number"))
+        intentWA.setPackage("com.whatsapp")
+        startActivity(intentWA)
+    }
 }
