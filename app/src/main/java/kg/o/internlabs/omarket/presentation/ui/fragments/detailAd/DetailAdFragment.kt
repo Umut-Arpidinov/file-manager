@@ -9,12 +9,15 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.databinding.FragmentDetailedAdBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.CellAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.SimilarAdsPagingAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.utils.LoaderStateAdapter
@@ -38,6 +41,14 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         "https://play-lh.googleusercontent.com/p51P1MutZJY9410vLPCsF-IAUVBmPxt8hi4W-3PTFwZBSPJmraaGyMT5Uv49cRZYSw0"
 
     val arrayOfString: List<String> = listOf(imgURL2, imgURL2, imgURL2)
+
+    val listOfDetails: MutableList<Pair<String, String>> =
+        mutableListOf(
+            Pair("Категория", "Электроника"),
+            Pair("Подкатегория", "Телефоны"),
+            Pair("Дата публикации", "11.11.22"),
+            Pair("Тип сделки", "Продам"),
+            Pair("Город", "Бишкек"))
     //--------------------------
 
     override val viewModel: DetailAdViewModel by lazy {
@@ -53,29 +64,18 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
         initAdapter()
         getAds()
-        args.uuid.let { title.text = it }
+        title.text = getString(coreString.sample_title_of_the_product)
+    }
 
-        val pagerAdapter =
-            DetailedImageAdapter(
-                requireContext(), arrayOfString, ViewGroup.LayoutParams.MATCH_PARENT)
-        imageViewPager.adapter = pagerAdapter
-
-        currentPos.text = String.format(getString(kg.o.internlabs.core.R.string.sample_indicator), 1, pagerAdapter.itemCount)
-        imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                currentPos.text = String.format(getString(kg.o.internlabs.core.R.string.sample_indicator), position+1, pagerAdapter.itemCount)
-            }
-        })
-
+    override fun initListener() = with(binding){
+        super.initListener()
+        tbAds.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         moreDetails.setOnClickListener {
             pressMoreDetails(moreDetails, description)
         }
-
-        // Recycler for Ad details
-//        cellRecycler.adapter = CellAdapter(list)
-//        cellRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         callBtn.setOnClickListener {
             callByNumber("+996555160301")
@@ -83,13 +83,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
         writeBtn.setOnClickListener {
             writeByPhone("+996555160301")
-        }
-    }
-
-    override fun initListener() {
-        super.initListener()
-        binding.tbAds.setOnClickListener {
-            findNavController().navigateUp()
         }
     }
 
@@ -103,6 +96,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     }
 
     private fun initAdapter() = with(binding) {
+        initViewPagerAdapter(imageViewPager, currentPos)
+        initCellAdapter(cellRecycler)
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
@@ -129,6 +124,25 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             description.ellipsize = TextUtils.TruncateAt.END
             moreDetails.text = getString(coreString.more_details)
         }
+    }
+
+    private fun initViewPagerAdapter(imageViewPager: ViewPager2, currentPos: TextView) {
+        val pagerAdapter = DetailedImageAdapter(requireContext(), arrayOfString, ViewGroup.LayoutParams.MATCH_PARENT)
+        imageViewPager.adapter = pagerAdapter
+
+        currentPos.text = String.format(getString(coreString.sample_indicator), 1, pagerAdapter.itemCount)
+
+        imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                currentPos.text = String.format(getString(coreString.sample_indicator), position+1, pagerAdapter.itemCount)
+            }
+        })
+    }
+
+    private fun initCellAdapter(cellRecycler: RecyclerView) {
+        cellRecycler.adapter = CellAdapter(listOfDetails)
+        cellRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun callByNumber(number: String) {
