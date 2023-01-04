@@ -90,7 +90,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
 
         callBtn.setOnClickListener {
-            callByNumber("+996555160301")
+            writeByWA("+996555160301")
         }
 
         writeBtn.setOnClickListener {
@@ -215,9 +215,13 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     }
 
     private fun writeByWA(number: String) {
-        val intentWA = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:$number"))
-        intentWA.setPackage("com.whatsapp")
-        startActivity(intentWA)
+        try {
+            val intentWA = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:$number"))
+            intentWA.setPackage("com.whatsapp")
+            startActivity(intentWA)
+        } catch (e : java.lang.Exception) {
+            Toast.makeText(requireContext(), "WhatsApp is not Installed", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun telegramIntent(context: Context) {
@@ -228,7 +232,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             )
             tgintent.setPackage("org.telegram.messenger")
             startActivity(tgintent)
-        }catch (e : Exception){ //App not found open in browser
+        }catch (e : Exception){
             Toast.makeText(requireContext(), "Telegram is not Installed", Toast.LENGTH_SHORT).show()
         }
     }
