@@ -1,12 +1,13 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -93,7 +94,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
 
         writeBtn.setOnClickListener {
-            writeByPhone("+996555160301")
+            telegramIntent(requireContext())
         }
     }
 
@@ -174,8 +175,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                         String.format(getString(coreString.dollar_price_overview), currentPrice.toInt())
                     )
                 } catch (e: NumberFormatException) {
-                    var dol: String
-                    var coin: String
+                    val dol: String
+                    val coin: String
                     if (currentPrice.contains(',')) {
                         dol = currentPrice.substringBefore(',')
                         coin = currentPrice.substringAfter(',')
@@ -217,5 +218,18 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         val intentWA = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:$number"))
         intentWA.setPackage("com.whatsapp")
         startActivity(intentWA)
+    }
+
+    fun telegramIntent(context: Context) {
+        try {
+            val tgintent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://t.me/areyouconfident")
+            )
+            tgintent.setPackage("org.telegram.messenger")
+            startActivity(tgintent)
+        }catch (e : Exception){ //App not found open in browser
+            Toast.makeText(requireContext(), "Telegram is not Installed", Toast.LENGTH_SHORT).show()
+        }
     }
 }
