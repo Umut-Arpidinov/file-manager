@@ -120,4 +120,5 @@
     <string name="null_price">Похожие объявления</string>
     <string name="som_price">%,d c</string>
     <string name="dollar_price_overview">$%,d</string>
+    <string name="choose_app">Выберите приложение</string>
 </resources>
