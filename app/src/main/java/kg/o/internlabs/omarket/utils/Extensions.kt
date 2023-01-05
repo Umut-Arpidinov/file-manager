@@ -31,6 +31,8 @@ fun Fragment.makeToast(msg: String) {
     Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
 }
 
+
+
 fun Fragment.safeFlowGather(action: suspend () -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {

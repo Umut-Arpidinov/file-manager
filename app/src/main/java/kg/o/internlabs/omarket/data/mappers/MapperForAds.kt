@@ -1,6 +1,8 @@
 package kg.o.internlabs.omarket.data.mappers
 
+import kg.o.internlabs.omarket.data.remote.model.EditAdsDto
 import kg.o.internlabs.omarket.data.remote.model.ads.*
+import kg.o.internlabs.omarket.domain.entity.EditAds
 import kg.o.internlabs.omarket.domain.entity.ads.*
 import retrofit2.Response
 
@@ -12,6 +14,31 @@ class MapperForAds {
         errorCode = v?.errorCode,
         result = toDbModel(v?.result),
         resultCode = v?.resultCode
+    )
+
+    fun toDbModel(v: EditAds?) = EditAdsDto(
+        details = v?.details,
+        errorCode = v?.errorCode,
+        result = toDbModel(v?.result),
+        resultCode = v?.resultCode,
+        adType = v?.adType,
+        category = v?.category,
+        contractPrice = v?.contractPrice,
+        currency = v?.currency,
+        delivery = v?.delivery,
+        description = v?.description,
+        images = v?.images,
+        latitude = v?.latitude,
+        location = v?.location,
+        longitude = v?.longitude,
+        oMoneyPay = v?.oMoneyPay,
+        price = v?.price,
+        promotionType = toDbModel(v?.promotionType),
+        telegramProfile = v?.telegramProfile,
+        telegramProfileIsIdent = v?.telegramProfileIsIdent,
+        title = v?.title,
+        whatsappNum = v?.whatsappNum,
+        whatsappNumIsIdent = v?.whatsappNumIsIdent
     )
 
     fun toDbModel(v: AdsByCategory?) = AdsByCategoryDto(
@@ -167,6 +194,32 @@ class MapperForAds {
         resultCode = v?.resultCode
     )
 
+    fun toEntity(v: EditAdsDto?) = EditAds(
+        details = v?.details,
+        errorCode = v?.errorCode,
+        result = toEntity(v?.result),
+        resultCode = v?.resultCode,
+        adType = v?.adType,
+        category = v?.category,
+        contractPrice = v?.contractPrice,
+        currency = v?.currency,
+        delivery = v?.delivery,
+        description = v?.description,
+        images = v?.images,
+        latitude = v?.latitude,
+        location = v?.location,
+        longitude = v?.longitude,
+        oMoneyPay = v?.oMoneyPay,
+        price = v?.price,
+        promotionType = toEntity(v?.promotionType),
+        telegramProfile = v?.telegramProfile,
+        telegramProfileIsIdent = v?.telegramProfileIsIdent,
+        title = v?.title,
+        whatsappNum = v?.whatsappNum,
+        whatsappNumIsIdent = v?.whatsappNumIsIdent
+    )
+
+
     fun toEntity(v: AdsByCategoryDto?) = AdsByCategory(
         mainFilter = toEntity(v?.mainFilter)
     )
@@ -312,6 +365,13 @@ class MapperForAds {
     )
 
     fun toRespEntityForAds(resp: Response<AdsDto?>) =
+        if (resp.isSuccessful) {
+            Response.success(toEntity(resp.body()))
+        } else {
+            resp.errorBody()?.let { Response.error(resp.code(), it) }
+        }
+
+    fun toRespEntityForEditAd(resp: Response<EditAdsDto?>) =
         if (resp.isSuccessful) {
             Response.success(toEntity(resp.body()))
         } else {

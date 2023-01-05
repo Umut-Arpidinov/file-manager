@@ -4,5 +4,5 @@ data class Ads(
     val details: String? = null,
     val errorCode: Int? = null,
     val result: MainResult? = null,
-    val resultCode: String? = null
+    val resultCode: String? = null,
 )

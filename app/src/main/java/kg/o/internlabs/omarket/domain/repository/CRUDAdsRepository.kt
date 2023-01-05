@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.domain.repository
 
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.DeleteImageEntity
+import kg.o.internlabs.omarket.domain.entity.EditAds
 import kg.o.internlabs.omarket.domain.entity.InitiateAdEntity
 import kg.o.internlabs.omarket.domain.entity.UploadImageEntity
 import kotlinx.coroutines.flow.Flow
@@ -15,6 +16,5 @@ interface CRUDAdsRepository {
 
     fun deleteImageFromAd(token: String, uuid: String): Flow<ApiState<DeleteImageEntity>>
 
-    //fun getAds(token: String, ads: AdsByCategory?): Flow<PagingData<ResultX>>
-
+    fun editAnAd(token: String, editAds: EditAds, uuid: String): Flow<ApiState<EditAds>>
 }

@@ -158,6 +158,8 @@ class CustomOneCellView : ConstraintLayout {
         }
     }
 
+    fun getItemId() = 2
+
     fun setInterface(cellsClickListener: CustomOneCellsClickListener, posOfCell: Int = 0) {
         cellListener = cellsClickListener
         this.posOfCell = posOfCell

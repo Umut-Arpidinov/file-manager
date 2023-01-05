@@ -72,11 +72,12 @@ interface ApiService {
         @Query("page") page: Int
     ): Response<AdsDto?>
 
-    @GET("api/ads-board/v1/ads/initial/")
+    @POST("api/ads-board/v1/ads/initial/")
     suspend fun initiateAd(
         @Header("Authorization") token: String?
     ): Response<InitiateAdDto?>
 
+    @Multipart
     @POST("api/ads-board/v1/ads/{uuid}/upload-image/")
     suspend fun uploadImageToAd(
         @Header("Authorization") token: String?,
@@ -89,5 +90,12 @@ interface ApiService {
         @Header("Authorization") token: String?,
         @Path("uuid") uuid: String
     ): Response<DeleteImageDto?>
+
+    @PUT("api/ads-board/v1/ads/{uuid}/")
+    suspend fun editAd(
+        @Header("Authorization") token: String?,
+        @Body uuid1: EditAdsDto,
+        @Path("uuid") uuid: String
+    ): Response<EditAdsDto?>
 
 }

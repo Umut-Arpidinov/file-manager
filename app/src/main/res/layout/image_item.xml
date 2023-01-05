@@ -56,7 +56,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_end_4dp"
                 android:layout_marginTop="@dimen/margin_top_4dp"
-                android:visibility="gone"
                 android:layout_gravity="end|top"
                 android:contentDescription="@string/icon"
                 android:src="@drawable/ic_delete" />
@@ -70,13 +69,12 @@
                 android:textAppearance="@style/TextView.Main_Image"
                 android:text="@string/main_image"/>
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="@style/ProgressBar.ImageLoad"
-                android:layout_gravity="center"
-                android:visibility="visible" />
         </androidx.cardview.widget.CardView>
 
-
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/ProgressBar.ImageLoad"
+            android:layout_gravity="center"
+            android:visibility="visible" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

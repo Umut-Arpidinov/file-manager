@@ -9,29 +9,40 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.ImageItemBinding
+import kg.o.internlabs.omarket.domain.entity.UploadImageResultEntity
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.LoadImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper
+import kg.o.internlabs.omarket.utils.safeFlowGather
+import kotlinx.coroutines.flow.collectLatest
 
-class ImageListAdapter(private var context: Context, private val clickers: NewAdsFragment)
-    : RecyclerView.Adapter<ImageListAdapter.ImageHolder>() {
+class ImageListAdapter(
+    private var context: Context,
+    private val clickers: NewAdsFragment,
+    private val viewModel: NewAdsViewModel
+) : RecyclerView.Adapter<ImageListAdapter.ImageHolder>() {
 
-    private var list: List<String> = arrayListOf()
+    private var selectedImages = mutableListOf<UploadImageResultEntity>()
+    private var list: List<UploadImageResultEntity> = arrayListOf()
     private var mainImageIndex: Int = 1
+    private var loadedImageIndex: Int = -1
     private var selectHelper: MainImageSelectHelper? = null
     private var loadImage: LoadImageHelper? = null
     private var deleteImage: DeleteImageHelper? = null
 
     @SuppressLint("NotifyDataSetChanged")
     fun initAdapter(
-        list: List<String>
+        list: List<UploadImageResultEntity>
     ) {
         this.list = list
-        selectHelper = clickers
-        loadImage = clickers
-        deleteImage = clickers
+        with(clickers) {
+            selectHelper = this
+            loadImage = this
+            deleteImage = this
+        }
         notifyDataSetChanged()
     }
 
@@ -63,17 +74,26 @@ class ImageListAdapter(private var context: Context, private val clickers: NewAd
     inner class ImageHolder(val binding: ImageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(uri: String, position: Int) = with(binding) {
+        fun bind(uri: UploadImageResultEntity, position: Int) = with(binding) {
             println("---666___" + uri)
-            /*if (position == 0) {
+           /* if (position == mainImageIndex) {
                 flAddImage.isVisible = list.isNotEmpty()
                 flLoadImage.isVisible = flAddImage.isVisible.not()
             } else {
                 flLoadImage.isVisible = true
                 flAddImage.isVisible = false*/
+
+            flLoadImage.isVisible = position == loadedImageIndex
+            progressBar.isVisible = flLoadImage.isVisible.not()
+            println("/00./....$position.....$loadedImageIndex.........${uri.path}.....................")
+            if (flLoadImage.isVisible) {
+                println("/./....$position.....$loadedImageIndex.........${uri.path}.....................")
+                Glide.with(root).load(uri.path).into(ivLoadImage)
+            }
                 selectedImage(position)
-                Glide.with(binding.root).load(uri).into(ivLoadImage)
-            //}
+                cvLoadImage.isVisible = false
+                //}
+
         }
 
         private fun selectedImage(position: Int) = with(binding) {
@@ -97,5 +117,37 @@ class ImageListAdapter(private var context: Context, private val clickers: NewAd
                 tvMainImage.isVisible = false
             }
         }
+
+        fun getUploadedImage() {
+            clickers.safeFlowGather {
+                viewModel.uploadImage.collectLatest {
+                    when (it) {
+                        is ApiState.Success -> {
+                            it.data.result?.let { it1 -> addIfNotContains(it1) }
+                        }
+                        is ApiState.Failure -> {
+                            println("--....1.." + it.msg.message)
+                        }
+                        is ApiState.Loading -> {
+                            println("--....2..Loading")
+                            /*btnNonActive.isVisible = false
+                        btnActive.isVisible = false*/
+                        }
+                    }
+                    println("here..................")
+                }
+            }
+        }
+    }
+
+    private fun addIfNotContains(it1: UploadImageResultEntity) {
+        if (selectedImages.contains(it1)) return
+        selectedImages.add(0, it1)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun imageLoaded(index: Int) {
+        loadedImageIndex = index
+        notifyDataSetChanged()
     }
 }
