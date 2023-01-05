@@ -2,12 +2,11 @@ package kg.o.internlabs.omarket.utils
 
 import kg.o.internlabs.omarket.domain.entity.ads.LocationX
 
-class LocationsX {
+class ListOfLocations {
     val list = mutableListOf<LocationX>()
     companion object {
         const val CITY = "Город"
         const val REGION = "Область"
-        const val PROVINCE = "Населенный пункт"
     }
     fun saveLocations(){
         list.add(LocationX(3,"Ошская", CITY, 0,true,null,"Поиск в Ошской области",listOf(150,119,120,122,123,124,118,121)))
@@ -82,36 +81,6 @@ class LocationsX {
         list.add(LocationX(134,"Сулюкта", CITY, 1,false,102,"Поиск в Сулюкте",null))
         list.add(LocationX(133,"Кызыл-Кия", CITY, 1,false,102,"Поиск в Кызыл-Кие",null))
         list.add(LocationX(132,"Разаков", CITY, 1,false,102,"Поиск в Разаков",null))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
