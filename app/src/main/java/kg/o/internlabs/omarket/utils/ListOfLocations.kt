@@ -26,7 +26,7 @@ class ListOfLocations {
         list.add(LocationX(127,"Чаек", locationType =  CITY, parent = 21))
 
         // subLocations of Issyk-Kul region
-        list.add(LocationX(81,"Каракол",   CITY,61))
+        list.add(LocationX(81,"Каракол",   CITY,parent = 61))
         list.add(LocationX(111,"Тюп", locationType =  CITY, parent = 61))
         list.add(LocationX(112,"Теплоключенка", locationType = CITY, parent = 61))
         list.add(LocationX(114,"Кызыл-Суу", locationType =  CITY, parent = 61))
