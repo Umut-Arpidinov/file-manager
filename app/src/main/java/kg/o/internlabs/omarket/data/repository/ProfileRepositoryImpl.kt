@@ -19,8 +19,10 @@ class ProfileRepositoryImpl @Inject constructor(
     private val mapper = MapperForFAQAndProfileModels()
 
     override fun getFaq(token: String) = Pager(
-        config = PagingConfig(pageSize = 10, prefetchDistance = 1, maxSize = 60,
-            initialLoadSize = 20),
+        config = PagingConfig(
+            pageSize = 10, prefetchDistance = 1, maxSize = 60,
+            initialLoadSize = 20
+        ),
         pagingSourceFactory = {
             FaqPagingSource(
                 apiService,
@@ -30,8 +32,10 @@ class ProfileRepositoryImpl @Inject constructor(
     ).flow
 
     override fun getMyAds(token: String, myAds: MyAdsEntity) = Pager(
-        config = PagingConfig(pageSize = 10, prefetchDistance = 1, maxSize = 60,
-            initialLoadSize = 20),
+        config = PagingConfig(
+            pageSize = 10, prefetchDistance = 1, maxSize = 60,
+            initialLoadSize = 20
+        ),
         pagingSourceFactory = {
             ProfilePagingSource(
                 apiService,
@@ -51,13 +55,13 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
     override fun uploadAvatar(token: String, body: MultipartBody.Part) = safeApiCall {
-        mapper.mapRespDbModelToRespEntityForAvatar(
+        mapper.mapRespDbModelToRespEntityForUploadImg(
             apiService.uploadAvatar(token, body)
         )
     }
 
     override fun deleteAvatar(token: String) = safeApiCall {
-        mapper.mapRespDbModelToRespEntityForAvatarDel(
+        mapper.mapRespDbModelToRespEntityForDelImg(
             apiService.deleteAvatar(token)
         )
     }

@@ -65,15 +65,15 @@ class ImageListAdapter(private var context: Context, private val clickers: NewAd
 
         fun bind(uri: String, position: Int) = with(binding) {
             println("---666___" + uri)
-            if (position == 0) {
+            /*if (position == 0) {
                 flAddImage.isVisible = list.isNotEmpty()
                 flLoadImage.isVisible = flAddImage.isVisible.not()
             } else {
                 flLoadImage.isVisible = true
-                flAddImage.isVisible = false
+                flAddImage.isVisible = false*/
                 selectedImage(position)
                 Glide.with(binding.root).load(uri).into(ivLoadImage)
-            }
+            //}
         }
 
         private fun selectedImage(position: Int) = with(binding) {

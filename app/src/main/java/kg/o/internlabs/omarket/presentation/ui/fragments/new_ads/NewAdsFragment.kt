@@ -60,14 +60,12 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(), C
         super.initListener()
 
         cusCategory.setOnClickListener {
-            //TODO if category has sub_category
             val category = ResultEntity()
             cusCategory.setText(category.name.toString())
             cusSubCategory.isVisible = category.subCategories?.isNotEmpty() == true
         }
 
         cusSubCategory.setOnClickListener {
-            //TODO if category has sub_category
             val category = ResultEntity()
             cusCategory.setText(category.subCategories!![0].name.toString())
         }
@@ -80,7 +78,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(), C
             //cusLocation.setText()
         }
 
-        ivAddImage.isVisible = selectedImages.size < 1
+        ivAddImage.isVisible = selectedImages.size < 10
 
         ivAddImage.setOnClickListener {
             println("...0....")
@@ -141,7 +139,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(), C
             return
         }
         selectedImages.add(0, uri)
-        binding.flAddImage.isVisible = selectedImages.size < 1
+        binding.flAddImage.isVisible = selectedImages.size < 10
     }
 
     override fun toggleClicked(positionOfCell: Int) = with(binding){

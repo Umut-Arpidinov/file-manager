@@ -59,16 +59,35 @@ interface ApiService {
     suspend fun uploadAvatar(
         @Header("Authorization") token: String?,
         @Part image: MultipartBody.Part
-    ): Response<AvatarDto?>
+    ): Response<UploadImageDto?>
 
     @DELETE("api/ads-board/v1/user/remove-avatar/")
     suspend fun deleteAvatar(
         @Header("Authorization") token: String?
-    ): Response<AvatarDelDto?>
+    ): Response<DeleteImageDto?>
 
     @GET("/api/ads-board/v1/ads/list/")
     suspend fun getAds(
         @Header("Authorization") token: String?,
         @Query("page") page: Int
     ): Response<AdsDto?>
+
+    @GET("api/ads-board/v1/ads/initial/")
+    suspend fun initiateAd(
+        @Header("Authorization") token: String?
+    ): Response<InitiateAdDto?>
+
+    @POST("api/ads-board/v1/ads/{uuid}/upload-image/")
+    suspend fun uploadImageToAd(
+        @Header("Authorization") token: String?,
+        @Part image: MultipartBody.Part,
+        @Path("uuid") uuid: String
+    ): Response<UploadImageDto?>
+
+    @DELETE("api/ads-board/v1/ads/{uuid}/remove-image/")
+    suspend fun deleteImageFromAd(
+        @Header("Authorization") token: String?,
+        @Path("uuid") uuid: String
+    ): Response<DeleteImageDto?>
+
 }

@@ -45,13 +45,13 @@ class ProfileViewModel @Inject constructor(
     val nonActiveAds: Flow<PagingData<MyAdsResultsEntity>>
         get() = _nonActiveAds
 
-    private val _avatar = MutableSharedFlow<ApiState<AvatarEntity>>()
+    private val _avatar = MutableSharedFlow<ApiState<UploadImageEntity>>()
     val avatar = _avatar.asSharedFlow()
 
     private val _allAds = MutableSharedFlow<ApiState<MyAdsEntity>>()
     val allAds = _allAds.asSharedFlow()
 
-    private val _deleteAvatar = MutableSharedFlow<ApiState<AvatarDelEntity>>()
+    private val _deleteAvatar = MutableSharedFlow<ApiState<DeleteImageEntity>>()
     val deleteAvatar = _deleteAvatar.asSharedFlow()
 
     private val _avatarUrl = MutableStateFlow("")

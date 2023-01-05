@@ -1,0 +1,20 @@
+package kg.o.internlabs.omarket.domain.repository
+
+import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.domain.entity.DeleteImageEntity
+import kg.o.internlabs.omarket.domain.entity.InitiateAdEntity
+import kg.o.internlabs.omarket.domain.entity.UploadImageEntity
+import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
+
+interface CRUDAdsRepository {
+    fun getInitiatedAnAD(token: String): Flow<ApiState<InitiateAdEntity>>
+
+    fun uploadImageToAd(token: String, body: MultipartBody.Part, uuid: String):
+            Flow<ApiState<UploadImageEntity>>
+
+    fun deleteImageFromAd(token: String, uuid: String): Flow<ApiState<DeleteImageEntity>>
+
+    //fun getAds(token: String, ads: AdsByCategory?): Flow<PagingData<ResultX>>
+
+}

@@ -148,33 +148,33 @@ class MapperForFAQAndProfileModels {
     }
     // endregion
 
-    //region  for avatar
+    //region  for image
 
-     private fun mapDbModelToEntity(ava: AvatarDto?) = AvatarEntity(
-        result = mapDbModelToEntity(ava?.result),
-        resultCode = ava?.resultCode,
-        details = ava?.details,
-        errorCode = ava?.errorCode
+     private fun mapDbModelToEntity(img: UploadImageDto?) = UploadImageEntity(
+        result = mapDbModelToEntity(img?.result),
+        resultCode = img?.resultCode,
+        details = img?.details,
+        errorCode = img?.errorCode
     )
 
-    private fun mapDbModelToEntity(res: AvatarResultDto?) = AvatarResultEntity(
+    private fun mapDbModelToEntity(res: UploadImageResultDto?) = UploadImageResultEntity(
        url = res?.url
     )
 
-    fun mapRespDbModelToRespEntityForAvatar(resp: Response<AvatarDto?>) = if (resp.isSuccessful) {
+    fun mapRespDbModelToRespEntityForUploadImg(resp: Response<UploadImageDto?>) = if (resp.isSuccessful) {
         Response.success(mapDbModelToEntity(resp.body()))
     } else {
         resp.errorBody()?.let { Response.error(resp.code(), it) }
     }
 
-    private fun mapDbModelToEntity(ava: AvatarDelDto?) = AvatarDelEntity(
-        result = ava?.result,
-        resultCode = ava?.resultCode,
-        details = ava?.details,
-        errorCode = ava?.errorCode
+    private fun mapDbModelToEntity(img: DeleteImageDto?) = DeleteImageEntity(
+        result = img?.result,
+        resultCode = img?.resultCode,
+        details = img?.details,
+        errorCode = img?.errorCode
     )
 
-    fun mapRespDbModelToRespEntityForAvatarDel(resp: Response<AvatarDelDto?>) =
+    fun mapRespDbModelToRespEntityForDelImg(resp: Response<DeleteImageDto?>) =
         if (resp.isSuccessful) {
         Response.success(mapDbModelToEntity(resp.body()))
     } else {
