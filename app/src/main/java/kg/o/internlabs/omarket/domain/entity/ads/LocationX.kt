@@ -1,11 +1,12 @@
 package kg.o.internlabs.omarket.domain.entity.ads
 
 data class LocationX(
-    val id: Int? = null,
-    val isPopular: Boolean? = null,
-    val locationType: String? = null,
-    val name: String? = null,
+    var id: Int? = null,  // id локаций
+    var name: String? = null, // название локаций
+    var locationType: String? = null, // тип локаций
     val orderNum: Int? = null,
-    val parent: Int? = null,
-    val searchByName: String? = null
+    val isPopular: Boolean? = null,
+    var parent: Int? = null, // к какому области относится id области
+    val searchByName: String? = null,
+    var subLocationsId: List<Int>? = arrayListOf() // если область все его города из картинки
 )
