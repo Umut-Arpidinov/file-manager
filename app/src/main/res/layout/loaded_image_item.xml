@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_loaded_image"
+    android:layout_width="@dimen/icon_width_100dp"
+    android:layout_height="@dimen/icon_height_100dp"
+    android:layout_marginEnd="@dimen/margin_end_8dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_load_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_1dp"
+        app:cardBackgroundColor="@color/black_1"
+        app:cardCornerRadius="@dimen/corner_radius_8dp"
+        app:cardElevation="@dimen/card_elevation_0dp">
+
+        <ImageView
+            android:id="@+id/iv_load_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/icon"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ic_profile" />
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="@dimen/margin_top_4dp"
+        android:layout_marginEnd="@dimen/margin_end_4dp"
+        android:contentDescription="@string/icon"
+        android:src="@drawable/ic_delete" />
+
+    <TextView
+        android:id="@+id/tv_main_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/main_image"
+        android:textAppearance="@style/TextView.Main_Image"
+        android:visibility="gone" />
+
+</FrameLayout>

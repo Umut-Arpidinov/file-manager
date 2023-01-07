@@ -40,6 +40,7 @@ abstract class BaseRepository {
             }
         }
     }.catch { e ->
+        println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
         e.printStackTrace()
         if(e is java.net.SocketTimeoutException) {
             emit(ApiState.Failure(Exception(e)))

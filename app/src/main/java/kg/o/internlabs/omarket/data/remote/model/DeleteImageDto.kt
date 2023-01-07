@@ -4,5 +4,6 @@ data class DeleteImageDto(
     val result: String? = null,
     val resultCode: String? = null,
     val details: String? = null,
-    val errorCode: Int? = null
+    val errorCode: Int? = null,
+    val url: String? = null
 )

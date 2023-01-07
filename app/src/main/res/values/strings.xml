@@ -35,7 +35,8 @@
     <string name="write_me_in_telegram">Писать мне в Telegram</string>
     <string name="at_sign">\@</string>
     <string name="image_load_information">Для загрузки фото дайте доступ приложению Мой О! к камере в настройках телефона</string>
-    <string name="main_image">Главное \n   фото</string>
+    <string name="main_image">Главное\n\tфото</string>
     <string name="add_icon">add_icon</string>
     <string name="create_an_ad">Подать объявление</string>
+    <string name="ready_to_deliver">Я готов доставить</string>
 </resources>

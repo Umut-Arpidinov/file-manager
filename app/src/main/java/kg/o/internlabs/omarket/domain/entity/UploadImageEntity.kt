@@ -11,6 +11,5 @@ data class UploadImageEntity(
 
 data class UploadImageResultEntity(
     val url: String? = null,
-    var isUploaded: Boolean = false,
     val path: Uri? = null
 )

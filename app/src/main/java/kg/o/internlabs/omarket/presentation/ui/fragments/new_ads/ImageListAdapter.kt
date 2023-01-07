@@ -1,36 +1,42 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.new_ads
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.R
-import kg.o.internlabs.omarket.databinding.ImageItemBinding
+import kg.o.internlabs.omarket.databinding.AddImageItemBinding
+import kg.o.internlabs.omarket.databinding.LoadedImageItemBinding
+import kg.o.internlabs.omarket.databinding.LoadingImageItemBinding
+import kg.o.internlabs.omarket.databinding.NoItemBinding
 import kg.o.internlabs.omarket.domain.entity.UploadImageResultEntity
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
-import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.LoadImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper
-import kg.o.internlabs.omarket.utils.safeFlowGather
-import kotlinx.coroutines.flow.collectLatest
+
+private const val ADD_STATE = 0
+private const val LOADING_STATE = 1
+private const val LOADED_STATE = 2
+private const val INVALID_STATE = -1
 
 class ImageListAdapter(
-    private var context: Context,
     private val clickers: NewAdsFragment,
-    private val viewModel: NewAdsViewModel
 ) : RecyclerView.Adapter<ImageListAdapter.ImageHolder>() {
 
-    private var selectedImages = mutableListOf<UploadImageResultEntity>()
     private var list: List<UploadImageResultEntity> = arrayListOf()
     private var mainImageIndex: Int = 1
-    private var loadedImageIndex: Int = -1
-    private var selectHelper: MainImageSelectHelper? = null
-    private var loadImage: LoadImageHelper? = null
+    private var selectMain: MainImageSelectHelper? = null
+    private var addImage: AddImageHelper? = null
     private var deleteImage: DeleteImageHelper? = null
 
     @SuppressLint("NotifyDataSetChanged")
@@ -39,29 +45,57 @@ class ImageListAdapter(
     ) {
         this.list = list
         with(clickers) {
-            selectHelper = this
-            loadImage = this
+            selectMain = this
+            addImage = this
             deleteImage = this
         }
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ImageHolder(
-            ImageItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent, false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
+        val binding = when (viewType) {
+            ADD_STATE -> {
+                AddImageItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+            }
+            LOADING_STATE -> {
+                LoadingImageItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+            }
+            LOADED_STATE -> {
+                LoadedImageItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+            }
+            else -> {
+                NoItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+            }
+        }
+        return ImageHolder(binding)
+    }
 
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-        println("---444----" + list)
         holder.bind(list[position], position)
-        holder.itemView.setOnClickListener {
-            println("----00---" + list[position])
-            selectHelper?.selectMainImage(position)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        if (position == 0) {
+            if (list.size >= 11) return INVALID_STATE
+            return ADD_STATE
+        }
+        return when (list[position].url == null) {
+            true -> LOADING_STATE
+            else -> LOADED_STATE
         }
     }
 
@@ -71,83 +105,70 @@ class ImageListAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ImageHolder(val binding: ImageItemBinding) :
+    @SuppressLint("NotifyDataSetChanged")
+    fun imageLoaded(updatedList: MutableList<UploadImageResultEntity>) {
+        list = updatedList
+        notifyDataSetChanged()
+    }
+
+    inner class ImageHolder(val binding: ViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(uri: UploadImageResultEntity, position: Int) = with(binding) {
-            println("---666___" + uri)
-           /* if (position == mainImageIndex) {
-                flAddImage.isVisible = list.isNotEmpty()
-                flLoadImage.isVisible = flAddImage.isVisible.not()
-            } else {
-                flLoadImage.isVisible = true
-                flAddImage.isVisible = false*/
-
-            flLoadImage.isVisible = position == loadedImageIndex
-            progressBar.isVisible = flLoadImage.isVisible.not()
-            println("/00./....$position.....$loadedImageIndex.........${uri.path}.....................")
-            if (flLoadImage.isVisible) {
-                println("/./....$position.....$loadedImageIndex.........${uri.path}.....................")
-                Glide.with(root).load(uri.path).into(ivLoadImage)
+        init {
+            with(binding.root) {
+                when (binding) {
+                    is AddImageItemBinding -> {
+                        setOnClickListener {
+                            addImage?.addImage()
+                        }
+                    }
+                    is LoadedImageItemBinding -> {
+                        findViewById<ImageView>(R.id.iv_delete).setOnClickListener {
+                            deleteImage?.deleteImage(absoluteAdapterPosition)
+                        }
+                        setOnClickListener {
+                            selectMain?.selectMainImage(absoluteAdapterPosition)
+                        }
+                    }
+                }
             }
-                selectedImage(position)
-                cvLoadImage.isVisible = false
-                //}
-
         }
 
-        private fun selectedImage(position: Int) = with(binding) {
-            println("--777--${position}")
+        fun bind(uri: UploadImageResultEntity, position: Int) = with(binding) {
+            when (binding) {
+                is AddImageItemBinding -> {
+                    if (list.size >= 11) {
+                        root.visibility = View.GONE
+                    }
+                }
+                is LoadedImageItemBinding -> {
+                    Glide.with(root).load(uri.path)
+                        .into(binding.root.findViewById(R.id.iv_load_image))
+
+                    selectedImage(position)
+                }
+            }
+        }
+
+        private fun selectedImage(position: Int) = with(binding.root) {
             if (position == mainImageIndex) {
-                flLoadImage.background = context.let {
+                background = context.let {
                     AppCompatResources.getDrawable(
                         it, R.drawable.bg_main_image
                     )
                 }
-                ivLoadImage.imageAlpha = 150
-                tvMainImage.isVisible = true
+                findViewById<ImageView>(R.id.iv_load_image)
+                    .setColorFilter(Color.rgb(100, 100, 100), PorterDuff.Mode.MULTIPLY)
+                findViewById<TextView>(R.id.tv_main_image).isVisible = true
             } else {
-                flLoadImage.background = context.let {
+                findViewById<FrameLayout>(R.id.fl_loaded_image).background = context.let {
                     AppCompatResources.getDrawable(
                         it, R.drawable.bg_image_load
                     )
                 }
-                ivLoadImage.imageAlpha = 255
-                cvLoadImage.setCardBackgroundColor(Color.WHITE)
-                tvMainImage.isVisible = false
+                findViewById<ImageView>(R.id.iv_load_image).clearColorFilter()
+                findViewById<TextView>(R.id.tv_main_image).isVisible = false
             }
         }
-
-        fun getUploadedImage() {
-            clickers.safeFlowGather {
-                viewModel.uploadImage.collectLatest {
-                    when (it) {
-                        is ApiState.Success -> {
-                            it.data.result?.let { it1 -> addIfNotContains(it1) }
-                        }
-                        is ApiState.Failure -> {
-                            println("--....1.." + it.msg.message)
-                        }
-                        is ApiState.Loading -> {
-                            println("--....2..Loading")
-                            /*btnNonActive.isVisible = false
-                        btnActive.isVisible = false*/
-                        }
-                    }
-                    println("here..................")
-                }
-            }
-        }
-    }
-
-    private fun addIfNotContains(it1: UploadImageResultEntity) {
-        if (selectedImages.contains(it1)) return
-        selectedImages.add(0, it1)
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun imageLoaded(index: Int) {
-        loadedImageIndex = index
-        notifyDataSetChanged()
     }
 }

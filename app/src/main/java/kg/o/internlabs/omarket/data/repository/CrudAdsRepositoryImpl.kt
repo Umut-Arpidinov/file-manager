@@ -5,6 +5,7 @@ import kg.o.internlabs.omarket.data.mappers.MapperForAds
 import kg.o.internlabs.omarket.data.mappers.MapperForCrudAds
 import kg.o.internlabs.omarket.data.mappers.MapperForFAQAndProfileModels
 import kg.o.internlabs.omarket.data.remote.ApiService
+import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
 import kg.o.internlabs.omarket.domain.entity.EditAds
 import kg.o.internlabs.omarket.domain.repository.CRUDAdsRepository
 import okhttp3.MultipartBody
@@ -32,9 +33,13 @@ class CrudAdsRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun deleteImageFromAd(token: String, uuid: String) = safeApiCall {
-        mapper.mapRespDbModelToRespEntityForDelImg(
-            apiService.deleteImageFromAd(token, uuid)
+    override fun deleteImageFromAd(token: String, body: DeletedImageUrlEntity, uuid: String) = safeApiCall {
+        map.toRespEntityForDelImg(
+            apiService.deleteImageFromAd(
+                token,
+                map.toDbModel(body),
+                uuid
+            )
         )
     }
 

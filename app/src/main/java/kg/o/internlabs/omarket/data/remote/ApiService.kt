@@ -85,9 +85,11 @@ interface ApiService {
         @Path("uuid") uuid: String
     ): Response<UploadImageDto?>
 
-    @DELETE("api/ads-board/v1/ads/{uuid}/remove-image/")
+    //@DELETE("api/ads-board/v1/ads/{uuid}/remove-image/")
+    @HTTP(method = "DELETE", path = "api/ads-board/v1/ads/{uuid}/remove-image/", hasBody = true)
     suspend fun deleteImageFromAd(
         @Header("Authorization") token: String?,
+        @Body deletingImage: DeletedImageUrlDto,
         @Path("uuid") uuid: String
     ): Response<DeleteImageDto?>
 

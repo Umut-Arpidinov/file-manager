@@ -4,7 +4,9 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
+import android.provider.MediaStore
 import android.provider.Settings
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -21,6 +23,7 @@ import com.bumptech.glide.Glide
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.PagingAdapterForMain
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagingAdapter
 import kotlinx.coroutines.launch
+import java.io.File
 import java.net.URI
 
 fun Context.makeToast(msg: String) {
@@ -31,7 +34,25 @@ fun Fragment.makeToast(msg: String) {
     Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
 }
 
+fun Fragment.getFile(imageUri: Uri): File? {
+    val file: File? = imageUri.path?.let { File(it) }
+    val filePath = file?.path?.split(":")?.toTypedArray()
+    val imageId = filePath?.get(filePath.size - 1)
 
+    val cursor: Cursor? = requireActivity().contentResolver.query(
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        null,
+        MediaStore.Images.Media._ID + " = ? ",
+        arrayOf(imageId),
+        null
+    )
+    cursor?.moveToFirst()
+    val columnIndex: Int? = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+    cursor?.moveToFirst()
+    val result: String? = columnIndex?.let { cursor.getString(it) }
+    cursor?.close()
+    return result?.let { File(it) }
+}
 
 fun Fragment.safeFlowGather(action: suspend () -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch {

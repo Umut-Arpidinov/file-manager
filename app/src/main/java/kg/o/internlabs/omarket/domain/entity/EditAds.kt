@@ -10,6 +10,7 @@ data class EditAds(
     val resultCode: String? = null,
 
     val category: Int? = null,
+    val address: String? = null,
     val contractPrice: Boolean? = null,
     val currency: String? = null,
     val delivery: Boolean? = null,

@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.DeleteImageEntity
+import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
 import kg.o.internlabs.omarket.domain.entity.EditAds
 import kg.o.internlabs.omarket.domain.entity.UploadImageEntity
 import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.DeleteImageFromAdUseCase
@@ -39,7 +40,6 @@ class NewAdsViewModel @Inject constructor(
     val editedAd = _editedAd.asSharedFlow()
 
     private val _deleteImage = MutableSharedFlow<ApiState<DeleteImageEntity>>()
-    val deleteImage = _deleteImage.asSharedFlow()
 
     init {
         getAccessTokenFromPrefs()
@@ -59,13 +59,11 @@ class NewAdsViewModel @Inject constructor(
     }
 
     fun uploadImage(uri: File?) {
-        println("><><><>< $uuid")
         viewModelScope.launch {
             uploadImageToAdUseCase(getAccessToken(), uri, getUuid())
                 .collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        println("===============================")
                         _uploadImage.emit(it)
                     }
                     is ApiState.Failure -> {
@@ -103,14 +101,16 @@ class NewAdsViewModel @Inject constructor(
         super.onCleared()
     }
 
-    fun deleteAvatar(uuid: String) {
+    fun deleteImageFromAd(body: DeletedImageUrlEntity) {
         viewModelScope.launch {
-            deleteImageFromAdUseCase(getAccessToken(), uuid).collectLatest {
+            deleteImageFromAdUseCase(getAccessToken(), body, getUuid()).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+                        println("----Del is ok")
                         _deleteImage.emit(it)
                     }
                     is ApiState.Failure -> {
+                        println("-----Del is fail    ${it.msg.message}")
                         _deleteImage.emit(it)
                     }
                     ApiState.Loading -> {
