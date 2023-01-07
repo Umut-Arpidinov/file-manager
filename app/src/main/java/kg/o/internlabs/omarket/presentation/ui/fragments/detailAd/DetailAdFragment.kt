@@ -19,6 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.cells.CustomAddPriceCellView
+import kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
 import kg.o.internlabs.core.custom_views.cells.Position
 import kg.o.internlabs.omarket.databinding.BottomSheetOverviewBinding
 import kg.o.internlabs.omarket.databinding.FragmentDetailedAdBinding
@@ -35,10 +36,14 @@ import kotlinx.coroutines.flow.collectLatest
 
 
 private typealias coreString = kg.o.internlabs.core.R.string
+private typealias coreDrawable = kg.o.internlabs.core.R.drawable
 
 @AndroidEntryPoint
 class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewModel>(),
     AdClickedInMain {
+    private val WHATSAPP = "com.whatsapp"
+    private val TELEGRAM = "org.telegram.messenger"
+
 
     private val args: DetailAdFragmentArgs by navArgs()
     private var adapter = SimilarAdsPagingAdapter()
@@ -173,12 +178,15 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         else {
             if (currency == "som")
                 customMainView.setPriceWithoutCoins(
-                String.format(getString(coreString.som_price), currentPrice.toInt())
-            )
+                    String.format(getString(coreString.som_price), currentPrice.toInt())
+                )
             else {
                 try {
                     customMainView.setPriceWithoutCoins(
-                        String.format(getString(coreString.dollar_price_overview), currentPrice.toInt())
+                        String.format(
+                            getString(coreString.dollar_price_overview),
+                            currentPrice.toInt()
+                        )
                     )
                 } catch (e: NumberFormatException) {
                     val dol: String
@@ -208,24 +216,24 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     }
 
-    private fun callByNumber(number: String) {
-        val callIntent = Intent(Intent.ACTION_DIAL)
-        callIntent.data = Uri.parse("tel:$number")
-        startActivity(callIntent)
+    private fun actionByNumber(number: String, isCall: Boolean) {
+        if (isCall) {
+            val callIntent = Intent(Intent.ACTION_DIAL)
+            callIntent.data = Uri.parse("tel:$number")
+            startActivity(callIntent)
+        } else {
+            val smsIntent = Intent(Intent.ACTION_VIEW)
+            smsIntent.data = Uri.parse("sms:$number")
+            startActivity(smsIntent)
+        }
     }
 
-    private fun writeByPhone(number: String) {
-        val smsIntent = Intent(Intent.ACTION_VIEW)
-        smsIntent.data = Uri.parse("sms:$number")
-        startActivity(smsIntent)
-    }
-
-    private fun writeByWA(number: String) {
+    private fun whatsAppIntent(number: String) {
         try {
             val intentWA = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:$number"))
             intentWA.setPackage("com.whatsapp")
             startActivity(intentWA)
-        } catch (e : java.lang.Exception) {
+        } catch (e: java.lang.Exception) {
             Toast.makeText(requireContext(), "WhatsApp is not Installed", Toast.LENGTH_SHORT).show()
         }
     }
@@ -237,7 +245,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                     Intent.ACTION_VIEW,
                     Uri.parse("https://t.me/$nickname")
                 )
-                tgintent.setPackage("org.telegram.messenger")
+                tgintent.setPackage(TELEGRAM)
                 startActivity(tgintent)
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Telegram is not Installed", Toast.LENGTH_SHORT)
@@ -252,51 +260,65 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         val dialog = BottomSheetDialog(requireContext())
         dialog.setContentView(binding.root)
 
-        binding.icClose.setOnClickListener {
-            dialog.dismiss()
-        }
+        with(binding) {
+            icClose.setOnClickListener {
+                dialog.dismiss()
+            }
 
-        if (isCall)
-            binding.appOption.setTitle("Звонок")
-        else
-            binding.appOption.setTitle("SMS")
+            if (isCall) appOption.setTitle("Звонок")
+            else appOption.setTitle("SMS")
 
-        if (!isAppInstalled("com.whatsapp")) {
-            binding.waOption.visibility = GONE
-        } else {
-            binding.waOption.setOnClickListener {
-                writeByWA(number)
+            if (!isAppInstalled(WHATSAPP))
+                waOption.visibility = GONE
+            else {
+                //WHATSAPP icon is not correct
+                //getAppIcon(waOption, WHATSAPP)
+
+                //Delete after resolving
+                waOption.hasIcon(true)
+                waOption.setIcon(coreDrawable.ic_whatsapp)
+                waOption.setOnClickListener {
+                    whatsAppIntent(number)
+                }
+            }
+
+            if (!isAppInstalled(TELEGRAM)) {
+                tgOption.visibility = GONE
+                waOption.setPosition(Position.BOTTOM)
+            } else {
+                getAppIcon(tgOption, TELEGRAM)
+                tgOption.setOnClickListener {
+                    telegramIntent(nickname)
+                }
+            }
+
+            if (!isAppInstalled(WHATSAPP) && !isAppInstalled(TELEGRAM))
+                appOption.setPosition(Position.SINGLE)
+
+            appOption.setOnClickListener {
+                actionByNumber(number, isCall)
             }
         }
-
-        if (!isAppInstalled("org.telegram.messenger")) {
-            binding.tgOption.visibility = GONE
-            binding.waOption.setPosition(Position.BOTTOM)
-        } else {
-            binding.tgOption.setOnClickListener {
-                telegramIntent(nickname)
-            }
-        }
-
-        if (!isAppInstalled("com.whatsapp") && !isAppInstalled("com.telegram")) {
-            binding.appOption.setPosition(Position.SINGLE)
-        }
-
-        binding.appOption.setOnClickListener {
-            if (isCall) callByNumber(number)
-            else writeByPhone(number)
-        }
-
         dialog.show()
     }
 
     @Suppress("DEPRECATION")
     private fun isAppInstalled(packageName: String): Boolean {
         return try {
-            requireContext().packageManager.getApplicationInfo(packageName,0).enabled
+            requireContext().packageManager.getApplicationInfo(packageName, 0).enabled
             true
         } catch (ignored: NameNotFoundException) {
             false
+        }
+    }
+
+    private fun getAppIcon(waOption: CustomRoundedOneCellLineView, app: String) {
+        try {
+            val icon = requireContext().packageManager.getApplicationIcon(app)
+            waOption.hasIcon(true)
+            waOption.setIcon(icon)
+        } catch (e: NameNotFoundException) {
+            e.printStackTrace()
         }
     }
 }
