@@ -21,12 +21,14 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.custom_views.cells.CustomAddPriceCellView
 import kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
 import kg.o.internlabs.core.custom_views.cells.Position
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.BottomSheetOverviewBinding
 import kg.o.internlabs.omarket.databinding.FragmentDetailedAdBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.CellAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.SimilarAdsPagingAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.main.MarginItemDecoration
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.utils.LoaderStateAdapter
 import kg.o.internlabs.omarket.utils.loadListener
@@ -121,6 +123,10 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private fun initAdapter() = with(binding) {
         initViewPagerAdapter(imageViewPager, currentPos)
         initCellAdapter(cellRecycler)
+        recSimilarAds.addItemDecoration(
+            MarginItemDecoration(resources.getDimensionPixelSize(
+                R.dimen.item_margin_7dp))
+        )
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
