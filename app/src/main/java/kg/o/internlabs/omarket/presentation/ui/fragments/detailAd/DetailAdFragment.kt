@@ -163,7 +163,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             requireContext(),
             arrayOfString,
             ViewGroup.LayoutParams.MATCH_PARENT,
-            false
+            false,
+            activity
         )
         imageViewPager.adapter = pagerAdapter
         pagerAdapter.setInterface(this@DetailAdFragment)

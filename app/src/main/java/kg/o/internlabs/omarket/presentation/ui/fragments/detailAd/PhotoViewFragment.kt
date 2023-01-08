@@ -45,7 +45,8 @@ class PhotoViewFragment : BaseFragment<FragmentPhotoViewBinding, DetailAdViewMod
             requireContext(),
             arrayOfString,
             ViewGroup.LayoutParams.MATCH_PARENT,
-            true
+            true,
+            activity
         )
         imageViewPager.adapter = pagerAdapter
 
