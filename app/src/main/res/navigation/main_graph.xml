@@ -163,5 +163,14 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/go_to_viewer"
+            app:destination="@id/mediaViewer">
+        </action>
     </fragment>
+    <fragment
+        android:id="@+id/mediaViewer"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.PhotoViewFragment"
+        android:label="fragment_viewer"
+        tools:layout="@layout/fragment_photo_view" />
 </navigation>

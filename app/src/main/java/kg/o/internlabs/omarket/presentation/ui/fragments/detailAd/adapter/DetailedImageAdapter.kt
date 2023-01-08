@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.PagerItemImageOverviewBinding
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
 
 internal class DetailedImageAdapter internal constructor(
     private val context: Context,
     private val imageURLs: List<String>?,
-    private val itemWidth: Int
+    private val itemWidth: Int,
+    private val viewer: Boolean
 ) : RecyclerView.Adapter<DetailedImageAdapter.ViewHolder>() {
-
+    lateinit var imageClicked: ImageClickedAds
     private var isEmpty = false
 
     internal class ViewHolder(val binding: PagerItemImageOverviewBinding) :
@@ -37,6 +39,12 @@ internal class DetailedImageAdapter internal constructor(
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.loading_img).into(binding.itemImgMain)
             }
+
+            if (!viewer) {
+                itemView.setOnClickListener {
+                    itemView.let { imageClicked.imageClicked() }
+                }
+            }
         }
     }
 
@@ -47,5 +55,9 @@ internal class DetailedImageAdapter internal constructor(
         } else
             isEmpty = true
         return 1
+    }
+
+    fun setInterface(imageClicked: ImageClickedAds) {
+        this.imageClicked = imageClicked
     }
 }

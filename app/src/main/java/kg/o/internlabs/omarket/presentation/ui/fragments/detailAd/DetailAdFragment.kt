@@ -35,14 +35,14 @@ import kg.o.internlabs.omarket.utils.loadListener
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
 
-
-private typealias coreString = kg.o.internlabs.core.R.string
+typealias coreString = kg.o.internlabs.core.R.string
 private typealias coreDrawable = kg.o.internlabs.core.R.drawable
 
 @AndroidEntryPoint
 class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewModel>(),
-    AdClickedInMain {
+    AdClickedInMain, ImageClickedAds{
     private val WHATSAPP = "com.whatsapp"
     private val TELEGRAM = "org.telegram.messenger"
 
@@ -120,6 +120,10 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         makeToast(args.uuid.toString())
     }
 
+    override fun imageClicked() {
+        findNavController().navigate(DetailAdFragmentDirections.goToViewer())
+    }
+
     private fun initAdapter() = with(binding) {
         initViewPagerAdapter(imageViewPager, currentPos)
         initCellAdapter(cellRecycler)
@@ -159,9 +163,11 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         val pagerAdapter = DetailedImageAdapter(
             requireContext(),
             arrayOfString,
-            ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            false
         )
         imageViewPager.adapter = pagerAdapter
+        pagerAdapter.setInterface(this@DetailAdFragment)
 
         currentPos.text =
             String.format(getString(coreString.sample_indicator), 1, pagerAdapter.itemCount)
