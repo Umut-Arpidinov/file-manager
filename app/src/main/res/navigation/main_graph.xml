@@ -165,7 +165,8 @@
             app:nullable="true" />
         <action
             android:id="@+id/go_to_viewer"
-            app:destination="@id/mediaViewer">
+            app:destination="@id/mediaViewer"
+            app:popUpTo="@id/createAdsFragment">
         </action>
     </fragment>
     <fragment

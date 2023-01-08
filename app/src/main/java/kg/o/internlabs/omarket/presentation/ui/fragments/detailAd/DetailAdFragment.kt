@@ -46,7 +46,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private val WHATSAPP = "com.whatsapp"
     private val TELEGRAM = "org.telegram.messenger"
 
-
     private val args: DetailAdFragmentArgs by navArgs()
     private var adapter = SimilarAdsPagingAdapter()
     private var moreDetailIsPressed = false

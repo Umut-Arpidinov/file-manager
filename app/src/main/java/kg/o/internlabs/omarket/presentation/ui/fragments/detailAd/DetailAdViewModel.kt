@@ -30,7 +30,6 @@ class DetailAdViewModel @Inject constructor(
         get() = _ads
 
     init {
-        getAccessTokenFromPrefs()
     }
 
     fun getAds(adsByCategory: AdsByCategory? = null) = launchPagingAsync({
