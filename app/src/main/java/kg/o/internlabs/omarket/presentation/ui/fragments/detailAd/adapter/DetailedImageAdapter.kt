@@ -10,6 +10,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
@@ -40,6 +41,14 @@ internal class DetailedImageAdapter internal constructor(
             PagerItemImageOverviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         binding.itemImgMain.layoutParams.width = itemWidth
+
+        if (viewer) {
+            binding.itemImgMain.layoutParams.height = LayoutParams.WRAP_CONTENT
+            binding.itemImgMain.scaleType = ImageView.ScaleType.CENTER
+        } else {
+            binding.itemImgMain.layoutParams.height = LayoutParams.MATCH_PARENT
+            binding.itemImgMain.scaleType = ImageView.ScaleType.CENTER_CROP
+        }
 
         return ViewHolder(binding)
     }
