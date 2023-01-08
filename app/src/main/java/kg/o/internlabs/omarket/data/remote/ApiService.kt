@@ -14,7 +14,7 @@ interface ApiService {
         @Body reg: RegisterDto?
     ): Response<RegisterDto?>
 
-    @POST("/api/market-auth/check-otp/")
+    @POST("api/market-auth/check-otp/")
     suspend fun checkOtp(
         @Body otp: RegisterDto?
     ): Response<RegisterDto?>
@@ -65,9 +65,15 @@ interface ApiService {
     suspend fun deleteAvatar(
         @Header("Authorization") token: String?
     ): Response<AvatarDelDto?>
-    @GET("/api/ads-board/v1/ads/list/")
+    @GET("api/ads-board/v1/ads/list/")
     suspend fun getAds(
         @Header("Authorization") token: String?,
         @Query("page") page: Int
+    ): Response<AdsDto?>
+
+    @GET("api/ads-board/v1/ads/<uuid>/")
+    suspend fun getAdDetail(
+        @Header("Authorization") token: String?,
+        @Path("uuid") uuid: String
     ): Response<AdsDto?>
 }
