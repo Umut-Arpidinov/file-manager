@@ -53,7 +53,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     //Data for test-------------
     val currentPrice = "10000.99"
-    val currency = "dollar"
+    val currency = "som"
     val verified = true
     val oMoney = false
     val seller = "Murat"
@@ -215,7 +215,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         else {
             if (currency == "som")
                 customMainView.setPriceWithoutCoins(
-                    String.format(getString(coreString.som_price), currentPrice.toInt())
+                    currentPrice, true
                 )
             else {
                 try {
