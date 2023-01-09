@@ -61,11 +61,31 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     override fun initView() = with(binding) {
         super.initView()
-
         adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
         initAdapter()
         getAds()
         getDetailAd()
+    }
+
+    override fun initListener() = with(binding) {
+        super.initListener()
+        tbAds.setOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
+
+    override fun initViewModel() {
+        super.initViewModel()
+        args?.uuid?.let { it -> viewModel.getDetailAd(it) }
+
+    }
+
+    override fun adClicked(ad: ResultX) {
+        makeToast(ad.uuid.toString())
+    }
+
+    override fun imageClicked() {
+        findNavController().navigate(DetailAdFragmentDirections.goToViewer())
     }
 
     private fun getDetailAd() {
@@ -90,8 +110,23 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         initViewPagerAdapter(imageViewPager, currentPos, ad?.minifyImages)
         initCellAdapter(cellRecycler, ad)
 
+        if (ad?.promotionType?.type != "VIP")
+            iconVipUser.visibility = GONE
+
+        if (ad?.author?.verified == null || !ad.author.verified)
+            iconCheckedUser.visibility = GONE
+
         title.text = ad?.title
         description.text = ad?.description
+
+        if (description.lineCount <= 3) {
+            moreDetails.visibility = GONE
+        }
+        else {
+            moreDetails.setOnClickListener {
+                pressMoreDetails(moreDetails, description)
+            }
+        }
 
         setMainCardView(customMainView, ad)
 
@@ -102,31 +137,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         writeBtn.setOnClickListener {
             showDialog(ad?.author?.contactNumber!!, false, ad.telegramProfile)
         }
-    }
-
-    override fun initListener() = with(binding) {
-        super.initListener()
-        tbAds.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        moreDetails.setOnClickListener {
-            pressMoreDetails(moreDetails, description)
-        }
-    }
-
-    override fun initViewModel() {
-        super.initViewModel()
-        args?.uuid?.let { it -> viewModel.getDetailAd(it) }
-
-    }
-
-    override fun adClicked(ad: ResultX) {
-        makeToast(ad.uuid.toString())
-    }
-
-    override fun imageClicked() {
-        findNavController().navigate(DetailAdFragmentDirections.goToViewer())
     }
 
     private fun initAdapter() = with(binding) {
@@ -242,8 +252,11 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         if (ad?.category?.categoryType != null && ad.category.categoryType != "")
             listOfDetails.add(Pair("Подкатегория", ad.category.categoryType))
 
-        if (ad?.createdAt != null && ad.createdAt != "")
-            listOfDetails.add(Pair("Дата публикации", ad.createdAt))
+        if (ad?.createdAt != null && ad.createdAt != "") {
+            var date = ad.createdAt.substring(0, 10)
+            date = getString(R.string.date, date.substring(8, 10), date.substring(5, 7), date.substring(0, 4))
+            listOfDetails.add(Pair("Дата публикации", date))
+        }
 
         if (ad?.location?.name != null && ad.location.name != "")
             listOfDetails.add(Pair("Город", ad.location.name))
@@ -309,10 +322,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             if (!isAppInstalled(_whatsapp))
                 waOption.visibility = GONE
             else {
-                //WHATSAPP icon is not correct
-                //getAppIcon(waOption, WHATSAPP)
-
-                //Delete after resolving
                 waOption.hasIcon(true)
                 waOption.setIcon(coreDrawable.ic_whatsapp)
                 waOption.setOnClickListener {
@@ -324,7 +333,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                 tgOption.visibility = GONE
                 waOption.setPosition(Position.BOTTOM)
             } else {
-                getAppIcon(tgOption, _telegram)
+                getAppIcon(tgOption)
                 tgOption.setOnClickListener {
                     telegramIntent(nickname)
                 }
@@ -350,9 +359,9 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
     }
 
-    private fun getAppIcon(waOption: CustomRoundedOneCellLineView, app: String) {
+    private fun getAppIcon(waOption: CustomRoundedOneCellLineView) {
         try {
-            val icon = requireContext().packageManager.getApplicationIcon(app)
+            val icon = requireContext().packageManager.getApplicationIcon(_telegram)
             waOption.hasIcon(true)
             waOption.setIcon(icon)
         } catch (e: NameNotFoundException) {
