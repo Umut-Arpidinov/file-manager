@@ -7,11 +7,8 @@ import kg.o.internlabs.omarket.data.mappers.MapperForAds
 import kg.o.internlabs.omarket.data.mappers.MapperForModels
 import kg.o.internlabs.omarket.data.paging.AdsPagingSource
 import kg.o.internlabs.omarket.data.remote.ApiService
-import kg.o.internlabs.omarket.data.remote.model.AdsDto
-import kg.o.internlabs.omarket.domain.entity.ads.Ads
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
 import kg.o.internlabs.omarket.domain.repository.AdsRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AdsRepositoryImpl @Inject constructor(
@@ -40,8 +37,4 @@ class AdsRepositoryImpl @Inject constructor(
             )
         }
     ).flow
-
-    override fun getAdDetail(token: String, uuid: String) = safeApiCall {
-        apiService.getAdDetail(token, uuid)
-    }
 }

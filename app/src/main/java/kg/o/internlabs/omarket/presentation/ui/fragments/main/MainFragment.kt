@@ -1,7 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -103,7 +102,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
                             )
                         )
                         initRecyclerViewAdapter(arr)
-
                     }
                     is ApiState.Failure -> {
                         makeToast(it.msg.message.toString())
