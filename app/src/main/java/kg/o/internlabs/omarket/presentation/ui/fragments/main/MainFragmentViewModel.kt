@@ -27,6 +27,9 @@ class MainFragmentViewModel @Inject constructor(
     private val _token = MutableStateFlow("")
     val token = _token.asStateFlow()
 
+    private val _uuid = MutableStateFlow("")
+    val uuid = _uuid.asStateFlow()
+
     private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
     val categories = _categories.asSharedFlow()
 
@@ -74,5 +77,6 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     private fun getAccessToken() = token.value
+    private fun getUuid() = uuid.value
 
 }

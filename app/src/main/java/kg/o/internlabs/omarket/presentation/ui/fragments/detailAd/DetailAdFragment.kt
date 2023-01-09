@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
+import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.cells.CustomAddPriceCellView
 import kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
 import kg.o.internlabs.core.custom_views.cells.Position
@@ -46,7 +47,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private val WHATSAPP = "com.whatsapp"
     private val TELEGRAM = "org.telegram.messenger"
 
-    private val args: DetailAdFragmentArgs by navArgs()
+    private val args: DetailAdFragmentArgs? by navArgs()
     private var adapter = SimilarAdsPagingAdapter()
     private var moreDetailIsPressed = false
 
@@ -89,6 +90,29 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
         initAdapter()
         getAds()
+        getDetailAd()
+    }
+
+    private fun getDetailAd() {
+        safeFlowGather {
+            viewModel.detailAd.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        it.data.resultX.let { it1 -> setDataToViews(it1) }
+                        println("++++++++" + it.data.resultX)
+                    }
+                    is ApiState.Failure -> {
+                        println("--....1.." + it.msg.message)
+                    }
+                    is ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setDataToViews(it1: ResultX?) {
+        println("-----------" + it1?.detail)
     }
 
     override fun initListener() = with(binding) {
@@ -112,11 +136,12 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     override fun initViewModel() {
         super.initViewModel()
-        viewModel.getAds()
+        args?.uuid?.let { it-> viewModel.getDetailAd(it)}
+
     }
 
     override fun adClicked(ad: ResultX) {
-        makeToast(args.uuid.toString())
+        makeToast(ad.uuid.toString())
     }
 
     override fun imageClicked() {
