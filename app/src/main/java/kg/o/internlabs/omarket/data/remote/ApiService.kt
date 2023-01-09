@@ -70,4 +70,10 @@ interface ApiService {
         @Header("Authorization") token: String?,
         @Query("page") page: Int
     ): Response<AdsDto?>
+
+    @GET("/api/ads-board/v1/ads/{uuid}/")
+    suspend fun getDetailAd(
+        @Header("Authorization") token: String?,
+        @Path("uuid") uuid: String,
+    ): Response<DetailsAdDto?>
 }
