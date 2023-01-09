@@ -86,15 +86,13 @@
                 android:id="@+id/title"
                 style="@style/detailedAdsTitleStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sample_title_of_the_product" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/description"
                 style="@style/detailedAdsDescriptionStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sample_description_of_the_product" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/more_details"

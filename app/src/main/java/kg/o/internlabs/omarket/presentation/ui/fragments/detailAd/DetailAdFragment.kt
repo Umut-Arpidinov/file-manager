@@ -43,36 +43,13 @@ private typealias coreDrawable = kg.o.internlabs.core.R.drawable
 
 @AndroidEntryPoint
 class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewModel>(),
-    AdClickedInMain, ImageClickedAds{
-    private val WHATSAPP = "com.whatsapp"
-    private val TELEGRAM = "org.telegram.messenger"
+    AdClickedInMain, ImageClickedAds {
+    private val _whatsapp = "com.whatsapp"
+    private val _telegram = "org.telegram.messenger"
 
     private val args: DetailAdFragmentArgs? by navArgs()
     private var adapter = SimilarAdsPagingAdapter()
     private var moreDetailIsPressed = false
-
-    //Data for test-------------
-    val currentPrice = "10000.99"
-    val currency = "som"
-    val verified = true
-    val oMoney = false
-    val seller = "Murat"
-    val phone = "+996705532206"
-    val nick = "areyouconfident"
-    val imgURL2 =
-        "https://play-lh.googleusercontent.com/p51P1MutZJY9410vLPCsF-IAUVBmPxt8hi4W-3PTFwZBSPJmraaGyMT5Uv49cRZYSw0"
-
-    val arrayOfString: List<String> = listOf(imgURL2, imgURL2, imgURL2)
-
-    val listOfDetails: MutableList<Pair<String, String>> =
-        mutableListOf(
-            Pair("Категория", "Электроника"),
-            Pair("Подкатегория", "Телефоны"),
-            Pair("Дата публикации", "11.11.22"),
-            Pair("Тип сделки", "Продам"),
-            Pair("Город", "Бишкек")
-        )
-    //--------------------------
 
     override val viewModel: DetailAdViewModel by lazy {
         ViewModelProvider(this)[DetailAdViewModel::class.java]
@@ -84,8 +61,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     override fun initView() = with(binding) {
         super.initView()
-        title.text = getString(coreString.sample_title_of_the_product)
-        setMainCardView(customMainView)
 
         adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
         initAdapter()
@@ -111,8 +86,22 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
     }
 
-    private fun setDataToViews(it1: ResultX?) {
-        println("-----------" + it1?.detail)
+    private fun setDataToViews(ad: ResultX?) = with(binding) {
+        initViewPagerAdapter(imageViewPager, currentPos, ad?.minifyImages)
+        initCellAdapter(cellRecycler, ad)
+
+        title.text = ad?.title
+        description.text = ad?.description
+
+        setMainCardView(customMainView, ad)
+
+        callBtn.setOnClickListener {
+            showDialog(ad?.author?.contactNumber!!, true, ad.telegramProfile)
+        }
+
+        writeBtn.setOnClickListener {
+            showDialog(ad?.author?.contactNumber!!, false, ad.telegramProfile)
+        }
     }
 
     override fun initListener() = with(binding) {
@@ -124,19 +113,11 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         moreDetails.setOnClickListener {
             pressMoreDetails(moreDetails, description)
         }
-
-        callBtn.setOnClickListener {
-            showDialog(phone, true, nick)
-        }
-
-        writeBtn.setOnClickListener {
-            showDialog(phone, false, nick)
-        }
     }
 
     override fun initViewModel() {
         super.initViewModel()
-        args?.uuid?.let { it-> viewModel.getDetailAd(it)}
+        args?.uuid?.let { it -> viewModel.getDetailAd(it) }
 
     }
 
@@ -149,11 +130,12 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     }
 
     private fun initAdapter() = with(binding) {
-        initViewPagerAdapter(imageViewPager, currentPos)
-        initCellAdapter(cellRecycler)
         recSimilarAds.addItemDecoration(
-            MarginItemDecoration(resources.getDimensionPixelSize(
-                R.dimen.item_margin_7dp))
+            MarginItemDecoration(
+                resources.getDimensionPixelSize(
+                    R.dimen.item_margin_7dp
+                )
+            )
         )
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
@@ -183,10 +165,14 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
     }
 
-    private fun initViewPagerAdapter(imageViewPager: ViewPager2, currentPos: TextView) {
+    private fun initViewPagerAdapter(
+        imageViewPager: ViewPager2,
+        currentPos: TextView,
+        minifyImages: List<String>?
+    ) {
         val pagerAdapter = DetailedImageAdapter(
             requireContext(),
-            arrayOfString,
+            minifyImages,
             ViewGroup.LayoutParams.MATCH_PARENT,
             false,
             activity
@@ -209,31 +195,31 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         })
     }
 
-    private fun setMainCardView(customMainView: CustomAddPriceCellView) {
-        if (currentPrice == null)
+    private fun setMainCardView(customMainView: CustomAddPriceCellView, ad: ResultX?) {
+        if (ad?.price == null)
             customMainView.setPriceWithoutCoins(getString(coreString.null_price))
         else {
-            if (currency == "som")
+            if (ad.currency == "som")
                 customMainView.setPriceWithoutCoins(
-                    currentPrice, true
+                    ad.price, true
                 )
             else {
                 try {
                     customMainView.setPriceWithoutCoins(
                         String.format(
                             getString(coreString.dollar_price_overview),
-                            currentPrice.toInt()
+                            ad.price.toInt()
                         )
                     )
                 } catch (e: NumberFormatException) {
                     val dol: String
                     val coin: String
-                    if (currentPrice.contains(',')) {
-                        dol = currentPrice.substringBefore(',')
-                        coin = currentPrice.substringAfter(',')
+                    if (ad.price.contains(',')) {
+                        dol = ad.price.substringBefore(',')
+                        coin = ad.price.substringAfter(',')
                     } else {
-                        dol = currentPrice.substringBefore('.')
-                        coin = currentPrice.substringAfter('.')
+                        dol = ad.price.substringBefore('.')
+                        coin = ad.price.substringAfter('.')
                     }
                     customMainView.setPriceWithoutCoins(
                         String.format(getString(coreString.dollar_price_overview), dol.toInt())
@@ -242,12 +228,27 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                 }
             }
         }
-        customMainView.isNumberVerified(verified)
-        customMainView.isODengiAccepted(oMoney)
-        customMainView.setTitle(seller)
+        customMainView.isNumberVerified(ad?.author?.verified!!)
+        customMainView.isODengiAccepted(ad.oMoneyPay!!)
+        customMainView.setTitle(ad.author.username!!)
     }
 
-    private fun initCellAdapter(cellRecycler: RecyclerView) {
+    private fun initCellAdapter(cellRecycler: RecyclerView, ad: ResultX?) {
+        val listOfDetails: MutableList<Pair<String, String>> = mutableListOf()
+
+        if (ad?.category?.name != null && ad.category.name != "")
+            listOfDetails.add(Pair("Категория", ad.category.name))
+
+        if (ad?.category?.categoryType != null && ad.category.categoryType != "")
+            listOfDetails.add(Pair("Подкатегория", ad.category.categoryType))
+
+        if (ad?.createdAt != null && ad.createdAt != "")
+            listOfDetails.add(Pair("Дата публикации", ad.createdAt))
+
+        if (ad?.location?.name != null && ad.location.name != "")
+            listOfDetails.add(Pair("Город", ad.location.name))
+
+
         cellRecycler.adapter = CellAdapter(listOfDetails)
         cellRecycler.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -278,12 +279,12 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private fun telegramIntent(nickname: String?) {
         if (nickname != null) {
             try {
-                val tgintent = Intent(
+                val tgIntent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse("https://t.me/$nickname")
                 )
-                tgintent.setPackage(TELEGRAM)
-                startActivity(tgintent)
+                tgIntent.setPackage(_telegram)
+                startActivity(tgIntent)
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Telegram is not Installed", Toast.LENGTH_SHORT)
                     .show()
@@ -305,7 +306,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             if (isCall) appOption.setTitle("Звонок")
             else appOption.setTitle("SMS")
 
-            if (!isAppInstalled(WHATSAPP))
+            if (!isAppInstalled(_whatsapp))
                 waOption.visibility = GONE
             else {
                 //WHATSAPP icon is not correct
@@ -319,17 +320,17 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                 }
             }
 
-            if (!isAppInstalled(TELEGRAM)) {
+            if (!isAppInstalled(_telegram)) {
                 tgOption.visibility = GONE
                 waOption.setPosition(Position.BOTTOM)
             } else {
-                getAppIcon(tgOption, TELEGRAM)
+                getAppIcon(tgOption, _telegram)
                 tgOption.setOnClickListener {
                     telegramIntent(nickname)
                 }
             }
 
-            if (!isAppInstalled(WHATSAPP) && !isAppInstalled(TELEGRAM))
+            if (!isAppInstalled(_whatsapp) && !isAppInstalled(_telegram))
                 appOption.setPosition(Position.SINGLE)
 
             appOption.setOnClickListener {
