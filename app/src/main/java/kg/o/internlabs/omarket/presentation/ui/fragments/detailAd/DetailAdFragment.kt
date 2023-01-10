@@ -3,9 +3,11 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd
 import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
 import android.net.Uri
+import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -50,6 +52,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private val args: DetailAdFragmentArgs? by navArgs()
     private var adapter = SimilarAdsPagingAdapter()
     private var moreDetailIsPressed = false
+    private var isMine = false
 
     override val viewModel: DetailAdViewModel by lazy {
         ViewModelProvider(this)[DetailAdViewModel::class.java]
@@ -61,9 +64,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     override fun initView() = with(binding) {
         super.initView()
-        adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
-        initAdapter()
-        getAds()
+        isMine = args?.uuid?.substring(0, 4).toBoolean()
         getDetailAd()
     }
 
@@ -76,8 +77,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     override fun initViewModel() {
         super.initViewModel()
-        args?.uuid?.let { it -> viewModel.getDetailAd(it) }
-
+        args?.uuid?.substring(4)?.let { it -> viewModel.getDetailAd(it) }
     }
 
     override fun adClicked(ad: ResultX) {
@@ -93,7 +93,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             viewModel.detailAd.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        it.data.resultX.let { it1 -> setDataToViews(it1) }
+                        it.data.resultX.let { it1 -> setDataToViews(it1, isMine) }
                         println("++++++++" + it.data.resultX)
                     }
                     is ApiState.Failure -> {
@@ -106,7 +106,19 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
     }
 
-    private fun setDataToViews(ad: ResultX?) = with(binding) {
+    private fun setDataToViews(ad: ResultX?, isMine: Boolean) = with(binding) {
+        if (isMine) {
+            callBtn.text = "Редактировать"
+            writeBtn.visibility = GONE
+            textBeforeAds.visibility = GONE
+            customMainView.isOwnAd()
+        }
+        if (!isMine) {
+            adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
+            initAdapter()
+            getAds()
+        }
+
         initViewPagerAdapter(imageViewPager, currentPos, ad?.minifyImages)
         initCellAdapter(cellRecycler, ad)
 
@@ -121,8 +133,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
         if (description.lineCount <= 3) {
             moreDetails.visibility = GONE
-        }
-        else {
+        } else {
             moreDetails.setOnClickListener {
                 pressMoreDetails(moreDetails, description)
             }
@@ -131,12 +142,27 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         setMainCardView(customMainView, ad)
 
         callBtn.setOnClickListener {
-            showDialog(ad?.author?.contactNumber!!, true, ad.telegramProfile)
+            if (isMine) {
+                findNavController().navigate(DetailAdFragmentDirections.goToEditFragment())
+            } else {
+                showDialog(ad?.author?.contactNumber!!, true, ad.telegramProfile)
+            }
         }
-
         writeBtn.setOnClickListener {
             showDialog(ad?.author?.contactNumber!!, false, ad.telegramProfile)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val timer = object: CountDownTimer(1200, 1000) {
+            override fun onTick(millisUntilFinished: Long) {}
+
+            override fun onFinish() {
+                binding.progressInAction.visibility = GONE
+                binding.parentScroll.visibility = VISIBLE}
+        }
+        timer.start()
     }
 
     private fun initAdapter() = with(binding) {
@@ -254,7 +280,12 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
         if (ad?.createdAt != null && ad.createdAt != "") {
             var date = ad.createdAt.substring(0, 10)
-            date = getString(R.string.date, date.substring(8, 10), date.substring(5, 7), date.substring(0, 4))
+            date = getString(
+                R.string.date,
+                date.substring(8, 10),
+                date.substring(5, 7),
+                date.substring(0, 4)
+            )
             listOfDetails.add(Pair("Дата публикации", date))
         }
 

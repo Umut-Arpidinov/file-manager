@@ -140,6 +140,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     override fun adClicked(ad: ResultX) {
-        findNavController().navigate(MainFragmentDirections.goToAds(ad.uuid.toString()))
+        findNavController().navigate(MainFragmentDirections.goToAds("fork" + ad.uuid.toString()))
     }
 }

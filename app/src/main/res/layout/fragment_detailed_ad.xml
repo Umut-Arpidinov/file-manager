@@ -25,6 +25,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/parent_scroll"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -38,8 +39,8 @@
                 android:id="@+id/image_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_240dp"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="@dimen/dimen_0dp">
+                app:cardCornerRadius="@dimen/dimen_0dp"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -110,7 +111,7 @@
                 app:isNumberVerified="true"
                 app:isOMoneyAccepted="true"
                 app:setPriceWithoutCoins="@string/sample_current_price"
-                app:setTitle="@string/app_name"/>
+                app:setTitle="@string/app_name" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cell_recycler"
@@ -126,8 +127,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
-                app:isShevronVisible="true"
                 app:hasIcon="true"
+                app:isShevronVisible="true"
                 app:setIcon="@drawable/ic_location"
                 app:setTitle="@string/location" />
 
@@ -177,7 +178,14 @@
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                tools:listitem="@layout/card_view_main_ads"/>
+                tools:listitem="@layout/card_view_main_ads" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    <ProgressBar
+        android:id="@+id/progress_in_action"
+        style="@style/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_30dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
