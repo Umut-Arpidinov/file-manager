@@ -44,6 +44,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         args = ProfileFragmentArgs.fromBundle(requireArguments())
     }
 
+    override fun onStart() {
+        super.onStart()
+        binding.btnActive.isChecked = true
+        getActiveAds()
+        isActive = true
+    }
+
     override val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(this)[ProfileViewModel::class.java]
     }
