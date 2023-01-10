@@ -37,4 +37,8 @@ class AdsRepositoryImpl @Inject constructor(
             )
         }
     ).flow
+
+    override fun getDetailAd(token: String, uuid: String) = safeApiCall{
+        map.toRespEntityForDetailedAd(apiService.getDetailAd(token,uuid))
+    }
 }

@@ -45,7 +45,7 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
 
     override fun initView() {
         super.initView()
-        lightStatusBar(window)
+        lightStatusBar(window,true)
         viewModel.isTokenExpired()
         checkToken()
     }

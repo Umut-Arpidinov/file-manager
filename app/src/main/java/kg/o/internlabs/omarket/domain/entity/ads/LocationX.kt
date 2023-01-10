@@ -1,11 +1,13 @@
 package kg.o.internlabs.omarket.domain.entity.ads
 
 data class LocationX(
-    val id: Int? = null,
-    val isPopular: Boolean? = null,
-    val locationType: String? = null,
-    val name: String? = null,
+    var id: Int? = null,
+    var name: String? = null,
+    var locationType: String? = null,
+    var parent: Int? = null,
     val orderNum: Int? = null,
-    val parent: Int? = null,
-    val searchByName: String? = null
+    val isPopular: Boolean? = null,
+    val searchByName: String? = null,
+    var subLocationsId: List<Int>? = null
+
 )

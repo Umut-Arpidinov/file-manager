@@ -25,4 +25,5 @@
     <string name="kgs">Сомы</string>
     <string name="us_dollars">Доллары</string>
     <string name="choose_currency">Выберите валюту</string>
+    <string name="date">%s.%s.%s</string>
 </resources>
