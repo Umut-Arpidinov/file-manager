@@ -259,7 +259,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
 
         if (ad?.location?.name != null && ad.location.name != "")
-            listOfDetails.add(Pair("Город", ad.location.name))
+            listOfDetails.add(Pair("Город", ad.location.name!!))
 
 
         cellRecycler.adapter = CellAdapter(listOfDetails)
