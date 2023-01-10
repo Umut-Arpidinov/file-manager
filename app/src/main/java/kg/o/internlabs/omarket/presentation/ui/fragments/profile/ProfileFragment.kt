@@ -71,11 +71,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         super.initListener()
         btnActive.setOnClickListener {
             getActiveAds()
-            isActive = !isActive
+            isActive = true
         }
         btnNonActive.setOnClickListener {
             getNonActiveAds()
-            isActive = !isActive
+            isActive = false
         }
         tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
     }
@@ -236,7 +236,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     override fun adClicked(ad: MyAdsResultsEntity) {
-        if (isActive) findNavController().navigate(ProfileFragmentDirections.goToMyAds(ad.uuid.toString()))
+        if (isActive) findNavController().navigate(ProfileFragmentDirections.goToMyAds("true"+ad.uuid.toString()))
         else findNavController().navigate(ProfileFragmentDirections.goToEditFragment())
     }
 }

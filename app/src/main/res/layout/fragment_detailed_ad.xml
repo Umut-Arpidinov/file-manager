@@ -152,6 +152,7 @@
                 app:shapeAppearanceOverlay="@style/MyShapeAppearance" />
 
             <TextView
+                android:id="@+id/text_before_ads"
                 style="@style/MainSearchResultText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
