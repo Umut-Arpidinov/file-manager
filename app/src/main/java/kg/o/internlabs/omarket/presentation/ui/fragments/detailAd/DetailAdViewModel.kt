@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments.main
+package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -6,60 +6,56 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
+import kg.o.internlabs.omarket.domain.entity.DetailsAd
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
-import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
+import kg.o.internlabs.omarket.domain.usecases.detailAd_use_case.GetDetailAdUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainFragmentViewModel @Inject constructor(
-    private val getCategoriesUseCase: GetCategoriesUseCase,
+class DetailAdViewModel @Inject constructor(
     private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
-    private val getAdsUseCase: GetAdsUseCase
-) :
-    BaseViewModel() {
+    private val getAdsUseCase: GetAdsUseCase,
+    private val getDetailAdUseCase: GetDetailAdUseCase
+) : BaseViewModel() {
 
     private val _token = MutableStateFlow("")
     val token = _token.asStateFlow()
-
-    private val _uuid = MutableStateFlow("")
-    val uuid = _uuid.asStateFlow()
-
-    private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
-    val categories = _categories.asSharedFlow()
 
     private var _ads: Flow<PagingData<ResultX>>? = null
     val ads: Flow<PagingData<ResultX>>?
         get() = _ads
 
+    private val _detailAd = MutableSharedFlow<ApiState<DetailsAd>>()
+    val detailAd = _detailAd.asSharedFlow()
+
     init {
         getAccessTokenFromPrefs()
     }
 
-    fun getCategories() {
+     fun getDetailAd(uuid: String) {
         viewModelScope.launch {
-            getCategoriesUseCase(getAccessToken()).collectLatest {
-                when (it) {
-                    is ApiState.Success -> {
-                        _categories.emit(it)
-
-                    }
-                    is ApiState.Failure -> {
-                        _categories.emit(it)
-                    }
-                    ApiState.Loading -> {
-                    }
-                }
+            getDetailAdUseCase(getAccessToken(),uuid).collectLatest {
+             when(it) {
+                 is ApiState.Success ->{
+                     _detailAd.emit(it)
+                 }
+                 is ApiState.Failure ->{
+                     _detailAd.emit(it)
+                 }
+                 is ApiState.Loading ->{
+                     _detailAd.emit(it)
+                 }
+             }
             }
         }
     }
 
-    fun getAds(adsByCategory: AdsByCategory? = null) = launchPagingAsync({
+     private fun getAds(adsByCategory: AdsByCategory? = null) = launchPagingAsync({
         getAdsUseCase(getAccessToken(), adsByCategory).cachedIn(viewModelScope)
     }, {
         _ads = it
@@ -77,6 +73,5 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     private fun getAccessToken() = token.value
-    private fun getUuid() = uuid.value
 
 }

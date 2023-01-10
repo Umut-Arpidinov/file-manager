@@ -29,5 +29,4 @@ abstract class RepositoryModule {
     abstract fun provideProfileRepository(
         profile: ProfileRepositoryImpl
     ): ProfileRepository
-
 }
