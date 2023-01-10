@@ -37,6 +37,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     private var args: ProfileFragmentArgs? = null
     private var adapter = AdsPagingAdapter()
+    private var isActive = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,16 +66,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         getMenu()
         visibleStatusBar()
     }
-    
-    override fun initListener() = with(binding){
+
+    override fun initListener() = with(binding) {
         super.initListener()
-        btnActive.setOnClickListener { getActiveAds() }
-        btnNonActive.setOnClickListener { getNonActiveAds() }
+        btnActive.setOnClickListener {
+            getActiveAds()
+            isActive = !isActive
+        }
+        btnNonActive.setOnClickListener {
+            getNonActiveAds()
+            isActive = !isActive
+        }
         tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
     private fun visibleStatusBar() {
-        WindowInsetsControllerCompat(requireActivity().window,requireView()).show((WindowInsetsCompat.Type.statusBars()))
+        WindowInsetsControllerCompat(
+            requireActivity().window,
+            requireView()
+        ).show((WindowInsetsCompat.Type.statusBars()))
     }
 
     private fun initAdapter() = with(binding) {
@@ -119,7 +129,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
-    private fun loadAllAds() = with(binding){
+    private fun loadAllAds() = with(binding) {
         safeFlowGather {
             viewModel.allAds.collectLatest {
                 when (it) {
@@ -188,7 +198,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when(menuItem.itemId) {
+                return when (menuItem.itemId) {
                     R.id.menu_faq_button -> {
                         findNavController().navigate(R.id.FAQFragment)
                         true
@@ -203,7 +213,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         openSomeActivityForResult()
     }
 
-    override fun iconLongClick() = with(binding){
+    override fun iconLongClick() = with(binding) {
         viewModel.deleteAvatar()
         safeFlowGather {
             viewModel.deleteAvatar.collectLatest {
@@ -226,6 +236,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     override fun adClicked(ad: MyAdsResultsEntity) {
-        ad.uuid?.let { makeToast(it) }
+        if (isActive) findNavController().navigate(ProfileFragmentDirections.goToMyAds(ad.uuid.toString()))
+        else findNavController().navigate(ProfileFragmentDirections.goToEditFragment())
     }
 }
