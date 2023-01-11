@@ -83,7 +83,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     private fun initAdapter() = with(binding) {
-        recMain.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_7dp)))
+        recMain.addItemDecoration(
+            MarginItemDecoration(2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         recMain.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()

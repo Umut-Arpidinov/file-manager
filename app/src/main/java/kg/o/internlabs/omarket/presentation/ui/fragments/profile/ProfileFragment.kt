@@ -100,7 +100,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
         )
-        rec.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_7dp)))
+        rec.addItemDecoration(
+            MarginItemDecoration(2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         loadListener(adapter, prog, rec)
     }
 

@@ -159,12 +159,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     private fun initAdapter() = with(binding) {
         recSimilarAds.addItemDecoration(
-            MarginItemDecoration(
-                resources.getDimensionPixelSize(
-                    R.dimen.item_margin_7dp
-                )
-            )
-        )
+            MarginItemDecoration
+                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
@@ -404,8 +400,12 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private fun checkNumber(number: String): String {
         return if (number.substring(0, 3) == "996") {
             "+$number"
-        } else if ((number.first() == '0' && number.length == 9) || number.substring(0, 4) == "+996")
-                number
+        } else if ((number.first() == '0' && number.length == 9) || number.substring(
+                0,
+                4
+            ) == "+996"
+        )
+            number
         else ""
     }
 }
