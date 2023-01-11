@@ -26,6 +26,7 @@ import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomProfileCellView
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentProfileBinding
 import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
+import kg.o.internlabs.omarket.presentation.ui.fragments.main.MarginItemDecoration
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdClicked
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagingAdapter
 import kg.o.internlabs.omarket.utils.*
@@ -99,6 +100,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
         )
+        rec.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_7dp)))
         loadListener(adapter, prog, rec)
     }
 

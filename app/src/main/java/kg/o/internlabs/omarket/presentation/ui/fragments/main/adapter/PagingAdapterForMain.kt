@@ -46,8 +46,6 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
 
         fun bind(item: ResultX?) = with(binding) {
             imgAds.layoutParams.width = LayoutParams.MATCH_PARENT
-            val width = imgAds.width
-            imgAds.layoutParams.width = width
 
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false

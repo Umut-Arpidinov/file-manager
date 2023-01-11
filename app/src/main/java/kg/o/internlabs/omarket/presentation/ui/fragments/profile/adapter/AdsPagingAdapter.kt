@@ -43,6 +43,8 @@ class AdsPagingAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagingAdapter.A
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MyAdsResultsEntity?) = with(binding) {
+            imgAds.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false
             setPager(item?.minifyImages, binding)
