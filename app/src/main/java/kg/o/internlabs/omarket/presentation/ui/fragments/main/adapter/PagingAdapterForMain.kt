@@ -23,6 +23,7 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
     (AdsComparatorForMain), BasePagingAdapter {
     private lateinit var adClicked: AdClickedInMain
     private var fragmentContext: MainFragment? = null
+    private var favorite = true
 
     var count = 1
     override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
@@ -43,7 +44,6 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
 
     inner class AdsViewHolder(private val binding: CardViewMainAdsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private var favorite = true
 
         fun bind(item: ResultX?) = with(binding) {
             imgAds.layoutParams.width = LayoutParams.MATCH_PARENT
@@ -61,9 +61,9 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
             placeProduct.text = item?.let { placeAndDelivery(it) }
 
             favoriteIcon.setOnClickListener {
-                if (item?.favorite == false || item?.favorite == null && !favorite) {
-                    favoriteIcon.setImageResource(kg.o.internlabs.core.R.drawable.ic_favorite_pressed)
+                if (!favorite) {
                     favorite = true
+                    favoriteIcon.setImageResource(kg.o.internlabs.core.R.drawable.ic_favorite_pressed)
                 } else {
                     favorite = false
                     favoriteIcon.setImageResource(kg.o.internlabs.core.R.drawable.ic_favorite)
