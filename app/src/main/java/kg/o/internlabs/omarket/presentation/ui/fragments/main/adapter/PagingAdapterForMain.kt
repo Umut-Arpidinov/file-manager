@@ -1,6 +1,5 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter
 
-import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -8,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.coreString
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
 import kg.o.internlabs.omarket.utils.BasePagingAdapter
@@ -50,7 +51,7 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false
             setPager(item?.minifyImages, binding)
-            item?.let { setPrice(it) }
+            setPrice(item?.price, item?.currency)
             oldPriceProduct.isVisible = item?.oldPrice.isNullOrEmpty().not()
             if (oldPriceProduct.isVisible) {
                 item?.let { setOldPriceWithCurrency(it) }
@@ -85,21 +86,18 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
                 indicator.attachToPager(imgAds)
             }
 
-        @SuppressLint("SetTextI18n")
-        private fun setPrice(item: ResultX): Unit = with(binding) {
-            with(item) {
+        private fun setPrice(price: String?, currency: String?): Unit = with(binding) {
+            if (price == null || price == "") priceProduct.text = getString(coreString.null_price)
+            else {
                 if (currency == "som") {
-                    val resultString = "$price c"
-                    val spannableString = SpannableString(resultString)
-                    spannableString.setSpan(
-                        UnderlineSpan(), resultString.lastIndex,
-                        resultString.length, 0
-                    )
-                    priceProduct.text = spannableString
+                    priceProduct.text = setSomPrice(price)
                 } else if (currency != null) {
-                    priceProduct.text = "$price $currency"
+                    priceProduct.text = String.format(
+                        getString(coreString.dollar_price),
+                        price.toInt().formatDecimalSeparator()
+                    )
                 } else {
-                    priceProduct.text = price
+                    priceProduct.text = price.toInt().formatDecimalSeparator()
                 }
             }
         }
@@ -109,6 +107,8 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
                 oldPriceProduct.visibility = View.GONE
             } else {
                 oldPriceProduct.visibility = View.VISIBLE
+                if (item.oldPrice == "10000 с") oldPriceProduct.text = item.oldPrice
+                else oldPriceProduct.text = item.oldPrice.toInt().formatDecimalSeparator()
                 oldPriceProduct.paintFlags =
                     oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
@@ -123,6 +123,28 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
         } else {
             item.location?.name
         }
+
+    private fun Int.formatDecimalSeparator(): String {
+        return toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(" ")
+            .reversed()
+    }
+
+    private fun setSomPrice(price: String?): SpannableString {
+        val resultString = String.format(getString(coreString.som_underline), price?.toInt()?.formatDecimalSeparator())
+        val spannableString = SpannableString(resultString)
+        spannableString.setSpan(
+            UnderlineSpan(), resultString.lastIndex,
+            resultString.length, 0
+        )
+        return spannableString
+    }
+
+    private fun getString(@StringRes resId: Int): String {
+        return fragmentContext?.resources?.getString(resId) ?: ""
+    }
 }
 
 object AdsComparatorForMain : DiffUtil.ItemCallback<ResultX>() {
