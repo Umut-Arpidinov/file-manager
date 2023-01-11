@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments.new_ads
+package kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -20,9 +20,9 @@ import kg.o.internlabs.omarket.databinding.LoadedImageItemBinding
 import kg.o.internlabs.omarket.databinding.LoadingImageItemBinding
 import kg.o.internlabs.omarket.databinding.NoItemBinding
 import kg.o.internlabs.omarket.domain.entity.UploadImageResultEntity
-import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImageHelper
-import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
-import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper
+import kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads.helpers.AddImageHelper
+import kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads.helpers.DeleteImageHelper
+import kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads.helpers.MainImageSelectHelper
 
 private const val ADD_STATE = 0
 private const val LOADING_STATE = 1
@@ -30,7 +30,7 @@ private const val LOADED_STATE = 2
 private const val INVALID_STATE = -1
 
 internal class ImageListAdapter(
-    private val clickers: NewAdsFragment,
+    private val clickers: EditAdsFragment,
 ) : RecyclerView.Adapter<ImageListAdapter.ImageHolder>() {
 
     private var list: List<UploadImageResultEntity> = arrayListOf()

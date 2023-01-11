@@ -34,7 +34,7 @@ class CrudAdsRepositoryImpl @Inject constructor(
     }
 
     override fun deleteImageFromAd(token: String, body: DeletedImageUrlEntity, uuid: String) = safeApiCall {
-        map.toRespEntityForDelImg(
+        map.toRespEntityForDelete(
             apiService.deleteImageFromAd(
                 token,
                 map.toDbModel(body),
@@ -48,6 +48,14 @@ class CrudAdsRepositoryImpl @Inject constructor(
             apiService.editAd(
                 token,
                 mapperForAds.toDbModel(editAds), uuid)
+        )
+    }
+
+    override fun deleteAd(token: String, uuid: String) = safeApiCall {
+        map.toRespEntityForDelete(
+            apiService.deleteAd(
+                token, uuid
+            )
         )
     }
 }

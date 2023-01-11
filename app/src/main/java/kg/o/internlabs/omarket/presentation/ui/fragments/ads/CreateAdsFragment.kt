@@ -11,6 +11,9 @@ class CreateAdsFragment : BaseFragment<FragmentCreateAdsBinding, CreateAdsViewMo
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentCreateAdsBinding {
+
+
+
         return FragmentCreateAdsBinding.inflate(inflater)
     }
 }

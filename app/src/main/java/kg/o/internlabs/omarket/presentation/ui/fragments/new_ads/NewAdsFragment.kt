@@ -26,15 +26,14 @@ import kg.o.internlabs.omarket.utils.getFile
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-
 @AndroidEntryPoint
 class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper {
 
-    private var selectedImages = mutableListOf(UploadImageResultEntity())
-    private var selected = mutableListOf(UploadImageResultEntity())
-    private var selectedPath = mutableListOf(UploadImageResultEntity())
-    private var args: NewAdsFragmentArgs? = null
+    private val selectedImages = mutableListOf(UploadImageResultEntity())
+    private val selected = mutableListOf(UploadImageResultEntity())
+    private val selectedPath = mutableListOf(UploadImageResultEntity())
+    private val args: NewAdsFragmentArgs by lazy(::initArgs)
     private var imageListAdapter: ImageListAdapter? = null
     private var subCategoriesEntity = SubCategoriesEntity()
 
@@ -44,9 +43,11 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        args = NewAdsFragmentArgs.fromBundle(requireArguments())
+        initArgs()
         imageListAdapter = ImageListAdapter(this@NewAdsFragment)
     }
+
+    private fun initArgs() = NewAdsFragmentArgs.fromBundle(requireArguments())
 
     override fun initViewModel() {
         super.initViewModel()
@@ -64,7 +65,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         super.initView()
 
         with(btnCreateAd) {
-            isCheckable = isButtonClickable()
+            isCheckable = !isButtonClickable()
             isEnabled = isCheckable
         }
 
@@ -73,7 +74,6 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         cusOMoneyAccept.setInterface(this@NewAdsFragment, 2)
         cusWhatsApp.setInterface(this@NewAdsFragment, 3)
         cusTelegram.setInterface(this@NewAdsFragment, 4)
-        cusLocationOnTheMap.setInterface(this@NewAdsFragment, 5)
     }
 
     override fun initListener() = with(binding) {
@@ -186,12 +186,10 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         imageListAdapter?.imageLoaded(selectedImages)
     }
 
-    private fun containsModel(m: UploadImageResultEntity): Boolean {
-        selectedPath.forEach {
-            if (it === m) return true
+    private fun containsModel(m: UploadImageResultEntity) =
+        selectedPath.any {
+             (it === m)
         }
-        return false
-    }
 
     private fun deleteModelFromLists(index: Int) {
         val uriOfDeletedImage = selectedImages[index].url
@@ -215,11 +213,10 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             3 -> {
                 cusWhatsAppNumber.isVisible = cusWhatsApp.isChecked()
                 if (cusWhatsAppNumber.isVisible) {
-                    cusWhatsAppNumber.setText(args?.number)
+                    cusWhatsAppNumber.setText(args.number)
                 }
             }
             4 -> cusTelegramNick.isVisible = cusTelegram.isChecked()
-            5 -> makeToast("В разработке.")
         }
     }
 
@@ -239,52 +236,53 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
     private fun prepareValuesForAd() = with(binding) {
         val editAds = EditAds(
+            adType = "",
+            category = 17,
+            contractPrice = true,
+            delivery = true,
+            description = "cusDescription",
+            images = prepareUrlForAd(),
+            location = 1,
+            oMoneyPay = cusOMoneyAccept.isChecked(),
+            promotionType = null,
+            telegramProfile = if (cusTelegram.isChecked()){cusTelegramNick.getText().drop(1)} else null,
+            title = cusTitle.getText(),
+            whatsappNum = if (cusWhatsApp.isChecked()){cusWhatsAppNumber.getValue()} else null,
+        )
+        /*val editAds = EditAds(
             adType = cusAdType.getText(),
             category = cusCategory.getItemId(),
             contractPrice = cusPriceIsNegotiable.isChecked(),
-            currency = cusCurrency.getText(),
+            currency = if (!cusPriceIsNegotiable.isChecked()){cusCurrency.getText()} else null,
             delivery = cusDelivery.isChecked(),
             description = cusDescription.getText(),
             images = prepareUrlForAd(),
-            latitude = "", // TODO
             location = cusLocation.getItemId(),
-            longitude = "", // TODO
             oMoneyPay = cusOMoneyAccept.isChecked(),
-            price = cusPrice.getText(),
+            price = if (!cusPriceIsNegotiable.isChecked()){cusPrice.getText()} else null,
             promotionType = null,
-            telegramProfile = cusTelegramNick.getText(),
+            telegramProfile = if (cusTelegram.isChecked()){cusTelegramNick.getText()} else null,
             title = cusTitle.getText(),
-            whatsappNum = cusWhatsAppNumber.getValue()
-        )
+            whatsappNum = if (cusWhatsApp.isChecked()){cusWhatsAppNumber.getValue()} else null,
+        )*/
         viewModel.createAd(editAds)
 
         createAd()
     }
 
     private fun prepareUrlForAd(): List<String> {
-        try {
-            val mainImageModel = selectedImages[mainImageIndex]
+        val mainImageModel = selectedImages.getOrNull(mainImageIndex)
+        if (mainImageModel != null) {
             selectedImages.removeAt(mainImageIndex)
             selectedImages.add(1, mainImageModel)
-        } catch (e: Exception) {
-            if (selectedImages.size > 1) {
-                return getList()
-            }
-            return emptyList()
+            return getList()
         }
-        return getList()
+        return if (selectedImages.size > 1) getList() else emptyList()
     }
 
-    private fun getList(): List<String> {
-        val list = mutableListOf<String>()
-        selectedImages.forEachIndexed { index, it ->
-            if (index != 0) {
-                it.url?.let { it1 -> list.add(0, it1) }
-            }
-        }
-        println("-----$list")
-        return list.toList()
-    }
+    private fun getList() =
+        selectedImages.filter { it.url != null }.map { it.url!! }
+
 
     private fun isButtonClickable(): Boolean {
         with(binding) {
@@ -294,10 +292,17 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
                 cusAdType.getText().isEmpty() ||
                 cusPriceIsNegotiable.isChecked().not() &&
                 (cusCurrency.getText().isEmpty() ||
-                        cusPrice.getText().isEmpty())
+                        cusPrice.getText().isEmpty()) ||
+                isAllImagesHasUrl()
             ) return false
         }
         return true
+    }
+
+    private fun isAllImagesHasUrl(): Boolean {
+        if (selectedImages.size > 1) return false
+        return selectedImages.filterNot { selectedImages.indexOf(it) != 0 }
+            .all { it.url != null }
     }
 
     private fun createAd() {
@@ -323,3 +328,4 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         super.onDestroy()
     }
 }
+

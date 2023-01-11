@@ -167,14 +167,14 @@ class MapperForFAQAndProfileModels {
         resp.errorBody()?.let { Response.error(resp.code(), it) }
     }
 
-    private fun mapDbModelToEntity(img: DeleteImageDto?) = DeleteImageEntity(
+    private fun mapDbModelToEntity(img: DeleteDto?) = DeleteEntity(
         result = img?.result,
         resultCode = img?.resultCode,
         details = img?.details,
         errorCode = img?.errorCode
     )
 
-    fun mapRespDbModelToRespEntityForDelImg(resp: Response<DeleteImageDto?>) =
+    fun mapRespDbModelToRespEntityForDelImg(resp: Response<DeleteDto?>) =
         if (resp.isSuccessful) {
         Response.success(mapDbModelToEntity(resp.body()))
     } else {

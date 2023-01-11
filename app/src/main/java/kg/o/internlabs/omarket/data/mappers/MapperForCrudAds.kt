@@ -1,9 +1,9 @@
 package kg.o.internlabs.omarket.data.mappers
 
-import kg.o.internlabs.omarket.data.remote.model.DeleteImageDto
+import kg.o.internlabs.omarket.data.remote.model.DeleteDto
 import kg.o.internlabs.omarket.data.remote.model.DeletedImageUrlDto
 import kg.o.internlabs.omarket.data.remote.model.InitiateAdDto
-import kg.o.internlabs.omarket.domain.entity.DeleteImageEntity
+import kg.o.internlabs.omarket.domain.entity.DeleteEntity
 import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
 import kg.o.internlabs.omarket.domain.entity.InitiateAdEntity
 import retrofit2.Response
@@ -28,14 +28,14 @@ class MapperForCrudAds {
         url = img?.url
     )
 
-    private fun toEntity(img: DeleteImageDto?) = DeleteImageEntity(
+    private fun toEntity(img: DeleteDto?) = DeleteEntity(
         result = img?.result,
         resultCode = img?.resultCode,
         details = img?.details,
         errorCode = img?.errorCode
     )
 
-    fun toRespEntityForDelImg(resp: Response<DeleteImageDto?>) =
+    fun toRespEntityForDelete(resp: Response<DeleteDto?>) =
         if (resp.isSuccessful) {
             Response.success(toEntity(resp.body()))
         } else {

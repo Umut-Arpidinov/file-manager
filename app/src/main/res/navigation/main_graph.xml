@@ -166,4 +166,16 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/editAdsFragment"
+        android:name="kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads.EditAdsFragment"
+        android:label="fragment_edit_ads"
+        tools:layout="@layout/fragment_edit_ads" >
+
+        <argument
+            android:name="uuid"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.domain.entity.DeleteImageEntity
+import kg.o.internlabs.omarket.domain.entity.DeleteEntity
 import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
 import kg.o.internlabs.omarket.domain.entity.EditAds
 import kg.o.internlabs.omarket.domain.entity.UploadImageEntity
@@ -39,7 +39,7 @@ class NewAdsViewModel @Inject constructor(
     private val _editedAd = MutableSharedFlow<ApiState<EditAds>>()
     val editedAd = _editedAd.asSharedFlow()
 
-    private val _deleteImage = MutableSharedFlow<ApiState<DeleteImageEntity>>()
+    private val _deleteImage = MutableSharedFlow<ApiState<DeleteEntity>>()
 
     init {
         getAccessTokenFromPrefs()
@@ -121,7 +121,6 @@ class NewAdsViewModel @Inject constructor(
         }
     }
 
-
     private fun getInitiatedAd() {
         viewModelScope.launch {
             initiateAd(getAccessToken()).collectLatest {
@@ -142,5 +141,4 @@ class NewAdsViewModel @Inject constructor(
     private fun getAccessToken() = token.value
 
     private fun getUuid() = uuid.value
-
 }

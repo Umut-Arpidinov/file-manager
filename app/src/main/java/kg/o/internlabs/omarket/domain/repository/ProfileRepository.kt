@@ -16,5 +16,5 @@ interface ProfileRepository {
 
     fun uploadAvatar(token: String, body: MultipartBody.Part): Flow<ApiState<UploadImageEntity>>
 
-    fun deleteAvatar(token: String): Flow<ApiState<DeleteImageEntity>>
+    fun deleteAvatar(token: String): Flow<ApiState<DeleteEntity>>
 }

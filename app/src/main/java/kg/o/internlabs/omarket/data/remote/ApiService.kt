@@ -64,7 +64,7 @@ interface ApiService {
     @DELETE("api/ads-board/v1/user/remove-avatar/")
     suspend fun deleteAvatar(
         @Header("Authorization") token: String?
-    ): Response<DeleteImageDto?>
+    ): Response<DeleteDto?>
 
     @GET("/api/ads-board/v1/ads/list/")
     suspend fun getAds(
@@ -85,13 +85,12 @@ interface ApiService {
         @Path("uuid") uuid: String
     ): Response<UploadImageDto?>
 
-    //@DELETE("api/ads-board/v1/ads/{uuid}/remove-image/")
     @HTTP(method = "DELETE", path = "api/ads-board/v1/ads/{uuid}/remove-image/", hasBody = true)
     suspend fun deleteImageFromAd(
         @Header("Authorization") token: String?,
         @Body deletingImage: DeletedImageUrlDto,
         @Path("uuid") uuid: String
-    ): Response<DeleteImageDto?>
+    ): Response<DeleteDto?>
 
     @PUT("api/ads-board/v1/ads/{uuid}/")
     suspend fun editAd(
@@ -99,5 +98,11 @@ interface ApiService {
         @Body uuid1: EditAdsDto,
         @Path("uuid") uuid: String
     ): Response<EditAdsDto?>
+
+    @DELETE("api/ads-board/v1/ads/{uuid}/")
+    suspend fun deleteAd(
+        @Header("Authorization") token: String?,
+        @Path("uuid") uuid: String
+    ): Response<DeleteDto?>
 
 }

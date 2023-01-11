@@ -195,7 +195,7 @@ class MapperForAds {
         resultCode = v?.resultCode
     )
 
-    fun toEntity(v: EditAdsDto?) = EditAds(
+    private fun toEntity(v: EditAdsDto?) = EditAds(
         details = v?.details,
         errorCode = v?.errorCode,
         result = toEntity(v?.result),

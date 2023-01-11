@@ -12,7 +12,11 @@ interface CRUDAdsRepository {
             Flow<ApiState<UploadImageEntity>>
 
     fun deleteImageFromAd(token: String, body: DeletedImageUrlEntity, uuid: String):
-            Flow<ApiState<DeleteImageEntity>>
+            Flow<ApiState<DeleteEntity>>
 
     fun editAnAd(token: String, editAds: EditAds, uuid: String): Flow<ApiState<EditAds>>
+
+    fun deleteAd(token: String, uuid: String):
+            Flow<ApiState<DeleteEntity>>
+
 }
