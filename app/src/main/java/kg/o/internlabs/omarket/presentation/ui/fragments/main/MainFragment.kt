@@ -1,7 +1,6 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -43,17 +42,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
     override fun onStart() {
         super.onStart()
-        // Need to discuss
-        val timer = object : CountDownTimer(1200, 1000) {
-            override fun onTick(millisUntilFinished: Long) {}
-
-            override fun onFinish() {
-                binding.loadingAnim.visibility = View.GONE
-                binding.cl.visibility = VISIBLE
-                binding.floatingButton.visibility = VISIBLE
-            }
+        adapter.addOnPagesUpdatedListener {
+            binding.loadingAnim.visibility = View.GONE
+            binding.cl.visibility = VISIBLE
+            binding.floatingButton.visibility = VISIBLE
         }
-        timer.start()
     }
 
     override val viewModel: MainFragmentViewModel by lazy {

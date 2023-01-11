@@ -3,7 +3,6 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd
 import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
 import android.net.Uri
-import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View.GONE
@@ -68,19 +67,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         getDetailAd()
     }
 
-    override fun onStart() {
-        super.onStart()
-        val timer = object : CountDownTimer(1200, 1000) {
-            override fun onTick(millisUntilFinished: Long) {}
-
-            override fun onFinish() {
-                binding.progressInAction.visibility = GONE
-                binding.parentScroll.visibility = VISIBLE
-            }
-        }
-        timer.start()
-    }
-
     override fun initListener() = with(binding) {
         super.initListener()
         tbAds.setOnClickListener {
@@ -108,6 +94,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                     is ApiState.Success -> {
                         it.data.resultX.let { it1 -> setDataToViews(it1, isMine) }
                         println("++++++++" + it.data.resultX)
+                        binding.progressInAction.visibility = GONE
+                        binding.parentScroll.visibility = VISIBLE
                     }
                     is ApiState.Failure -> {
                         println("--....1.." + it.msg.message)
