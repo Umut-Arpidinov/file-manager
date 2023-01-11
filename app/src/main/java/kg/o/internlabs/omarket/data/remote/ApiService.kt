@@ -105,4 +105,10 @@ interface ApiService {
         @Path("uuid") uuid: String
     ): Response<DeleteDto?>
 
+
+    @GET("/api/ads-board/v1/ads/{uuid}/")
+    suspend fun getDetailAd(
+        @Header("Authorization") token: String?,
+        @Path("uuid") uuid: String,
+    ): Response<DetailsAdDto?>
 }

@@ -450,4 +450,46 @@
     </style>
 
     <dimen name="padding_18dp">18dp</dimen>
+
+    <style name="detailedAdsTitleStyle">
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/black_5</item>
+        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8dp</item>
+        <item name="android:minLines">1</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="adsMoreDetailedStyle" parent="AppDefaultBlueText">
+        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_end_13dp</item>
+    </style>
+
+    <style name="detailedAdsDescriptionStyle" parent="AppPrimaryStyle">
+        <item name="android:minLines">1</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8dp</item>
+    </style>
+
+    <style name="TopPositionTextStyle">
+        <item name="android:layout_margin">@dimen/margin_16dp</item>
+        <item name="android:background">@drawable/background_rounded_text</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">@dimen/text_13sp</item>
+    </style>
 </resources>

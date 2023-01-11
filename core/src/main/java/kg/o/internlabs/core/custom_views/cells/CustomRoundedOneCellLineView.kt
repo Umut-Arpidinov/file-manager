@@ -1,6 +1,7 @@
 package kg.o.internlabs.core.custom_views.cells
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -142,6 +143,12 @@ class CustomRoundedOneCellLineView : ConstraintLayout {
         isVisible = true
 
         Glide.with(context).load(res)
+            .centerCrop()
+            .into(this)
+    }
+
+    fun setIcon(icon: Drawable): Unit = with(binding.ivCellsIcon) {
+        Glide.with(context).load(icon)
             .centerCrop()
             .into(this)
     }

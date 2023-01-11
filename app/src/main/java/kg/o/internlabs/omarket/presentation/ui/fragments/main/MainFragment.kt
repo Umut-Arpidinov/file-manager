@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
@@ -99,6 +100,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     private fun initAdapter() = with(binding) {
+        recMain.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_7dp)))
         recMain.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
@@ -166,6 +168,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     override fun adClicked(ad: ResultX) {
-        makeToast("Ad with ${ad.uuid} uuid was clicked")
+        findNavController().navigate(MainFragmentDirections.goToAds("fork" + ad.uuid.toString()))
     }
 }

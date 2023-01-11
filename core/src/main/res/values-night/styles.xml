@@ -87,7 +87,7 @@
     <style name="TextView.Cells.SubTitle.Faq" parent="TextView.Cells.SubTitle">
         <item name="android:layout_marginStart">@dimen/margin_start_16dp</item>
         <item name="android:textSize">@dimen/cells_subTitle_text_size_15sp</item>
-        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textColor">@color/gray_1</item>
         <item name="android:letterSpacing">0</item>
     </style>
 
@@ -343,5 +343,29 @@
         <item name="android:textSize">@dimen/text_12sp</item>
         <item name="android:textColor">@color/gray_3</item>
         <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
+    </style>
+
+    <style name="detailedAdsTitleStyle">
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:lineSpacingExtra">@dimen/extra_spacing_3dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8dp</item>
+        <item name="android:minLines">1</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="detailedAdsDescriptionStyle" parent="AppPrimaryStyle">
+        <item name="android:minLines">1</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/gray_2</item>
+        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_8dp</item>
     </style>
 </resources>

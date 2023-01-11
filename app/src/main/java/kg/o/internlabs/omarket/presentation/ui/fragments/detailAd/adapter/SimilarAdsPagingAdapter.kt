@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter
+package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
@@ -7,48 +7,47 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
-import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.DetailAdFragment
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.utils.BasePagingAdapter
 
-class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.AdsViewHolder>
-    (AdsComparatorForMain), BasePagingAdapter {
-    private lateinit var adClicked: AdClickedInMain
-    private var fragmentContext: MainFragment? = null
 
-    var count = 1
-    override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
+class SimilarAdsPagingAdapter : PagingDataAdapter<ResultX, SimilarAdsPagingAdapter.SimilarAdsHolder>
+    (SimilarAdsComparator), BasePagingAdapter {
+
+    private lateinit var adClicked: AdClickedInMain
+   private var fragmentContext: DetailAdFragment? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        SimilarAdsHolder(CardViewMainAdsBinding.inflate(LayoutInflater.from(parent.context)))
+
+
+    override fun onBindViewHolder(holder: SimilarAdsHolder, position: Int) {
         holder.bind(getItem(position))
 
         holder.itemView.setOnClickListener {
             getItem(position)?.let { it1 -> adClicked.adClicked(it1) }
+
         }
     }
 
-    fun setInterface(adClicked: AdClickedInMain, mainFragment: MainFragment) {
+    fun setInterface(adClicked: AdClickedInMain,createAdsFragment: DetailAdFragment) {
         this.adClicked = adClicked
-        fragmentContext = mainFragment
+        fragmentContext = createAdsFragment
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        AdsViewHolder(CardViewMainAdsBinding.inflate(LayoutInflater.from(parent.context)))
-
-    inner class AdsViewHolder(private val binding: CardViewMainAdsBinding) :
+    inner class SimilarAdsHolder(private val binding: CardViewMainAdsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private var favorite = true
 
         fun bind(item: ResultX?) = with(binding) {
-            imgAds.layoutParams.width = LayoutParams.MATCH_PARENT
-            val width = imgAds.width
-            imgAds.layoutParams.width = width
-
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false
             setPager(item?.minifyImages, binding)
@@ -79,13 +78,14 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
                         PagerImageAdapter(
                             it.requireActivity(),
                             minifyImages,
-                            LayoutParams.MATCH_PARENT
+                            ViewGroup.LayoutParams.MATCH_PARENT
                         )
                     }
                 imgAds.adapter = pagerAdapter2
                 indicator.attachToPager(imgAds)
                 indicator.attachToPager(imgAds)
             }
+
 
         @SuppressLint("SetTextI18n")
         private fun setPrice(item: ResultX): Unit = with(binding) {
@@ -115,19 +115,21 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
                     oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
         }
+
+        private fun placeAndDelivery(item: ResultX) =
+            if (item.delivery == true) {
+                fragmentContext?.requireActivity()
+                    ?.getString(kg.o.internlabs.core.R.string.delivery_available)
+                    ?.let { String.format(it, item.location?.name) }
+            } else {
+                item.location?.name
+            }
+
     }
 
-    private fun placeAndDelivery(item: ResultX) =
-        if (item.delivery == true) {
-            fragmentContext?.requireActivity()
-                ?.getString(kg.o.internlabs.core.R.string.delivery_available)
-                ?.let { String.format(it, item.location?.name) }
-        } else {
-            item.location?.name
-        }
 }
 
-object AdsComparatorForMain : DiffUtil.ItemCallback<ResultX>() {
+object SimilarAdsComparator : DiffUtil.ItemCallback<ResultX>() {
     override fun areItemsTheSame(oldItem: ResultX, newItem: ResultX): Boolean {
         return oldItem.uuid == newItem.uuid
     }

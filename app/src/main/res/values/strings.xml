@@ -20,6 +20,7 @@
     <string name="terms_and_conditions">Нажимая \"Регистрация\" вы принимаете\n<a href="">условия пользовательского соглашения </a> </string>
     <string name="terms_and_conditions_of_place_an_ad">Нажимая \"Подать объявление\", вы принимаете\n<a href="">условия пользовательского соглашения </a> </string>
     <string name="sample_views">sample Views</string>
+    <string name="date">%s.%s.%s</string>
     <string name="sub_category">Подкатегория</string>
     <string name="description">Описания</string>
     <string name="order_type">Тип сделки</string>

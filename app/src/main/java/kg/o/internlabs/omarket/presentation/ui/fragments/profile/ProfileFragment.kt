@@ -37,10 +37,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     private var args: ProfileFragmentArgs? = null
     private var adapter = AdsPagingAdapter()
+    private var isActive = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         args = ProfileFragmentArgs.fromBundle(requireArguments())
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.btnActive.isChecked = true
+        getActiveAds()
+        isActive = true
     }
 
     override val viewModel: ProfileViewModel by lazy {
@@ -65,16 +73,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         getMenu()
         visibleStatusBar()
     }
-    
-    override fun initListener() = with(binding){
+
+    override fun initListener() = with(binding) {
         super.initListener()
-        btnActive.setOnClickListener { getActiveAds() }
-        btnNonActive.setOnClickListener { getNonActiveAds() }
+        btnActive.setOnClickListener {
+            getActiveAds()
+            isActive = true
+        }
+        btnNonActive.setOnClickListener {
+            getNonActiveAds()
+            isActive = false
+        }
         tbProfile.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
     private fun visibleStatusBar() {
-        WindowInsetsControllerCompat(requireActivity().window,requireView()).show((WindowInsetsCompat.Type.statusBars()))
+        WindowInsetsControllerCompat(
+            requireActivity().window,
+            requireView()
+        ).show((WindowInsetsCompat.Type.statusBars()))
     }
 
     private fun initAdapter() = with(binding) {
@@ -119,7 +136,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
-    private fun loadAllAds() = with(binding){
+    private fun loadAllAds() = with(binding) {
         safeFlowGather {
             viewModel.allAds.collectLatest {
                 when (it) {
@@ -188,7 +205,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when(menuItem.itemId) {
+                return when (menuItem.itemId) {
                     R.id.menu_faq_button -> {
                         findNavController().navigate(R.id.FAQFragment)
                         true
@@ -203,7 +220,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         openSomeActivityForResult()
     }
 
-    override fun iconLongClick() = with(binding){
+    override fun iconLongClick() = with(binding) {
         viewModel.deleteAvatar()
         safeFlowGather {
             viewModel.deleteAvatar.collectLatest {
@@ -225,6 +242,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     override fun adClicked(ad: MyAdsResultsEntity) {
-        ad.uuid?.let { makeToast(it) }
+        if (isActive) findNavController().navigate(ProfileFragmentDirections.goToMyAds("true"+ad.uuid.toString()))
+        else findNavController().navigate(ProfileFragmentDirections.goToEditFragment())
     }
 }
