@@ -25,9 +25,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/parent_scroll"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -122,16 +122,6 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/card_overview_cell" />
 
-            <kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
-                android:id="@+id/cell_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                app:hasIcon="true"
-                app:isShevronVisible="true"
-                app:setIcon="@drawable/ic_location"
-                app:setTitle="@string/location" />
-
             <TextView
                 android:id="@+id/write_btn"
                 style="@style/AppDefaultBlueText"
@@ -139,7 +129,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margin_16dp"
-                android:padding="@dimen/margin_14dp"
+                android:paddingStart="@dimen/margin_14dp"
+                android:paddingTop="@dimen/margin_14dp"
+                android:paddingEnd="@dimen/margin_14dp"
                 android:text="@string/write"
                 android:textSize="17sp" />
 
@@ -148,7 +140,10 @@
                 style="@style/GreenButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_22dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
                 android:text="@string/call"
                 app:shapeAppearanceOverlay="@style/MyShapeAppearance" />
 
@@ -181,6 +176,7 @@
                 tools:listitem="@layout/card_view_main_ads" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
     <ProgressBar
         android:id="@+id/progress_in_action"
         style="@style/progressBarStyle"
