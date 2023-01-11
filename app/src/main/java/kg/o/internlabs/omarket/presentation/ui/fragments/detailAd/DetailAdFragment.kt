@@ -68,6 +68,19 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         getDetailAd()
     }
 
+    override fun onStart() {
+        super.onStart()
+        val timer = object : CountDownTimer(1200, 1000) {
+            override fun onTick(millisUntilFinished: Long) {}
+
+            override fun onFinish() {
+                binding.progressInAction.visibility = GONE
+                binding.parentScroll.visibility = VISIBLE
+            }
+        }
+        timer.start()
+    }
+
     override fun initListener() = with(binding) {
         super.initListener()
         tbAds.setOnClickListener {
@@ -154,19 +167,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                 showDialog(num, false, ad.telegramProfile)
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val timer = object : CountDownTimer(1200, 1000) {
-            override fun onTick(millisUntilFinished: Long) {}
-
-            override fun onFinish() {
-                binding.progressInAction.visibility = GONE
-                binding.parentScroll.visibility = VISIBLE
-            }
-        }
-        timer.start()
     }
 
     private fun initAdapter() = with(binding) {
