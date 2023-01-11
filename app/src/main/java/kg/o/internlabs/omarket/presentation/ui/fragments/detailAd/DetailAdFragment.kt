@@ -141,26 +141,30 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
         setMainCardView(customMainView, ad)
 
-        callBtn.setOnClickListener {
-            if (isMine) {
-                findNavController().navigate(DetailAdFragmentDirections.goToEditFragment())
-            } else {
-                showDialog(ad?.author?.contactNumber!!, true, ad.telegramProfile)
+        val num = checkNumber(ad?.author?.msisdn!!)
+        if (num != "") {
+            callBtn.setOnClickListener {
+                if (isMine) {
+                    findNavController().navigate(DetailAdFragmentDirections.goToEditFragment())
+                } else {
+                    showDialog(num, true, ad.telegramProfile)
+                }
             }
-        }
-        writeBtn.setOnClickListener {
-            showDialog(ad?.author?.contactNumber!!, false, ad.telegramProfile)
+            writeBtn.setOnClickListener {
+                showDialog(num, false, ad.telegramProfile)
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
-        val timer = object: CountDownTimer(1200, 1000) {
+        val timer = object : CountDownTimer(1200, 1000) {
             override fun onTick(millisUntilFinished: Long) {}
 
             override fun onFinish() {
                 binding.progressInAction.visibility = GONE
-                binding.parentScroll.visibility = VISIBLE}
+                binding.parentScroll.visibility = VISIBLE
+            }
         }
         timer.start()
     }
@@ -407,5 +411,13 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             .chunked(3)
             .joinToString(" ")
             .reversed()
+    }
+
+    private fun checkNumber(number: String): String {
+        return if (number.substring(0, 3) == "996") {
+            "+$number"
+        } else if ((number.first() == '0' && number.length == 9) || number.substring(0, 4) == "+996")
+                number
+        else ""
     }
 }
