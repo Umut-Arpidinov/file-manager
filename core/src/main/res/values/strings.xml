@@ -119,6 +119,6 @@
     <string name="similar_ads">Похожие объявления</string>
     <string name="null_price">Цена договорная</string>
     <string name="som_price">%,d c</string>
-    <string name="dollar_price_overview">$%,d</string>
+    <string name="dollar_price_overview">$%s</string>
     <string name="choose_app">Выберите приложение</string>
 </resources>

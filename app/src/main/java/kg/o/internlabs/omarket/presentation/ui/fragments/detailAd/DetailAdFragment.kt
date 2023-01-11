@@ -235,16 +235,17 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         if (ad?.price == null)
             customMainView.setPriceWithoutCoins(getString(coreString.null_price))
         else {
+            val price = ad.price.toInt().formatDecimalSeparator()
             if (ad.currency == "som")
                 customMainView.setPriceWithoutCoins(
-                    ad.price, true
+                    price, true
                 )
             else {
                 try {
                     customMainView.setPriceWithoutCoins(
                         String.format(
                             getString(coreString.dollar_price_overview),
-                            ad.price.toInt()
+                            price
                         )
                     )
                 } catch (e: NumberFormatException) {
@@ -398,5 +399,13 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         } catch (e: NameNotFoundException) {
             e.printStackTrace()
         }
+    }
+
+    private fun Int.formatDecimalSeparator(): String {
+        return toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(" ")
+            .reversed()
     }
 }
