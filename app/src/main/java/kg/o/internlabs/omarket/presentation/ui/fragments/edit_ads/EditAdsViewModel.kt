@@ -4,11 +4,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.domain.entity.DeleteEntity
-import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
-import kg.o.internlabs.omarket.domain.entity.EditAds
-import kg.o.internlabs.omarket.domain.entity.UploadImageEntity
+import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.*
+import kg.o.internlabs.omarket.domain.usecases.detailAd_use_case.GetDetailAdUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -22,7 +20,8 @@ class EditAdsViewModel@Inject constructor(
     private val uploadImageToAdUseCase: UploadImageToAdUseCase,
     private val deleteImageFromAdUseCase: DeleteImageFromAdUseCase,
     private val editAnAdUseCase: EditAnAdUseCase,
-    private val deleteAdUseCase: DeleteAdUseCase
+    private val deleteAdUseCase: DeleteAdUseCase,
+    private val getDetailAdUseCase: GetDetailAdUseCase
 ) : BaseViewModel() {
 
     private val _token = MutableStateFlow("")
@@ -30,6 +29,9 @@ class EditAdsViewModel@Inject constructor(
 
     private val _uuid = MutableStateFlow("")
     val uuid = _uuid.asStateFlow()
+
+    private val _detailAd = MutableSharedFlow<ApiState<DetailsAd>>()
+    val detailAd = _detailAd.asSharedFlow()
 
     private val _uploadImage = MutableSharedFlow<ApiState<UploadImageEntity>>()
     val uploadImage = _uploadImage.asSharedFlow()
@@ -94,6 +96,24 @@ class EditAdsViewModel@Inject constructor(
                         }
                     }
                 }
+        }
+    }
+
+    fun getDetailAd(uuid: String) {
+        viewModelScope.launch {
+            getDetailAdUseCase(getAccessToken(),uuid).collectLatest {
+                when(it) {
+                    is ApiState.Success ->{
+                        _detailAd.emit(it)
+                    }
+                    is ApiState.Failure ->{
+                        _detailAd.emit(it)
+                    }
+                    is ApiState.Loading ->{
+                        _detailAd.emit(it)
+                    }
+                }
+            }
         }
     }
 
