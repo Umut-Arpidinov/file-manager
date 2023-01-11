@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
@@ -18,6 +19,7 @@ import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.coreString
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
 import kg.o.internlabs.omarket.utils.BasePagingAdapter
+
 
 class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.AdsViewHolder>
     (AdsComparatorForMain), BasePagingAdapter {
@@ -47,6 +49,12 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
 
         fun bind(item: ResultX?) = with(binding) {
             imgAds.layoutParams.width = LayoutParams.MATCH_PARENT
+            imgAds.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    imgAds.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    imgAds.layoutParams.height = imgAds.width //height is ready
+                }
+            })
 
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false

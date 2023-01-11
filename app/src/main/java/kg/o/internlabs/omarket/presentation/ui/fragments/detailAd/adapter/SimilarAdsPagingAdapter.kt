@@ -6,6 +6,7 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
@@ -49,6 +50,13 @@ class SimilarAdsPagingAdapter : PagingDataAdapter<ResultX, SimilarAdsPagingAdapt
 
         fun bind(item: ResultX?) = with(binding) {
             imgAds.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            imgAds.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    imgAds.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    imgAds.layoutParams.height = imgAds.width //height is ready
+                }
+            })
 
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false
