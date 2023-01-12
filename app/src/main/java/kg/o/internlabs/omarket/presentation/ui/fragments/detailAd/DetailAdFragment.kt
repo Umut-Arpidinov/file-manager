@@ -3,7 +3,6 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd
 import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
 import android.net.Uri
-import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View.GONE
@@ -95,6 +94,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                     is ApiState.Success -> {
                         it.data.resultX.let { it1 -> setDataToViews(it1, isMine) }
                         println("++++++++" + it.data.resultX)
+                        binding.progressInAction.visibility = GONE
+                        binding.parentScroll.visibility = VISIBLE
                     }
                     is ApiState.Failure -> {
                         println("--....1.." + it.msg.message)
@@ -141,38 +142,25 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
         setMainCardView(customMainView, ad)
 
-        callBtn.setOnClickListener {
-            if (isMine) {
-                findNavController().navigate(DetailAdFragmentDirections.goToEditFragment())
-            } else {
-                showDialog(ad?.author?.contactNumber!!, true, ad.telegramProfile)
+        val num = checkNumber(ad?.author?.msisdn!!)
+        if (num != "") {
+            callBtn.setOnClickListener {
+                if (isMine) {
+                    findNavController().navigate(DetailAdFragmentDirections.goToEditFragment())
+                } else {
+                    showDialog(num, true, ad.telegramProfile)
+                }
+            }
+            writeBtn.setOnClickListener {
+                showDialog(num, false, ad.telegramProfile)
             }
         }
-        writeBtn.setOnClickListener {
-            showDialog(ad?.author?.contactNumber!!, false, ad.telegramProfile)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val timer = object: CountDownTimer(1200, 1000) {
-            override fun onTick(millisUntilFinished: Long) {}
-
-            override fun onFinish() {
-                binding.progressInAction.visibility = GONE
-                binding.parentScroll.visibility = VISIBLE}
-        }
-        timer.start()
     }
 
     private fun initAdapter() = with(binding) {
         recSimilarAds.addItemDecoration(
-            MarginItemDecoration(
-                resources.getDimensionPixelSize(
-                    R.dimen.item_margin_7dp
-                )
-            )
-        )
+            MarginItemDecoration
+                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
@@ -235,16 +223,17 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         if (ad?.price == null)
             customMainView.setPriceWithoutCoins(getString(coreString.null_price))
         else {
+            val price = ad.price.toInt().formatDecimalSeparator()
             if (ad.currency == "som")
                 customMainView.setPriceWithoutCoins(
-                    ad.price, true
+                    price, true
                 )
             else {
                 try {
                     customMainView.setPriceWithoutCoins(
                         String.format(
                             getString(coreString.dollar_price_overview),
-                            ad.price.toInt()
+                            price
                         )
                     )
                 } catch (e: NumberFormatException) {
@@ -398,5 +387,25 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         } catch (e: NameNotFoundException) {
             e.printStackTrace()
         }
+    }
+
+    private fun Int.formatDecimalSeparator(): String {
+        return toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(" ")
+            .reversed()
+    }
+
+    private fun checkNumber(number: String): String {
+        return if (number.substring(0, 3) == "996") {
+            "+$number"
+        } else if ((number.first() == '0' && number.length == 9) || number.substring(
+                0,
+                4
+            ) == "+996"
+        )
+            number
+        else ""
     }
 }

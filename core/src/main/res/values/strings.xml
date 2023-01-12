@@ -104,8 +104,8 @@
     <string name="place_delivery_product">Place/delivery of product</string>
     <string name="sell_faster_string">Продать быстрее</string>
     <string name="sample_viewed_string">777</string>
-    <string name="som_underline">%,s c</string>
-    <string name="dollar_price">%,d $</string>
+    <string name="som_underline">%s c</string>
+    <string name="dollar_price">%s $</string>
     <string name="search_text">У вас в городе</string>
     <string name="delivery_available">%s/Доставка</string>
     <string name="category_description">icons of categories</string>
@@ -119,6 +119,6 @@
     <string name="similar_ads">Похожие объявления</string>
     <string name="null_price">Цена договорная</string>
     <string name="som_price">%,d c</string>
-    <string name="dollar_price_overview">$%,d</string>
+    <string name="dollar_price_overview">$%s</string>
     <string name="choose_app">Выберите приложение</string>
 </resources>
