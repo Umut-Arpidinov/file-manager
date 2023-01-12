@@ -171,4 +171,5 @@
     <dimen name="padding_end_0dp">0dp</dimen>
     <dimen name="padding_start_0dp">0dp</dimen>
     <dimen name="padding_end_16dp">16dp</dimen>
+    <dimen name="margin_22dp">22dp</dimen>
 </resources>

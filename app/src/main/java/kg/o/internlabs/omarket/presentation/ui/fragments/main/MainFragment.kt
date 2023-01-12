@@ -2,6 +2,8 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.View.VISIBLE
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +38,15 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         args = MainFragmentArgs.fromBundle(requireArguments())
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.addOnPagesUpdatedListener {
+            binding.loadingAnim.visibility = View.GONE
+            binding.cl.visibility = VISIBLE
+            binding.floatingButton.visibility = VISIBLE
+        }
     }
 
     override val viewModel: MainFragmentViewModel by lazy {
@@ -100,7 +111,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     }
 
     private fun initAdapter() = with(binding) {
-        recMain.addItemDecoration(MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.item_margin_7dp)))
+        recMain.addItemDecoration(
+            MarginItemDecoration(2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         recMain.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
