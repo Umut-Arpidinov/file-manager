@@ -1,16 +1,20 @@
 package kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter
 
-import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.databinding.CardViewUsersAdsBinding
 import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.coreString
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.ProfileFragment
 import kg.o.internlabs.omarket.utils.BasePagingAdapter
@@ -43,10 +47,19 @@ class AdsPagingAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagingAdapter.A
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MyAdsResultsEntity?) = with(binding) {
+            imgAds.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            imgAds.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    imgAds.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    imgAds.layoutParams.height = imgAds.width //height is ready
+                }
+            })
+
             vipIcon.isVisible = item?.promotionType?.type == "vip"
             oPayIcon.isVisible = item?.oMoneyPay ?: false
             setPager(item?.minifyImages, binding)
-            item?.let { setPrice(it) }
+            setPrice(item?.price, item?.currency)
             oldPriceProduct.isVisible = item?.oldPrice.isNullOrEmpty().not()
             if (oldPriceProduct.isVisible) {
                 item?.let { setOldPriceWithCurrency(it) }
@@ -74,33 +87,31 @@ class AdsPagingAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagingAdapter.A
                 imgAds.adapter = pagerAdapter2
             }
 
-
-        @SuppressLint("SetTextI18n")
-        private fun setPrice(item: MyAdsResultsEntity): Unit = with(binding) {
-            with(item) {
+        private fun setPrice(price: String?, currency: String?): Unit = with(binding) {
+            if (price == null || price == "") priceProduct.text = getString(coreString.null_price)
+            else {
                 if (currency == "som") {
-                    val resultString = "$price c"
-                    val spannableString = SpannableString(resultString)
-                    spannableString.setSpan(
-                        UnderlineSpan(), resultString.lastIndex,
-                        resultString.length, 0
-                    )
-                    priceProduct.text = spannableString
+                    priceProduct.text = setSomPrice(price)
                 } else if (currency != null) {
-                    priceProduct.text = "$price $currency"
+                    priceProduct.text = String.format(
+                        getString(coreString.dollar_price),
+                        price.toInt().formatDecimalSeparator()
+                    )
                 } else {
-                    priceProduct.text = price
+                    priceProduct.text = price.toInt().formatDecimalSeparator()
                 }
             }
         }
 
         private fun setOldPriceWithCurrency(item: MyAdsResultsEntity) = with(binding) {
             if (item.oldPrice == null || item.oldPrice == "") {
-                oldPriceProduct.visibility = android.view.View.GONE
+                oldPriceProduct.visibility = View.GONE
             } else {
-                oldPriceProduct.visibility = android.view.View.VISIBLE
+                oldPriceProduct.visibility = View.VISIBLE
+                if (item.oldPrice == "10000 с") oldPriceProduct.text = item.oldPrice
+                else oldPriceProduct.text = item.oldPrice.toInt().formatDecimalSeparator()
                 oldPriceProduct.paintFlags =
-                    oldPriceProduct.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+                    oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
         }
     }
@@ -128,5 +139,27 @@ class AdsPagingAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagingAdapter.A
         ): Boolean {
             return oldItem == newItem
         }
+    }
+
+    private fun setSomPrice(price: String?): SpannableString {
+        val resultString = String.format(getString(coreString.som_underline), price?.toInt()?.formatDecimalSeparator())
+        val spannableString = SpannableString(resultString)
+        spannableString.setSpan(
+            UnderlineSpan(), resultString.lastIndex,
+            resultString.length, 0
+        )
+        return spannableString
+    }
+
+    private fun getString(@StringRes resId: Int): String {
+        return fragmentContext?.resources?.getString(resId) ?: ""
+    }
+
+    private fun Int.formatDecimalSeparator(): String {
+        return toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(" ")
+            .reversed()
     }
 }

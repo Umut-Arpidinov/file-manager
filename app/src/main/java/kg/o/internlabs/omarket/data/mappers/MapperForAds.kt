@@ -1,8 +1,10 @@
 package kg.o.internlabs.omarket.data.mappers
 
 import kg.o.internlabs.omarket.data.remote.model.EditAdsDto
+import kg.o.internlabs.omarket.data.remote.model.DetailsAdDto
 import kg.o.internlabs.omarket.data.remote.model.ads.*
 import kg.o.internlabs.omarket.domain.entity.EditAds
+import kg.o.internlabs.omarket.domain.entity.DetailsAd
 import kg.o.internlabs.omarket.domain.entity.ads.*
 import retrofit2.Response
 
@@ -41,6 +43,14 @@ class MapperForAds {
         whatsappNum = v?.whatsappNum,
         whatsappNumIsIdent = v?.whatsappNumIsIdent
     )
+
+    fun toDbModel(v: DetailsAd?) = DetailsAdDto(
+        details = v?.details,
+        errorCode = v?.errorCode,
+        resultX = toDbModel(v?.resultX),
+        resultCode = v?.resultCode
+    )
+
 
     fun toDbModel(v: AdsByCategory?) = AdsByCategoryDto(
         mainFilter = toDbModel(v?.mainFilter)
@@ -366,6 +376,13 @@ class MapperForAds {
         whatsappNumIsIdent = v?.whatsappNumIsIdent
     )
 
+    private fun toEntity(v: DetailsAdDto?) = DetailsAd(
+        details = v?.details,
+        errorCode = v?.errorCode,
+        resultX = toEntity(v?.resultX),
+        resultCode = v?.resultCode
+    )
+
     fun toRespEntityForAds(resp: Response<AdsDto?>) =
         if (resp.isSuccessful) {
             Response.success(toEntity(resp.body()))
@@ -379,5 +396,13 @@ class MapperForAds {
         } else {
             resp.errorBody()?.let { Response.error(resp.code(), it) }
         }
+
+    fun toRespEntityForDetailedAd(resp: Response<DetailsAdDto?>) =
+        if (resp.isSuccessful) {
+            Response.success(toEntity(resp.body()))
+        } else {
+            resp.errorBody()?.let { Response.error(resp.code(), it) }
+        }
+
     // endregion
 }

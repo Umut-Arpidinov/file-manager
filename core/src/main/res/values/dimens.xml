@@ -165,6 +165,8 @@
     <dimen name="view_width_68dp">68dp</dimen>
     <dimen name="view_36dp">36dp</dimen>
     <dimen name="view_height_1dp">1dp</dimen>
+    <dimen name="view_240dp">240dp</dimen>
+    <dimen name="margin_22dp">22dp</dimen>
     <dimen name="margin_bottom_8dp">8dp</dimen>
     <dimen name="padding_start_16dp">16dp</dimen>
     <dimen name="padding_end_0dp">0dp</dimen>

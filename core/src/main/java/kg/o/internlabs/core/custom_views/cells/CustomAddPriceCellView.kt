@@ -2,6 +2,8 @@ package kg.o.internlabs.core.custom_views.cells
 
 import android.content.Context
 import android.net.Uri
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -81,6 +83,18 @@ class CustomAddPriceCellView : ConstraintLayout {
         binding.tvPriceWithoutCoins.text = price
     }
 
+    fun setPriceWithoutCoins(price: String, som: Boolean) {
+        if (som) {
+            val resultString = "$price c"
+            val spannableString = SpannableString(resultString)
+            spannableString.setSpan(
+                UnderlineSpan(), resultString.lastIndex,
+                resultString.length, 0
+            )
+            binding.tvPriceWithoutCoins.text = spannableString
+        }
+    }
+
     fun setPriceWithCoins(price: String) {
         binding.tvPriceWithCoins.text = price
     }
@@ -116,5 +130,11 @@ class CustomAddPriceCellView : ConstraintLayout {
 
     fun setInterface(addPriceClick: CustomAddPriceCellViewClick) {
         aboutAdvertiser = addPriceClick
+    }
+
+    fun isOwnAd() = with(binding) {
+        cv.visibility = GONE
+        tvCellTitle.visibility = GONE
+        ivShevron.visibility = GONE
     }
 }
