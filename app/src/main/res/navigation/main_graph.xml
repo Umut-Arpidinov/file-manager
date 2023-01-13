@@ -146,6 +146,7 @@
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.login.PdfFragment"
         android:label="fragment_pdf"
         tools:layout="@layout/fragment_pdf" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.profile.ProfileFragment"
@@ -156,6 +157,7 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+
         <action
             android:id="@+id/go_to_my_ads"
             app:destination="@id/overviewAdsFragment">
@@ -164,34 +166,51 @@
                 app:nullable="true"
                 app:argType="string" />
         </action>
+
         <action
             android:id="@+id/go_to_edit_fragment"
-            app:destination="@id/editFragment"/>
+            app:destination="@id/editFragment">
+            <argument
+                android:name="uuid"
+                app:nullable="true"
+                app:argType="string" />
+        </action>
     </fragment>
+
     <fragment
         android:id="@+id/FAQFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.profile.FAQFragment"
         android:label="fragment_f_a_q"
         tools:layout="@layout/fragment_f_a_q" />
+
     <fragment
         android:id="@+id/overviewAdsFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.DetailAdFragment"
         android:label="fragment_create_ads"
         tools:layout="@layout/fragment_detailed_ad">
-        <argument
-            android:name="uuid"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
+
         <action
             android:id="@+id/go_to_viewer"
             app:destination="@id/mediaViewer"
             app:popUpTo="@id/overviewAdsFragment">
         </action>
+
         <action
             android:id="@id/go_to_edit_fragment"
-            app:destination="@id/editFragment" />
+            app:destination="@id/editFragment" >
+            <argument
+                android:name="uuid"
+                app:nullable="true"
+                app:argType="string" />
+        </action>
+
+        <argument
+            android:name="uuid"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
+
     <fragment
         android:id="@+id/mediaViewer"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.PhotoViewFragment"
@@ -204,7 +223,7 @@
         android:label="fragment_edit_ad"
         tools:layout="@layout/fragment_edit_ads">
     </fragment>
-        tools:layout="@layout/fragment_create_ads" />
+
     <fragment
         android:id="@+id/newAdsFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.NewAdsFragment"
@@ -217,6 +236,7 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+
     <fragment
         android:id="@+id/editAdsFragment"
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads.EditAdsFragment"
@@ -229,4 +249,5 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+
 </navigation>

@@ -92,6 +92,4 @@ class MainFragmentViewModel @Inject constructor(
     }
 
     private fun getAccessToken() = token.value
-    private fun getUuid() = uuid.value
-
 }

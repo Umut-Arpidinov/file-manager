@@ -17,7 +17,10 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomWithToggleCellViewClick
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentEditAdsBinding
-import kg.o.internlabs.omarket.domain.entity.*
+import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
+import kg.o.internlabs.omarket.domain.entity.EditAds
+import kg.o.internlabs.omarket.domain.entity.ResultEntity
+import kg.o.internlabs.omarket.domain.entity.UploadImageResultEntity
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads.helpers.AddImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.edit_ads.helpers.DeleteImageHelper
@@ -28,9 +31,8 @@ import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
 
-
 @AndroidEntryPoint
-class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>() ,
+class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>(),
     CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper {
 
     private val selectedImages = mutableListOf(UploadImageResultEntity())
@@ -38,12 +40,18 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     private val selectedPath = mutableListOf(UploadImageResultEntity())
     private val args: EditAdsFragmentArgs by lazy(::initArgs)
     private var imageListAdapter: ImageListAdapter? = null
-    private var adDetails = ResultX()
-    private var subCategoriesEntity = SubCategoriesEntity()
+    private var categoriesEntity = mutableListOf<ResultEntity>()
 
     companion object {
         var mainImageIndex = 1
     }
+
+    override val viewModel: EditAdsViewModel by lazy {
+        ViewModelProvider(this)[EditAdsViewModel::class.java]
+    }
+
+    override fun inflateViewBinding(inflater: LayoutInflater) =
+        FragmentEditAdsBinding.inflate(inflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,31 +63,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
 
     override fun initViewModel() {
         super.initViewModel()
-        viewModel.initViewModel()
-        setField()
+        args.uuid?.let { it -> viewModel.getDetailAd(it) }
     }
-
-
-    private fun setField() = with(binding){
-        adDetails.title?.let { cusTitle.setText(it) }
-        adDetails.category?.parent?.name?.let { cusCategory.setText(it) }
-        adDetails.category?.name?.let { cusSubCategory.setText(it) }
-        adDetails.description?.let { cusDescription.setText(it) }
-        adDetails.adType?.let { cusAdType.setText(it) }
-        adDetails.contractPrice?.let { cusPriceIsNegotiable.isChecked(it) }
-        /*adDetails.?.let { .isChecked(it) }
-        adDetails.?.let { .isChecked(it) }
-        adDetails.?.let { .isChecked(it) }
-        adDetails.?.let { .isChecked(it) }
-        adDetails.?.let { .isChecked(it) }*/
-    }
-
-    override val viewModel: EditAdsViewModel by lazy {
-        ViewModelProvider(this)[EditAdsViewModel::class.java]
-    }
-
-    override fun inflateViewBinding(inflater: LayoutInflater) =
-        FragmentEditAdsBinding.inflate(inflater)
 
     override fun initView() = with(binding) {
         super.initView()
@@ -94,6 +79,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         cusOMoneyAccept.setInterface(this@EditAdsFragment, 2)
         cusWhatsApp.setInterface(this@EditAdsFragment, 3)
         cusTelegram.setInterface(this@EditAdsFragment, 4)
+
+        getAdsDetail()
     }
 
     override fun initListener() = with(binding) {
@@ -129,6 +116,85 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
     }
 
+    private fun setField(item: ResultX) = with(binding) {
+        item.title?.let { if(it.isNotEmpty()) cusTitle.setText(it) else
+            cusTitle.setHint(getString(R.string.title)) }
+
+        item.category?.parent?.name?.let { if(it.isNotEmpty()) cusCategory.setText(it) else
+            cusCategory.setHint(getString(R.string.category)) }
+
+        item.category?.name?.let { if(it.isNotEmpty()) {
+            cusSubCategory.setText(it)
+            cusSubCategory.isVisible = it.isNotEmpty()
+        } else
+            cusSubCategory.setHint(getString(R.string.sub_category)) }
+
+        item.description?.let {if(it.isNotEmpty()) cusDescription.setText(it) else
+            cusDescription.setHint(getString(R.string.description)) }
+
+        item.adType?.let { if(it.isNotEmpty()) cusAdType.setText(it) else
+            cusTitle.setHint(getString(R.string.ad_type)) }
+
+        item.contractPrice?.let {
+            cusPriceIsNegotiable.isChecked(it)
+            cusCurrency.isVisible = it.not()
+            cusPrice.isVisible = it.not()
+        }
+        item.currency?.let { if(it.isNotEmpty()) cusCurrency.setText(it) else
+            cusCategory.setHint(getString(R.string.currency)) }
+
+        item.price?.let { if(it.isNotEmpty()) cusPrice.setText(it) else
+            cusPrice.setHint(getString(R.string.price)) }
+
+        item.location?.name?.let { if(it.isNotEmpty()) cusLocation.setText(it) else
+            cusLocation.setHint(getString(R.string.bishkek)) }
+
+        item.oMoneyPay?.let {
+            cusOMoneyAccept.isChecked(it)
+            tvOMoneyPayAgreement.isVisible = it
+        }
+
+        item.delivery?.let {
+            cusDelivery.isChecked(it)
+            cusDelivery.isVisible = it
+        }
+
+        item.whatsappNum?.let {
+            cusWhatsApp.isChecked(it.isNotEmpty())
+            cusWhatsAppNumber.isVisible = it.isNotEmpty()
+            cusWhatsAppNumber.setText(it)
+        }
+
+        item.telegramProfile?.let {
+            cusTelegram.isChecked(it.isNotEmpty())
+            cusTelegramNick.isVisible = it.isNotEmpty()
+            cusTelegramNick.setText(it)
+        }
+
+        item.hasImage?.let { it ->
+            if (it) {
+                item.images?.let { img -> uploadImage(img) }
+            }
+        }
+    }
+
+    private fun getAdsDetail() {
+        safeFlowGather {
+            viewModel.detailAd.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        it.data.resultX?.let { it1 -> setField(it1) }
+                    }
+                    is ApiState.Failure -> {
+                        println("--....1.." + it.msg.message)
+                    }
+                    is ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
     private fun pickImages() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
@@ -137,23 +203,22 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         resultLauncher.launch(Intent.createChooser(intent, "image"))
     }
 
-    private var resultLauncher = registerForActivityResult(
-        ActivityResultContracts
-        .StartActivityForResult(), fun(result: ActivityResult) {
-        if (result.resultCode == AppCompatActivity.RESULT_OK) {
-            val intent: Intent? = result.data
-            if (intent?.clipData != null) {
-                val count = intent.clipData!!.itemCount
-                for (i in 0 until count) {
-                    val imageUri: Uri = intent.clipData!!.getItemAt(i).uri
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts
+            .StartActivityForResult(), fun(result: ActivityResult) {
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                val intent: Intent? = result.data
+                if (intent?.clipData != null) {
+                    val count = intent.clipData!!.itemCount
+                    for (i in 0 until count) {
+                        val imageUri: Uri = intent.clipData!!.getItemAt(i).uri
+                        this addImage imageUri
+                    }
+                } else if (intent?.data != null) {
+                    val imageUri: Uri = intent.data!!
                     this addImage imageUri
                 }
-            } else if (intent?.data != null) {
-                val imageUri: Uri = intent.data!!
-                this addImage imageUri
             }
-        }
-    })
+        })
 
     private infix fun addImage(uri: Uri) {
         if (selectedImages.size >= 11) {
@@ -176,6 +241,17 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         getUploadedImage(model, imageUri)
     }
 
+    private fun uploadImage(imageUri: List<String>) {
+        println("====1====   $imageUri ")
+        println("==${selectedImages.size}==2====   $selectedImages ")
+        imageUri.map { selectedImages.addAll(1, listOf(UploadImageResultEntity(url = it))) }
+
+        println("==${selectedImages.size}==3====   $selectedImages ")
+        binding.flAddImage.isVisible = false
+        imageListAdapter?.initAdapter(selectedImages.toList())
+        binding.rwToUploadImages.adapter = imageListAdapter
+    }
+
     private fun getUploadedImage(path: UploadImageResultEntity, imageUri: Uri) {
         safeFlowGather {
             viewModel.uploadImage.collectLatest {
@@ -193,11 +269,15 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
     }
 
+    private fun getCategoryId(catName: String, subCatName: String?) =
+        categoriesEntity.asSequence().filter { it.name == catName }.map { it }
+            .filter { it.name == subCatName }.map { it.id }.first()
+
     private fun addIfNotContains(
         uri: UploadImageResultEntity,
         path: UploadImageResultEntity, imageUri: Uri
     ) {
-        if (selected.contains(uri)) return
+        if (uri in selected) return
         if (containsModel(path)) return
         val itemIndex = selectedImages.indexOf(path)
         if (itemIndex < 0) return
@@ -215,7 +295,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     private fun deleteModelFromLists(index: Int) {
         val uriOfDeletedImage = selectedImages[index].url
         selectedImages.removeAt(index)
-        selected.removeAt(index)
+        selected
         selectedPath.removeAt(index)
 
         viewModel.deleteImageFromAd(DeletedImageUrlEntity(url = uriOfDeletedImage))
@@ -223,7 +303,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
 
     override fun toggleClicked(positionOfCell: Int) = with(binding) {
         when (positionOfCell) {
-            0 -> cusDelivery.isVisible = subCategoriesEntity.delivery ?: false
+            0 -> cusDelivery.isVisible = categoriesEntity[0].delivery ?: false
             1 -> {
                 with(cusPriceIsNegotiable.isChecked()) {
                     cusCurrency.isVisible = this.not()
@@ -256,23 +336,11 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     }
 
     private fun prepareValuesForAd() = with(binding) {
+
         val editAds = EditAds(
-            adType = "",
-            category = 17,
-            contractPrice = true,
-            delivery = true,
-            description = "cusDescription",
-            images = prepareUrlForAd(),
-            location = 1,
-            oMoneyPay = cusOMoneyAccept.isChecked(),
-            promotionType = null,
-            telegramProfile = if (cusTelegram.isChecked()){cusTelegramNick.getText().drop(1)} else null,
             title = cusTitle.getText(),
-            whatsappNum = if (cusWhatsApp.isChecked()){cusWhatsAppNumber.getValue()} else null,
-        )
-        /*val editAds = EditAds(
+            category = getCategoryId(cusCategory.getText(), cusSubCategory.getText()),
             adType = cusAdType.getText(),
-            category = cusCategory.getItemId(),
             contractPrice = cusPriceIsNegotiable.isChecked(),
             currency = if (!cusPriceIsNegotiable.isChecked()){cusCurrency.getText()} else null,
             delivery = cusDelivery.isChecked(),
@@ -283,9 +351,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             price = if (!cusPriceIsNegotiable.isChecked()){cusPrice.getText()} else null,
             promotionType = null,
             telegramProfile = if (cusTelegram.isChecked()){cusTelegramNick.getText()} else null,
-            title = cusTitle.getText(),
             whatsappNum = if (cusWhatsApp.isChecked()){cusWhatsAppNumber.getValue()} else null,
-        )*/
+        )
         viewModel.createAd(editAds)
 
         createAd()

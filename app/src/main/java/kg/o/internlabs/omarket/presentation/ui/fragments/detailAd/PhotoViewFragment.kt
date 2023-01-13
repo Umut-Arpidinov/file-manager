@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.databinding.FragmentPhotoViewBinding
 import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
+import kg.o.internlabs.core.R.string as coreString
 
 @AndroidEntryPoint
 class PhotoViewFragment : BaseFragment<FragmentPhotoViewBinding, DetailAdViewModel>() {

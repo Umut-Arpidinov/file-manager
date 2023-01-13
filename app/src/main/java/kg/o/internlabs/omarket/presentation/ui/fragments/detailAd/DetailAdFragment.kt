@@ -29,6 +29,7 @@ import kg.o.internlabs.omarket.databinding.FragmentDetailedAdBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.CellAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.SimilarAdsPagingAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MarginItemDecoration
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
@@ -37,10 +38,8 @@ import kg.o.internlabs.omarket.utils.loadListener
 import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
-
-typealias coreString = kg.o.internlabs.core.R.string
-private typealias coreDrawable = kg.o.internlabs.core.R.drawable
+import kg.o.internlabs.core.R.drawable as coreDrawable
+import kg.o.internlabs.core.R.string as coreString
 
 @AndroidEntryPoint
 class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewModel>(),
@@ -146,7 +145,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         if (num != "") {
             callBtn.setOnClickListener {
                 if (isMine) {
-                    findNavController().navigate(DetailAdFragmentDirections.goToEditFragment())
+                    findNavController().navigate(DetailAdFragmentDirections
+                        .goToEditFragment(ad.uuid))
                 } else {
                     showDialog(num, true, ad.telegramProfile)
                 }

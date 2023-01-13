@@ -142,7 +142,10 @@ internal class ImageListAdapter(
                     }
                 }
                 is LoadedImageItemBinding -> {
-                    Glide.with(root).load(uri.path)
+                    println("--------1------$uri    $position")
+                    Glide.with(root).load(uri.path ?: uri.url)
+                        .error(R.drawable.ic_img_empty)
+                        .
                         .into(binding.root.findViewById(R.id.iv_load_image))
 
                     selectedImage(position)

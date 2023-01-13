@@ -15,11 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.DetailAdFragment
-import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.coreString
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.utils.BasePagingAdapter
-
+import kg.o.internlabs.core.R.string as coreString
 
 class SimilarAdsPagingAdapter : PagingDataAdapter<ResultX, SimilarAdsPagingAdapter.SimilarAdsHolder>
     (SimilarAdsComparator), BasePagingAdapter {

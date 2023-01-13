@@ -246,6 +246,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun adClicked(ad: MyAdsResultsEntity) {
         if (isActive) findNavController().navigate(ProfileFragmentDirections.goToMyAds("true"+ad.uuid.toString()))
-        else findNavController().navigate(ProfileFragmentDirections.goToEditFragment())
+        else findNavController().navigate(ProfileFragmentDirections.goToEditFragment(ad.uuid))
     }
 }

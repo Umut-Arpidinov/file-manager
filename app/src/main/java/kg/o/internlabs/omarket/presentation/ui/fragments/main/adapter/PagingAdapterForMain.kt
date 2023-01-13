@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.databinding.CardViewMainAdsBinding
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
-import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.coreString
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MainFragment
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
 import kg.o.internlabs.omarket.utils.BasePagingAdapter
+import kg.o.internlabs.core.R.string as coreString
 
 
 class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.AdsViewHolder>
@@ -30,7 +30,6 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
     var count = 1
     override fun onBindViewHolder(holder: AdsViewHolder, position: Int) {
         holder.bind(getItem(position))
-
         holder.itemView.setOnClickListener {
             getItem(position)?.let { it1 -> adClicked.adClicked(it1) }
         }

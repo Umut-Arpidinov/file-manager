@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kg.o.internlabs.omarket.databinding.CardViewUsersAdsBinding
 import kg.o.internlabs.omarket.domain.entity.MyAdsResultsEntity
-import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.coreString
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.PagerImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.ProfileFragment
 import kg.o.internlabs.omarket.utils.BasePagingAdapter
 import kg.o.internlabs.omarket.utils.makeToast
+import kg.o.internlabs.core.R.string as coreString
 
 class AdsPagingAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagingAdapter.AdsViewHolder>
     (AdsComparator), BasePagingAdapter {
