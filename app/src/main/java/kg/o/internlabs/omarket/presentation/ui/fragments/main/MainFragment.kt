@@ -33,7 +33,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
     private var args: MainFragmentArgs? = null
     private var adapter = PagingAdapterForMain()
 
-    private var list: List<ResultEntity>? = listOf()
+    private var list: List<ResultEntity>? = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -161,8 +161,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         }
     }
 
-    override fun clickedCategory(item: Int?) {
-        if (item == null) {
+    override fun clickedCategory(item: ResultEntity?) {
+        if (item?.id == null) {
             viewModel.getAds()
             getAds()
             return
@@ -171,7 +171,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             AdsByCategory(
                 mainFilter = MainFilter(
                     orderBy = "new",
-                    categoryId = item
+                    categoryId = item.id
                 )
             )
         )

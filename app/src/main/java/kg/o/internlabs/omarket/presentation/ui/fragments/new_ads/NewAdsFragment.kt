@@ -246,12 +246,9 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             delivery = cusDelivery.isChecked(),
             description = cusDescription.getText(),
             images = prepareUrlForAd(),
-            latitude = "", // TODO
             location = cusLocation.getItemId(),
-            longitude = "", // TODO
             oMoneyPay = cusOMoneyAccept.isChecked(),
             price = cusPrice.getText(),
-            promotionType = null,
             telegramProfile = cusTelegramNick.getText(),
             title = cusTitle.getText(),
             whatsappNum = cusWhatsAppNumber.getValue()

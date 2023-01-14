@@ -27,7 +27,7 @@ class CategoryRecyclerViewAdapter(
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bind(listOfResult?.get(position), context)
         holder.itemView.setOnClickListener {
-            clickHandler.clickedCategory(listOfResult?.get(position)?.id)
+            clickHandler.clickedCategory(listOfResult?.get(position))
         }
     }
 
@@ -39,17 +39,18 @@ class CategoryRecyclerViewAdapter(
     inner class CategoryViewHolder(val binding: CategoryViewHolderBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ResultEntity?, context: Context) = with(binding) {
-            categoryName.text = item?.name
-            if (item?.name == "Все") {
-                Glide.with(context)
-                    .load(R.drawable.category_all_union)
-                    .into(categoryImage)
-            } else {
-                Glide.with(context)
-                    .load(item?.iconImg)
-                    .fitCenter()
-                    .into(categoryImage)
-            }
+                categoryName.text = item?.name
+                if (item?.name == "Все") {
+                    Glide.with(context)
+                        .load(R.drawable.category_all_union)
+                        .into(categoryImage)
+                } else {
+                    Glide.with(context)
+                        .load(item?.iconImg)
+                        .fitCenter()
+                        .into(categoryImage)
+                }
+
         }
     }
 
