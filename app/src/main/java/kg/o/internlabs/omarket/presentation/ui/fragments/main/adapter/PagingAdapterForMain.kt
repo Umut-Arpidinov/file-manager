@@ -40,6 +40,7 @@ class PagingAdapterForMain : PagingDataAdapter<ResultX, PagingAdapterForMain.Ads
         this.adClicked = adClicked
         fragmentContext = mainFragment
     }
+    fun itemCount() = super.getItemCount()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         AdsViewHolder(CardViewMainAdsBinding.inflate(LayoutInflater.from(parent.context)))

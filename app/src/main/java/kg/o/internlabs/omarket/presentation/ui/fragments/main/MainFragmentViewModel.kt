@@ -8,8 +8,10 @@ import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
+import kg.o.internlabs.omarket.domain.entity.ads.AdsByFilter
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
+import kg.o.internlabs.omarket.domain.usecases.GetAdsByFilterUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
 import kotlinx.coroutines.flow.*
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class MainFragmentViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
-    private val getAdsUseCase: GetAdsUseCase
+    private val getAdsUseCase: GetAdsUseCase,
+    private val getAdsByFilterUseCase: GetAdsByFilterUseCase
 ) :
     BaseViewModel() {
 
@@ -64,6 +67,13 @@ class MainFragmentViewModel @Inject constructor(
     }, {
         _ads = it
     })
+    fun getAdsByFilter(adsFilter: AdsByFilter? = null) = launchPagingAsync({
+        getAdsByFilterUseCase(getAccessToken(), adsFilter).cachedIn(viewModelScope)
+    }, {
+        _ads = it
+
+    })
+
 
     private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {

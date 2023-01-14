@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
@@ -15,9 +18,7 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentMainBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
-import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
-import kg.o.internlabs.omarket.domain.entity.ads.MainFilter
-import kg.o.internlabs.omarket.domain.entity.ads.ResultX
+import kg.o.internlabs.omarket.domain.entity.ads.*
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.PagingAdapterForMain
 import kg.o.internlabs.omarket.utils.LoaderStateAdapter
@@ -66,8 +67,10 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         adapter.setInterface(this@MainFragment, this)
         initAdapter()
         getCategories()
+        initSearchView()
         getAds()
         visibleStatusBar()
+        loadStateListener()
     }
 
     override fun initListener() = with(binding) {
@@ -89,7 +92,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
         )
-        loadListener(adapter, loadingAnim, recMain)
     }
 
     private fun initRecyclerViewAdapter(list: List<ResultEntity>?) {
@@ -124,6 +126,67 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             }
         }
     }
+    private fun getAdsByFilter(search: String?) {
+        viewModel.getAdsByFilter(
+            AdsByFilter(
+                mainFilters = MainFilters(
+                    q = search
+                )
+            )
+        )
+        getAds()
+    }
+    private fun loadStateListener() = with(binding) {
+        adapter.addLoadStateListener { loadState ->
+            if (loadState.refresh is LoadState.Loading) {
+                loadingAnim.isVisible = true
+                cardViewErrorSearch.isVisible = false
+            }
+            if (loadState.refresh !is LoadState.Loading) {
+                if (loadState.refresh is LoadState.Error || adapter.itemCount() < 1) {
+                    loadingAnim.isVisible = false
+                    recMain.isVisible = false
+                    cardViewErrorSearch.isVisible = true
+                } else {
+                    recMain.isVisible = true
+                    cardViewErrorSearch.isVisible = false
+                    loadingAnim.isVisible = false
+                }
+            }
+        }
+    }
+
+    private fun initSearchView() = with(binding) {
+        searchMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (searchMain.query.trim().isNotEmpty() && query!!.length > 2) {
+                    getAdsByFilter(query)
+                    searchMain.clearFocus()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (searchMain.query.trim().isNotEmpty() && newText!!.length > 2) {
+                    println("${newText.isEmpty()} ________")
+                    getAdsByFilter(newText)
+                }
+                if (searchMain.query.trim().isEmpty()) {
+                    viewModel.getAds(
+                        AdsByCategory(
+                            mainFilter = MainFilter(
+                                orderBy = "new",
+                            )
+                        )
+                    )
+                }
+                getAds()
+                return true
+            }
+
+        })
+    }
+
 
     private fun getAds() {
         safeFlowGather {
@@ -143,7 +206,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             AdsByCategory(
                 mainFilter = MainFilter(
                     orderBy = "new",
-                    categoryId = item
+                    categoryId = item,
+                    q = binding.searchMain.query.toString()
                 )
             )
         )
