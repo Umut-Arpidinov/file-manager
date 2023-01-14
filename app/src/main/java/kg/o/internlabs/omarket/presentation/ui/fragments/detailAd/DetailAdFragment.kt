@@ -37,6 +37,7 @@ import kg.o.internlabs.omarket.presentation.ui.fragments.main.MarginItemDecorati
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.utils.LoaderStateAdapter
 import kg.o.internlabs.omarket.utils.loadListener
+import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
 
@@ -102,7 +103,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                         binding.parentScroll.visibility = VISIBLE
                     }
                     is ApiState.Failure -> {
-                        println("--....1.." + it.msg.message)
+                        makeToast(it.msg.message.toString())
                     }
                     is ApiState.Loading -> {
                     }
