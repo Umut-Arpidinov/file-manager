@@ -31,9 +31,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
         initListener()
     }
 
-    open fun checkInternet() {} // проверка интернета
-    open fun initViewModel() {}// Обрабатываем все обзерверы
-    open fun initView() {} // Инициализации вьюшек
-    open fun initListener() {} // Прописываем все логику кликов
-
+    open fun checkInternet() {}
+    open fun initViewModel() {}
+    open fun initView() {}
+    open fun initListener() {}
 }

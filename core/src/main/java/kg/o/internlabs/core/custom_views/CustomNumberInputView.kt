@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding.inflate
+
 class CustomNumberInputView : ConstraintLayout {
     private val binding: CustomInputFieldBinding = inflate(
         LayoutInflater.from(context), this, true

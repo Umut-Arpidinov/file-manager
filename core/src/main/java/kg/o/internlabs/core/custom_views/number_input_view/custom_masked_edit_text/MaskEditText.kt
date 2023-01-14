@@ -11,7 +11,6 @@ import androidx.appcompat.widget.AppCompatEditText
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.custom_views.NumberInputHelper
 
-
 class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placeholder: Char) :
     AppCompatEditText(context, attr) {
     private var mask: String
@@ -168,10 +167,10 @@ class MaskEditText(context: Context, attr: AttributeSet?, mask: String, placehol
         }
     }
 
-    private inner class PlaceholderSpan { // this class is used just to keep track of placeholders in the text
+    private inner class PlaceholderSpan {
     }
 
-    private inner class LiteralSpan { // this class is used just to keep track of literal chars in the text
+    private inner class LiteralSpan {
     }
 
     companion object {
