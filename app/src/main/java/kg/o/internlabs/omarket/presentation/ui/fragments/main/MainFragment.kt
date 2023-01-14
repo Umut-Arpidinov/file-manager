@@ -168,7 +168,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (searchMain.query.trim().isNotEmpty() && newText!!.length > 2) {
-                    println("${newText.isEmpty()} ________")
                     getAdsByFilter(newText)
                 }
                 if (searchMain.query.trim().isEmpty()) {
@@ -211,7 +210,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
                 )
             )
         )
-        makeToast("$item with id was clicked")
         getAds()
     }
 
