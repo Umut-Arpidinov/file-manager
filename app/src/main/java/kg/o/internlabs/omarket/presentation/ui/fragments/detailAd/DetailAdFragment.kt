@@ -26,18 +26,19 @@ import kg.o.internlabs.core.custom_views.cells.Position
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.BottomSheetOverviewBinding
 import kg.o.internlabs.omarket.databinding.FragmentDetailedAdBinding
+import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
+import kg.o.internlabs.omarket.domain.entity.ads.MainFilter
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.CellAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.SimilarAdsPagingAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.MarginItemDecoration
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.utils.LoaderStateAdapter
 import kg.o.internlabs.omarket.utils.loadListener
-import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
-import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
 
 typealias coreString = kg.o.internlabs.core.R.string
 private typealias coreDrawable = kg.o.internlabs.core.R.drawable
@@ -80,7 +81,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     }
 
     override fun adClicked(ad: ResultX) {
-        makeToast(ad.uuid.toString())
+        viewModel.getDetailAd(ad.uuid.toString())
+        binding.parentScroll.scrollTo(0, 0)
     }
 
     override fun imageClicked() {
@@ -92,8 +94,10 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             viewModel.detailAd.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+
                         it.data.resultX.let { it1 -> setDataToViews(it1, isMine) }
-                        println("++++++++" + it.data.resultX)
+                        it.data.resultX?.category.let { it1 -> getSimilarAds(it1?.id) }
+
                         binding.progressInAction.visibility = GONE
                         binding.parentScroll.visibility = VISIBLE
                     }
@@ -157,10 +161,22 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
     }
 
+    private fun getSimilarAds(id: Int?) {
+        viewModel.getAds(
+            AdsByCategory(
+                mainFilter = MainFilter(
+                    orderBy = "new",
+                    categoryId = id
+                )
+            )
+        )
+    }
+
     private fun initAdapter() = with(binding) {
         recSimilarAds.addItemDecoration(
             MarginItemDecoration
-                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
+                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true)
+        )
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
