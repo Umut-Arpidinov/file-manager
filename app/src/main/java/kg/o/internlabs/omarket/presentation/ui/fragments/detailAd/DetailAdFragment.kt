@@ -34,7 +34,6 @@ import kg.o.internlabs.omarket.presentation.ui.fragments.main.MarginItemDecorati
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.AdClickedInMain
 import kg.o.internlabs.omarket.utils.LoaderStateAdapter
 import kg.o.internlabs.omarket.utils.loadListener
-import kg.o.internlabs.omarket.utils.makeToast
 import kg.o.internlabs.omarket.utils.safeFlowGather
 import kotlinx.coroutines.flow.collectLatest
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
@@ -64,6 +63,9 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     override fun initView() = with(binding) {
         super.initView()
         isMine = args?.uuid?.substring(0, 4).toBoolean()
+        recSimilarAds.addItemDecoration(
+            MarginItemDecoration
+                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         getDetailAd()
     }
 
@@ -80,7 +82,10 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     }
 
     override fun adClicked(ad: ResultX) {
-        makeToast(ad.uuid.toString())
+        binding.progressInAction.visibility = VISIBLE
+        binding.parentScroll.visibility = GONE
+        viewModel.getDetailAd(ad.uuid.toString())
+        binding.parentScroll.scrollTo(0, 0)
     }
 
     override fun imageClicked() {
@@ -93,7 +98,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
                 when (it) {
                     is ApiState.Success -> {
                         it.data.resultX.let { it1 -> setDataToViews(it1, isMine) }
-                        println("++++++++" + it.data.resultX)
                         binding.progressInAction.visibility = GONE
                         binding.parentScroll.visibility = VISIBLE
                     }
@@ -158,9 +162,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     }
 
     private fun initAdapter() = with(binding) {
-        recSimilarAds.addItemDecoration(
-            MarginItemDecoration
-                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
