@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -66,7 +67,13 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     override fun initView() = with(binding) {
         super.initView()
         isMine = args?.uuid?.substring(0, 4).toBoolean()
+        recSimilarAds.addItemDecoration(
+            MarginItemDecoration
+                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true)
+        )
+
         getDetailAd()
+
     }
 
     override fun initListener() = with(binding) {
@@ -95,10 +102,8 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             viewModel.detailAd.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-
                         it.data.resultX.let { it1 -> setDataToViews(it1, isMine) }
                         it.data.resultX?.category.let { it1 -> getSimilarAds(it1?.id) }
-
                         binding.progressInAction.visibility = GONE
                         binding.parentScroll.visibility = VISIBLE
                     }
@@ -174,10 +179,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     }
 
     private fun initAdapter() = with(binding) {
-        recSimilarAds.addItemDecoration(
-            MarginItemDecoration
-                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true)
-        )
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
@@ -188,6 +189,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private fun getAds() {
         safeFlowGather {
             viewModel.ads?.collectLatest {
+                adapter.submitData(it.filter { here -> here.uuid != args?.uuid?.substring(4) })
                 adapter.submitData(it)
             }
         }
