@@ -20,4 +20,6 @@
     <string name="terms_and_conditions">Нажимая "Регистрация" вы принимаете\n<a href="">условия пользовательского соглашения </a> </string>
     <string name="sample_views">sample Views</string>
     <string name="date">%s.%s.%s</string>
+    <string name="empty_result">error image</string>
+    <string name="no_search_results">По вашему запросу ничего не найдено</string>
 </resources>

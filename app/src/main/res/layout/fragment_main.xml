@@ -15,9 +15,8 @@
         android:layout_height="wrap_content"
         app:elevation="@dimen/elevation_0dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_main"
-            style="@style/StyleMainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetStart="0dp"
@@ -37,10 +36,11 @@
                     app:layout_constraintBottom_toBottomOf="@+id/search_main"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/search_main" />
-
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_main"
                     style="@style/AppSearchView"
+                    app:queryBackground="@color/transparent"
+                    android:theme="@style/SearchViewTheme"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/view_height_32dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +50,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/category_recycler"
                     android:layout_width="match_parent"
+                    android:focusable="false"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:orientation="horizontal"
@@ -70,7 +71,7 @@
                     app:layout_constraintTop_toBottomOf="@id/category_recycler" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.appbar.MaterialToolbar>
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -103,6 +104,49 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/margin_30dp"
         android:visibility="visible" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_error_search"
+        android:visibility="gone"
+        app:cardElevation="@dimen/view_width_0dp"
+        tools:visibility="visible"
+        android:background="@color/transparent"
+        android:backgroundTint="@color/transparent"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/ic_search_empty"
+            app:layout_constraintStart_toStartOf="@+id/ic_search_empty">
+
+            <ImageView
+                android:contentDescription="@string/empty_result"
+                android:id="@+id/ic_search_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_img_empty"
+                app:layout_constraintBaseline_toTopOf="@string/no_search_results"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/no_search_results"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/no_search_results"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_search_empty" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button"
