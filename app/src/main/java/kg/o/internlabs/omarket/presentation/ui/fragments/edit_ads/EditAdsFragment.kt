@@ -17,7 +17,6 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomWithToggleCellViewClick
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentEditAdsBinding
-import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
 import kg.o.internlabs.omarket.domain.entity.EditAds
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.domain.entity.UploadImageResultEntity
@@ -35,9 +34,10 @@ import kotlinx.coroutines.flow.collectLatest
 class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>(),
     CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper {
 
+    private var listImageUrlInRemote = mutableListOf<String>()
     private val selectedImages = mutableListOf(UploadImageResultEntity())
-    private val selected = mutableListOf(UploadImageResultEntity())
-    private val selectedPath = mutableListOf(UploadImageResultEntity())
+    private val selectedUrl = mutableListOf<UploadImageResultEntity>()
+    private val selectedPath = mutableListOf<UploadImageResultEntity>()
     private val args: EditAdsFragmentArgs by lazy(::initArgs)
     private var imageListAdapter: ImageListAdapter? = null
     private var categoriesEntity = mutableListOf<ResultEntity>()
@@ -63,6 +63,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
 
     override fun initViewModel() {
         super.initViewModel()
+        viewModel.initViewModel()
         args.uuid?.let { it -> viewModel.getDetailAd(it) }
     }
 
@@ -186,7 +187,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                         it.data.resultX?.let { it1 -> setField(it1) }
                     }
                     is ApiState.Failure -> {
-                        println("--....1.." + it.msg.message)
+                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
                     }
                     is ApiState.Loading -> {
                     }
@@ -242,11 +243,15 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     }
 
     private fun uploadImage(imageUri: List<String>) {
-        println("====1====   $imageUri ")
-        println("==${selectedImages.size}==2====   $selectedImages ")
+        println("${this.javaClass.simpleName}====1====   $imageUri ")
+        println("${this.javaClass.simpleName}==${selectedImages.size}==2====   $selectedImages ")
         imageUri.map { selectedImages.addAll(1, listOf(UploadImageResultEntity(url = it))) }
-
-        println("==${selectedImages.size}==3====   $selectedImages ")
+        selectedUrl.addAll(selectedImages)
+        selectedPath.addAll(selectedImages)
+        listImageUrlInRemote = imageUri.toMutableList()
+        println("${this.javaClass.simpleName}==${selectedImages.size}==3====   $selectedImages ")
+        println("${this.javaClass.simpleName}==${selectedUrl.size}==4====   $selectedUrl ")
+        println("${this.javaClass.simpleName}==${selectedPath.size}==5====   $selectedPath ")
         binding.flAddImage.isVisible = false
         imageListAdapter?.initAdapter(selectedImages.toList())
         binding.rwToUploadImages.adapter = imageListAdapter
@@ -260,7 +265,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                         it.data.result?.let { it1 -> addIfNotContains(it1, path, imageUri) }
                     }
                     is ApiState.Failure -> {
-                        println("--....1.." + it.msg.message)
+                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
                     }
                     is ApiState.Loading -> {
                     }
@@ -277,12 +282,12 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         uri: UploadImageResultEntity,
         path: UploadImageResultEntity, imageUri: Uri
     ) {
-        if (uri in selected) return
+        if (uri in selectedUrl) return
         if (containsModel(path)) return
         val itemIndex = selectedImages.indexOf(path)
         if (itemIndex < 0) return
         selectedPath.add(1, path)
-        selected.add(1, uri)
+        selectedUrl.add(1, uri)
         selectedImages[itemIndex] = UploadImageResultEntity(uri.url, path = imageUri)
         imageListAdapter?.imageLoaded(selectedImages)
     }
@@ -294,11 +299,19 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
 
     private fun deleteModelFromLists(index: Int) {
         val uriOfDeletedImage = selectedImages[index].url
+        println("${this.javaClass.simpleName}====1.00==${selectedImages.size}==   $selectedImages ")
+        println("${this.javaClass.simpleName}====1.10====${selectedUrl.size}   $selectedUrl ")
+        println("${this.javaClass.simpleName}====1.20====${selectedPath.size}   $selectedPath ")
         selectedImages.removeAt(index)
-        selected
+        selectedUrl.removeAt(index)
         selectedPath.removeAt(index)
 
-        viewModel.deleteImageFromAd(DeletedImageUrlEntity(url = uriOfDeletedImage))
+        println("${this.javaClass.simpleName}====1.0====${selectedImages.size}   $selectedImages ")
+        println("${this.javaClass.simpleName}====1.1====${selectedUrl.size}   $selectedUrl ")
+        println("${this.javaClass.simpleName}====1.2====${selectedPath.size}   $selectedPath ")
+
+        //viewModel.deleteImageFromAd(DeletedImageUrlEntity(url = uriOfDeletedImage))
+        imageListAdapter?.initAdapter(selectedImages.toList())
     }
 
     override fun toggleClicked(positionOfCell: Int) = with(binding) {
@@ -324,6 +337,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     override fun deleteImage(index: Int) {
         deleteModelFromLists(index)
         selectMainImage(mainImageIndex)
+        deleteImagesFromRemote()
     }
 
     override fun addImage() {
@@ -399,16 +413,24 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                 when (it) {
                     is ApiState.Success -> {
                         makeToast("Объявление создано")
+                        deleteImagesFromRemote()
                         findNavController().navigate(R.id.mainFragment)
                     }
                     is ApiState.Failure -> {
-                        println("--....1.." + it.msg.message)
+                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
                     }
                     is ApiState.Loading -> {
                     }
                 }
             }
         }
+    }
+
+    private fun deleteImagesFromRemote() {
+        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
+        listImageUrlInRemote.retainAll(selectedImages.map { it.url })
+        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
+        //viewModel.deleteImageFromAd()
     }
 
     override fun onDestroy() {

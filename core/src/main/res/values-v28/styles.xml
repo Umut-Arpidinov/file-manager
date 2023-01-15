@@ -325,4 +325,18 @@
     <style name="TextView.Telegram_Hint" parent="TextView.O_Money_Agreement">
         <item name="android:textColor">@color/black_5</item>
     </style>
+
+    <style name="TextView.WithButton">
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">@dimen/text_17sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:lineHeight">@dimen/editable_text_line_height_20.29sp</item>
+    </style>
+
+    <style name="TextView.ForTransparentButton" parent="TextView.ForGreenButton">
+        <item name="android:textColor">@color/red_1</item>
+    </style>
+
 </resources>

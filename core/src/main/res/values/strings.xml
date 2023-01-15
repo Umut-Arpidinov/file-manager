@@ -10,6 +10,8 @@
     <string name="empty_text">Empty text</string>
     <string name="title_in_cells">Заголовок</string>
     <string name="cells_info">Информация</string>
+    <string name="description">Описания</string>
+    <string name="category">Категория</string>
     <string name="cells_subtitle">Подзаголовок</string>
     <string name="svevron" translatable="false">svevron</string>
     <string name="icon">icon</string>

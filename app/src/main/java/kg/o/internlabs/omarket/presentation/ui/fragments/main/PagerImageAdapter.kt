@@ -44,8 +44,9 @@ internal class PagerImageAdapter internal constructor(
         if (imageURLs?.isNotEmpty() == true) {
             isEmpty = false
             return imageURLs.size
-        } else
+        } else {
             isEmpty = true
+        }
             return 1
     }
 }

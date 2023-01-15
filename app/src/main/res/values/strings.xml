@@ -23,6 +23,7 @@
     <string name="terms_and_conditions_of_place_an_ad">Нажимая \"Подать объявление\", вы принимаете\n<a href="">условия пользовательского соглашения </a> </string>
     <string name="sub_category">Подкатегория</string>
     <string name="description">Описания</string>
+    <string name="category">Категория</string>
     <string name="ad_type">Тип сделки</string>
     <string name="price_is_neg">Цена договорная</string>
     <string name="currency">Валюта</string>
@@ -41,5 +42,7 @@
     <string name="create_an_ad">Подать объявление</string>
     <string name="ready_to_deliver">Я готов доставить</string>
     <string name="title">Название</string>
-    <string name="category">Категория</string>
+    <string name="activate_ad">Активировать объявление</string>
+    <string name="edit_ad">Редактировать объявление</string>
+    <string name="delete_ad">Удалить объявление</string>
 </resources>

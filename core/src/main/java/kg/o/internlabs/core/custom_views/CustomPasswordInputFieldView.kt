@@ -10,9 +10,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
-import androidx.core.widget.doOnTextChanged
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomPasswordInputViewBinding
 
@@ -115,7 +112,7 @@ class CustomPasswordInputFieldView : ConstraintLayout {
             setPasswordInfo("emptySpace")
             return false
         }
-        if (password.matches(".*[0-9].*".toRegex()).not()) {
+        if (password.matches(".*\\d.*".toRegex()).not()) {
             setPasswordInfo("noDigits")
             return false
         }
