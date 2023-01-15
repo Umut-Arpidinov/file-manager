@@ -3,6 +3,7 @@ package kg.o.internlabs.omarket.data.remote
 
 import kg.o.internlabs.omarket.data.remote.model.*
 import kg.o.internlabs.omarket.data.remote.model.ads.AdsByCategoryDto
+import kg.o.internlabs.omarket.data.remote.model.ads.AdsByFilterDto
 import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -54,6 +55,13 @@ interface ApiService {
         @Query("page") page: Int?
     ): Response<AdsDto?>
 
+    @POST("api/ads-board/trusted/ads-filter-old/")
+    suspend fun getAdsByFilter(
+        @Header("Authorization") token: String?,
+        @Body adsDto: AdsByFilterDto?,
+        @Query("page") page: Int?
+    ): Response<AdsDto?>
+
     @Multipart
     @POST("api/ads-board/v1/user/upload-avatar/")
     suspend fun uploadAvatar(
@@ -64,7 +72,7 @@ interface ApiService {
     @DELETE("api/ads-board/v1/user/remove-avatar/")
     suspend fun deleteAvatar(
         @Header("Authorization") token: String?
-    ): Response<DeleteDto?>
+    ): Response<DeleteImageDto?>
 
     @GET("/api/ads-board/v1/ads/list/")
     suspend fun getAds(
@@ -90,7 +98,7 @@ interface ApiService {
         @Header("Authorization") token: String?,
         @Body deletingImage: DeletedImageUrlDto,
         @Path("uuid") uuid: String
-    ): Response<DeleteDto?>
+    ): Response<DeleteImageDto?>
 
     @PUT("api/ads-board/v1/ads/{uuid}/")
     suspend fun editAd(

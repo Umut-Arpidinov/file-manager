@@ -14,7 +14,6 @@ import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomRoundedOneCellL
 import kg.o.internlabs.core.databinding.RoundedOneCellLineBinding
 
 class CustomRoundedOneCellLineView : ConstraintLayout {
-
     private var buttonClicked: CustomRoundedOneCellLineViewClick? = null
     private var positionOfCell = 0
 

@@ -262,6 +262,8 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             price = if (!cusPriceIsNegotiable.isChecked()){cusPrice.getText()} else null,
             promotionType = null,
             telegramProfile = if (cusTelegram.isChecked()){cusTelegramNick.getText()} else null,
+            price = cusPrice.getText(),
+            telegramProfile = cusTelegramNick.getText(),
             title = cusTitle.getText(),
             whatsappNum = if (cusWhatsApp.isChecked()){cusWhatsAppNumber.getValue()} else null,
         )*/
@@ -328,4 +330,3 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         super.onDestroy()
     }
 }
-

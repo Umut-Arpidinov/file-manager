@@ -45,4 +45,6 @@
     <string name="activate_ad">Активировать объявление</string>
     <string name="edit_ad">Редактировать объявление</string>
     <string name="delete_ad">Удалить объявление</string>
+    <string name="empty_result">error image</string>
+    <string name="no_search_results">По вашему запросу ничего не найдено</string>
 </resources>

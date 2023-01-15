@@ -37,25 +37,25 @@ class DetailAdViewModel @Inject constructor(
         getAccessTokenFromPrefs()
     }
 
-     fun getDetailAd(uuid: String) {
+    fun getDetailAd(uuid: String) {
         viewModelScope.launch {
-            getDetailAdUseCase(getAccessToken(),uuid).collectLatest {
-             when(it) {
-                 is ApiState.Success ->{
-                     _detailAd.emit(it)
-                 }
-                 is ApiState.Failure ->{
-                     _detailAd.emit(it)
-                 }
-                 is ApiState.Loading ->{
-                     _detailAd.emit(it)
-                 }
-             }
+            getDetailAdUseCase(getAccessToken(), uuid).collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        _detailAd.emit(it)
+                    }
+                    is ApiState.Failure -> {
+                        _detailAd.emit(it)
+                    }
+                    is ApiState.Loading -> {
+                        _detailAd.emit(it)
+                    }
+                }
             }
         }
     }
 
-     private fun getAds(adsByCategory: AdsByCategory? = null) = launchPagingAsync({
+    fun getAds(adsByCategory: AdsByCategory? = null) = launchPagingAsync({
         getAdsUseCase(getAccessToken(), adsByCategory).cachedIn(viewModelScope)
     }, {
         _ads = it
