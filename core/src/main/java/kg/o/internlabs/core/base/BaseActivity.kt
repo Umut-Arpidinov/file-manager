@@ -23,9 +23,9 @@ abstract class BaseActivity<VM: ViewModel, VB: ViewBinding> : AppCompatActivity(
         initListener()
     }
 
-    open fun operationBeforeSetContent() {}  // Этот метод выпонится до задание setContentView
-    open fun checkInternet() {} // Провека интернета
-    open fun initViewModel() {}// Обрабатываем все обзерверы
-    open fun initView() {} // Инициализации вьюшек
-    open fun initListener() {} // Прописываем все логику кликов
+    open fun operationBeforeSetContent() {}
+    open fun checkInternet() {}
+    open fun initViewModel() {}
+    open fun initView() {}
+    open fun initListener() {}
 }

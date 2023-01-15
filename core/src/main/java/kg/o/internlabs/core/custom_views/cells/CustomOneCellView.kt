@@ -16,7 +16,6 @@ import kg.o.internlabs.core.R
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomOneCellsClickListener
 import kg.o.internlabs.core.databinding.CustomOneCellViewBinding
 
-
 class CustomOneCellView : ConstraintLayout {
     private var posOfCell: Int = 0
     private var cellListener: CustomOneCellsClickListener? = null

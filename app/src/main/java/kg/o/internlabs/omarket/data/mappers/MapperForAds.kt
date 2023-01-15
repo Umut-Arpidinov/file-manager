@@ -9,8 +9,6 @@ import kg.o.internlabs.omarket.domain.entity.ads.*
 import retrofit2.Response
 
 class MapperForAds {
-
-    //region toDomain
     fun toDbModel(v: Ads?) = AdsDto(
         details = v?.details,
         errorCode = v?.errorCode,
@@ -55,10 +53,19 @@ class MapperForAds {
     fun toDbModel(v: AdsByCategory?) = AdsByCategoryDto(
         mainFilter = toDbModel(v?.mainFilter)
     )
+    fun toDbModel(v: AdsByFilter?) = AdsByFilterDto(
+        mainFilters = toDbModel(v?.mainFilters)
+    )
+    private fun toDbModel(v: MainFilters?) = MainFiltersDto(
+        q = v?.q
+    )
+
 
     private fun toDbModel(v: MainFilter?) = MainFilterDto(
         orderBy = v?.orderBy,
-        categoryId = v?.categoryId
+        categoryId = v?.categoryId,
+        q = v?.q
+
     )
 
     private fun toDbModel(v: Author?) = AuthorAdsDto(
@@ -204,6 +211,13 @@ class MapperForAds {
         result = toEntity(v?.result),
         resultCode = v?.resultCode
     )
+    fun toEntity(v: AdsByFilterDto?) = AdsByFilter(
+        mainFilters = toEntity(v?.mainFilters)
+    )
+    private fun toEntity(v: MainFiltersDto?) = MainFilters(
+        q = v?.q
+    )
+
 
     fun toEntity(v: EditAdsDto?) = EditAds(
         details = v?.details,
@@ -238,8 +252,10 @@ class MapperForAds {
 
     private fun toEntity(v: MainFilterDto?) = MainFilter(
         orderBy = v?.orderBy,
-        categoryId = v?.categoryId
+        categoryId = v?.categoryId,
+        q =v?.q
     )
+
 
     private fun toEntity(v: AuthorAdsDto?) = Author(
         avatar = v?.avatar,
@@ -403,6 +419,4 @@ class MapperForAds {
         } else {
             resp.errorBody()?.let { Response.error(resp.code(), it) }
         }
-
-    // endregion
 }

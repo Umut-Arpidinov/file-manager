@@ -40,4 +40,6 @@
     <string name="create_an_ad">Подать объявление</string>
     <string name="ready_to_deliver">Я готов доставить</string>
     <string name="date">%s.%s.%s</string>
+    <string name="empty_result">error image</string>
+    <string name="no_search_results">По вашему запросу ничего не найдено</string>
 </resources>
