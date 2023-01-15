@@ -18,6 +18,7 @@ import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomWithToggleCellV
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentNewAdsBinding
 import kg.o.internlabs.omarket.domain.entity.*
+import kg.o.internlabs.omarket.presentation.ui.fragments.main.CategoryClickHandler
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper
@@ -29,7 +30,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
-    CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper {
+    CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper,
+    CategoryClickHandler {
 
     private var selectedImages = mutableListOf(UploadImageResultEntity())
     private var selected = mutableListOf(UploadImageResultEntity())
@@ -37,6 +39,8 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     private var args: NewAdsFragmentArgs? = null
     private var imageListAdapter: ImageListAdapter? = null
     private var subCategoriesEntity = SubCategoriesEntity()
+    private var categoryEntity = ResultEntity()
+    private var list: List<ResultEntity>? = null
 
     companion object {
         var mainImageIndex = 1
@@ -74,15 +78,17 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         cusWhatsApp.setInterface(this@NewAdsFragment, 3)
         cusTelegram.setInterface(this@NewAdsFragment, 4)
         cusLocationOnTheMap.setInterface(this@NewAdsFragment, 5)
+
+        getCategories()
     }
 
     override fun initListener() = with(binding) {
         super.initListener()
 
         cusCategory.setOnClickListener {
-            val category = ResultEntity()
-            cusCategory.setText(category.name.toString())
-            cusSubCategory.isVisible = category.subCategories?.isNotEmpty() == true
+            bottomSheetCategory.root.isVisible = true
+            cusCategory.setText(categoryEntity.name.toString())
+            cusSubCategory.isVisible = categoryEntity.subCategories?.isNotEmpty() == true
         }
 
         cusSubCategory.setOnClickListener {
@@ -313,6 +319,33 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
                 }
             }
         }
+    }
+
+    private fun initCategoryAdapter(list: List<ResultEntity>?) {
+        binding.bottomSheetCategory.recyclerCategoryBs.adapter =
+            CategoriesBottomSheetAdapter(list, this)
+    }
+
+    private fun getCategories() {
+        safeFlowGather {
+            viewModel.categories.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        list = it.data.result
+                        initCategoryAdapter(list)
+                    }
+                    is ApiState.Failure -> {
+                        makeToast(it.msg.message.toString())
+                    }
+                    is ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    override fun clickedCategory(item: ResultEntity?) {
+        TODO("Not yet implemented")
     }
 
     override fun onDestroy() {

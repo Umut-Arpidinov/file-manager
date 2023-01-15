@@ -4,10 +4,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
-import kg.o.internlabs.omarket.domain.entity.DeleteImageEntity
-import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
-import kg.o.internlabs.omarket.domain.entity.EditAds
-import kg.o.internlabs.omarket.domain.entity.UploadImageEntity
+import kg.o.internlabs.omarket.domain.entity.*
+import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
 import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.DeleteImageFromAdUseCase
 import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.EditAnAdUseCase
 import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.InitiateAdUseCase
@@ -24,7 +22,8 @@ class NewAdsViewModel @Inject constructor(
     private val initiateAd: InitiateAdUseCase,
     private val uploadImageToAdUseCase: UploadImageToAdUseCase,
     private val deleteImageFromAdUseCase: DeleteImageFromAdUseCase,
-    private val editAnAdUseCase: EditAnAdUseCase
+    private val editAnAdUseCase: EditAnAdUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase
 ) : BaseViewModel() {
 
     private val _token = MutableStateFlow("")
@@ -39,13 +38,18 @@ class NewAdsViewModel @Inject constructor(
     private val _editedAd = MutableSharedFlow<ApiState<EditAds>>()
     val editedAd = _editedAd.asSharedFlow()
 
+    private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
+    val categories = _categories.asSharedFlow()
+
     private val _deleteImage = MutableSharedFlow<ApiState<DeleteImageEntity>>()
 
     init {
         getAccessTokenFromPrefs()
     }
 
-    fun initViewModel() {}
+    fun initViewModel() {
+        getCategories()
+    }
 
     private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {
@@ -131,6 +135,24 @@ class NewAdsViewModel @Inject constructor(
                     }
                     is ApiState.Failure -> {
                         _uuid.value = ""
+                    }
+                    ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getCategories() {
+        viewModelScope.launch {
+            getCategoriesUseCase(getAccessToken()).collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        _categories.emit(it)
+
+                    }
+                    is ApiState.Failure -> {
+                        _categories.emit(it)
                     }
                     ApiState.Loading -> {
                     }
