@@ -131,4 +131,10 @@ class CustomAddPriceCellView : ConstraintLayout {
     fun setInterface(addPriceClick: CustomAddPriceCellViewClick) {
         aboutAdvertiser = addPriceClick
     }
+
+    fun isOwnAd() = with(binding) {
+        cv.visibility = GONE
+        tvCellTitle.visibility = GONE
+        ivShevron.visibility = GONE
+    }
 }

@@ -27,6 +27,7 @@
         android:id="@+id/parent_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -38,8 +39,8 @@
                 android:id="@+id/image_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_240dp"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="@dimen/dimen_0dp">
+                app:cardCornerRadius="@dimen/dimen_0dp"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -110,7 +111,7 @@
                 app:isNumberVerified="true"
                 app:isOMoneyAccepted="true"
                 app:setPriceWithoutCoins="@string/sample_current_price"
-                app:setTitle="@string/app_name"/>
+                app:setTitle="@string/app_name" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cell_recycler"
@@ -121,16 +122,6 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/card_overview_cell" />
 
-            <kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
-                android:id="@+id/cell_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                app:isShevronVisible="true"
-                app:hasIcon="true"
-                app:setIcon="@drawable/ic_location"
-                app:setTitle="@string/location" />
-
             <TextView
                 android:id="@+id/write_btn"
                 style="@style/AppDefaultBlueText"
@@ -138,7 +129,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margin_16dp"
-                android:padding="@dimen/margin_14dp"
+                android:paddingStart="@dimen/margin_14dp"
+                android:paddingTop="@dimen/margin_14dp"
+                android:paddingEnd="@dimen/margin_14dp"
                 android:text="@string/write"
                 android:textSize="17sp" />
 
@@ -147,11 +140,15 @@
                 style="@style/GreenButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_22dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
                 android:text="@string/call"
                 app:shapeAppearanceOverlay="@style/MyShapeAppearance" />
 
             <TextView
+                android:id="@+id/text_before_ads"
                 style="@style/MainSearchResultText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +173,15 @@
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                tools:listitem="@layout/card_view_main_ads"/>
+                tools:listitem="@layout/card_view_main_ads" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_in_action"
+        style="@style/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_30dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

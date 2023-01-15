@@ -6,6 +6,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -50,6 +51,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
     private val args: DetailAdFragmentArgs? by navArgs()
     private var adapter = SimilarAdsPagingAdapter()
     private var moreDetailIsPressed = false
+    private var isMine = false
 
     override val viewModel: DetailAdViewModel by lazy {
         ViewModelProvider(this)[DetailAdViewModel::class.java]
@@ -61,9 +63,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     override fun initView() = with(binding) {
         super.initView()
-        adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
-        initAdapter()
-        getAds()
+        isMine = args?.uuid?.substring(0, 4).toBoolean()
         getDetailAd()
     }
 
@@ -76,8 +76,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
     override fun initViewModel() {
         super.initViewModel()
-        args?.uuid?.let { it -> viewModel.getDetailAd(it) }
-
+        args?.uuid?.substring(4)?.let { it -> viewModel.getDetailAd(it) }
     }
 
     override fun adClicked(ad: ResultX) {
@@ -93,8 +92,10 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             viewModel.detailAd.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        it.data.resultX.let { it1 -> setDataToViews(it1) }
+                        it.data.resultX.let { it1 -> setDataToViews(it1, isMine) }
                         println("++++++++" + it.data.resultX)
+                        binding.progressInAction.visibility = GONE
+                        binding.parentScroll.visibility = VISIBLE
                     }
                     is ApiState.Failure -> {
                         println("--....1.." + it.msg.message)
@@ -106,7 +107,19 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         }
     }
 
-    private fun setDataToViews(ad: ResultX?) = with(binding) {
+    private fun setDataToViews(ad: ResultX?, isMine: Boolean) = with(binding) {
+        if (isMine) {
+            callBtn.text = "Редактировать"
+            writeBtn.visibility = GONE
+            textBeforeAds.visibility = GONE
+            customMainView.isOwnAd()
+        }
+        if (!isMine) {
+            adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
+            initAdapter()
+            getAds()
+        }
+
         initViewPagerAdapter(imageViewPager, currentPos, ad?.minifyImages)
         initCellAdapter(cellRecycler, ad)
 
@@ -121,8 +134,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
         if (description.lineCount <= 3) {
             moreDetails.visibility = GONE
-        }
-        else {
+        } else {
             moreDetails.setOnClickListener {
                 pressMoreDetails(moreDetails, description)
             }
@@ -130,23 +142,25 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
         setMainCardView(customMainView, ad)
 
-        callBtn.setOnClickListener {
-            showDialog(ad?.author?.contactNumber!!, true, ad.telegramProfile)
-        }
-
-        writeBtn.setOnClickListener {
-            showDialog(ad?.author?.contactNumber!!, false, ad.telegramProfile)
+        val num = checkNumber(ad?.author?.msisdn!!)
+        if (num != "") {
+            callBtn.setOnClickListener {
+                if (isMine) {
+                    findNavController().navigate(DetailAdFragmentDirections.goToEditFragment())
+                } else {
+                    showDialog(num, true, ad.telegramProfile)
+                }
+            }
+            writeBtn.setOnClickListener {
+                showDialog(num, false, ad.telegramProfile)
+            }
         }
     }
 
     private fun initAdapter() = with(binding) {
         recSimilarAds.addItemDecoration(
-            MarginItemDecoration(
-                resources.getDimensionPixelSize(
-                    R.dimen.item_margin_7dp
-                )
-            )
-        )
+            MarginItemDecoration
+                (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         recSimilarAds.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
@@ -209,16 +223,17 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         if (ad?.price == null)
             customMainView.setPriceWithoutCoins(getString(coreString.null_price))
         else {
+            val price = ad.price.toInt().formatDecimalSeparator()
             if (ad.currency == "som")
                 customMainView.setPriceWithoutCoins(
-                    ad.price, true
+                    price, true
                 )
             else {
                 try {
                     customMainView.setPriceWithoutCoins(
                         String.format(
                             getString(coreString.dollar_price_overview),
-                            ad.price.toInt()
+                            price
                         )
                     )
                 } catch (e: NumberFormatException) {
@@ -254,12 +269,17 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
 
         if (ad?.createdAt != null && ad.createdAt != "") {
             var date = ad.createdAt.substring(0, 10)
-            date = getString(R.string.date, date.substring(8, 10), date.substring(5, 7), date.substring(0, 4))
+            date = getString(
+                R.string.date,
+                date.substring(8, 10),
+                date.substring(5, 7),
+                date.substring(0, 4)
+            )
             listOfDetails.add(Pair("Дата публикации", date))
         }
 
         if (ad?.location?.name != null && ad.location.name != "")
-            listOfDetails.add(Pair("Город", ad.location.name))
+            listOfDetails.add(Pair("Город", ad.location.name!!))
 
 
         cellRecycler.adapter = CellAdapter(listOfDetails)
@@ -367,5 +387,25 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         } catch (e: NameNotFoundException) {
             e.printStackTrace()
         }
+    }
+
+    private fun Int.formatDecimalSeparator(): String {
+        return toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(" ")
+            .reversed()
+    }
+
+    private fun checkNumber(number: String): String {
+        return if (number.substring(0, 3) == "996") {
+            "+$number"
+        } else if ((number.first() == '0' && number.length == 9) || number.substring(
+                0,
+                4
+            ) == "+996"
+        )
+            number
+        else ""
     }
 }
