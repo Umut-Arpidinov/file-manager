@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.collectLatest
 class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>(),
     CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper {
 
-    private var listImageUrlInRemote = mutableListOf<String>()
+    private var listImageUrlInRemote = mutableListOf<UploadImageResultEntity>()
     private val selectedImages = mutableListOf(UploadImageResultEntity())
     private val selectedUrl = mutableListOf<UploadImageResultEntity>()
     private val selectedPath = mutableListOf<UploadImageResultEntity>()
@@ -248,7 +248,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         imageUri.map { selectedImages.addAll(1, listOf(UploadImageResultEntity(url = it))) }
         selectedUrl.addAll(selectedImages)
         selectedPath.addAll(selectedImages)
-        listImageUrlInRemote = imageUri.toMutableList()
+        listImageUrlInRemote = imageUri.map { UploadImageResultEntity(url = it) }.toMutableList()
         println("${this.javaClass.simpleName}==${selectedImages.size}==3====   $selectedImages ")
         println("${this.javaClass.simpleName}==${selectedUrl.size}==4====   $selectedUrl ")
         println("${this.javaClass.simpleName}==${selectedPath.size}==5====   $selectedPath ")
@@ -289,7 +289,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         selectedPath.add(1, path)
         selectedUrl.add(1, uri)
         selectedImages[itemIndex] = UploadImageResultEntity(uri.url, path = imageUri)
-        imageListAdapter?.imageLoaded(selectedImages)
+        imageListAdapter?.imagesLoaded(selectedImages)
     }
 
     private fun containsModel(m: UploadImageResultEntity) =
@@ -309,8 +309,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         println("${this.javaClass.simpleName}====1.0====${selectedImages.size}   $selectedImages ")
         println("${this.javaClass.simpleName}====1.1====${selectedUrl.size}   $selectedUrl ")
         println("${this.javaClass.simpleName}====1.2====${selectedPath.size}   $selectedPath ")
-
-        //viewModel.deleteImageFromAd(DeletedImageUrlEntity(url = uriOfDeletedImage))
         imageListAdapter?.initAdapter(selectedImages.toList())
     }
 
@@ -428,7 +426,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
 
     private fun deleteImagesFromRemote() {
         println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
-        listImageUrlInRemote.retainAll(selectedImages.map { it.url })
+        //listImageUrlInRemote.retainAll(selectedImages.map { it.url })
+        listImageUrlInRemote.filter { it in selectedImages }
         println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
         //viewModel.deleteImageFromAd()
     }

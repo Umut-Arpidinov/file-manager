@@ -106,7 +106,7 @@ internal class ImageListAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun imageLoaded(updatedList: MutableList<UploadImageResultEntity>) {
+    fun imagesLoaded(updatedList: MutableList<UploadImageResultEntity>) {
         list = updatedList
         notifyDataSetChanged()
     }

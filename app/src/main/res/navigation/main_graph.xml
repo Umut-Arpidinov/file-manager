@@ -188,11 +188,7 @@
         android:name="kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.DetailAdFragment"
         android:label="fragment_create_ads"
         tools:layout="@layout/fragment_detailed_ad">
-        <argument
-            android:name="uuid"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
+
         <action
             android:id="@+id/go_to_viewer"
             app:destination="@id/mediaViewer"
