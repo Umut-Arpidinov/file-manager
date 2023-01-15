@@ -9,14 +9,12 @@ import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CategoryViewHolderBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 
-
 class CategoryRecyclerViewAdapter(
     private var listOfResult: List<ResultEntity>?,
     private val context: Context,
     private val clickHandler: CategoryClickHandler
 
     ) : RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val binding = CategoryViewHolderBinding
@@ -35,7 +33,6 @@ class CategoryRecyclerViewAdapter(
         return listOfResult!!.size
     }
 
-
     inner class CategoryViewHolder(val binding: CategoryViewHolderBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ResultEntity?, context: Context) = with(binding) {
@@ -50,8 +47,6 @@ class CategoryRecyclerViewAdapter(
                         .fitCenter()
                         .into(categoryImage)
                 }
-
         }
     }
-
 }

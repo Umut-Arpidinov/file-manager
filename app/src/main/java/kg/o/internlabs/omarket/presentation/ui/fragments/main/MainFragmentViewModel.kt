@@ -10,8 +10,8 @@ import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByFilter
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
-import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetAdsByFilterUseCase
+import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.CheckNumberFromPrefsUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
@@ -24,8 +24,7 @@ class MainFragmentViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
     private val getAdsUseCase: GetAdsUseCase,
-    private val getNumber: CheckNumberFromPrefsUseCase
-    private val getAdsUseCase: GetAdsUseCase,
+    private val getNumber: CheckNumberFromPrefsUseCase,
     private val getAdsByFilterUseCase: GetAdsByFilterUseCase
 ) :
     BaseViewModel() {
@@ -76,8 +75,6 @@ class MainFragmentViewModel @Inject constructor(
         _ads = it
 
     })
-
-
     private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {
             getAccessTokenFromPrefsUseCase().collectLatest {

@@ -232,9 +232,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
             AdsByCategory(
                 mainFilter = MainFilter(
                     orderBy = "new",
-                    categoryId = item,
+                    categoryId = item.id,
                     q = binding.searchMain.query.toString()
-                    categoryId = item.id
                 )
             )
         )
