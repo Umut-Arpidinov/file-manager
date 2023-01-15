@@ -51,11 +51,17 @@
         <attr name="isEditableView" format="boolean" />
         <attr name="setHint" format="string" />
         <attr name="setText" format="string" />
+        <attr name="android:inputType"/>
         <attr name="setDelimiter" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomTelegramCellView">
+        <attr name="android:text"/>
     </declare-styleable>
 
     <declare-styleable name="CustomWithToggleCellView">
         <attr name="setTitle" />
+        <attr name="isChecked" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="CustomFAQCellView">

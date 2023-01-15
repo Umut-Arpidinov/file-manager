@@ -1,13 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.new_ads.NewAdsFragment">
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_faq"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello world" />
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/arrow_left_magenta">
 
-</FrameLayout>
+        <TextView
+            style="@style/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_ad" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_faq">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+                android:id="@+id/cus_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:inputType="textMultiLine"
+                app:isEditableView="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setDelimiter="50"
+                app:setHint="@string/naming" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+                android:id="@+id/cus_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                app:isEditableView="false"
+                app:layout_constraintTop_toBottomOf="@id/cus_title"
+                app:setHint="@string/category" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+                android:id="@+id/cus_sub_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:visibility="gone"
+                app:isEditableView="false"
+                app:layout_constraintTop_toBottomOf="@id/cus_category"
+                app:setHint="@string/sub_category" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+                android:id="@+id/cus_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:inputType="textMultiLine"
+                app:isEditableView="true"
+                app:layout_constraintTop_toBottomOf="@id/cus_sub_category"
+                app:setDelimiter="1000"
+                app:setHint="@string/description" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+                android:id="@+id/cus_ad_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                app:isEditableView="false"
+                app:layout_constraintTop_toBottomOf="@id/cus_description"
+                app:setHint="@string/order_type" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomWithToggleCellView
+                android:id="@+id/cus_price_is_negotiable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                app:layout_constraintTop_toBottomOf="@id/cus_ad_type"
+                app:setTitle="@string/price_is_neg" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+                android:id="@+id/cus_currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                app:isEditableView="false"
+                app:layout_constraintTop_toBottomOf="@id/cus_price_is_negotiable"
+                app:setHint="@string/currency" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+                android:id="@+id/cus_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:inputType="numberDecimal"
+                app:isEditableView="true"
+                app:layout_constraintTop_toBottomOf="@id/cus_currency"
+                app:setDelimiter="9"
+                app:setHint="@string/price" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomOneCellView
+                android:id="@+id/cus_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                app:layout_constraintTop_toBottomOf="@id/cus_price"
+                app:setText="@string/bishkek" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomWithToggleCellView
+                android:id="@+id/cus_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/cus_location"
+                app:setTitle="@string/ready_to_deliver" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomWithToggleCellView
+                android:id="@+id/cus_location_on_the_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                app:layout_constraintTop_toBottomOf="@id/cus_delivery"
+                app:setTitle="@string/location_on_the_map" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomWithToggleCellView
+                android:id="@+id/cus_o_money_accept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                app:layout_constraintTop_toBottomOf="@id/cus_location_on_the_map"
+                app:setTitle="@string/o_money_pay" />
+
+            <TextView
+                android:id="@+id/tv_o_money_pay_agreement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:background="@drawable/o_money_agreement_backround"
+                android:padding="@dimen/padding_8dp"
+                android:text="@string/o_money_agreement"
+                android:textAppearance="@style/TextView.O_Money_Agreement"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/cus_o_money_accept" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomWithToggleCellView
+                android:id="@+id/cus_whats_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom_8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_o_money_pay_agreement"
+                app:setTitle="@string/whatsapp_me" />
+
+            <kg.o.internlabs.core.custom_views.number_input_view.custom_masked_edit_text.MaskEditText
+                android:id="@+id/cus_whats_app_number"
+                style="@style/Container.OneCell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom_8dp"
+                android:autofillHints="phone"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:minHeight="@dimen/min_height_48dp"
+                android:paddingHorizontal="@dimen/padding_horizontal_16dp"
+                android:textAppearance="@style/EditableTextView"
+                android:textCursorDrawable="@color/magenta_1"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/cus_whats_app"
+                app:masks="+### ### ### ###"
+                app:placeholder="" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomWithToggleCellView
+                android:id="@+id/cus_telegram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom_8dp"
+                app:layout_constraintTop_toBottomOf="@id/cus_whats_app_number"
+                app:setTitle="@string/write_me_in_telegram" />
+
+            <kg.o.internlabs.core.custom_views.cells.CustomTelegramCellView
+                android:id="@+id/cus_telegram_nick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom_8dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/cus_telegram" />
+
+            <TextView
+                android:id="@+id/tv_information_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:layout_marginBottom="@dimen/margin_bottom_16dp"
+                android:background="@drawable/o_money_agreement_backround"
+                android:padding="@dimen/padding_8dp"
+                android:text="@string/image_load_information"
+                android:textAppearance="@style/TextView.O_Money_Agreement"
+                app:layout_constraintTop_toBottomOf="@id/cus_telegram_nick" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_image_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_16dp"
+                android:layout_marginBottom="@dimen/margin_bottom_48dp"
+                android:layout_marginEnd="@dimen/margin_end_8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_information_block">
+
+                <FrameLayout
+                    android:id="@+id/fl_add_image"
+                    android:layout_width="@dimen/icon_width_100dp"
+                    android:layout_height="@dimen/icon_height_100dp"
+                    android:visibility="visible"
+                    android:layout_marginStart="@dimen/margin_start_8dp"
+                    android:background="@drawable/bg_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/iv_add_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/add_icon"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_add" />
+                </FrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rw_to_upload_images"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/margin_start_8dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/fl_add_image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/add_image_item" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_ad_agreement"
+                style="@style/TextView.Add_Ads_Agreement"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
+                android:layout_marginTop="@dimen/margin_top_48dp"
+                android:padding="@dimen/padding_8dp"
+                android:text="@string/terms_and_conditions_of_place_an_ad"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_image_block" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_ad"
+                style="@style/GreenButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:clickable="false"
+                android:enabled="false"
+                android:text="@string/create_an_ad"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_ad_agreement"
+                app:shapeAppearanceOverlay="@style/MyShapeAppearance" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,9 +8,12 @@ import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
+import kg.o.internlabs.omarket.domain.entity.ads.AdsByFilter
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
+import kg.o.internlabs.omarket.domain.usecases.GetAdsByFilterUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetAdsUseCase
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
+import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.CheckNumberFromPrefsUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -20,15 +23,17 @@ import javax.inject.Inject
 class MainFragmentViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
-    private val getAdsUseCase: GetAdsUseCase
+    private val getAdsUseCase: GetAdsUseCase,
+    private val getNumber: CheckNumberFromPrefsUseCase,
+    private val getAdsByFilterUseCase: GetAdsByFilterUseCase
 ) :
     BaseViewModel() {
 
     private val _token = MutableStateFlow("")
     val token = _token.asStateFlow()
 
-    private val _uuid = MutableStateFlow("")
-    val uuid = _uuid.asStateFlow()
+    private val _number = MutableStateFlow("")
+    val number = _number.asStateFlow()
 
     private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
     val categories = _categories.asSharedFlow()
@@ -64,7 +69,12 @@ class MainFragmentViewModel @Inject constructor(
     }, {
         _ads = it
     })
+    fun getAdsByFilter(adsFilter: AdsByFilter? = null) = launchPagingAsync({
+        getAdsByFilterUseCase(getAccessToken(), adsFilter).cachedIn(viewModelScope)
+    }, {
+        _ads = it
 
+    })
     private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {
             getAccessTokenFromPrefsUseCase().collectLatest {
@@ -76,7 +86,15 @@ class MainFragmentViewModel @Inject constructor(
         }
     }
 
-    private fun getAccessToken() = token.value
-    private fun getUuid() = uuid.value
+    fun getNumberFromPrefs() {
+        viewModelScope.launch {
+            getNumber().collectLatest {
+                if (it != null) {
+                    _number.emit(it)
+                }
+            }
+        }
+    }
 
+    private fun getAccessToken() = token.value
 }

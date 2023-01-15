@@ -24,9 +24,15 @@ class CustomWithToggleCellView : ConstraintLayout {
                 setTitle(it)
             }
 
+            isChecked(getBoolean(R.styleable.CustomWithToggleCellView_isChecked, false))
+
             initListeners()
             recycle()
         }
+    }
+
+    fun isChecked(isChecked: Boolean) {
+        binding.btnSwitch.isChecked = isChecked
     }
 
     private fun initListeners() {
@@ -45,4 +51,6 @@ class CustomWithToggleCellView : ConstraintLayout {
     }
 
     fun getTitle() = binding.tvTitle.text.toString()
+
+    fun isChecked() = binding.btnSwitch.isChecked
 }

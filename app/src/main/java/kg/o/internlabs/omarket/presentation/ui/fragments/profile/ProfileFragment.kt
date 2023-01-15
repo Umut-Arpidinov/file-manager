@@ -230,8 +230,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 when (it) {
                     is ApiState.Success -> {
                         cusProfile.isProgressVisible()
-                        it.data.result?.let { it1 -> binding.cusProfile.setIcon(it1) }
-                        requireActivity().makeToast(it.data.result.toString())
+                        cusProfile.setIcon(kg.o.internlabs.core.R.drawable.ic_user_profile)
                     }
                     is ApiState.Failure -> {
                         cusProfile.isProgressVisible()

@@ -13,4 +13,11 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"/>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminateDrawable="@drawable/progress"
+        android:visibility="visible" />
+
 </FrameLayout>

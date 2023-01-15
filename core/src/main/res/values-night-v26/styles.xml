@@ -45,6 +45,10 @@
         <item name="android:fontWeight">700</item>
     </style>
 
+    <style name="TextView.Telegram_Hint" parent="TextView.O_Money_Agreement">
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
     <style name="EditableTextView">
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
         <item name="android:minHeight">@dimen/min_height_20dp</item>
@@ -55,6 +59,11 @@
 
     <style name="EditableTextView.Hint" parent="EditableTextView">
         <item name="android:textColorHint">@color/gray_1</item>
+        <item name="android:alpha">0.5</item>
+    </style>
+
+    <style name="EditableTextView.AsHint" parent="EditableTextView">
+        <item name="android:textColor">@color/gray_1</item>
         <item name="android:alpha">0.5</item>
     </style>
 

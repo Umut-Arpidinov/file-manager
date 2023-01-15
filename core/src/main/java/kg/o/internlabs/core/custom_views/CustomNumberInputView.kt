@@ -3,13 +3,13 @@ package kg.o.internlabs.core.custom_views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding
 import kg.o.internlabs.core.databinding.CustomInputFieldBinding.inflate
+
 class CustomNumberInputView : ConstraintLayout {
     private val binding: CustomInputFieldBinding = inflate(
         LayoutInflater.from(context), this, true
@@ -74,7 +74,6 @@ class CustomNumberInputView : ConstraintLayout {
             setMessage("Введите номер телефона")
             numberInputHelperText.setTextAppearance(R.style.hint)
             enterNumberEditText.eraseField()
-
         }
     }
 }

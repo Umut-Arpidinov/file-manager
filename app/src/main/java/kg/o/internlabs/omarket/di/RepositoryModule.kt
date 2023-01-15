@@ -5,9 +5,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kg.o.internlabs.omarket.data.repository.AdsRepositoryImpl
+import kg.o.internlabs.omarket.data.repository.CrudAdsRepositoryImpl
 import kg.o.internlabs.omarket.data.repository.ProfileRepositoryImpl
 import kg.o.internlabs.omarket.data.repository.RegisterRepositoryImpl
 import kg.o.internlabs.omarket.domain.repository.AdsRepository
+import kg.o.internlabs.omarket.domain.repository.CRUDAdsRepository
 import kg.o.internlabs.omarket.domain.repository.ProfileRepository
 import kg.o.internlabs.omarket.domain.repository.RegisterRepository
 
@@ -29,4 +31,9 @@ abstract class RepositoryModule {
     abstract fun provideProfileRepository(
         profile: ProfileRepositoryImpl
     ): ProfileRepository
+
+    @Binds
+    abstract fun provideCrudAdsRepository(
+        crudAds: CrudAdsRepositoryImpl
+    ): CRUDAdsRepository
 }

@@ -1,80 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_editable"
+    <FrameLayout
+        android:id="@+id/fl_editable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:boxBackgroundMode="none"
-        app:hintEnabled="false"
-        app:hintTextAppearance="@style/EditableTextView.Hint"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_editable"
-            style="@style/Container.EditCells"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:focusableInTouchMode="true"
-            android:hint="@string/description"
-            android:maxLength="0"
-            android:minHeight="@dimen/min_height_48dp"
-            android:padding="0dp"
-            android:paddingHorizontal="@dimen/padding_16dp"
-            android:textAppearance="@style/EditableTextView" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_not_editable_views"
-        style="@style/Container.EditCells"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/til_editable">
+        android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_not_editable"
-            android:layout_width="0dp"
+            android:id="@+id/til_editable"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:focusableInTouchMode="false"
+            android:gravity="center_vertical"
             app:boxBackgroundMode="none"
             app:hintEnabled="false"
-            app:hintTextAppearance="@style/EditableTextView.Hint"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:hintTextAppearance="@style/EditableTextView.Hint">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_not_editable"
-                style="@style/Container.EditCells"
+                android:id="@+id/et_editable"
+                style="@style/Container.OneCell"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="false"
-                android:hint="@string/category"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:hint="@string/description"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:maxLength="0"
                 android:minHeight="@dimen/min_height_48dp"
                 android:padding="0dp"
                 android:paddingHorizontal="@dimen/padding_16dp"
-                android:textAppearance="@style/EditableTextView" />
+                android:textAppearance="@style/EditableTextView"
+                tools:ignore="TextContrastCheck" />
+
         </com.google.android.material.textfield.TextInputLayout>
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_not_editable"
+        style="@style/Container.OneCell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:focusableInTouchMode="true"
+        android:minHeight="@dimen/min_height_48dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:focusableInTouchMode="true"
+            android:paddingHorizontal="@dimen/padding_16dp"
+            android:textAppearance="@style/EditableTextView.AsHint"
+            tools:text="@string/category" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:focusableInTouchMode="true"
+            android:paddingHorizontal="@dimen/padding_16dp"
+            android:textAppearance="@style/EditableTextView"
+            android:visibility="gone"
+            tools:text="Title" />
 
         <ImageView
             android:id="@+id/iv_shevron"
             android:layout_width="@dimen/view_width_32dp"
             android:layout_height="@dimen/view_height_32dp"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="@dimen/margin_end_8dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/shevron"
             android:scaleType="centerInside"
-            android:src="@drawable/arrow_shevron"/>
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:src="@drawable/arrow_shevron" />
+    </FrameLayout>
+</FrameLayout>

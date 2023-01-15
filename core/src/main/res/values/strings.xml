@@ -121,4 +121,7 @@
     <string name="som_price">%,d c</string>
     <string name="dollar_price_overview">$%s</string>
     <string name="choose_app">Выберите приложение</string>
+    <string name="at_sign">\@</string>
+    <string name="space" />
+    <string name="telegram_hint">Введите логин телеграм в формате @имя</string>
 </resources>

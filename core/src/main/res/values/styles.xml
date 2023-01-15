@@ -19,6 +19,24 @@
         <item name="android:background">@color/white_1</item>
     </style>
 
+    <style name="TextView.O_Money_Agreement">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textColor">@color/gray_1</item>
+    </style>
+
+    <style name="TextView.Add_Ads_Agreement" parent="TextView.O_Money_Agreement">
+        <item name="android:textColorLink">@color/magenta_1</item>
+    </style>
+
+    <style name="TextView.Main_Image" parent="TextView.O_Money_Agreement">
+        <item name="android:textColor">@color/white_1</item>
+    </style>
+
+    <style name="TextView.Telegram_Hint" parent="TextView.O_Money_Agreement">
+        <item name="android:textColor">@color/black_5</item>
+    </style>
+
     <style name="EditableTextView">
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
         <item name="android:minHeight">@dimen/min_height_20dp</item>
@@ -28,6 +46,11 @@
 
     <style name="EditableTextView.Hint" parent="EditableTextView">
         <item name="android:textColorHint">@color/gray_1</item>
+        <item name="android:alpha">0.5</item>
+    </style>
+
+    <style name="EditableTextView.AsHint" parent="EditableTextView">
+        <item name="android:textColor">@color/gray_1</item>
         <item name="android:alpha">0.5</item>
     </style>
 
@@ -119,6 +142,10 @@
         <item name="android:background">@color/gray_5</item>
     </style>
 
+    <style name="Container.OneCell">
+        <item name="android:background">@color/gray_6</item>
+    </style>
+
     <style name="Divider">
         <item name="android:background">?android:attr/listDivider</item>
         <item name="android:visibility">visible</item>
@@ -159,7 +186,7 @@
         <item name="android:textColor">@color/black_4</item>
     </style>
 
-    <style name="hint" >
+    <style name="hint">
         <item name="android:textSize">@dimen/text_13sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:textColor">@color/black_4</item>
@@ -310,7 +337,7 @@
         <item name="android:insetBottom">@dimen/inset_0dp</item>
     </style>
 
-    <style name="ButtonGray" >
+    <style name="ButtonGray">
         <item name="android:background">@color/gray_5</item>
         <item name="android:textColor">@color/black_1</item>
     </style>
@@ -352,6 +379,24 @@
         <item name="android:indeterminateTintMode">src_atop</item>
     </style>
 
+    <style name="ProgressBar">
+        <item name="android:indeterminate">true</item>
+    </style>
+
+    <style name="ProgressBar.ImageLoad">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">@color/black_1</item>
+    </style>
+
+    <style name="ProgressBar.Big">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">@color/black_1</item>
+    </style>
+
     <style name="AdsPriceStyle" parent="AppPrimaryStyle">
         <item name="android:textSize">@dimen/text_15sp</item>
         <item name="android:textColor">@color/black_5</item>
@@ -382,15 +427,13 @@
 
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
         <item name="queryBackground">@color/transparent</item>
-        <item name="android:textColorPrimary"> @color/red</item>
+        <item name="searchIcon">@drawable/ic_search</item>
+        <item name="android:textColorPrimary">@color/red</item>
         <item name="android:background">@drawable/background_rounded_search_view</item>
         <item name="android:layout_marginEnd">@dimen/margin_50dp</item>
         <item name="android:layout_marginTop">@dimen/margin_end_13dp</item>
-        <item name="searchIcon">@drawable/ic_search</item>
         <item name="iconifiedByDefault">false</item>
-        <item name="android:inputType">textMultiLine</item>
     </style>
-
     <style name="StyleMainLayout">
         <item name="android:background">@color/gray_5</item>
     </style>
@@ -398,11 +441,18 @@
     <style name="StyleAdsBackground">
         <item name="android:background">@color/gray_5</item>
     </style>
+    <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
+        <item name="colorControlActivated">@color/magenta_1</item>
+
+        <item name="queryBackground">@color/transparent</item>
+        <item name="android:inputType">textFilter|textNoSuggestions</item>
+        <item name="fontFamily">@font/sf_pro_text_regular</item>
+    </style>
 
     <style name="MainSearchView">
         <item name="android:textColor">@color/red</item>
     </style>
-    
+
     <style name="CategoryViewTextAppearance">
         <item name="lineHeight">@dimen/line_height_13.13dp</item>
         <item name="fontFamily">@font/sf_pro_text_regular</item>

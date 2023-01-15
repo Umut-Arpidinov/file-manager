@@ -13,7 +13,6 @@ import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomProfileCellView
 import kg.o.internlabs.core.databinding.ProfileCellViewBinding
 
 class CustomProfileCellView : ConstraintLayout {
-
     private var clickers: CustomProfileCellViewClickers? = null
 
     private val binding = ProfileCellViewBinding.inflate(

@@ -109,6 +109,12 @@
         <item name="android:textColorHint">@color/gray_1</item>
         <item name="android:alpha">0.5</item>
     </style>
+
+    <style name="EditableTextView.AsHint" parent="EditableTextView">
+        <item name="android:textColor">@color/gray_1</item>
+        <item name="android:alpha">0.5</item>
+    </style>
+
     <style name="OTPInputText">
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>
@@ -297,5 +303,26 @@
         <item name="android:textColor">@color/white_1</item>
         <item name="android:textFontWeight">400</item>
         <item name="android:textSize">@dimen/text_13sp</item>
+    </style>
+
+    <style name="TextView.O_Money_Agreement">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textColor">@color/gray_1</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:lineHeight">15.51dp</item>
+    </style>
+
+    <style name="TextView.Add_Ads_Agreement" parent="TextView.O_Money_Agreement">
+        <item name="android:textColorLink">@color/magenta_1</item>
+        <item name="android:lineHeight">15dp</item>
+    </style>
+
+    <style name="TextView.Main_Image" parent="TextView.O_Money_Agreement">
+        <item name="android:textColor">@color/white_1</item>
+    </style>
+
+    <style name="TextView.Telegram_Hint" parent="TextView.O_Money_Agreement">
+        <item name="android:textColor">@color/black_5</item>
     </style>
 </resources>

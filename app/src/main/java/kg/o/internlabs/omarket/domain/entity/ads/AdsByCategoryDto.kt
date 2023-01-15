@@ -6,5 +6,6 @@ data class AdsByCategory(
 
 data class MainFilter(
     val orderBy: String? = null,
-    val categoryId: Int? = null
+    val categoryId: Int? = null,
+    val q: String? = null
 )

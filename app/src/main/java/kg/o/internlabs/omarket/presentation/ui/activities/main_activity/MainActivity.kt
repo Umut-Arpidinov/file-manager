@@ -1,6 +1,7 @@
 package kg.o.internlabs.omarket.presentation.ui.activities.main_activity
 
 import android.view.LayoutInflater
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -80,9 +81,11 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
         val navGraph = navController.navInflater.inflate(R.navigation.main_graph)
         when(s) {
             "403" -> {
+                binding.progressBar.isVisible = false
                 navGraph.setStartDestination(R.id.loginStartFragment)
             }
             "200" -> {
+                binding.progressBar.isVisible = false
                 navGraph.setStartDestination(R.id.mainFragment)
             }
         }

@@ -15,7 +15,6 @@ import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomAddPriceCellVie
 import kg.o.internlabs.core.databinding.AddPriceCellBinding
 
 class CustomAddPriceCellView : ConstraintLayout {
-
     private var aboutAdvertiser: CustomAddPriceCellViewClick? = null
 
     private val binding = AddPriceCellBinding.inflate(
