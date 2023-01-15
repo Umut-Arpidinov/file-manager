@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,7 +65,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         initAdapter()
         getCategories()
         getAds()
-        visibleStatusBar()
     }
 
     override fun initListener() = with(binding) {
@@ -75,11 +72,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(),
         icProfile.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.goToProfile(args?.number))
         }
-    }
-
-    private fun visibleStatusBar() {
-        WindowInsetsControllerCompat(requireActivity().window, requireView())
-            .show((WindowInsetsCompat.Type.statusBars()))
     }
 
     private fun initAdapter() = with(binding) {
