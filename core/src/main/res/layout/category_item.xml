@@ -1,41 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/view_44dp"
     android:background="@color/white_1">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/category_icon"
-        android:layout_width="@dimen/view_28dp"
-        android:layout_height="@dimen/view_28dp"
-        android:scaleType="center"
-        android:layout_marginStart="@dimen/margin_8dp"
-        android:src="@drawable/ic_plus_fab"
-        app:layout_constraintEnd_toStartOf="@id/category_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/category_name"
-        android:layout_width="0dp"
+    <kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
+        android:id="@+id/cell"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_8dp"
-        style="@style/CategoryNameTextAppearance"
-        android:text="@string/active"
-        app:lineHeight="@dimen/min_height_20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/category_icon"/>
+        app:position="TOP" />
 
-    <View
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="@dimen/view_height_1dp"
-        android:background="@color/gray_1"
-        app:layout_constraintStart_toEndOf="@id/category_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
