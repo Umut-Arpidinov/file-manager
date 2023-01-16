@@ -17,6 +17,7 @@ import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomWithToggleCellViewClick
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.FragmentEditAdsBinding
+import kg.o.internlabs.omarket.domain.entity.DeletedImageUrlEntity
 import kg.o.internlabs.omarket.domain.entity.EditAds
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.domain.entity.UploadImageResultEntity
@@ -298,7 +299,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
 
     private fun deleteModelFromLists(index: Int) {
-        val uriOfDeletedImage = selectedImages[index].url
+        val urlOfDeletedImage = selectedImages[index]
         println("${this.javaClass.simpleName}====1.00==${selectedImages.size}==   $selectedImages ")
         println("${this.javaClass.simpleName}====1.10====${selectedUrl.size}   $selectedUrl ")
         println("${this.javaClass.simpleName}====1.20====${selectedPath.size}   $selectedPath ")
@@ -310,6 +311,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         println("${this.javaClass.simpleName}====1.1====${selectedUrl.size}   $selectedUrl ")
         println("${this.javaClass.simpleName}====1.2====${selectedPath.size}   $selectedPath ")
         imageListAdapter?.initAdapter(selectedImages.toList())
+        if (urlOfDeletedImage in selectedImages) return
+        viewModel.deleteImageFromAd(DeletedImageUrlEntity(url = urlOfDeletedImage.url))
     }
 
     override fun toggleClicked(positionOfCell: Int) = with(binding) {
@@ -335,7 +338,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     override fun deleteImage(index: Int) {
         deleteModelFromLists(index)
         selectMainImage(mainImageIndex)
-        deleteImagesFromRemote()
     }
 
     override fun addImage() {
@@ -366,7 +368,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             whatsappNum = if (cusWhatsApp.isChecked()){cusWhatsAppNumber.getValue()} else null,
         )
         viewModel.createAd(editAds)
-
+        deleteImagesFromRemote()
         createAd()
     }
 
@@ -427,8 +429,9 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     private fun deleteImagesFromRemote() {
         println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
         //listImageUrlInRemote.retainAll(selectedImages.map { it.url })
-        listImageUrlInRemote.filter { it in selectedImages }
-        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
+        val tmp = listImageUrlInRemote.filter { it in selectedImages }
+        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....2000..$listImageUrlInRemote")
+        println("${this.javaClass.simpleName}--${tmp.size}....3000..$tmp")
         //viewModel.deleteImageFromAd()
     }
 
