@@ -73,6 +73,9 @@ class CustomOneCellView : ConstraintLayout {
             return
         }
         tvHint.text = hint
+        tvHint.isVisible = true
+        tvTitle.text = ""
+        tvTitle.isVisible = false
     }
 
     fun setText(text: String) = with(binding) {

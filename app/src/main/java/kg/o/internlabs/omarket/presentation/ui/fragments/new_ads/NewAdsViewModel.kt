@@ -39,7 +39,7 @@ class NewAdsViewModel @Inject constructor(
     private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
     val categories = _categories.asSharedFlow()
 
-    private val _adType = MutableSharedFlow<ApiState<AdTypeEntity>>()
+    private val  _adType = MutableSharedFlow<ApiState<AdTypeEntity>>()
     val adType = _adType.asSharedFlow()
 
     private val _deleteImage = MutableSharedFlow<ApiState<DeleteImageEntity>>()
@@ -169,7 +169,6 @@ class NewAdsViewModel @Inject constructor(
                 when (it) {
                     is ApiState.Success -> {
                         _adType.emit(it)
-
                     }
                     is ApiState.Failure -> {
                         _adType.emit(it)

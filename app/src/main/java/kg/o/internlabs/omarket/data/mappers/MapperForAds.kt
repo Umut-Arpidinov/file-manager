@@ -1,15 +1,14 @@
 package kg.o.internlabs.omarket.data.mappers
 
-import kg.o.internlabs.omarket.data.remote.model.AdTypeDto
-import kg.o.internlabs.omarket.data.remote.model.AdTypeResultDto
-import kg.o.internlabs.omarket.data.remote.model.EditAdsDto
-import kg.o.internlabs.omarket.data.remote.model.DetailsAdDto
+import kg.o.internlabs.omarket.data.remote.model.*
 import kg.o.internlabs.omarket.data.remote.model.ads.*
-import kg.o.internlabs.omarket.domain.entity.AdTypeEntity
-import kg.o.internlabs.omarket.domain.entity.AdTypeResultEntity
-import kg.o.internlabs.omarket.domain.entity.EditAds
-import kg.o.internlabs.omarket.domain.entity.DetailsAd
+import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
+import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.domain.entity.ads.*
+import kg.o.internlabs.omarket.domain.entity.ads.Author
+import kg.o.internlabs.omarket.domain.entity.ads.LocationX
+import kg.o.internlabs.omarket.domain.entity.ads.PromotionType
+import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import retrofit2.Response
 
 class MapperForAds {
@@ -322,26 +321,34 @@ class MapperForAds {
     )
 
     private fun toEntity(v: AdTypeDto?) = AdTypeEntity(
-        results = v?.results?.map { toEntity(it) },
+        result = toEntity(v?.result),
         resultCode = v?.resultCode,
         details = v?.details,
         errorCode = v?.errorCode
     )
+     private fun toEntity(v: AdTypeResultDto?) = AdTypeResultEntity(
+        results = v?.results?.map { toEntity(it) },
+        count = v?.count
+    )
 
-    private fun toEntity(v: AdTypeResultDto?) = AdTypeResultEntity(
+    private fun toEntity(v: AdTypeResultsDto?) = AdTypeResultsEntity(
         id = v?.id,
         codeValue = v?.codeValue,
         name = v?.name
     )
 
-    fun toDbModel(v: AdTypeEntity?) = AdTypeDto (
-        results = v?.results?.map { toDbModel(it) },
+    private fun toDto(v: AdTypeEntity?) = AdTypeDto(
+        result = toDto(v?.result),
         resultCode = v?.resultCode,
         details = v?.details,
         errorCode = v?.errorCode
     )
+    private fun toDto(v: AdTypeResultEntity?) = AdTypeResultDto(
+        results = v?.results?.map { toDto(it) },
+        count = v?.count
+    )
 
-    fun toDbModel(v: AdTypeResultEntity?) = AdTypeResultDto(
+    private fun toDto(v: AdTypeResultsEntity?) = AdTypeResultsDto(
         id = v?.id,
         codeValue = v?.codeValue,
         name = v?.name

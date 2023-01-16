@@ -3,17 +3,14 @@ package kg.o.internlabs.omarket.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import kg.o.internlabs.core.base.BaseRepository
-import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.data.mappers.MapperForAds
 import kg.o.internlabs.omarket.data.mappers.MapperForModels
 import kg.o.internlabs.omarket.data.paging.AdsFilterPagingSource
 import kg.o.internlabs.omarket.data.paging.AdsPagingSource
 import kg.o.internlabs.omarket.data.remote.ApiService
-import kg.o.internlabs.omarket.domain.entity.AdTypeEntity
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByFilter
 import kg.o.internlabs.omarket.domain.repository.AdsRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AdsRepositoryImpl @Inject constructor(

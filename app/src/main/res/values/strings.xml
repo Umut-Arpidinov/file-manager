@@ -21,8 +21,8 @@
     <string name="terms_and_conditions_of_place_an_ad">Нажимая \"Подать объявление\", вы принимаете\n<a href="">условия пользовательского соглашения </a> </string>
     <string name="sample_views">sample Views</string>
     <string name="ad_type_title">Тип сделки</string>
-    <string name="ad_type_sell">Продать</string>
-    <string name="ad_type_buy">Купить</string>
+    <string name="sell">Продажа</string>
+    <string name="buy">Покупка</string>
     <string name="kgs">Сомы</string>
     <string name="us_dollars">Доллары</string>
     <string name="choose_currency">Выберите валюту</string>
@@ -48,4 +48,9 @@
     <string name="date">%s.%s.%s</string>
     <string name="empty_result">error image</string>
     <string name="no_search_results">По вашему запросу ничего не найдено</string>
+    <string name="recruiting">Ищу сотрудников</string>
+    <string name="looking">Ищу работу</string>
+    <string name="rent">Аренда</string>
+    <string name="service">Услуга</string>
+    <string name="hiring">Сниму</string>
 </resources>
