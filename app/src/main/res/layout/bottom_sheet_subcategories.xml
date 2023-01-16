@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/margin_18dp"
     android:background="@drawable/rounded_bottom_sheet">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/cancel_icon_categories"
+        android:id="@+id/cancel_icon_subcategories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_5dp"
@@ -17,14 +17,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/category_text"
+        android:id="@+id/sub_category_text"
         style="@style/TextView.Cells.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/margin_8dp"
         android:paddingVertical="@dimen/margin_18dp"
-        android:text="@string/category"
-        app:layout_constraintTop_toBottomOf="@id/cancel_icon_categories" />
+        android:text="@string/sub_category"
+        app:layout_constraintTop_toBottomOf="@id/cancel_icon_subcategories" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -33,15 +33,15 @@
         app:cardCornerRadius="@dimen/margin_8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_text">
+        app:layout_constraintTop_toBottomOf="@id/sub_category_text">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_category_bs"
+            android:id="@+id/recycler_subcategory_bs"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/category_item" />
+            tools:listitem="@layout/rv_cell_item" />
 
     </androidx.cardview.widget.CardView>
 

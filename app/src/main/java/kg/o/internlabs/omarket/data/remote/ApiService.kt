@@ -114,4 +114,9 @@ interface ApiService {
         @Header("Authorization") token: String?,
         @Path("uuid") uuid: String,
     ): Response<DetailsAdDto?>
+
+    @GET("/api/ads-board/v1/ad_type/list/")
+    suspend fun getAdType(
+        @Header("Authorization") token: String?
+    ): Response<AdTypeDto?>
 }

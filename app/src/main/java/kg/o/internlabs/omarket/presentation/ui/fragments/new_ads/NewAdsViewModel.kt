@@ -6,10 +6,7 @@ import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
-import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.DeleteImageFromAdUseCase
-import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.EditAnAdUseCase
-import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.InitiateAdUseCase
-import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.UploadImageToAdUseCase
+import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.*
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,7 +20,8 @@ class NewAdsViewModel @Inject constructor(
     private val uploadImageToAdUseCase: UploadImageToAdUseCase,
     private val deleteImageFromAdUseCase: DeleteImageFromAdUseCase,
     private val editAnAdUseCase: EditAnAdUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getAdTypeUseCase: AdTypeUseCase
 ) : BaseViewModel() {
 
     private val _token = MutableStateFlow("")
@@ -41,6 +39,9 @@ class NewAdsViewModel @Inject constructor(
     private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
     val categories = _categories.asSharedFlow()
 
+    private val _adType = MutableSharedFlow<ApiState<AdTypeEntity>>()
+    val adType = _adType.asSharedFlow()
+
     private val _deleteImage = MutableSharedFlow<ApiState<DeleteImageEntity>>()
 
     init {
@@ -57,6 +58,7 @@ class NewAdsViewModel @Inject constructor(
                 if (it != null) {
                     _token.emit(it)
                     getInitiatedAd()
+                    getAdType()
                 }
             }
         }
@@ -153,6 +155,24 @@ class NewAdsViewModel @Inject constructor(
                     }
                     is ApiState.Failure -> {
                         _categories.emit(it)
+                    }
+                    ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getAdType() {
+        viewModelScope.launch {
+            getAdTypeUseCase(getAccessToken()).collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        _adType.emit(it)
+
+                    }
+                    is ApiState.Failure -> {
+                        _adType.emit(it)
                     }
                     ApiState.Loading -> {
                     }

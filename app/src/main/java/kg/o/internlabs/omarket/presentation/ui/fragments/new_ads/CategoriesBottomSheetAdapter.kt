@@ -3,6 +3,7 @@ package kg.o.internlabs.omarket.presentation.ui.fragments.new_ads
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kg.o.internlabs.core.custom_views.cells.Position
 import kg.o.internlabs.omarket.databinding.CategoryItemBinding
 import kg.o.internlabs.omarket.domain.entity.ResultEntity
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.CategoryClickHandler
@@ -23,7 +24,7 @@ class CategoriesBottomSheetAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoriesBottomSheetViewHolder, position: Int) {
-        holder.bind(list?.get(position))
+        holder.bind(list?.get(position), position)
         holder.itemView.setOnClickListener {
             clickHandler.clickedCategory(list?.get(position))
         }
@@ -33,9 +34,15 @@ class CategoriesBottomSheetAdapter(
 
     inner class CategoriesBottomSheetViewHolder(val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ResultEntity?) = with(binding) {
+        @Suppress("KotlinConstantConditions")
+        fun bind(item: ResultEntity?, position: Int) = with(binding) {
             cell.setTitle(item?.name.toString())
             cell.setIcon(item?.iconImg.toString())
+            when(position) {
+                0 -> cell.setPosition(Position.TOP)
+                list?.lastIndex -> cell.setPosition(Position.BOTTOM)
+                else -> cell.setPosition(Position.MIDDLE)
+            }
         }
     }
 }

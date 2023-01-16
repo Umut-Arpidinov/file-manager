@@ -1,8 +1,12 @@
 package kg.o.internlabs.omarket.data.mappers
 
+import kg.o.internlabs.omarket.data.remote.model.AdTypeDto
+import kg.o.internlabs.omarket.data.remote.model.AdTypeResultDto
 import kg.o.internlabs.omarket.data.remote.model.EditAdsDto
 import kg.o.internlabs.omarket.data.remote.model.DetailsAdDto
 import kg.o.internlabs.omarket.data.remote.model.ads.*
+import kg.o.internlabs.omarket.domain.entity.AdTypeEntity
+import kg.o.internlabs.omarket.domain.entity.AdTypeResultEntity
 import kg.o.internlabs.omarket.domain.entity.EditAds
 import kg.o.internlabs.omarket.domain.entity.DetailsAd
 import kg.o.internlabs.omarket.domain.entity.ads.*
@@ -316,6 +320,39 @@ class MapperForAds {
         previous = v?.previous,
         results = v?.results?.map { toEntity(it) }
     )
+
+    private fun toEntity(v: AdTypeDto?) = AdTypeEntity(
+        results = v?.results?.map { toEntity(it) },
+        resultCode = v?.resultCode,
+        details = v?.details,
+        errorCode = v?.errorCode
+    )
+
+    private fun toEntity(v: AdTypeResultDto?) = AdTypeResultEntity(
+        id = v?.id,
+        codeValue = v?.codeValue,
+        name = v?.name
+    )
+
+    fun toDbModel(v: AdTypeEntity?) = AdTypeDto (
+        results = v?.results?.map { toDbModel(it) },
+        resultCode = v?.resultCode,
+        details = v?.details,
+        errorCode = v?.errorCode
+    )
+
+    fun toDbModel(v: AdTypeResultEntity?) = AdTypeResultDto(
+        id = v?.id,
+        codeValue = v?.codeValue,
+        name = v?.name
+    )
+
+    fun toRespEntityForAdType(resp: Response<AdTypeDto?>) =
+        if (resp.isSuccessful) {
+            Response.success(toEntity(resp.body()))
+        } else {
+            resp.errorBody()?.let { Response.error(resp.code(), it) }
+        }
 
     private fun toEntity(v: ParentAdsDto?) = ParentAds(
         adType = v?.adType,
