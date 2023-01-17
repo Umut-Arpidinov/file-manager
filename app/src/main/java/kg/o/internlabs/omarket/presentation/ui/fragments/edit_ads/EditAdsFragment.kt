@@ -99,6 +99,10 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     override fun initListener() = with(binding) {
         super.initListener()
 
+        tbFaq.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         cusCategory.setOnClickListener {
             callCategoryBottomSheet()
         }
@@ -147,146 +151,23 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
     }
 
-    private fun callCategoryBottomSheet() {
-        val lBinding = BottomSheetCategoriesBinding.inflate(LayoutInflater.from(context))
-        lBinding.recyclerCategoryBs.adapter =
-            CategoriesBottomSheetAdapterForEditAd(categories, this)
-        dialog?.setContentView(lBinding.root)
-        dialog?.show()
-
-        lBinding.cancelIconCategories.setOnClickListener {
-            dialog?.dismiss()
-        }
-    }
-
-    private fun callSubCategoryBottomSheet() {
-        val lBinding = BottomSheetSubcategoriesBinding.inflate(LayoutInflater.from(context))
-        lBinding.recyclerSubcategoryBs.adapter = SubCategoriesBottomSheetAdapterForEditAd(
-            categoryEntity?.subCategories, this
-        )
-        dialog?.setContentView(lBinding.root)
-        dialog?.show()
-
-        lBinding.cancelIconSubcategories.setOnClickListener {
-            dialog?.dismiss()
-        }
-    }
-
-    private fun callCurrencyBottomSheet() {
-        val lBinding = BottomSheetCurrencyBinding.inflate(LayoutInflater.from(context))
-        dialog?.setContentView(lBinding.root)
-
-        with(lBinding) {
-            cancelIconAdType.setOnClickListener {
-                dialog?.dismiss()
-            }
-            kgsCell.setOnClickListener {
-                binding.cusCurrency.setText(kgsCell.getTitle())
-                currency = "som"
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-            dollarsCell.setOnClickListener {
-                binding.cusCurrency.setText(dollarsCell.getTitle())
-                currency = "usd"
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-        }
-        dialog?.show()
-    }
-
-    private fun callAdTypeBottomSheet() {
-        val lBinding = BottomSheetAdTypeBinding.inflate(LayoutInflater.from(context))
-        dialog?.setContentView(lBinding.root)
-
-        with(lBinding) {
-            cancelIconAdType.setOnClickListener {
-                dialog?.dismiss()
-            }
-            setVisibilityAndPosition(lBinding)
-            recruitingCellBottom.setOnClickListener {
-                binding.cusAdType.setText(recruitingCellBottom.getTitle())
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-            lookingCellBottom.setOnClickListener {
-                binding.cusAdType.setText(lookingCellBottom.getTitle())
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-            sellCellBottom.setOnClickListener {
-                binding.cusAdType.setText(sellCellBottom.getTitle())
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-            buyCellBottom.setOnClickListener {
-                binding.cusAdType.setText(buyCellBottom.getTitle())
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-            rentCellBottom.setOnClickListener {
-                binding.cusAdType.setText(rentCellBottom.getTitle())
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-            serviceCellBottom.setOnClickListener {
-                binding.cusAdType.setText(serviceCellBottom.getTitle())
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-            hiringCellBottom.setOnClickListener {
-                binding.cusAdType.setText(hiringCellBottom.getTitle())
-                isButtonClickable()
-                dialog?.dismiss()
-            }
-        }
-        dialog?.show()
-    }
-
-    private fun setVisibilityAndPosition(lBinding: BottomSheetAdTypeBinding) {
-        val list = getAdTypeList()
-        lBinding.apply {
-            recruitingCellBottom.isVisible = "recruiting" in list.map { it.codeValue }
-            lookingCellBottom.isVisible = "looking" in list.map { it.codeValue }
-            setPosition(lookingCellBottom, "looking", list)
-            sellCellBottom.isVisible = "sell" in list.map { it.codeValue }
-            setPosition(sellCellBottom, "sell", list)
-            buyCellBottom.isVisible = "buy" in list.map { it.codeValue }
-            setPosition(buyCellBottom, "buy", list)
-            rentCellBottom.isVisible = "rent" in list.map { it.codeValue }
-            setPosition(rentCellBottom, "rent", list)
-            serviceCellBottom.isVisible = "service" in list.map { it.codeValue }
-            setPosition(serviceCellBottom, "service", list)
-            hiringCellBottom.isVisible = "hiring" in list.map { it.codeValue }
-            setPosition(hiringCellBottom, "hiring", list)
-        }
-    }
-
-    private fun setPosition(
-        v: CustomRoundedOneCellLineView,
-        s: String,
-        list: List<AdTypeResultsEntity>
-    ) {
-        when (s) {
-            list.first().codeValue -> v.setPosition(Position.TOP)
-            list.last().codeValue -> v.setPosition(Position.BOTTOM)
-            else -> v.setPosition(Position.MIDDLE)
-        }
-    }
-
     private fun setField(item: ResultX) = with(binding) {
-         categoryEntity = ResultEntity()
-        if (item.category?.parent == null) item.category
+        setData(item)
+
         item.title?.let {
             if (it.isNotEmpty()) cusTitle.setText(it) else
                 cusTitle.setHint(getString(R.string.title))
         }
 
-
         with(item.category) {
-            val category = if (this?.parent == null) this?.name else this.parent.name
-            val subCategory = if (this?.parent != null) this.name else null
+            val category = if (this?.parent?.name == null){
+                println("===========1    ")
+                this?.name
+            } else this.parent.name
+            println("-${this}--- $category  ---*****1")
+            println("---- $category  ---*****10")
+            val subCategory = if (this?.parent?.name != null) this.name else null
+            println("---- $subCategory  ---*****2")
 
             if (category.isNullOrEmpty()) cusCategory.setHint(getString(R.string.category))
             else cusCategory.setText(category)
@@ -356,6 +237,14 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                 item.images?.let { img -> uploadImage(img) }
             }
         }
+    }
+
+    private fun setData(item: ResultX) {
+       /* val i = item.category
+        val o = item.category?.parent
+        categoryEntity =
+        val c = item.currency
+        val*/
     }
 
     private fun pickImages() {
@@ -717,6 +606,147 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         println("${this.javaClass.simpleName}--${tmp.size}....3000..$tmp")
         //viewModel.deleteImageFromAd()
     }
+
+
+    private fun callCategoryBottomSheet() {
+        val lBinding = BottomSheetCategoriesBinding.inflate(LayoutInflater.from(context))
+        lBinding.recyclerCategoryBs.adapter =
+            CategoriesBottomSheetAdapterForEditAd(categories, this)
+        dialog?.setContentView(lBinding.root)
+        dialog?.show()
+
+        lBinding.cancelIconCategories.setOnClickListener {
+            dialog?.dismiss()
+        }
+    }
+
+    private fun callSubCategoryBottomSheet() {
+        val lBinding = BottomSheetSubcategoriesBinding.inflate(LayoutInflater.from(context))
+        lBinding.recyclerSubcategoryBs.adapter = SubCategoriesBottomSheetAdapterForEditAd(
+            categoryEntity?.subCategories, this
+        )
+        dialog?.setContentView(lBinding.root)
+        dialog?.show()
+
+        lBinding.cancelIconSubcategories.setOnClickListener {
+            dialog?.dismiss()
+        }
+    }
+
+    private fun callCurrencyBottomSheet() {
+        val lBinding = BottomSheetCurrencyBinding.inflate(LayoutInflater.from(context))
+        dialog?.setContentView(lBinding.root)
+
+        with(lBinding) {
+            cancelIconAdType.setOnClickListener {
+                dialog?.dismiss()
+            }
+            kgsCell.setOnClickListener {
+                binding.cusCurrency.setText(kgsCell.getTitle())
+                currency = "som"
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+            dollarsCell.setOnClickListener {
+                binding.cusCurrency.setText(dollarsCell.getTitle())
+                currency = "usd"
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+        }
+        dialog?.show()
+    }
+
+    private fun callAdTypeBottomSheet() {
+        val lBinding = BottomSheetAdTypeBinding.inflate(LayoutInflater.from(context))
+        dialog?.setContentView(lBinding.root)
+
+        with(lBinding) {
+            cancelIconAdType.setOnClickListener {
+                dialog?.dismiss()
+            }
+            setVisibilityAndPosition(lBinding)
+            recruitingCellBottom.setOnClickListener {
+                binding.cusAdType.setText(recruitingCellBottom.getTitle())
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+            lookingCellBottom.setOnClickListener {
+                binding.cusAdType.setText(lookingCellBottom.getTitle())
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+            sellCellBottom.setOnClickListener {
+                binding.cusAdType.setText(sellCellBottom.getTitle())
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+            buyCellBottom.setOnClickListener {
+                binding.cusAdType.setText(buyCellBottom.getTitle())
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+            rentCellBottom.setOnClickListener {
+                binding.cusAdType.setText(rentCellBottom.getTitle())
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+            serviceCellBottom.setOnClickListener {
+                binding.cusAdType.setText(serviceCellBottom.getTitle())
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+            hiringCellBottom.setOnClickListener {
+                binding.cusAdType.setText(hiringCellBottom.getTitle())
+                isButtonClickable()
+                dialog?.dismiss()
+            }
+        }
+        dialog?.show()
+    }
+
+    private fun setVisibilityAndPosition(lBinding: BottomSheetAdTypeBinding) {
+        val list = getAdTypeList()
+        lBinding.apply {
+            recruitingCellBottom.isVisible = "recruiting" in list.map { it.codeValue }
+            lookingCellBottom.isVisible = "looking" in list.map { it.codeValue }
+            setPosition(lookingCellBottom, "looking", list)
+            sellCellBottom.isVisible = "sell" in list.map { it.codeValue }
+            setPosition(sellCellBottom, "sell", list)
+            buyCellBottom.isVisible = "buy" in list.map { it.codeValue }
+            setPosition(buyCellBottom, "buy", list)
+            rentCellBottom.isVisible = "rent" in list.map { it.codeValue }
+            setPosition(rentCellBottom, "rent", list)
+            serviceCellBottom.isVisible = "service" in list.map { it.codeValue }
+            setPosition(serviceCellBottom, "service", list)
+            hiringCellBottom.isVisible = "hiring" in list.map { it.codeValue }
+            setPosition(hiringCellBottom, "hiring", list)
+        }
+    }
+
+    private fun setPosition(
+        v: CustomRoundedOneCellLineView,
+        s: String,
+        list: List<AdTypeResultsEntity>
+    ) {
+        when (s) {
+            list.first().codeValue -> v.setPosition(Position.TOP)
+            list.last().codeValue -> v.setPosition(Position.BOTTOM)
+            else -> v.setPosition(Position.MIDDLE)
+        }
+    }
+
+    override fun onDestroy() {
+        println("fOnDest------")
+        dialog = null
+        categories = null
+        super.onDestroy()
+    }
+
+    override fun textWatcher(isEmpty: Boolean, cellPosition: Int) {
+        isButtonClickable()
+    }
+
     override fun clickedCategory(item: ResultEntity?) = with(binding) {
         cusSubCategory.setHint(getString(R.string.sub_category))
         cusAdType.setHint(getString(R.string.ad_type_title))
@@ -739,16 +769,5 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             cusAdType.setText("")
             cusAdType.setHint(getString(R.string.ad_type_title))
         }
-    }
-
-    override fun onDestroy() {
-        println("fOnDest------")
-        dialog = null
-        categories = null
-        super.onDestroy()
-    }
-
-    override fun textWatcher(isEmpty: Boolean, cellPosition: Int) {
-        isButtonClickable()
     }
 }
