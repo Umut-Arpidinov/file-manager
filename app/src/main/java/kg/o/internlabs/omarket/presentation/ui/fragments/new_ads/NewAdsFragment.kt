@@ -19,11 +19,7 @@ import kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
 import kg.o.internlabs.core.custom_views.cells.Position
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomWithToggleCellViewClick
 import kg.o.internlabs.omarket.R
-import kg.o.internlabs.omarket.databinding.BottomSheetAdTypeBinding
-import kg.o.internlabs.omarket.databinding.BottomSheetCategoriesBinding
-import kg.o.internlabs.omarket.databinding.BottomSheetCurrencyBinding
-import kg.o.internlabs.omarket.databinding.BottomSheetSubcategoriesBinding
-import kg.o.internlabs.omarket.databinding.FragmentNewAdsBinding
+import kg.o.internlabs.omarket.databinding.*
 import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.CategoryClickHandler
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImageHelper
@@ -98,10 +94,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         super.initListener()
 
         cusCategory.setOnClickListener {
-            cusSubCategory.setHint(getString(R.string.sub_category))
-            cusAdType.setHint(getString(R.string.order_type))
             callCategoryBottomSheet()
-            bottomSheetCategory.root.isVisible = true
         }
 
         cusSubCategory.setOnClickListener {
@@ -544,6 +537,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     override fun onDestroy() {
         println("fOnDest------")
         dialog = null
+        list = null
         super.onDestroy()
     }
 }
