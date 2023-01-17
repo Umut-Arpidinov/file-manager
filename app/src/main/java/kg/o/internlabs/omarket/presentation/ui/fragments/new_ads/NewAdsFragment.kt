@@ -47,6 +47,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     private var adTypeEntity: AdTypeEntity? = null
     private var list: List<ResultEntity>? = null
     private var dialog: BottomSheetDialog? = null
+    private var currency = ""
 
     companion object {
         var mainImageIndex = 1
@@ -75,7 +76,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         super.initView()
 
         with(btnCreateAd) {
-            isCheckable = isButtonClickable()
+            isCheckable = isButtonClickable().not()
             isEnabled = isCheckable
         }
 
@@ -159,12 +160,12 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             }
             kgsCell.setOnClickListener {
                 binding.cusCurrency.setText(kgsCell.getTitle())
-                binding.cusCurrency.tag = "som"
+                currency = "som"
                 dialog?.dismiss()
             }
             dollarsCell.setOnClickListener {
                 binding.cusCurrency.setText(dollarsCell.getTitle())
-                binding.cusCurrency.tag = "usd"
+                currency = "usd"
                 dialog?.dismiss()
             }
         }
@@ -384,7 +385,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             adType = getAdTypeNameCode(cusAdType.getText()),
             category = getCategoryId(cusCategory.getText()),
             contractPrice = cusPriceIsNegotiable.isChecked(),
-            currency = if(cusPriceIsNegotiable.isChecked().not()) cusCurrency.getText() else null,
+            currency = if(cusPriceIsNegotiable.isChecked().not()) currency else null,
             delivery = cusDelivery.isChecked(),
             description = cusDescription.getText(),
             images = prepareUrlForAd(),
@@ -521,6 +522,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         cusCategory.setText(categoryEntity?.name.toString())
         cusSubCategory.isVisible = categoryEntity?.subCategories?.isNotEmpty() == true
         cusDelivery.isVisible = cusSubCategory.isVisible.not() && categoryEntity?.delivery == true
+
     }
 
     override fun subClickHandler(item: SubCategoriesEntity?) = with(binding) {
