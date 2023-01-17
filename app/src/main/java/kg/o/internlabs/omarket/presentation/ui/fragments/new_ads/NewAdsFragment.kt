@@ -20,7 +20,9 @@ import kg.o.internlabs.core.custom_views.cells.Position
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomWithToggleCellViewClick
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.BottomSheetAdTypeBinding
+import kg.o.internlabs.omarket.databinding.BottomSheetCategoriesBinding
 import kg.o.internlabs.omarket.databinding.BottomSheetCurrencyBinding
+import kg.o.internlabs.omarket.databinding.BottomSheetSubcategoriesBinding
 import kg.o.internlabs.omarket.databinding.FragmentNewAdsBinding
 import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.CategoryClickHandler
@@ -47,6 +49,8 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     private var subCategoriesEntity: SubCategoriesEntity? = null
     private var categoryEntity: ResultEntity? = null
     private var adTypeEntity: AdTypeEntity? = null
+    private var list: List<ResultEntity>? = null
+    private var dialog: BottomSheetDialog? = null
 
     companion object {
         var mainImageIndex = 1
@@ -56,6 +60,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         super.onCreate(savedInstanceState)
         args = NewAdsFragmentArgs.fromBundle(requireArguments())
         imageListAdapter = ImageListAdapter(this@NewAdsFragment)
+        dialog = BottomSheetDialog(requireContext())
     }
 
     override fun initViewModel() {
@@ -95,11 +100,11 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         cusCategory.setOnClickListener {
             cusSubCategory.setHint(getString(R.string.sub_category))
             cusAdType.setHint(getString(R.string.order_type))
-            bottomSheetCategory.root.isVisible = true
+            callCategoryBottomSheet()
         }
 
         cusSubCategory.setOnClickListener {
-            bottomSheetSubcategory.root.isVisible = true
+            callSubCategoryBottomSheet()
         }
 
         cusAdType.setOnClickListener {
@@ -125,79 +130,92 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         btnCreateAd.setOnClickListener {
             prepareValuesForAd()
         }
+    }
 
-        bottomSheetCategory.cancelIconCategories.setOnClickListener {
-            bottomSheetCategory.root.isVisible = false
+    private fun callCategoryBottomSheet() {
+        val lBinding = BottomSheetCategoriesBinding.inflate(LayoutInflater.from(context))
+        lBinding.recyclerCategoryBs.adapter = CategoriesBottomSheetAdapter(list, this)
+        dialog?.setContentView(lBinding.root)
+        dialog?.show()
+
+        lBinding.cancelIconCategories.setOnClickListener {
+            dialog?.dismiss()
         }
+    }
 
-        bottomSheetSubcategory.cancelIconSubcategories.setOnClickListener {
-            bottomSheetSubcategory.root.isVisible = false
+    private fun callSubCategoryBottomSheet() {
+        val lBinding = BottomSheetSubcategoriesBinding.inflate(LayoutInflater.from(context))
+        lBinding.recyclerSubcategoryBs.adapter = SubCategoriesBottomSheetAdapter(
+            categoryEntity?.subCategories, this)
+        dialog?.setContentView(lBinding.root)
+        dialog?.show()
+
+        lBinding.cancelIconSubcategories.setOnClickListener {
+            dialog?.dismiss()
         }
     }
 
     private fun callCurrencyBottomSheet() {
         val lBinding = BottomSheetCurrencyBinding.inflate(LayoutInflater.from(context))
-        val dialog = BottomSheetDialog(requireContext())
-        dialog.setContentView(lBinding.root)
+        dialog?.setContentView(lBinding.root)
 
         with(lBinding) {
             cancelIconAdType.setOnClickListener {
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             kgsCell.setOnClickListener {
                 binding.cusCurrency.setText(kgsCell.getTitle())
                 binding.cusCurrency.tag = "som"
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             dollarsCell.setOnClickListener {
                 binding.cusCurrency.setText(dollarsCell.getTitle())
                 binding.cusCurrency.tag = "usd"
-                dialog.dismiss()
+                dialog?.dismiss()
             }
         }
-        dialog.show()
+        dialog?.show()
     }
 
     private fun callAdTypeBottomSheet() {
         val lBinding = BottomSheetAdTypeBinding.inflate(LayoutInflater.from(context))
-        val dialog = BottomSheetDialog(requireContext())
-        dialog.setContentView(lBinding.root)
+        dialog?.setContentView(lBinding.root)
 
         with(lBinding) {
             cancelIconAdType.setOnClickListener {
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             setVisibilityAndPosition(lBinding)
             recruitingCellBottom.setOnClickListener {
                 binding.cusAdType.setText(recruitingCellBottom.getTitle())
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             lookingCellBottom.setOnClickListener {
                 binding.cusAdType.setText(lookingCellBottom.getTitle())
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             sellCellBottom.setOnClickListener {
                 binding.cusAdType.setText(sellCellBottom.getTitle())
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             buyCellBottom.setOnClickListener {
                 binding.cusAdType.setText(buyCellBottom.getTitle())
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             rentCellBottom.setOnClickListener {
                 binding.cusAdType.setText(rentCellBottom.getTitle())
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             serviceCellBottom.setOnClickListener {
                 binding.cusAdType.setText(serviceCellBottom.getTitle())
-                dialog.dismiss()
+                dialog?.dismiss()
             }
             hiringCellBottom.setOnClickListener {
                 binding.cusAdType.setText(hiringCellBottom.getTitle())
-                dialog.dismiss()
+                dialog?.dismiss()
             }
         }
-        dialog.show()
+        dialog?.show()
     }
 
     private fun setVisibilityAndPosition(lBinding: BottomSheetAdTypeBinding) {
@@ -457,8 +475,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             viewModel.categories.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        binding.bottomSheetCategory.recyclerCategoryBs.adapter =
-                            CategoriesBottomSheetAdapter(it.data.result, this)
+                        list = it.data.result
                     }
                     is ApiState.Failure -> {
                         makeToast(it.msg.message.toString())
@@ -489,18 +506,16 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
     override fun clickedCategory(item: ResultEntity?) = with(binding) {
         categoryEntity = item
+        dialog?.dismiss()
         cusCategory.setText(categoryEntity?.name.toString())
         cusSubCategory.isVisible = categoryEntity?.subCategories?.isNotEmpty() == true
         cusDelivery.isVisible = cusSubCategory.isVisible.not() && categoryEntity?.delivery == true
-        bottomSheetCategory.root.isVisible = false
-        bottomSheetSubcategory.recyclerSubcategoryBs.adapter =
-            SubCategoriesBottomSheetAdapter(categoryEntity?.subCategories, this@NewAdsFragment)
     }
 
-    override fun subClickHandler(item: SubCategoriesEntity?) = with(binding){
+    override fun subClickHandler(item: SubCategoriesEntity?) = with(binding) {
         subCategoriesEntity = item
+        dialog?.dismiss()
         cusSubCategory.setText(subCategoriesEntity?.name.toString())
-        bottomSheetSubcategory.root.isVisible = false
         cusDelivery.isVisible = item?.delivery == true
         if (item != null) {
             cusAdType.setText("")
@@ -510,6 +525,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
     override fun onDestroy() {
         println("fOnDest------")
+        dialog = null
         super.onDestroy()
     }
 }
