@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -20,12 +19,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.adapter.PagingAdapterForMain
 import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagingAdapter
 import kotlinx.coroutines.launch
 import java.io.File
-import java.net.URI
 
 const val REQUEST_CODE = 100
 
@@ -120,16 +117,4 @@ fun Fragment.checkPermission(): Boolean {
         )
         write == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED
     }
-}
-
-fun Fragment.glide(fragment: Fragment, uri: URI, imageView: ImageView) {
-    Glide.with(fragment).load(uri).centerCrop().into(imageView)
-}
-
-fun Fragment.glide(fragment: Fragment, uri: Int, imageView: ImageView) {
-    Glide.with(fragment).load(uri).centerCrop().into(imageView)
-}
-
-fun glide(fragment: Fragment, uri: String, imageView: ImageView) {
-    Glide.with(fragment).load(uri).centerCrop().into(imageView)
 }

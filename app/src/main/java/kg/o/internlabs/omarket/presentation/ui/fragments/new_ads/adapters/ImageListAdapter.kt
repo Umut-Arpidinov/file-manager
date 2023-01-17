@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments.new_ads
+package kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.adapters
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -20,6 +20,7 @@ import kg.o.internlabs.omarket.databinding.LoadedImageItemBinding
 import kg.o.internlabs.omarket.databinding.LoadingImageItemBinding
 import kg.o.internlabs.omarket.databinding.NoItemBinding
 import kg.o.internlabs.omarket.domain.entity.UploadImageResultEntity
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.*
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper

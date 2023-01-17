@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments.new_ads
+package kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -23,6 +23,9 @@ import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.*
 import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.CategoryClickHandler
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.adapters.CategoriesBottomSheetAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.adapters.ImageListAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.adapters.SubCategoriesBottomSheetAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper
