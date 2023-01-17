@@ -27,10 +27,7 @@ import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImag
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.SubCategoryClickHandler
-import kg.o.internlabs.omarket.utils.checkPermission
-import kg.o.internlabs.omarket.utils.getFile
-import kg.o.internlabs.omarket.utils.makeToast
-import kg.o.internlabs.omarket.utils.safeFlowGather
+import kg.o.internlabs.omarket.utils.*
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -118,7 +115,11 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         flAddImage.isVisible = selectedPath.size < 2
 
         ivAddImage.setOnClickListener {
-            pickImages()
+            if(checkPermission()) {
+                pickImages()
+            } else {
+                requestPermission()
+            }
         }
 
         btnCreateAd.setOnClickListener {

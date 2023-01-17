@@ -2,15 +2,16 @@ package kg.o.internlabs.omarket.utils
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
-import android.provider.Settings
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -25,6 +26,8 @@ import kg.o.internlabs.omarket.presentation.ui.fragments.profile.adapter.AdsPagi
 import kotlinx.coroutines.launch
 import java.io.File
 import java.net.URI
+
+const val REQUEST_CODE = 100
 
 fun Context.makeToast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
@@ -89,22 +92,33 @@ fun Fragment.loadListener(
     }
 }
 
-fun Fragment.checkPermission() {
-    if (ContextCompat.checkSelfPermission(
-            requireContext(),
+fun Fragment.requestPermission() {
+    //Android is below 11(R)
+    ActivityCompat.requestPermissions(
+        requireActivity(),
+        arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ),
+        REQUEST_CODE
+    )
+}
+
+fun Fragment.checkPermission(): Boolean {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        //Android is 11(R) or above
+        Environment.isExternalStorageManager()
+    } else {
+        //Android is below 11(R)
+        val write = ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        val read = ContextCompat.checkSelfPermission(
+            requireActivity(),
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
-        != PackageManager.PERMISSION_GRANTED
-    ) {
-        Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse(
-                "package:${requireActivity().packageName}"
-            )
-        ).apply {
-            addCategory(Intent.CATEGORY_DEFAULT)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(this)
-        }
+        write == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED
     }
 }
 
