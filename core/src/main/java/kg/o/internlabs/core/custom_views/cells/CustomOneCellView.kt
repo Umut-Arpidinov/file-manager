@@ -14,11 +14,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kg.o.internlabs.core.R
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomOneCellsClickListener
+import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomOneCellsTextWatcher
 import kg.o.internlabs.core.databinding.CustomOneCellViewBinding
 
 class CustomOneCellView : ConstraintLayout {
     private var posOfCell: Int = 0
     private var cellListener: CustomOneCellsClickListener? = null
+    private var textWatcher: CustomOneCellsTextWatcher? = null
 
     private val binding = CustomOneCellViewBinding.inflate(
         LayoutInflater.from(context), this, true
@@ -73,6 +75,9 @@ class CustomOneCellView : ConstraintLayout {
             return
         }
         tvHint.text = hint
+        tvHint.isVisible = true
+        tvTitle.text = ""
+        tvTitle.isVisible = false
     }
 
     fun setText(text: String) = with(binding) {
@@ -116,7 +121,9 @@ class CustomOneCellView : ConstraintLayout {
                     etEditable.text?.let { etEditable.setSelection(it.length) }
                 }
             }
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+                textWatcher?.textWatcher(s.isNullOrEmpty(), posOfCell)
+            }
         })
 
         ivShevron.setOnClickListener {
@@ -157,10 +164,12 @@ class CustomOneCellView : ConstraintLayout {
         }
     }
 
-    fun getItemId() = 2
-
     fun setInterface(cellsClickListener: CustomOneCellsClickListener, posOfCell: Int = 0) {
         cellListener = cellsClickListener
+        this.posOfCell = posOfCell
+    }
+    fun setInterface(textWatcher: CustomOneCellsTextWatcher, posOfCell: Int = 0) {
+        this.textWatcher = textWatcher
         this.posOfCell = posOfCell
     }
 }

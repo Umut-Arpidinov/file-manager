@@ -278,4 +278,12 @@
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
     </style>
+
+    <style name="CategoryNameTextAppearance">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
 </resources>

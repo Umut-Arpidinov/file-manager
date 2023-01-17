@@ -108,8 +108,11 @@ class AdsPagingAdapter: PagingDataAdapter<MyAdsResultsEntity, AdsPagingAdapter.A
                 oldPriceProduct.visibility = View.GONE
             } else {
                 oldPriceProduct.visibility = View.VISIBLE
-                if (item.oldPrice == "10000 с") oldPriceProduct.text = item.oldPrice
-                else oldPriceProduct.text = item.oldPrice.toInt().formatDecimalSeparator()
+                try {
+                    oldPriceProduct.text = item.oldPrice.toInt().formatDecimalSeparator()
+                } catch (e: Exception) {
+                    oldPriceProduct.text = item.oldPrice
+                }
                 oldPriceProduct.paintFlags =
                     oldPriceProduct.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }

@@ -2,10 +2,17 @@ package kg.o.internlabs.omarket.data.mappers
 
 import kg.o.internlabs.omarket.data.remote.model.DetailsAdDto
 import kg.o.internlabs.omarket.data.remote.model.EditAdsDto
+import kg.o.internlabs.omarket.data.remote.model.*
 import kg.o.internlabs.omarket.data.remote.model.ads.*
 import kg.o.internlabs.omarket.domain.entity.DetailsAd
 import kg.o.internlabs.omarket.domain.entity.EditAds
+import kg.o.internlabs.omarket.data.remote.model.ads.AdsDto
+import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.domain.entity.ads.*
+import kg.o.internlabs.omarket.domain.entity.ads.Author
+import kg.o.internlabs.omarket.domain.entity.ads.LocationX
+import kg.o.internlabs.omarket.domain.entity.ads.PromotionType
+import kg.o.internlabs.omarket.domain.entity.ads.ResultX
 import retrofit2.Response
 
 class MapperForAds {
@@ -48,6 +55,14 @@ class MapperForAds {
         whatsappNum = v?.whatsappNum,
         whatsappNumIsIdent = v?.whatsappNumIsIdent
     )
+
+    fun toDbModel(v: DetailsAd?) = DetailsAdDto(
+        details = v?.details,
+        errorCode = v?.errorCode,
+        resultX = toDbModel(v?.resultX),
+        resultCode = v?.resultCode
+    )
+
 
     fun toDbModel(v: AdsByCategory?) = AdsByCategoryDto(
         mainFilter = toDbModel(v?.mainFilter)
@@ -315,6 +330,47 @@ class MapperForAds {
         previous = v?.previous,
         results = v?.results?.map { toEntity(it) }
     )
+
+    private fun toEntity(v: AdTypeDto?) = AdTypeEntity(
+        result = toEntity(v?.result),
+        resultCode = v?.resultCode,
+        details = v?.details,
+        errorCode = v?.errorCode
+    )
+     private fun toEntity(v: AdTypeResultDto?) = AdTypeResultEntity(
+        results = v?.results?.map { toEntity(it) },
+        count = v?.count
+    )
+
+    private fun toEntity(v: AdTypeResultsDto?) = AdTypeResultsEntity(
+        id = v?.id,
+        codeValue = v?.codeValue,
+        name = v?.name
+    )
+
+    private fun toDto(v: AdTypeEntity?) = AdTypeDto(
+        result = toDto(v?.result),
+        resultCode = v?.resultCode,
+        details = v?.details,
+        errorCode = v?.errorCode
+    )
+    private fun toDto(v: AdTypeResultEntity?) = AdTypeResultDto(
+        results = v?.results?.map { toDto(it) },
+        count = v?.count
+    )
+
+    private fun toDto(v: AdTypeResultsEntity?) = AdTypeResultsDto(
+        id = v?.id,
+        codeValue = v?.codeValue,
+        name = v?.name
+    )
+
+    fun toRespEntityForAdType(resp: Response<AdTypeDto?>) =
+        if (resp.isSuccessful) {
+            Response.success(toEntity(resp.body()))
+        } else {
+            resp.errorBody()?.let { Response.error(resp.code(), it) }
+        }
 
     private fun toEntity(v: ParentAdsDto?) = ParentAds(
         adType = v?.adType,

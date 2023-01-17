@@ -206,8 +206,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_16dp"
-                android:layout_marginBottom="@dimen/margin_bottom_48dp"
                 android:layout_marginEnd="@dimen/margin_end_8dp"
+                android:layout_marginBottom="@dimen/margin_bottom_48dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_information_block">
 
@@ -215,9 +215,9 @@
                     android:id="@+id/fl_add_image"
                     android:layout_width="@dimen/icon_width_100dp"
                     android:layout_height="@dimen/icon_height_100dp"
-                    android:visibility="visible"
                     android:layout_marginStart="@dimen/margin_start_8dp"
                     android:background="@drawable/bg_image"
+                    android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -235,13 +235,13 @@
                     android:id="@+id/rw_to_upload_images"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginStart="@dimen/margin_start_8dp"
+                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/fl_add_image"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:itemCount="10"
                     tools:listitem="@layout/add_image_item" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -271,6 +271,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_ad_agreement"
                 app:shapeAppearanceOverlay="@style/MyShapeAppearance" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/progressBarStyle"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_ad_agreement" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

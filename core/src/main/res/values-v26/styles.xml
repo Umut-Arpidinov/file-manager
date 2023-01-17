@@ -171,4 +171,12 @@
     <style name="TextView.Telegram_Hint" parent="TextView.O_Money_Agreement">
         <item name="android:textColor">@color/black_5</item>
     </style>
+
+    <style name="CategoryNameTextAppearance">
+        <item name="android:textColor">@color/black_1</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
 </resources>

@@ -185,6 +185,12 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="inAppToolbarTitle">
+        <item name="android:textSize">@dimen/text_17sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:textColor">@color/black_1</item>
+    </style>
+
     <style name="appBar">
         <item name="android:textSize">@dimen/text_15sp</item>
         <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
@@ -463,6 +469,12 @@
         <item name="fontFamily">@font/sf_pro_text_regular</item>
         <item name="android:textColor">@color/black_5</item>
         <item name="android:textSize">@dimen/text_11sp</item>
+    </style>
+
+    <style name="CategoryNameTextAppearance">
+        <item name="android:textColor">@color/black_1</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
     </style>
 
     <dimen name="padding_18dp">18dp</dimen>

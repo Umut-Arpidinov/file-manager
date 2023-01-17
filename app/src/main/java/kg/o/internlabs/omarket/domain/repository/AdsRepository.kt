@@ -2,6 +2,7 @@ package kg.o.internlabs.omarket.domain.repository
 
 import androidx.paging.PagingData
 import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.omarket.domain.entity.AdTypeEntity
 import kg.o.internlabs.omarket.domain.entity.CategoriesEntity
 import kg.o.internlabs.omarket.domain.entity.DetailsAd
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
@@ -17,5 +18,7 @@ interface AdsRepository {
     fun getDetailAd(token: String,uuid: String): Flow<ApiState<DetailsAd>>
 
     fun getAdsFilter(token: String, adsFilter: AdsByFilter?): Flow<PagingData<ResultX>>
+
+    fun getAdType(token: String): Flow<ApiState<AdTypeEntity>>
 
 }
