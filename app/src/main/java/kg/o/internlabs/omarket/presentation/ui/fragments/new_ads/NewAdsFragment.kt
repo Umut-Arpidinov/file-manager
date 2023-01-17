@@ -32,6 +32,7 @@ import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainIma
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.SubCategoryClickHandler
 import kg.o.internlabs.omarket.utils.*
 import kotlinx.coroutines.flow.collectLatest
+
 @AndroidEntryPoint
 class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper,
@@ -93,6 +94,10 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
     override fun initListener() = with(binding) {
         super.initListener()
+
+        tbFaq.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         cusCategory.setOnClickListener {
             callCategoryBottomSheet()
@@ -324,7 +329,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         uri: UploadImageResultEntity,
         path: UploadImageResultEntity, imageUri: Uri
     ) {
-        if (selected.contains(uri)) return
+        if (uri in selected) return
         if (containsModel(path)) return
         val itemIndex = selectedImages.indexOf(path)
         if (itemIndex < 0) return
@@ -468,13 +473,6 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     private fun createAd() = with(binding) {
-    private fun isAllImagesHasUrl(): Boolean {
-        if (selectedImages.size > 1) return false
-        return selectedImages.filterNot { selectedImages.indexOf(it) != 0 }
-            .all { it.url != null }
-    }
-
-    private fun createAd() {
         safeFlowGather {
             viewModel.editedAd.collectLatest {
                 when (it) {
@@ -538,7 +536,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
     override fun clickedCategory(item: ResultEntity?) = with(binding) {
         cusSubCategory.setHint(getString(R.string.sub_category))
-        cusAdType.setHint(getString(R.string.order_type))
+        cusAdType.setHint(getString(R.string.ad_type_title))
         subCategoriesEntity = null
         categoryEntity = item
         dialog?.dismiss()
@@ -556,7 +554,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         cusDelivery.isVisible = item?.delivery == true
         if (item != null) {
             cusAdType.setText("")
-            cusAdType.setHint(getString(R.string.order_type))
+            cusAdType.setHint(getString(R.string.ad_type_title))
         }
     }
 

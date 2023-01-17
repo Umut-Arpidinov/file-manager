@@ -80,7 +80,7 @@
                 android:layout_marginTop="@dimen/margin_8dp"
                 app:isEditableView="false"
                 app:layout_constraintTop_toBottomOf="@id/cus_description"
-                app:setHint="@string/ad_type" />
+                app:setHint="@string/ad_type_title" />
             <kg.o.internlabs.core.custom_views.cells.CustomWithToggleCellView
                 android:id="@+id/cus_price_is_negotiable"
                 android:layout_width="match_parent"

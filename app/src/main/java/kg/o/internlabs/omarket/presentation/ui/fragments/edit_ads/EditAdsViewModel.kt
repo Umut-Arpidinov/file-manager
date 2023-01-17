@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kg.o.internlabs.core.base.BaseViewModel
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.omarket.domain.entity.*
+import kg.o.internlabs.omarket.domain.usecases.GetCategoriesUseCase
 import kg.o.internlabs.omarket.domain.usecases.crud_ad_usecases.*
 import kg.o.internlabs.omarket.domain.usecases.detailAd_use_case.GetDetailAdUseCase
 import kg.o.internlabs.omarket.domain.usecases.shared_prefs_use_cases.GetAccessTokenFromPrefsUseCase
@@ -21,14 +22,13 @@ class EditAdsViewModel@Inject constructor(
     private val deleteImageFromAdUseCase: DeleteImageFromAdUseCase,
     private val editAnAdUseCase: EditAnAdUseCase,
     private val deleteAdUseCase: DeleteAdUseCase,
-    private val getDetailAdUseCase: GetDetailAdUseCase
+    private val getDetailAdUseCase: GetDetailAdUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getAdTypeUseCase: AdTypeUseCase
 ) : BaseViewModel() {
 
     private val _token = MutableStateFlow("")
     val token = _token.asStateFlow()
-
-    private val _uuid = MutableStateFlow("")
-    val uuid = _uuid.asStateFlow()
 
     private val _detailAd = MutableSharedFlow<ApiState<DetailsAd>>()
     val detailAd = _detailAd.asSharedFlow()
@@ -44,18 +44,31 @@ class EditAdsViewModel@Inject constructor(
 
     private val _deleteImage = MutableSharedFlow<ApiState<DeleteEntity>>()
 
+    private val _categories = MutableSharedFlow<ApiState<CategoriesEntity>>()
+    val categories = _categories.asSharedFlow()
+
+    private val  _adType = MutableSharedFlow<ApiState<AdTypeEntity>>()
+    val adType = _adType.asSharedFlow()
+
+    private var uuid = ""
+
     init {
         getAccessTokenFromPrefs()
     }
 
-    fun initViewModel() {}
+    fun setUuid(uuid: String) {
+        println("-------=-=--===-0=0-=0-=0=-0-=0=0")
+        this.uuid = uuid
+        getDetailAd()
+    }
 
     private fun getAccessTokenFromPrefs() {
         viewModelScope.launch {
             getAccessTokenFromPrefsUseCase().collectLatest {
                 if (it != null) {
                     _token.emit(it)
-                    getInitiatedAd()
+                    getAdType()
+                    getCategories()
                 }
             }
         }
@@ -63,7 +76,7 @@ class EditAdsViewModel@Inject constructor(
 
     fun uploadImage(uri: File?) {
         viewModelScope.launch {
-            uploadImageToAdUseCase(getAccessToken(), uri, getUuid())
+            uploadImageToAdUseCase(getAccessToken(), uri, uuid)
                 .collectLatest {
                     when (it) {
                         is ApiState.Success -> {
@@ -82,7 +95,7 @@ class EditAdsViewModel@Inject constructor(
 
     fun createAd(editAds: EditAds) {
         viewModelScope.launch {
-            editAnAdUseCase(getAccessToken(), editAds, getUuid())
+            editAnAdUseCase(getAccessToken(), editAds, uuid)
                 .collectLatest {
                     when (it) {
                         is ApiState.Success -> {
@@ -99,7 +112,7 @@ class EditAdsViewModel@Inject constructor(
         }
     }
 
-    fun getDetailAd(uuid: String) {
+    private fun getDetailAd() {
         viewModelScope.launch {
             getDetailAdUseCase(getAccessToken(),uuid).collectLatest {
                 when(it) {
@@ -124,7 +137,7 @@ class EditAdsViewModel@Inject constructor(
 
     fun deleteImageFromAd(body: DeletedImageUrlEntity) {
         viewModelScope.launch {
-            deleteImageFromAdUseCase(getAccessToken(), body, getUuid()).collectLatest {
+            deleteImageFromAdUseCase(getAccessToken(), body, uuid).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         println("----Del is ok")
@@ -144,7 +157,7 @@ class EditAdsViewModel@Inject constructor(
 
     fun deleteAd() {
         viewModelScope.launch {
-            deleteAdUseCase(getAccessToken(), getUuid()).collectLatest {
+            deleteAdUseCase(getAccessToken(), uuid).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         println("----Del is ok")
@@ -162,17 +175,37 @@ class EditAdsViewModel@Inject constructor(
         }
     }
 
-    private fun getInitiatedAd() {
+    private fun getCategories() {
         viewModelScope.launch {
-            initiateAd(getAccessToken()).collectLatest {
+            getCategoriesUseCase(getAccessToken()).collectLatest {
                 when (it) {
                     is ApiState.Success -> {
-                        _uuid.value = it.data.result.toString()
+                        _categories.emit(it)
+
                     }
                     is ApiState.Failure -> {
-                        _uuid.value = ""
+                        _categories.emit(it)
                     }
                     ApiState.Loading -> {
+                        _categories.emit(it)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getAdType() {
+        viewModelScope.launch {
+            getAdTypeUseCase(getAccessToken()).collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        _adType.emit(it)
+                    }
+                    is ApiState.Failure -> {
+                        _adType.emit(it)
+                    }
+                    ApiState.Loading -> {
+                        _adType.emit(it)
                     }
                 }
             }
@@ -180,6 +213,4 @@ class EditAdsViewModel@Inject constructor(
     }
 
     private fun getAccessToken() = token.value
-
-    private fun getUuid() = uuid.value
 }

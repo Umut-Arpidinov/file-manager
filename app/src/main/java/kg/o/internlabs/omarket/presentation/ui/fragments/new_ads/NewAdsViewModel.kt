@@ -42,7 +42,7 @@ class NewAdsViewModel @Inject constructor(
     private val  _adType = MutableSharedFlow<ApiState<AdTypeEntity>>()
     val adType = _adType.asSharedFlow()
 
-    private val _deleteImage = MutableSharedFlow<ApiState<DeleteImageEntity>>()
+    private val _deleteImage = MutableSharedFlow<ApiState<DeleteEntity>>()
 
     init {
         getAccessTokenFromPrefs()
