@@ -49,6 +49,11 @@ class CrudAdsRepositoryImpl @Inject constructor(
                 token,
                 mapperForAds.toDbModel(editAds), uuid)
         )
+        /*mapperForAds.toRespEntityForEditAd(
+            apiService.editAd(token, editAds, uuid)
+
+        )
+*/
     }
 
     override fun deleteAd(token: String, uuid: String) = safeApiCall {

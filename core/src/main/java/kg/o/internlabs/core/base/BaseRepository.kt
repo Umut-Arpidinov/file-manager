@@ -15,7 +15,6 @@ abstract class BaseRepository {
         apiCall: suspend () -> Response<T>?
     ): Flow<ApiState<T>> = flow {
         emit(ApiState.Loading)
-
         val response = apiCall()
         if (response != null) {
             if (response.isSuccessful) {
@@ -27,7 +26,7 @@ abstract class BaseRepository {
                     if (error != null) {
                         emit(ApiState.Failure(IOException(error.toString())))
                     } else {
-                        emit(ApiState.Failure(IOException("Something went wrong")))
+                        emit(ApiState.Failure(IOException("Something went wrong2")))
                     }
                 }
             } else {
@@ -40,8 +39,12 @@ abstract class BaseRepository {
             }
         }
     }.catch { e ->
-        println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
-        e.printStackTrace()
+        println("AAAAAAAAAAAAA$e AAAAAAAAAAAAAAAAa")
+
+        if(e is com.google.gson.JsonSyntaxException) {
+            emit(ApiState.Failure(Exception("1000")))
+            return@catch
+        }
         if(e is java.net.SocketTimeoutException) {
             emit(ApiState.Failure(Exception(e)))
             return@catch

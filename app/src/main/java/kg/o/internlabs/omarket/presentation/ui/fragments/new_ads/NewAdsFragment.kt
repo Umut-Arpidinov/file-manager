@@ -388,8 +388,8 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     private fun getAdTypeNameCode(name: String) =
         adTypeEntity?.result?.results?.find { it.name == name }?.codeValue
 
-    private fun getCategoryId(name: String) =
-        if (subCategoriesEntity?.name == name) subCategoriesEntity?.id
+    private fun getCategoryId(subName: String) =
+        if (subCategoriesEntity?.name == subName) subCategoriesEntity?.id
         else {
             categoryEntity?.id
         }
@@ -397,7 +397,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     private fun prepareValuesForAd() = with(binding) {
         val editAds = EditAds(
             adType = getAdTypeNameCode(cusAdType.getText()),
-            category = getCategoryId(cusCategory.getText()),
+            category = getCategoryId(cusSubCategory.getText()),
             contractPrice = cusPriceIsNegotiable.isChecked(),
             currency = if (cusPriceIsNegotiable.isChecked().not()) currency else null,
             delivery = cusDelivery.isChecked(),

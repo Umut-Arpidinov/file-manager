@@ -124,12 +124,23 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         flAddImage.isVisible = selectedPath.size < 2
 
         ivAddImage.setOnClickListener {
-            if(checkPermission()) {
+            if (checkPermission()) {
                 pickImages()
             } else {
                 requestPermission()
             }
         }
+
+        btnDeleteAd.setOnClickListener {
+            viewModel.deleteAd()
+
+            isTheAdDeleted()
+        }
+
+/*
+        01:54:06.428  I  {"contract_price":false,"currency":"","delivery":false,"description":"Harley Davidson идеальное состояние","images":[],"location":1,"o_money_pay":true,"price":"500000","promotion_type":{},"result":{"author":{"location":{}},"category":{"parent":{}},"location":{},"promotion_type":{}},"telegram_profile":"_me_keny2076","title":"Мото","whatsapp_num":"+996 700 453 128"}
+*/
+
 
         btnCreateAd.setOnClickListener {
             prepareValuesForAd()
@@ -138,7 +149,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
 
     private fun callCategoryBottomSheet() {
         val lBinding = BottomSheetCategoriesBinding.inflate(LayoutInflater.from(context))
-        lBinding.recyclerCategoryBs.adapter = CategoriesBottomSheetAdapterForEditAd(categories, this)
+        lBinding.recyclerCategoryBs.adapter =
+            CategoriesBottomSheetAdapterForEditAd(categories, this)
         dialog?.setContentView(lBinding.root)
         dialog?.show()
 
@@ -262,39 +274,60 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             else -> v.setPosition(Position.MIDDLE)
         }
     }
+
     private fun setField(item: ResultX) = with(binding) {
-        categoryEntity = item?.category?
-        item.title?.let { if(it.isNotEmpty()) cusTitle.setText(it) else
-            cusTitle.setHint(getString(R.string.title)) }
+         categoryEntity = ResultEntity()
+        if (item.category?.parent == null) item.category
+        item.title?.let {
+            if (it.isNotEmpty()) cusTitle.setText(it) else
+                cusTitle.setHint(getString(R.string.title))
+        }
 
-        item.category?.parent?.name?.let { if(it.isNotEmpty()) cusCategory.setText(it) else
-            cusCategory.setHint(getString(R.string.category)) }
 
-        item.category?.name?.let { if(it.isNotEmpty()) {
-            cusSubCategory.setText(it)
-            cusSubCategory.isVisible = it.isNotEmpty()
-        } else
-            cusSubCategory.setHint(getString(R.string.sub_category)) }
+        with(item.category) {
+            val category = if (this?.parent == null) this?.name else this.parent.name
+            val subCategory = if (this?.parent != null) this.name else null
 
-        item.description?.let {if(it.isNotEmpty()) cusDescription.setText(it) else
-            cusDescription.setHint(getString(R.string.description)) }
+            if (category.isNullOrEmpty()) cusCategory.setHint(getString(R.string.category))
+            else cusCategory.setText(category)
 
-        item.adType?.let { if(it.isNotEmpty()) cusAdType.setText(it) else
-            cusTitle.setHint(getString(R.string.ad_type_title)) }
+            if (subCategory.isNullOrEmpty()) {
+                cusSubCategory.isVisible = false
+            } else {
+                cusSubCategory.isVisible = true
+                cusSubCategory.setText(subCategory)
+            }
+        }
+
+        item.description?.let {
+            if (it.isNotEmpty()) cusDescription.setText(it) else
+                cusDescription.setHint(getString(R.string.description))
+        }
+
+        item.adType?.let {
+            if (it.isNotEmpty()) cusAdType.setText(it) else
+                cusTitle.setHint(getString(R.string.ad_type_title))
+        }
 
         item.contractPrice?.let {
             cusPriceIsNegotiable.isChecked(it)
             cusCurrency.isVisible = it.not()
             cusPrice.isVisible = it.not()
         }
-        item.currency?.let { if(it.isNotEmpty()) cusCurrency.setText(it) else
-            cusCategory.setHint(getString(R.string.currency)) }
+        item.currency?.let {
+            if (it.isNotEmpty()) cusCurrency.setText(it) else
+                cusCategory.setHint(getString(R.string.currency))
+        }
 
-        item.price?.let { if(it.isNotEmpty()) cusPrice.setText(it) else
-            cusPrice.setHint(getString(R.string.price)) }
+        item.price?.let {
+            if (it.isNotEmpty()) cusPrice.setText(it) else
+                cusPrice.setHint(getString(R.string.price))
+        }
 
-        item.location?.name?.let { if(it.isNotEmpty()) cusLocation.setText(it) else
-            cusLocation.setText(getString(R.string.bishkek)) }
+        item.location?.name?.let {
+            if (it.isNotEmpty()) cusLocation.setText(it) else
+                cusLocation.setText(getString(R.string.bishkek))
+        }
 
         item.oMoneyPay?.let {
             cusOMoneyAccept.isChecked(it)
@@ -325,23 +358,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
     }
 
-    private fun getAdsDetail() {
-        safeFlowGather {
-            viewModel.detailAd.collectLatest {
-                when (it) {
-                    is ApiState.Success -> {
-                        it.data.resultX?.let { it1 -> setField(it1) }
-                    }
-                    is ApiState.Failure -> {
-                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
-                    }
-                    is ApiState.Loading -> {
-                    }
-                }
-            }
-        }
-    }
-
     private fun pickImages() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
@@ -351,21 +367,21 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     }
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts
-            .StartActivityForResult(), fun(result: ActivityResult) {
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                val intent: Intent? = result.data
-                if (intent?.clipData != null) {
-                    val count = intent.clipData!!.itemCount
-                    for (i in 0 until count) {
-                        val imageUri: Uri = intent.clipData!!.getItemAt(i).uri
-                        this addImage imageUri
-                    }
-                } else if (intent?.data != null) {
-                    val imageUri: Uri = intent.data!!
+        .StartActivityForResult(), fun(result: ActivityResult) {
+        if (result.resultCode == AppCompatActivity.RESULT_OK) {
+            val intent: Intent? = result.data
+            if (intent?.clipData != null) {
+                val count = intent.clipData!!.itemCount
+                for (i in 0 until count) {
+                    val imageUri: Uri = intent.clipData!!.getItemAt(i).uri
                     this addImage imageUri
                 }
+            } else if (intent?.data != null) {
+                val imageUri: Uri = intent.data!!
+                this addImage imageUri
             }
-        })
+        }
+    })
 
     private infix fun addImage(uri: Uri) {
         if (selectedImages.size >= 11) {
@@ -401,22 +417,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         binding.rwToUploadImages.adapter = imageListAdapter
     }
 
-    private fun getUploadedImage(path: UploadImageResultEntity, imageUri: Uri) {
-        safeFlowGather {
-            viewModel.uploadImage.collectLatest {
-                when (it) {
-                    is ApiState.Success -> {
-                        it.data.result?.let { it1 -> addIfNotContains(it1, path, imageUri) }
-                    }
-                    is ApiState.Failure -> {
-                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
-                    }
-                    is ApiState.Loading -> {
-                    }
-                }
-            }
-        }
-    }
 
     private fun addIfNotContains(
         uri: UploadImageResultEntity,
@@ -493,12 +493,13 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         else {
             categoryEntity?.id
         }
+
     private fun prepareValuesForAd() = with(binding) {
 
         val editAds = EditAds(
             promotionType = null,
             adType = getAdTypeNameCode(cusAdType.getText()),
-            category = getCategoryId(cusCategory.getText()),
+            category = getCategoryId(cusSubCategory.getText()),
             contractPrice = cusPriceIsNegotiable.isChecked(),
             currency = if (cusPriceIsNegotiable.isChecked().not()) currency else null,
             delivery = cusDelivery.isChecked(),
@@ -597,24 +598,18 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                         makeToast(it.msg.message.toString())
                         progressBar.isVisible = false
                         btnCreateAd.isVisible = true
+                        btnDeleteAd.isVisible = true
                     }
                     is ApiState.Loading -> {
                         progressBar.isVisible = true
                         btnCreateAd.isVisible = false
+                        btnDeleteAd.isVisible = false
                     }
                 }
             }
         }
     }
 
-    private fun deleteImagesFromRemote() {
-        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
-        //listImageUrlInRemote.retainAll(selectedImages.map { it.url })
-        val tmp = listImageUrlInRemote.filter { it in selectedImages }
-        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....2000..$listImageUrlInRemote")
-        println("${this.javaClass.simpleName}--${tmp.size}....3000..$tmp")
-        //viewModel.deleteImageFromAd()
-    }
     private fun getCategories() {
         safeFlowGather {
             viewModel.categories.collectLatest {
@@ -649,6 +644,79 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
     }
 
+    private fun getAdsDetail() {
+        safeFlowGather {
+            viewModel.detailAd.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        it.data.resultX?.let { it1 -> setField(it1) }
+                    }
+                    is ApiState.Failure -> {
+                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
+                    }
+                    is ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+    private fun getUploadedImage(path: UploadImageResultEntity, imageUri: Uri) {
+        safeFlowGather {
+            viewModel.uploadImage.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        it.data.result?.let { it1 -> addIfNotContains(it1, path, imageUri) }
+                    }
+                    is ApiState.Failure -> {
+                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
+                    }
+                    is ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun isTheAdDeleted() = with(binding) {
+        safeFlowGather {
+            viewModel.deleteAd.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        progressBar.isVisible = false
+                        try {
+                            findNavController().navigate(R.id.mainFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                    is ApiState.Failure -> {
+                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
+                        if (it.msg.message == "1000") {
+                            findNavController().navigate(R.id.mainFragment)
+                            return@collectLatest
+                        }
+                        progressBar.isVisible = false
+                        btnDeleteAd.isVisible = true
+                        btnCreateAd.isVisible = true
+                    }
+                    is ApiState.Loading -> {
+                        progressBar.isVisible = true
+                        btnDeleteAd.isVisible = false
+                        btnCreateAd.isVisible = false
+                    }
+                }
+            }
+        }
+    }
+
+    private fun deleteImagesFromRemote() {
+        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
+        //listImageUrlInRemote.retainAll(selectedImages.map { it.url })
+        val tmp = listImageUrlInRemote.filter { it in selectedImages }
+        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....2000..$listImageUrlInRemote")
+        println("${this.javaClass.simpleName}--${tmp.size}....3000..$tmp")
+        //viewModel.deleteImageFromAd()
+    }
     override fun clickedCategory(item: ResultEntity?) = with(binding) {
         cusSubCategory.setHint(getString(R.string.sub_category))
         cusAdType.setHint(getString(R.string.ad_type_title))

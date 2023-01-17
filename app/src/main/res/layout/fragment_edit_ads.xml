@@ -245,16 +245,6 @@
                     tools:listitem="@layout/add_image_item" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ProgressBar
-                android:id="@+id/progress_bar_del"
-                style="@style/progressBarStyle"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/margin_bottom_8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/btn_delete_ad"
-                app:layout_constraintTop_toTopOf="@id/btn_delete_ad" />
-
             <TextView
                 android:id="@+id/btn_delete_ad"
                 android:layout_width="match_parent"
@@ -272,12 +262,14 @@
             <ProgressBar
                 android:id="@+id/progress_bar"
                 style="@style/progressBarStyle"
+                android:layout_width="@dimen/icon_width_46dp"
+                android:layout_height="@dimen/icon_height_46dp"
                 android:visibility="gone"
                 android:layout_marginTop="@dimen/margin_bottom_8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_delete_ad" />
+                app:layout_constraintTop_toBottomOf="@id/cl_image_block" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_create_ad"
