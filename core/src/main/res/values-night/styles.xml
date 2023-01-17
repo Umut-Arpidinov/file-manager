@@ -225,6 +225,12 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="inAppToolbarTitle">
+        <item name="android:textSize">@dimen/text_17sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_semibold</item>
+        <item name="android:textColor">@color/white_1</item>
+    </style>
+
     <style name="ButtonGray">
         <item name="android:background">@color/black_3</item>
         <item name="android:textColor">@color/white_1</item>
@@ -344,6 +350,13 @@
         <item name="android:textColor">@color/gray_3</item>
         <item name="android:lineSpacingExtra">@dimen/extra_spacing_2dp</item>
     </style>
+
+    <style name="CategoryNameTextAppearance">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textSize">@dimen/cells_title_text_size_17sp</item>
+    </style>
+
 
     <style name="detailedAdsTitleStyle">
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>

@@ -27,6 +27,7 @@
     <string name="number_verified">Подтвержденный номер</string>
     <string name="naming">Название</string>
     <string name="category">Категория</string>
+    <string name="sub_category">Подкатегория</string>
     <string name="description">Описание</string>
     <string name="my_profile">Мой профиль</string>
     <string name="faq">Вопрос-ответ</string>

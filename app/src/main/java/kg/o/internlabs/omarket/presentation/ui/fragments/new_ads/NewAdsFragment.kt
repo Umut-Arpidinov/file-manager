@@ -11,16 +11,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
+import kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
+import kg.o.internlabs.core.custom_views.cells.Position
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomWithToggleCellViewClick
 import kg.o.internlabs.omarket.R
+import kg.o.internlabs.omarket.databinding.BottomSheetAdTypeBinding
+import kg.o.internlabs.omarket.databinding.BottomSheetCurrencyBinding
 import kg.o.internlabs.omarket.databinding.FragmentNewAdsBinding
 import kg.o.internlabs.omarket.domain.entity.*
+import kg.o.internlabs.omarket.presentation.ui.fragments.main.CategoryClickHandler
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.SubCategoryClickHandler
 import kg.o.internlabs.omarket.utils.checkPermission
 import kg.o.internlabs.omarket.utils.getFile
 import kg.o.internlabs.omarket.utils.makeToast
@@ -29,14 +36,17 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
-    CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper {
+    CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper,
+    CategoryClickHandler, SubCategoryClickHandler {
 
     private var selectedImages = mutableListOf(UploadImageResultEntity())
     private var selected = mutableListOf(UploadImageResultEntity())
     private var selectedPath = mutableListOf(UploadImageResultEntity())
     private var args: NewAdsFragmentArgs? = null
     private var imageListAdapter: ImageListAdapter? = null
-    private var subCategoriesEntity = SubCategoriesEntity()
+    private var subCategoriesEntity: SubCategoriesEntity? = null
+    private var categoryEntity: ResultEntity? = null
+    private var adTypeEntity: AdTypeEntity? = null
 
     companion object {
         var mainImageIndex = 1
@@ -74,28 +84,36 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         cusWhatsApp.setInterface(this@NewAdsFragment, 3)
         cusTelegram.setInterface(this@NewAdsFragment, 4)
         cusLocationOnTheMap.setInterface(this@NewAdsFragment, 5)
+
+        getCategories()
+        getAdType()
     }
 
     override fun initListener() = with(binding) {
         super.initListener()
 
         cusCategory.setOnClickListener {
-            val category = ResultEntity()
-            cusCategory.setText(category.name.toString())
-            cusSubCategory.isVisible = category.subCategories?.isNotEmpty() == true
+            cusSubCategory.setHint(getString(R.string.sub_category))
+            cusAdType.setHint(getString(R.string.order_type))
+            bottomSheetCategory.root.isVisible = true
         }
 
         cusSubCategory.setOnClickListener {
-            val category = ResultEntity()
-            cusCategory.setText(category.subCategories!![0].name.toString())
+            bottomSheetSubcategory.root.isVisible = true
         }
 
         cusAdType.setOnClickListener {
-            //cusAdType.setText()
+            if (categoryEntity == null) return@setOnClickListener
+            if (subCategoriesEntity == null && cusSubCategory.isVisible) return@setOnClickListener
+            callAdTypeBottomSheet()
+        }
+
+        cusCurrency.setOnClickListener {
+            callCurrencyBottomSheet()
         }
 
         cusLocation.setOnClickListener {
-            //cusLocation.setText()
+            return@setOnClickListener
         }
 
         flAddImage.isVisible = selectedPath.size < 2
@@ -106,6 +124,110 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
         btnCreateAd.setOnClickListener {
             prepareValuesForAd()
+        }
+
+        bottomSheetCategory.cancelIconCategories.setOnClickListener {
+            bottomSheetCategory.root.isVisible = false
+        }
+
+        bottomSheetSubcategory.cancelIconSubcategories.setOnClickListener {
+            bottomSheetSubcategory.root.isVisible = false
+        }
+    }
+
+    private fun callCurrencyBottomSheet() {
+        val lBinding = BottomSheetCurrencyBinding.inflate(LayoutInflater.from(context))
+        val dialog = BottomSheetDialog(requireContext())
+        dialog.setContentView(lBinding.root)
+
+        with(lBinding) {
+            cancelIconAdType.setOnClickListener {
+                dialog.dismiss()
+            }
+            kgsCell.setOnClickListener {
+                binding.cusCurrency.setText(kgsCell.getTitle())
+                binding.cusCurrency.tag = "som"
+                dialog.dismiss()
+            }
+            dollarsCell.setOnClickListener {
+                binding.cusCurrency.setText(dollarsCell.getTitle())
+                binding.cusCurrency.tag = "usd"
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+    private fun callAdTypeBottomSheet() {
+        val lBinding = BottomSheetAdTypeBinding.inflate(LayoutInflater.from(context))
+        val dialog = BottomSheetDialog(requireContext())
+        dialog.setContentView(lBinding.root)
+
+        with(lBinding) {
+            cancelIconAdType.setOnClickListener {
+                dialog.dismiss()
+            }
+            setVisibilityAndPosition(lBinding)
+            recruitingCellBottom.setOnClickListener {
+                binding.cusAdType.setText(recruitingCellBottom.getTitle())
+                dialog.dismiss()
+            }
+            lookingCellBottom.setOnClickListener {
+                binding.cusAdType.setText(lookingCellBottom.getTitle())
+                dialog.dismiss()
+            }
+            sellCellBottom.setOnClickListener {
+                binding.cusAdType.setText(sellCellBottom.getTitle())
+                dialog.dismiss()
+            }
+            buyCellBottom.setOnClickListener {
+                binding.cusAdType.setText(buyCellBottom.getTitle())
+                dialog.dismiss()
+            }
+            rentCellBottom.setOnClickListener {
+                binding.cusAdType.setText(rentCellBottom.getTitle())
+                dialog.dismiss()
+            }
+            serviceCellBottom.setOnClickListener {
+                binding.cusAdType.setText(serviceCellBottom.getTitle())
+                dialog.dismiss()
+            }
+            hiringCellBottom.setOnClickListener {
+                binding.cusAdType.setText(hiringCellBottom.getTitle())
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+    private fun setVisibilityAndPosition(lBinding: BottomSheetAdTypeBinding) {
+        val list = getAdTypeList()
+        lBinding.apply {
+            recruitingCellBottom.isVisible = "recruiting" in list.map { it.codeValue }
+            lookingCellBottom.isVisible = "looking" in list.map { it.codeValue }
+            setPosition(lookingCellBottom, "looking", list)
+            sellCellBottom.isVisible = "sell" in list.map { it.codeValue }
+            setPosition(sellCellBottom, "sell", list)
+            buyCellBottom.isVisible = "buy" in list.map { it.codeValue }
+            setPosition(buyCellBottom, "buy", list)
+            rentCellBottom.isVisible = "rent" in list.map { it.codeValue }
+            setPosition(rentCellBottom, "rent", list)
+            serviceCellBottom.isVisible = "service" in list.map { it.codeValue }
+            setPosition(serviceCellBottom, "service", list)
+            hiringCellBottom.isVisible = "hiring" in list.map { it.codeValue }
+            setPosition(hiringCellBottom, "hiring", list)
+        }
+    }
+
+    private fun setPosition(
+        v: CustomRoundedOneCellLineView,
+        s: String,
+        list: List<AdTypeResultsEntity>
+    ) {
+        when (s) {
+            list.first().codeValue -> v.setPosition(Position.TOP)
+            list.last().codeValue -> v.setPosition(Position.BOTTOM)
+            else -> v.setPosition(Position.MIDDLE)
         }
     }
 
@@ -204,7 +326,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
     override fun toggleClicked(positionOfCell: Int) = with(binding) {
         when (positionOfCell) {
-            0 -> cusDelivery.isVisible = subCategoriesEntity.delivery ?: false
+            0 -> cusDelivery.isVisible = subCategoriesEntity?.delivery ?: false
             1 -> {
                 with(cusPriceIsNegotiable.isChecked()) {
                     cusCurrency.isVisible = this.not()
@@ -272,15 +394,30 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         return getList()
     }
 
-    private fun getList(): List<String> {
-        val list = mutableListOf<String>()
-        selectedImages.forEachIndexed { index, it ->
-            if (index != 0) {
-                it.url?.let { it1 -> list.add(0, it1) }
+    private fun getList() =
+        selectedImages.filter { it.url != null }.map { it.url!! }
+
+
+    private fun getAdTypeList(): List<AdTypeResultsEntity> {
+        val list = mutableListOf<AdTypeResultsEntity>()
+        if (categoryEntity?.subCategories?.isEmpty() == true) {
+            if (categoryEntity?.adType?.isEmpty() == true) {
+                adTypeEntity?.result?.results?.map { it }?.let { list.addAll(it) }
+                return list
             }
+            categoryEntity?.adType?.forEach { i ->
+                adTypeEntity?.result?.results?.filter { it.id == i }?.map { list.add(it) }
+            }
+            return list
         }
-        println("-----$list")
-        return list.toList()
+        if (subCategoriesEntity?.adType?.isEmpty() == true) {
+            adTypeEntity?.result?.results?.map { it }?.let { list.addAll(it) }
+            return list
+        }
+        subCategoriesEntity?.adType?.forEach { i ->
+            adTypeEntity?.result?.results?.filter { it.id == i }?.map { list.add(it) }
+        }
+        return list
     }
 
     private fun isButtonClickable(): Boolean {
@@ -312,6 +449,62 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
                     }
                 }
             }
+        }
+    }
+
+    private fun getCategories() {
+        safeFlowGather {
+            viewModel.categories.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        binding.bottomSheetCategory.recyclerCategoryBs.adapter =
+                            CategoriesBottomSheetAdapter(it.data.result, this)
+                    }
+                    is ApiState.Failure -> {
+                        makeToast(it.msg.message.toString())
+                    }
+                    is ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getAdType() {
+        safeFlowGather {
+            viewModel.adType.collectLatest {
+                when (it) {
+                    is ApiState.Success -> {
+                        adTypeEntity = it.data
+                    }
+                    is ApiState.Failure -> {
+                        makeToast(it.msg.message.toString())
+                    }
+                    is ApiState.Loading -> {
+                    }
+                }
+            }
+        }
+    }
+
+    override fun clickedCategory(item: ResultEntity?) = with(binding) {
+        categoryEntity = item
+        cusCategory.setText(categoryEntity?.name.toString())
+        cusSubCategory.isVisible = categoryEntity?.subCategories?.isNotEmpty() == true
+        cusDelivery.isVisible = cusSubCategory.isVisible.not() && categoryEntity?.delivery == true
+        bottomSheetCategory.root.isVisible = false
+        bottomSheetSubcategory.recyclerSubcategoryBs.adapter =
+            SubCategoriesBottomSheetAdapter(categoryEntity?.subCategories, this@NewAdsFragment)
+    }
+
+    override fun subClickHandler(item: SubCategoriesEntity?) = with(binding){
+        subCategoriesEntity = item
+        cusSubCategory.setText(subCategoriesEntity?.name.toString())
+        bottomSheetSubcategory.root.isVisible = false
+        cusDelivery.isVisible = item?.delivery == true
+        if (item != null) {
+            cusAdType.setText("")
+            cusAdType.setHint(getString(R.string.order_type))
         }
     }
 
