@@ -258,7 +258,6 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     private fun pickImages() {
-        checkPermission()
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
