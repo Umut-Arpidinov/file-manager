@@ -93,8 +93,6 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         super.initListener()
 
         cusCategory.setOnClickListener {
-            cusSubCategory.setHint(getString(R.string.sub_category))
-            cusAdType.setHint(getString(R.string.order_type))
             bottomSheetCategory.root.isVisible = true
         }
 
@@ -232,6 +230,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     private fun pickImages() {
+        checkPermission()
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -265,7 +264,6 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     private fun uploadImage(imageUri: Uri) {
-        checkPermission()
         viewModel.uploadImage(getFile(imageUri))
 
         val model = UploadImageResultEntity(path = imageUri)
@@ -326,7 +324,6 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
 
     override fun toggleClicked(positionOfCell: Int) = with(binding) {
         when (positionOfCell) {
-            0 -> cusDelivery.isVisible = subCategoriesEntity?.delivery ?: false
             1 -> {
                 with(cusPriceIsNegotiable.isChecked()) {
                     cusCurrency.isVisible = this.not()
@@ -359,21 +356,30 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         imageListAdapter?.selectMainImage(index)
     }
 
+    private fun getAdTypeNameCode(name: String) =
+        adTypeEntity?.result?.results?.find { it.name == name }?.codeValue
+
+    private fun getCategoryId(name: String) =
+        if (subCategoriesEntity?.name == name) subCategoriesEntity?.id
+        else {
+            categoryEntity?.id
+        }
+
     private fun prepareValuesForAd() = with(binding) {
         val editAds = EditAds(
-            adType = cusAdType.getText(),
-            category = cusCategory.getItemId(),
+            adType = getAdTypeNameCode(cusAdType.getText()),
+            category = getCategoryId(cusCategory.getText()),
             contractPrice = cusPriceIsNegotiable.isChecked(),
-            currency = cusCurrency.getText(),
+            currency = if(cusPriceIsNegotiable.isChecked().not()) cusCurrency.getText() else null,
             delivery = cusDelivery.isChecked(),
             description = cusDescription.getText(),
             images = prepareUrlForAd(),
-            location = cusLocation.getItemId(),
+            location = 1,
             oMoneyPay = cusOMoneyAccept.isChecked(),
-            price = cusPrice.getText(),
-            telegramProfile = cusTelegramNick.getText(),
+            price = if(cusPriceIsNegotiable.isChecked().not()) cusPrice.getText() else null,
+            telegramProfile = if(cusTelegram.isChecked()) cusTelegramNick.getText() else null,
             title = cusTitle.getText(),
-            whatsappNum = cusWhatsAppNumber.getValue()
+            whatsappNum = if(cusWhatsApp.isChecked()) cusWhatsAppNumber.getValue() else null,
         )
         viewModel.createAd(editAds)
 
@@ -411,7 +417,13 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             return list
         }
         if (subCategoriesEntity?.adType?.isEmpty() == true) {
-            adTypeEntity?.result?.results?.map { it }?.let { list.addAll(it) }
+            if (categoryEntity?.adType?.isEmpty() == true) {
+                adTypeEntity?.result?.results?.map { it }?.let { list.addAll(it) }
+                return list
+            }
+            categoryEntity?.adType?.forEach { i ->
+                adTypeEntity?.result?.results?.filter { it.id == i }?.map { list.add(it) }
+            }
             return list
         }
         subCategoriesEntity?.adType?.forEach { i ->
@@ -488,6 +500,9 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     override fun clickedCategory(item: ResultEntity?) = with(binding) {
+        cusSubCategory.setHint(getString(R.string.sub_category))
+        cusAdType.setHint(getString(R.string.order_type))
+        subCategoriesEntity = null
         categoryEntity = item
         cusCategory.setText(categoryEntity?.name.toString())
         cusSubCategory.isVisible = categoryEntity?.subCategories?.isNotEmpty() == true
