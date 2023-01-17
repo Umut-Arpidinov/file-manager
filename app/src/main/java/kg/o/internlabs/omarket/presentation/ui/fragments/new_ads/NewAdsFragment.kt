@@ -17,29 +17,26 @@ import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.core.common.ApiState
 import kg.o.internlabs.core.custom_views.cells.CustomRoundedOneCellLineView
 import kg.o.internlabs.core.custom_views.cells.Position
+import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomOneCellsTextWatcher
 import kg.o.internlabs.core.custom_views.cells.cells_utils.CustomWithToggleCellViewClick
 import kg.o.internlabs.omarket.R
-import kg.o.internlabs.omarket.databinding.BottomSheetAdTypeBinding
-import kg.o.internlabs.omarket.databinding.BottomSheetCategoriesBinding
-import kg.o.internlabs.omarket.databinding.BottomSheetCurrencyBinding
-import kg.o.internlabs.omarket.databinding.BottomSheetSubcategoriesBinding
-import kg.o.internlabs.omarket.databinding.FragmentNewAdsBinding
+import kg.o.internlabs.omarket.databinding.*
 import kg.o.internlabs.omarket.domain.entity.*
 import kg.o.internlabs.omarket.presentation.ui.fragments.main.CategoryClickHandler
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.adapters.CategoriesBottomSheetAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.adapters.ImageListAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.adapters.SubCategoriesBottomSheetAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.AddImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.DeleteImageHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.MainImageSelectHelper
 import kg.o.internlabs.omarket.presentation.ui.fragments.new_ads.helpers.SubCategoryClickHandler
-import kg.o.internlabs.omarket.utils.checkPermission
-import kg.o.internlabs.omarket.utils.getFile
-import kg.o.internlabs.omarket.utils.makeToast
-import kg.o.internlabs.omarket.utils.safeFlowGather
+import kg.o.internlabs.omarket.utils.*
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     CustomWithToggleCellViewClick, MainImageSelectHelper, DeleteImageHelper, AddImageHelper,
-    CategoryClickHandler, SubCategoryClickHandler {
+    CategoryClickHandler, SubCategoryClickHandler, CustomOneCellsTextWatcher {
 
     private var selectedImages = mutableListOf(UploadImageResultEntity())
     private var selected = mutableListOf(UploadImageResultEntity())
@@ -51,6 +48,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     private var adTypeEntity: AdTypeEntity? = null
     private var list: List<ResultEntity>? = null
     private var dialog: BottomSheetDialog? = null
+    private var currency = ""
 
     companion object {
         var mainImageIndex = 1
@@ -78,17 +76,15 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     override fun initView() = with(binding) {
         super.initView()
 
-        with(btnCreateAd) {
-            isCheckable = isButtonClickable()
-            isEnabled = isCheckable
-        }
-
+        isButtonClickable()
+        cusTitle.setInterface(this@NewAdsFragment)
+        cusDescription.setInterface(this@NewAdsFragment, 1)
+        cusPrice.setInterface(this@NewAdsFragment, 2)
         cusDelivery.setInterface(this@NewAdsFragment)
         cusPriceIsNegotiable.setInterface(this@NewAdsFragment, 1)
         cusOMoneyAccept.setInterface(this@NewAdsFragment, 2)
         cusWhatsApp.setInterface(this@NewAdsFragment, 3)
         cusTelegram.setInterface(this@NewAdsFragment, 4)
-        cusLocationOnTheMap.setInterface(this@NewAdsFragment, 5)
 
         getCategories()
         getAdType()
@@ -98,8 +94,6 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         super.initListener()
 
         cusCategory.setOnClickListener {
-            cusSubCategory.setHint(getString(R.string.sub_category))
-            cusAdType.setHint(getString(R.string.order_type))
             callCategoryBottomSheet()
         }
 
@@ -124,7 +118,11 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         flAddImage.isVisible = selectedPath.size < 2
 
         ivAddImage.setOnClickListener {
-            pickImages()
+            if(checkPermission()) {
+                pickImages()
+            } else {
+                requestPermission()
+            }
         }
 
         btnCreateAd.setOnClickListener {
@@ -146,7 +144,8 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     private fun callSubCategoryBottomSheet() {
         val lBinding = BottomSheetSubcategoriesBinding.inflate(LayoutInflater.from(context))
         lBinding.recyclerSubcategoryBs.adapter = SubCategoriesBottomSheetAdapter(
-            categoryEntity?.subCategories, this)
+            categoryEntity?.subCategories, this
+        )
         dialog?.setContentView(lBinding.root)
         dialog?.show()
 
@@ -165,12 +164,14 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             }
             kgsCell.setOnClickListener {
                 binding.cusCurrency.setText(kgsCell.getTitle())
-                binding.cusCurrency.tag = "som"
+                currency = "som"
+                isButtonClickable()
                 dialog?.dismiss()
             }
             dollarsCell.setOnClickListener {
                 binding.cusCurrency.setText(dollarsCell.getTitle())
-                binding.cusCurrency.tag = "usd"
+                currency = "usd"
+                isButtonClickable()
                 dialog?.dismiss()
             }
         }
@@ -188,30 +189,37 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             setVisibilityAndPosition(lBinding)
             recruitingCellBottom.setOnClickListener {
                 binding.cusAdType.setText(recruitingCellBottom.getTitle())
+                isButtonClickable()
                 dialog?.dismiss()
             }
             lookingCellBottom.setOnClickListener {
                 binding.cusAdType.setText(lookingCellBottom.getTitle())
+                isButtonClickable()
                 dialog?.dismiss()
             }
             sellCellBottom.setOnClickListener {
                 binding.cusAdType.setText(sellCellBottom.getTitle())
+                isButtonClickable()
                 dialog?.dismiss()
             }
             buyCellBottom.setOnClickListener {
                 binding.cusAdType.setText(buyCellBottom.getTitle())
+                isButtonClickable()
                 dialog?.dismiss()
             }
             rentCellBottom.setOnClickListener {
                 binding.cusAdType.setText(rentCellBottom.getTitle())
+                isButtonClickable()
                 dialog?.dismiss()
             }
             serviceCellBottom.setOnClickListener {
                 binding.cusAdType.setText(serviceCellBottom.getTitle())
+                isButtonClickable()
                 dialog?.dismiss()
             }
             hiringCellBottom.setOnClickListener {
                 binding.cusAdType.setText(hiringCellBottom.getTitle())
+                isButtonClickable()
                 dialog?.dismiss()
             }
         }
@@ -250,6 +258,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     private fun pickImages() {
+        checkPermission()
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -283,9 +292,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     private fun uploadImage(imageUri: Uri) {
-        checkPermission()
         viewModel.uploadImage(getFile(imageUri))
-
         val model = UploadImageResultEntity(path = imageUri)
         selectedImages.add(1, model)
         binding.flAddImage.isVisible = false
@@ -326,12 +333,8 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         imageListAdapter?.imageLoaded(selectedImages)
     }
 
-    private fun containsModel(m: UploadImageResultEntity): Boolean {
-        selectedPath.forEach {
-            if (it === m) return true
-        }
-        return false
-    }
+    private fun containsModel(m: UploadImageResultEntity) = selectedPath.any { it === m }
+
 
     private fun deleteModelFromLists(index: Int) {
         val uriOfDeletedImage = selectedImages[index].url
@@ -342,10 +345,10 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         viewModel.deleteImageFromAd(DeletedImageUrlEntity(url = uriOfDeletedImage))
     }
 
-    override fun toggleClicked(positionOfCell: Int) = with(binding) {
+    override fun toggleClicked(positionOfCell: Int): Unit = with(binding) {
         when (positionOfCell) {
-            0 -> cusDelivery.isVisible = subCategoriesEntity?.delivery ?: false
             1 -> {
+                isButtonClickable()
                 with(cusPriceIsNegotiable.isChecked()) {
                     cusCurrency.isVisible = this.not()
                     cusPrice.isVisible = this.not()
@@ -359,7 +362,6 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
                 }
             }
             4 -> cusTelegramNick.isVisible = cusTelegram.isChecked()
-            5 -> makeToast("В разработке.")
         }
     }
 
@@ -377,21 +379,31 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         imageListAdapter?.selectMainImage(index)
     }
 
+    private fun getAdTypeNameCode(name: String) =
+        adTypeEntity?.result?.results?.find { it.name == name }?.codeValue
+
+    private fun getCategoryId(name: String) =
+        if (subCategoriesEntity?.name == name) subCategoriesEntity?.id
+        else {
+            categoryEntity?.id
+        }
+
     private fun prepareValuesForAd() = with(binding) {
         val editAds = EditAds(
-            adType = cusAdType.getText(),
-            category = cusCategory.getItemId(),
+            adType = getAdTypeNameCode(cusAdType.getText()),
+            category = getCategoryId(cusCategory.getText()),
             contractPrice = cusPriceIsNegotiable.isChecked(),
-            currency = cusCurrency.getText(),
+            currency = if (cusPriceIsNegotiable.isChecked().not()) currency else null,
             delivery = cusDelivery.isChecked(),
             description = cusDescription.getText(),
             images = prepareUrlForAd(),
-            location = cusLocation.getItemId(),
+            location = 1,
             oMoneyPay = cusOMoneyAccept.isChecked(),
-            price = cusPrice.getText(),
-            telegramProfile = cusTelegramNick.getText(),
+            price = if (cusPriceIsNegotiable.isChecked().not()) cusPrice.getText() else null,
+            telegramProfile = if (cusTelegram.isChecked()) cusTelegramNick.getText()
+                .drop(1) else null,
             title = cusTitle.getText(),
-            whatsappNum = cusWhatsAppNumber.getValue()
+            whatsappNum = if (cusWhatsApp.isChecked()) cusWhatsAppNumber.getValue() else null,
         )
         viewModel.createAd(editAds)
 
@@ -429,7 +441,13 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
             return list
         }
         if (subCategoriesEntity?.adType?.isEmpty() == true) {
-            adTypeEntity?.result?.results?.map { it }?.let { list.addAll(it) }
+            if (categoryEntity?.adType?.isEmpty() == true) {
+                adTypeEntity?.result?.results?.map { it }?.let { list.addAll(it) }
+                return list
+            }
+            categoryEntity?.adType?.forEach { i ->
+                adTypeEntity?.result?.results?.filter { it.id == i }?.map { list.add(it) }
+            }
             return list
         }
         subCategoriesEntity?.adType?.forEach { i ->
@@ -438,32 +456,42 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         return list
     }
 
-    private fun isButtonClickable(): Boolean {
+    private fun isButtonClickable() {
         with(binding) {
-            if (cusTitle.getText().isEmpty() ||
-                cusCategory.getText().isEmpty() ||
-                cusDescription.getText().isEmpty() ||
-                cusAdType.getText().isEmpty() ||
-                cusPriceIsNegotiable.isChecked().not() &&
-                (cusCurrency.getText().isEmpty() ||
-                        cusPrice.getText().isEmpty())
-            ) return false
+            btnCreateAd.isEnabled = cusTitle.getText().isNotEmpty() and
+                    cusCategory.getText().isNotEmpty() and
+                    cusDescription.getText().isNotEmpty() and
+                    cusAdType.getText().isNotEmpty() and
+                    cusPriceIsNegotiable.isChecked() or
+                    (cusPriceIsNegotiable.isChecked().not() and
+                            cusCurrency.getText().isNotEmpty() and
+                            cusPrice.getText().isNotEmpty())
+            btnCreateAd.isClickable = btnCreateAd.isEnabled
         }
-        return true
     }
 
-    private fun createAd() {
+    private fun createAd() = with(binding) {
         safeFlowGather {
             viewModel.editedAd.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+                        progressBar.isVisible = false
                         makeToast("Объявление создано")
-                        findNavController().navigate(R.id.mainFragment)
+                        try {
+                            findNavController().navigate(R.id.mainFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                     is ApiState.Failure -> {
                         println("--....1.." + it.msg.message)
+                        makeToast(it.msg.message.toString())
+                        progressBar.isVisible = false
+                        btnCreateAd.isVisible = true
                     }
                     is ApiState.Loading -> {
+                        progressBar.isVisible = true
+                        btnCreateAd.isVisible = false
                     }
                 }
             }
@@ -505,9 +533,13 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     override fun clickedCategory(item: ResultEntity?) = with(binding) {
+        cusSubCategory.setHint(getString(R.string.sub_category))
+        cusAdType.setHint(getString(R.string.order_type))
+        subCategoriesEntity = null
         categoryEntity = item
         dialog?.dismiss()
         cusCategory.setText(categoryEntity?.name.toString())
+        isButtonClickable()
         cusSubCategory.isVisible = categoryEntity?.subCategories?.isNotEmpty() == true
         cusDelivery.isVisible = cusSubCategory.isVisible.not() && categoryEntity?.delivery == true
     }
@@ -516,6 +548,7 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         subCategoriesEntity = item
         dialog?.dismiss()
         cusSubCategory.setText(subCategoriesEntity?.name.toString())
+        isButtonClickable()
         cusDelivery.isVisible = item?.delivery == true
         if (item != null) {
             cusAdType.setText("")
@@ -526,6 +559,11 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     override fun onDestroy() {
         println("fOnDest------")
         dialog = null
+        list = null
         super.onDestroy()
+    }
+
+    override fun textWatcher(isEmpty: Boolean, cellPosition: Int) {
+        isButtonClickable()
     }
 }
