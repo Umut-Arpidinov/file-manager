@@ -281,21 +281,4 @@
                 app:shapeAppearanceOverlay="@style/MyShapeAppearance" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <include
-        android:id="@+id/bottom_sheet_category"
-        layout="@layout/bottom_sheet_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <include
-        android:id="@+id/bottom_sheet_subcategory"
-        layout="@layout/bottom_sheet_subcategories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
