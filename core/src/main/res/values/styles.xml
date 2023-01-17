@@ -349,6 +349,12 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
+    <style name="styleToggleButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/magenta_1</item>
+        <item name="android:textColor">@color/switch_text</item>
+        <item name="backgroundTint">@color/switch_bg_color</item>
+    </style>
+
     <style name="GreenButton" parent="MaterialButton">
         <item name="android:textColor">@color/white_1</item>
         <item name="backgroundTint">@color/color_green_button</item>

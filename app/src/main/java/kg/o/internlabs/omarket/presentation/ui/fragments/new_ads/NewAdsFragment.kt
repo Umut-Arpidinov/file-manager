@@ -128,6 +128,14 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
         btnCreateAd.setOnClickListener {
             prepareValuesForAd()
         }
+
+        tvAdAgreement.setOnClickListener {
+            findNavController().navigate(R.id.pdfFragment)
+        }
+
+        tbFaq.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun callCategoryBottomSheet() {
