@@ -23,6 +23,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -287,4 +288,11 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/big_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminateDrawable="@drawable/progress"
+        android:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

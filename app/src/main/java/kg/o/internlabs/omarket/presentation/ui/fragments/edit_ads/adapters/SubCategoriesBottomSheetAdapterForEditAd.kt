@@ -29,7 +29,7 @@ class SubCategoriesBottomSheetAdapterForEditAd(
         }
     }
 
-    override fun getItemCount(): Int = list!!.size
+    override fun getItemCount(): Int = list?.size ?: 0
 
     inner class VH(val binding: RvCellItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

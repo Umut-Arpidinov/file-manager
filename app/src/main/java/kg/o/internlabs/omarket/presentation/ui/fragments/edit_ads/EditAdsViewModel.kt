@@ -17,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class EditAdsViewModel@Inject constructor(
     private val getAccessTokenFromPrefsUseCase: GetAccessTokenFromPrefsUseCase,
-    private val initiateAd: InitiateAdUseCase,
     private val uploadImageToAdUseCase: UploadImageToAdUseCase,
     private val deleteImageFromAdUseCase: DeleteImageFromAdUseCase,
     private val editAnAdUseCase: EditAnAdUseCase,

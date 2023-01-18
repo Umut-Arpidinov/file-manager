@@ -91,9 +91,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         cusWhatsApp.setInterface(this@EditAdsFragment, 3)
         cusTelegram.setInterface(this@EditAdsFragment, 4)
 
-        getAdsDetail()
-        getCategories()
         getAdType()
+
     }
 
     override fun initListener() = with(binding) {
@@ -141,11 +140,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             isTheAdDeleted()
         }
 
-/*
-        01:54:06.428  I  {"contract_price":false,"currency":"","delivery":false,"description":"Harley Davidson идеальное состояние","images":[],"location":1,"o_money_pay":true,"price":"500000","promotion_type":{},"result":{"author":{"location":{}},"category":{"parent":{}},"location":{},"promotion_type":{}},"telegram_profile":"_me_keny2076","title":"Мото","whatsapp_num":"+996 700 453 128"}
-*/
-
-
         btnCreateAd.setOnClickListener {
             prepareValuesForAd()
         }
@@ -160,14 +154,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
 
         with(item.category) {
-            val category = if (this?.parent?.name == null){
-                println("===========1    ")
-                this?.name
-            } else this.parent.name
-            println("-${this}--- $category  ---*****1")
-            println("---- $category  ---*****10")
+            val category = if (this?.parent?.name == null) this?.name else this.parent.name
             val subCategory = if (this?.parent?.name != null) this.name else null
-            println("---- $subCategory  ---*****2")
 
             if (category.isNullOrEmpty()) cusCategory.setHint(getString(R.string.category))
             else cusCategory.setText(category)
@@ -186,8 +174,9 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
 
         item.adType?.let {
-            if (it.isNotEmpty()) cusAdType.setText(it) else
-                cusTitle.setHint(getString(R.string.ad_type_title))
+            if (it.isNotEmpty()) getAdTypeName(it)?.let { it1 ->
+                cusAdType.setText(it1) }
+            else cusTitle.setHint(getString(R.string.ad_type_title))
         }
 
         item.contractPrice?.let {
@@ -196,7 +185,10 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             cusPrice.isVisible = it.not()
         }
         item.currency?.let {
-            if (it.isNotEmpty()) cusCurrency.setText(it) else
+            if (it.isNotEmpty()) {
+                if (it == "som") cusCurrency.setText("Сомы")
+                if(it == "usd") cusCurrency.setText("Доллары")
+            } else
                 cusCategory.setHint(getString(R.string.currency))
         }
 
@@ -232,19 +224,23 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             cusTelegramNick.setText(it)
         }
 
-        item.hasImage?.let { it ->
-            if (it) {
-                item.images?.let { img -> uploadImage(img) }
-            }
+        item.hasImage?.let {
+            item.images?.let { img -> uploadImage(img) }
         }
+        isButtonClickable()
     }
 
     private fun setData(item: ResultX) {
-       /* val i = item.category
-        val o = item.category?.parent
-        categoryEntity =
-        val c = item.currency
-        val*/
+        if(item.category?.parent?.name == null) {
+            categoryEntity = categories?.find { it.id == item.category?.id }
+            return
+        } else {
+            categoryEntity = categories?.find { it.id == item.category.parent.id }
+            subCategoriesEntity = categoryEntity?.subCategories?.find { it.id == item.category.id }
+        }
+
+        currency = item.currency.toString()
+        isButtonClickable()
     }
 
     private fun pickImages() {
@@ -292,20 +288,20 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     }
 
     private fun uploadImage(imageUri: List<String>) {
-        println("${this.javaClass.simpleName}====1====   $imageUri ")
-        println("${this.javaClass.simpleName}==${selectedImages.size}==2====   $selectedImages ")
         imageUri.map { selectedImages.addAll(1, listOf(UploadImageResultEntity(url = it))) }
-        selectedUrl.addAll(selectedImages)
-        selectedPath.addAll(selectedImages)
+        if(selectedImages.isEmpty()) {
+            selectedUrl.add(UploadImageResultEntity())
+            selectedPath.add(UploadImageResultEntity())
+        }
+        else {
+            selectedUrl.addAll(selectedImages)
+            selectedPath.addAll(selectedImages)
+        }
         listImageUrlInRemote = imageUri.map { UploadImageResultEntity(url = it) }.toMutableList()
-        println("${this.javaClass.simpleName}==${selectedImages.size}==3====   $selectedImages ")
-        println("${this.javaClass.simpleName}==${selectedUrl.size}==4====   $selectedUrl ")
-        println("${this.javaClass.simpleName}==${selectedPath.size}==5====   $selectedPath ")
         binding.flAddImage.isVisible = false
         imageListAdapter?.initAdapter(selectedImages.toList())
         binding.rwToUploadImages.adapter = imageListAdapter
     }
-
 
     private fun addIfNotContains(
         uri: UploadImageResultEntity,
@@ -315,7 +311,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         if (containsModel(path)) return
         val itemIndex = selectedImages.indexOf(path)
         if (itemIndex < 0) return
-        selectedPath.add(1, path)
+        selectedPath.add(1, uri)
         selectedUrl.add(1, uri)
         selectedImages[itemIndex] = UploadImageResultEntity(uri.url, path = imageUri)
         imageListAdapter?.imagesLoaded(selectedImages)
@@ -325,16 +321,9 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
 
     private fun deleteModelFromLists(index: Int) {
         val urlOfDeletedImage = selectedImages[index]
-        println("${this.javaClass.simpleName}====1.00==${selectedImages.size}==   $selectedImages ")
-        println("${this.javaClass.simpleName}====1.10====${selectedUrl.size}   $selectedUrl ")
-        println("${this.javaClass.simpleName}====1.20====${selectedPath.size}   $selectedPath ")
         selectedImages.removeAt(index)
         selectedUrl.removeAt(index)
         selectedPath.removeAt(index)
-
-        println("${this.javaClass.simpleName}====1.0====${selectedImages.size}   $selectedImages ")
-        println("${this.javaClass.simpleName}====1.1====${selectedUrl.size}   $selectedUrl ")
-        println("${this.javaClass.simpleName}====1.2====${selectedPath.size}   $selectedPath ")
         imageListAdapter?.initAdapter(selectedImages.toList())
         if (urlOfDeletedImage in selectedImages) return
         viewModel.deleteImageFromAd(DeletedImageUrlEntity(url = urlOfDeletedImage.url))
@@ -377,6 +366,9 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     private fun getAdTypeNameCode(name: String) =
         adTypeEntity?.result?.results?.find { it.name == name }?.codeValue
 
+    private fun getAdTypeName(name: String) =
+        adTypeEntity?.result?.results?.find { it.codeValue == name }?.name
+
     private fun getCategoryId(name: String) =
         if (subCategoriesEntity?.name == name) subCategoriesEntity?.id
         else {
@@ -390,15 +382,20 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             adType = getAdTypeNameCode(cusAdType.getText()),
             category = getCategoryId(cusSubCategory.getText()),
             contractPrice = cusPriceIsNegotiable.isChecked(),
-            currency = if (cusPriceIsNegotiable.isChecked().not()) currency else null,
+            currency = if (cusPriceIsNegotiable.isChecked().not()) {
+                if(cusAdType.getText() == "Сомы") "som" else "usd"
+            } else null,
             delivery = cusDelivery.isChecked(),
             description = cusDescription.getText(),
             images = prepareUrlForAd(),
             location = 1,
             oMoneyPay = cusOMoneyAccept.isChecked(),
             price = if (cusPriceIsNegotiable.isChecked().not()) cusPrice.getText() else null,
-            telegramProfile = if (cusTelegram.isChecked()) cusTelegramNick.getText()
-                .drop(1) else null,
+            telegramProfile = if (cusTelegram.isChecked()) {
+                if (cusTelegramNick.getText().startsWith("@")) cusTelegramNick.getText().drop(1)
+                else cusTelegramNick.getText()
+            }
+                 else null,
             title = cusTitle.getText(),
             whatsappNum = if (cusWhatsApp.isChecked()) cusWhatsAppNumber.getValue() else null,
         )
@@ -462,12 +459,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
     }
 
-    private fun isAllImagesHasUrl(): Boolean {
-        if (selectedImages.size > 1) return false
-        return selectedImages.filterNot { selectedImages.indexOf(it) != 0 }
-            .all { it.url != null }
-    }
-
     private fun createAd() = with(binding) {
         safeFlowGather {
             viewModel.editedAd.collectLatest {
@@ -483,7 +474,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                         }
                     }
                     is ApiState.Failure -> {
-                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
                         makeToast(it.msg.message.toString())
                         progressBar.isVisible = false
                         btnCreateAd.isVisible = true
@@ -505,9 +495,14 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                 when (it) {
                     is ApiState.Success -> {
                         categories = it.data.result
+
+                        getAdsDetail()
+
                     }
                     is ApiState.Failure -> {
                         makeToast(it.msg.message.toString())
+                        binding.bigProgressBar.isVisible = false
+                        binding.nsv.isVisible = true
                     }
                     is ApiState.Loading -> {
                     }
@@ -517,14 +512,19 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     }
 
     private fun getAdType() {
+        binding.bigProgressBar.isVisible = true
+        binding.nsv.isVisible = false
         safeFlowGather {
             viewModel.adType.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
                         adTypeEntity = it.data
+                        getCategories()
                     }
                     is ApiState.Failure -> {
                         makeToast(it.msg.message.toString())
+                        binding.bigProgressBar.isVisible = false
+                        binding.nsv.isVisible = true
                     }
                     is ApiState.Loading -> {
                     }
@@ -538,12 +538,16 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             viewModel.detailAd.collectLatest {
                 when (it) {
                     is ApiState.Success -> {
+                        binding.bigProgressBar.isVisible = false
+                        binding.nsv.isVisible = true
                         it.data.resultX?.let { it1 -> setField(it1) }
                     }
                     is ApiState.Failure -> {
-                        println("${this.javaClass.simpleName}--....1.." + it.msg.message)
+                        binding.bigProgressBar.isVisible = false
+                        binding.nsv.isVisible = true
                     }
                     is ApiState.Loading -> {
+
                     }
                 }
             }
@@ -599,14 +603,10 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     }
 
     private fun deleteImagesFromRemote() {
-        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....1000..$listImageUrlInRemote")
-        //listImageUrlInRemote.retainAll(selectedImages.map { it.url })
-        val tmp = listImageUrlInRemote.filter { it in selectedImages }
-        println("${this.javaClass.simpleName}--${listImageUrlInRemote.size}....2000..$listImageUrlInRemote")
-        println("${this.javaClass.simpleName}--${tmp.size}....3000..$tmp")
-        //viewModel.deleteImageFromAd()
+        listImageUrlInRemote.filter { it in selectedImages }.forEach {
+            viewModel.deleteImageFromAd(DeletedImageUrlEntity(it.url))
+        }
     }
-
 
     private fun callCategoryBottomSheet() {
         val lBinding = BottomSheetCategoriesBinding.inflate(LayoutInflater.from(context))
@@ -665,7 +665,11 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
             cancelIconAdType.setOnClickListener {
                 dialog?.dismiss()
             }
-            setVisibilityAndPosition(lBinding)
+            try {
+                setVisibilityAndPosition(lBinding)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             recruitingCellBottom.setOnClickListener {
                 binding.cusAdType.setText(recruitingCellBottom.getTitle())
                 isButtonClickable()
@@ -724,11 +728,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         }
     }
 
-    private fun setPosition(
-        v: CustomRoundedOneCellLineView,
-        s: String,
-        list: List<AdTypeResultsEntity>
-    ) {
+    private fun setPosition(v: CustomRoundedOneCellLineView,
+        s: String, list: List<AdTypeResultsEntity>) {
         when (s) {
             list.first().codeValue -> v.setPosition(Position.TOP)
             list.last().codeValue -> v.setPosition(Position.BOTTOM)
