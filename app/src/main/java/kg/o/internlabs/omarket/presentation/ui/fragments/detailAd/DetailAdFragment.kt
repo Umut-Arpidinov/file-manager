@@ -29,7 +29,7 @@ import kg.o.internlabs.omarket.databinding.FragmentDetailedAdBinding
 import kg.o.internlabs.omarket.domain.entity.ads.AdsByCategory
 import kg.o.internlabs.omarket.domain.entity.ads.MainFilter
 import kg.o.internlabs.omarket.domain.entity.ads.ResultX
-import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.DetailedImageAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.CellAdapter
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
 import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.SimilarAdsPagingAdapter

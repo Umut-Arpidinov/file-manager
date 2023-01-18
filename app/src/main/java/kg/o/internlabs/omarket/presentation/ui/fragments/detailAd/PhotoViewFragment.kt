@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import kg.o.internlabs.core.base.BaseFragment
 import kg.o.internlabs.omarket.databinding.FragmentPhotoViewBinding
-import kg.o.internlabs.omarket.presentation.ui.fragments.ads.DetailedImageAdapter
+import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.DetailedImageAdapter
 import kg.o.internlabs.core.R.string as coreString
 
 @AndroidEntryPoint

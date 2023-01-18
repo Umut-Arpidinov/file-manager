@@ -1,4 +1,4 @@
-package kg.o.internlabs.omarket.presentation.ui.fragments.ads
+package kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter
 
 import android.content.ContentValues
 import android.content.Context
@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kg.o.internlabs.omarket.R
 import kg.o.internlabs.omarket.databinding.PagerItemImageOverviewBinding
-import kg.o.internlabs.omarket.presentation.ui.fragments.detailAd.adapter.ImageClickedAds
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
