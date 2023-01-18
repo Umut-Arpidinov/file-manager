@@ -384,7 +384,11 @@ class NewAdsFragment : BaseFragment<FragmentNewAdsBinding, NewAdsViewModel>(),
     }
 
     override fun addImage() {
-        pickImages()
+        if (checkPermission()) {
+            pickImages()
+        } else {
+            requestPermission()
+        }
     }
 
     override fun selectMainImage(index: Int, uri: String?) {

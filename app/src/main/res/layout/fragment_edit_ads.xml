@@ -27,7 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_faq">
+        app:layout_constraintTop_toBottomOf="@+id/tb_faq"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -82,6 +84,7 @@
                 app:isEditableView="false"
                 app:layout_constraintTop_toBottomOf="@id/cus_description"
                 app:setHint="@string/ad_type_title" />
+
             <kg.o.internlabs.core.custom_views.cells.CustomWithToggleCellView
                 android:id="@+id/cus_price_is_negotiable"
                 android:layout_width="match_parent"
@@ -206,8 +209,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_16dp"
-                android:layout_marginBottom="@dimen/margin_bottom_48dp"
                 android:layout_marginEnd="@dimen/margin_end_8dp"
+                android:layout_marginBottom="@dimen/margin_bottom_48dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_information_block">
 
@@ -215,9 +218,9 @@
                     android:id="@+id/fl_add_image"
                     android:layout_width="@dimen/icon_width_100dp"
                     android:layout_height="@dimen/icon_height_100dp"
-                    android:visibility="visible"
                     android:layout_marginStart="@dimen/margin_start_8dp"
                     android:background="@drawable/bg_image"
+                    android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -235,13 +238,13 @@
                     android:id="@+id/rw_to_upload_images"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginStart="@dimen/margin_start_8dp"
+                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/fl_add_image"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:itemCount="10"
                     tools:listitem="@layout/add_image_item" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -250,26 +253,26 @@
                 android:id="@+id/btn_delete_ad"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/icon_height_48dp"
-                android:gravity="center"
-                android:clickable="true"
-                android:textAppearance="@style/TextView.ForTransparentButton"
                 android:layout_marginHorizontal="@dimen/margin_horizontal_8dp"
-                android:layout_marginBottom="@dimen/margin_bottom_8dp"
                 android:layout_marginTop="@dimen/margin_top_29dp"
-                app:layout_constraintTop_toBottomOf="@id/cl_image_block"
+                android:layout_marginBottom="@dimen/margin_bottom_8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
                 android:text="@string/delete_ad"
-                android:focusable="true" />
+                android:textAppearance="@style/TextView.ForTransparentButton"
+                app:layout_constraintTop_toBottomOf="@id/cl_image_block" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"
                 style="@style/progressBarStyle"
                 android:layout_width="@dimen/icon_width_46dp"
                 android:layout_height="@dimen/icon_height_46dp"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/margin_bottom_8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_image_block" />
 
             <com.google.android.material.button.MaterialButton
@@ -280,11 +283,11 @@
                 android:layout_margin="@dimen/margin_8dp"
                 android:clickable="false"
                 android:enabled="false"
-                app:textAppearanceButton="@style/TextView.ForGreenButton"
                 android:text="@string/activate_ad"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_delete_ad"
-                app:shapeAppearanceOverlay="@style/MyShapeAppearance" />
+                app:shapeAppearanceOverlay="@style/MyShapeAppearance"
+                app:textAppearanceButton="@style/TextView.ForGreenButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -294,5 +297,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminateDrawable="@drawable/progress"
-        android:visibility="visible" />
+        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

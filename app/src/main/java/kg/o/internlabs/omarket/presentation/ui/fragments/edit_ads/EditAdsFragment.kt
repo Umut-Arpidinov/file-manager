@@ -92,6 +92,7 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
         cusTelegram.setInterface(this@EditAdsFragment, 4)
 
         getAdType()
+        getAdsDetail()
 
     }
 
@@ -355,7 +356,11 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     }
 
     override fun addImage() {
-        pickImages()
+        if (checkPermission()) {
+            pickImages()
+        } else {
+            requestPermission()
+        }
     }
 
     override fun selectMainImage(index: Int, uri: String?) {
@@ -495,14 +500,9 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                 when (it) {
                     is ApiState.Success -> {
                         categories = it.data.result
-
-                        getAdsDetail()
-
                     }
                     is ApiState.Failure -> {
                         makeToast(it.msg.message.toString())
-                        binding.bigProgressBar.isVisible = false
-                        binding.nsv.isVisible = true
                     }
                     is ApiState.Loading -> {
                     }
@@ -512,8 +512,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
     }
 
     private fun getAdType() {
-        binding.bigProgressBar.isVisible = true
-        binding.nsv.isVisible = false
         safeFlowGather {
             viewModel.adType.collectLatest {
                 when (it) {
@@ -523,8 +521,6 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                     }
                     is ApiState.Failure -> {
                         makeToast(it.msg.message.toString())
-                        binding.bigProgressBar.isVisible = false
-                        binding.nsv.isVisible = true
                     }
                     is ApiState.Loading -> {
                     }
@@ -547,7 +543,8 @@ class EditAdsFragment : BaseFragment<FragmentEditAdsBinding, EditAdsViewModel>()
                         binding.nsv.isVisible = true
                     }
                     is ApiState.Loading -> {
-
+                        binding.bigProgressBar.isVisible = true
+                        binding.nsv.isVisible = false
                     }
                 }
             }
