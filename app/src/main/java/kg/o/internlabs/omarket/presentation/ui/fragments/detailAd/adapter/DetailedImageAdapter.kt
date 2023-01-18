@@ -65,7 +65,10 @@ internal class DetailedImageAdapter internal constructor(
 
             if (!viewer) {
                 itemView.setOnClickListener {
-                    itemView.let { imageClicked.imageClicked() }
+                    itemView.let {
+//                        imageClicked.imageClicked()
+                        return@setOnClickListener
+                    }
                 }
             } else {
                 itemView.setOnClickListener {
