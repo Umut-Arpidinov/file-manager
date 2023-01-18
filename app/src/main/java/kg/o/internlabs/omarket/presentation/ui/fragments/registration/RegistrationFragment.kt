@@ -125,6 +125,10 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding,
             )
             initObserver()
         }
+
+        textButton.setOnClickListener {
+            findNavController().navigate(R.id.pdfFragment)
+        }
     }
 
     override fun numberWatcher(notEmpty: Boolean, fieldsNumber: Int) {

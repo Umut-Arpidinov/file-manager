@@ -32,41 +32,41 @@
         app:layout_constraintTop_toBottomOf="@id/tb_profile"
         app:setTitle="+996 776 543 654" />
 
-    <RadioGroup
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/switch_group"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/view_30dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
-        android:background="@drawable/switch_outline"
-        android:orientation="horizontal"
+        app:singleSelection="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cus_profile">
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
+        <com.google.android.material.button.MaterialButton
+            style="@style/styleToggleButton"
             android:id="@+id/btn_active"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/switch_background"
-            android:button="@null"
+            app:toggleCheckedStateOnClick="true"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
-            android:text="@string/active"
-            android:textColor="@color/switch_text" />
+            android:textSize="@dimen/cells_info_text_size_15sp"
+            android:text="@string/active" />
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
+        <com.google.android.material.button.MaterialButton
+            style="@style/styleToggleButton"
             android:id="@+id/btn_non_active"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/switch_background"
-            android:button="@null"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
             android:text="@string/non_active"
+            android:textSize="@dimen/cells_info_text_size_15sp"
             android:textColor="@color/switch_text" />
-    </RadioGroup>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec"
