@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -69,6 +70,7 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
             MarginItemDecoration
                 (2, resources.getDimensionPixelSize(R.dimen.item_margin_7dp), true))
         getDetailAd()
+        getAds(ad = ResultX())
     }
 
     override fun initListener() = with(binding) {
@@ -125,7 +127,6 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         if (!isMine) {
             adapter.setInterface(this@DetailAdFragment, this@DetailAdFragment)
             initAdapter()
-            getAds()
         }
 
         initViewPagerAdapter(imageViewPager, currentPos, ad?.minifyImages)
@@ -185,10 +186,14 @@ class DetailAdFragment : BaseFragment<FragmentDetailedAdBinding, DetailAdViewMod
         loadListener(adapter, loadingAnim, recSimilarAds)
     }
 
-    private fun getAds() {
+    private fun getAds(ad: ResultX? ) {
+
         safeFlowGather {
             viewModel.ads?.collectLatest {
-                adapter.submitData(it)
+                adapter.submitData(it.filter { here -> here.uuid != args?.uuid?.substring(4) })
+                println("${ad?.uuid} uuid uuid")
+                println("${args?.uuid} args uuid")
+
             }
         }
     }

@@ -51,7 +51,7 @@
     <color name="black_1">#010101</color>
     <color name="black_2">#111112</color>
     <color name="black_3">#1C1C1E</color>
-    <color name="black_4">#28282A</color>
+        <color name="black_4">#28282A</color>
     <color name="black_5">#4A4A4A</color>
     <!--    Blue                -->
     <color name="blue_1">#007AFF</color>
