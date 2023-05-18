@@ -1,23 +1,24 @@
-# O! Market Android Team
 
-O! Market - это маркетплейс для абонентов мобильного оператора "О!". Данное приложение создано для
-размещения и продажи товаров с возможностью использования, при оплате, электронного кошелька О! Деньги.
+# O!Market
 
-# Project in developing stage
+It's a multi-module project for Kyrgyzstan people whose aim is to sell or buy something
 
-**В нашем проекте мы использовали следующие инструменты:**   
-- Android Gradle Plugin Version 7.3.1
-- Gradle Version 7.4   
 
-Есть риск, что проект не собереться, если версии Gradle на вашем персональном компьютере будут выше или ниже указанных.
-Настоятельно советуем проверить версии Gradle для стабильной работы.
+## Screenshots
 
-Возможный вариант разрешения этой проблемы
-1) Нажимаем File 
-2) Project Structure
-3) Project 
-4) В Android Gradle Plugin Version выбираем версию 7.3.1
-5) Gradle Version выбираем версию 7.4
-6) Затем Apply и ОК
-7) Пересобираем проект. Для этого в правом вверхнем углу в панели инструментов есть иконка Gradle 
-8) При появлении сообщения Sync Project with Gradle Files? нажимаем на него
+Splash
+![App Screenshot](screens/spash.png)
+
+Registartion
+![App Screenshot](screens/registration.png)
+
+
+Home
+![App Screenshot](screens/main.png)
+
+Create ad
+
+![App Screenshot](screens/createAd.png)
+
+
+
